@@ -11,16 +11,11 @@ import org.slf4j.LoggerFactory;
 
 import java.io.*;
 
-/**
- * Hello world!
- */
 public class App {
 
     static Logger logger = LoggerFactory.getLogger(App.class);
 
     public App() throws IOException {
-
-        logger.info("::begin");
 
         logger.info("::configure schema");
 
@@ -50,6 +45,7 @@ public class App {
 
         Decoder decoder = DecoderFactory.get().binaryDecoder(inStream, null);
 
+        // TODO: Throws a NPE. Wtf?
         GenericRecord result = reader.read(null, decoder);
 
         logger.info(":: left = {}", result.get("left").toString());
