@@ -6,6 +6,7 @@ import org.apache.avro.generic.GenericDatumReader;
 import org.apache.avro.generic.GenericDatumWriter;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.avro.io.*;
+import org.apache.log4j.BasicConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +17,8 @@ public class App {
     static Logger logger = LoggerFactory.getLogger(App.class);
 
     public App() throws IOException {
+
+        BasicConfigurator.configure();
 
         logger.info("::configure schema");
 
@@ -40,12 +43,12 @@ public class App {
 
         logger.info("::read");
 
-        DatumReader<GenericRecord> reader = new GenericDatumReader<>();
+        DatumReader<GenericRecord> reader = new GenericDatumReader<>(schema);
+
         InputStream inStream = new FileInputStream("tmp/out1.avro");
 
         Decoder decoder = DecoderFactory.get().binaryDecoder(inStream, null);
 
-        // TODO: Throws a NPE. Wtf?
         GenericRecord result = reader.read(null, decoder);
 
         logger.info(":: left = {}", result.get("left").toString());

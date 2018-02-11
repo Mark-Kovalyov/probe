@@ -1,0 +1,9 @@
+{
+   "type" : "record",
+   "name" : "emp",
+   "doc"  : "Employee table",
+   "fields" : [
+       { "name" : "ID",    "type" : "int" },
+       { "name" : "name",  "type" : "string" }
+   ]
+}
