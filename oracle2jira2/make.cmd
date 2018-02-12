@@ -1,3 +1,7 @@
 call mvn clean package
-xcopy /Y .\target\oracle2jira.jar .
-java  -jar oracle2jira.jar "scott/tiger@127.0.0.1:1521/XE" "select * from emp order by 1"
+
+xcopy /Y .\target\*.jar .
+
+java -XX:+UseSerialGC -jar SQL2Horizontal.jar "scott/tiger@127.0.0.1:1521/XE" "select * from emp order by 1"
+
+java -XX:+UseSerialGC -jar SQL2Vertical.jar   "scott/tiger@127.0.0.1:1521/XE" "select * from emp order by 1"

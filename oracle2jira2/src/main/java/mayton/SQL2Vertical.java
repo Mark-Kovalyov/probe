@@ -8,13 +8,17 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
+import static mayton.Console.printf;
+import static mayton.Console.println;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class SQL2Vertical {
-
+    
+    static String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    
     static Logger logger = LoggerFactory.getLogger(SQL2Vertical.class);
 
     public static void dumpPropertiesSorted(Properties p) {
@@ -38,7 +42,6 @@ public class SQL2Vertical {
         if (url.equals("-")) {
             url = "scott/tiger@127.0.0.1:1521/XE";
         }
-
         String sql = args[1];
         Connection conn = DriverManager.getConnection("jdbc:oracle:thin:" + url);
         Properties props = conn.getClientInfo();
@@ -49,30 +52,19 @@ public class SQL2Vertical {
         ResultSetMetaData rsmd = rs.getMetaData();
         int cols = rsmd.getColumnCount();
         while (rs.next()) {
-            out.printf("||Name||Value||\n");
+            printf("||Name||Value||\n");
             for (int i = 1; i < cols; i++) {
                 String name = rsmd.getColumnName(i);
                 String value = rs.getString(i);
                 if (hideNulls) {
                     if (value != null) {
-                        out.printf("|%s|%s|\n", name, value);
+                        printf("|%s|%s|\n", name, value);
                     }
                 } else {
-                    out.printf("|%s|%s|\n", name, value);
+                    printf("|%s|%s|\n", name, value);
                 }
             }
-            /*for (Pair<String, Integer> p : columns) {
-                String name  = p.getLeft();
-                String value = rs.getString(name);
-                if (hideNulls) {
-                    if (value!=null) {
-                        out.printf("|%s|%s|\n", name, value);
-                    }
-                } else { 
-                    out.printf("|%s|%s|\n", name, value);
-                }
-            }*/
-            out.println();
+            println();
         }
         rs.close();
         st.close();
