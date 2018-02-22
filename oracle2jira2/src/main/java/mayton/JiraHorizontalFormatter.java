@@ -17,8 +17,10 @@ import static mayton.Console.printf;
 
 public class JiraHorizontalFormatter implements IFormatter {
     
+    static String TIMESTAMP_TZ_FORMAT = "yyyy-MM-dd HH:mm:ss.FF";
+    static String TIMESTAMP_FORMAT    = "yyyy-MM-dd HH:mm:ss.FF";
     static String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
-    static String DATE_FORMAT = "yyyy-MM-dd";
+    static String DATE_FORMAT      = "yyyy-MM-dd";
 
     private Properties props;
 
@@ -41,10 +43,6 @@ public class JiraHorizontalFormatter implements IFormatter {
                 Object value = rs.getString(i);
                 int type = rs.getType();
                 switch(type) {
-                    case Types.VARCHAR :
-                        ps.printf("|%s", value);
-                    case Types.CHAR :
-                        ps.printf("|%s", value);
                     case Types.DATE :
                         Date dt = (Date)value;
                         ps.printf("|%s", sdtf.format(dt));
