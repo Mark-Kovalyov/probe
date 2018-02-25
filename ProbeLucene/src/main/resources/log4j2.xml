@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+
+    <Appenders>
+
+        <File name="file" fileName="logs/app.log">
+            <PatternLayout>
+                <Pattern>%d %m %X{startIpNum} %n</Pattern>
+            </PatternLayout>
+        </File>
+
+        <Console name="STDOUT" target="SYSTEM_OUT">
+            <PatternLayout pattern="%m %X{startIpNum} %n"/>
+        </Console>
+
+    </Appenders>
+
+    <Loggers>
+        <Root level="trace">
+            <AppenderRef ref="file"   level="DEBUG"/>
+            <AppenderRef ref="STDOUT" level="INFO"/>
+        </Root>
+    </Loggers>
+
+</Configuration>

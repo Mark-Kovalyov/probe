@@ -26,6 +26,12 @@ hs_err_pid*
 camel/CamelTest/.idea
 avro/.idea
 
+# ProbeLucene
+ProbeLucene/.idea
+ProbeLucene/input
+ProbeLucene/output
+ProbeLucene/logs
+
 # Temp files
 *.tmp
 
