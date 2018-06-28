@@ -9,61 +9,65 @@
 * GRPH (http://www.i3s.unice.fr/~hogie/maven_repository/)
 
 ## Features comparison (Genrics)
-||                || JUNG || JGT || ACG || GCG|| GRPH ||
-|Generics         |   +   |      |  -   |  ?  |       |
-|Generic vertex   |   +   |      |  -   |  +  |       |
-|Generic edge     |   +   |      |  -   |  -  |       |
+                | JUNG  | JGT  | ACG  | GCG | GRPH  |
+----------------|-------|------|------|-----|-------|
+Generics        |   +   |      |  -   |  ?  |       |
+Generic vertex  |   +   |      |  -   |  +  |       |
+Generic edge    |   +   |      |  -   |  -  |       |
 
 (todo: complete filling)
 
 ## Graph types
-||                 || JUNG || JGT || ACG || GCG|| GRPH ||
-|Directed          |   +   |      |      |   + |       |
-|Directed Sparce   |   +   |      |      |   ? |       |
-|Sparce            |   +   |      |      |   ? |       |
-|Sparce Multigraph |   +   |      |      |   ? |       |
-|Multigraph/Network|   ?   |      |      |   + |       |
+                   | JUNG  | JGT  | ACG  | GCG | GRPH  |
+-------------------|-------|------|------|-----|-------|
+ Directed          |   +   |      |      |   + |       |
+ Directed Sparce   |   +   |      |      |   ? |       |
+ Sparce            |   +   |      |      |   ? |       |
+ Sparce Multigraph |   +   |      |      |   ? |       |
+ Multigraph/Network|   ?   |      |      |   + |       |
 
 (todo: complete filling)
 
 ## Export/Import features comparison 
-||                 || JUNG || JGT || ACG || GCG|| GRPH ||
-|GraphML(XML)      |       |      |      |     |   +   |
-|GML               |       |      |      |     |   +   |
-|DOT/GraphViz      |       |      |      |     |   +   |
-|DGS/Dynamic Graphs|       |      |      |     |   +   |
-|Inet/Caida maps   |       |      |      |     |   +   |
-|JUNG              |       |      |      |     |   +   |
-|Mascopt           |       |      |      |     |   +   |
+                   | JUNG  | JGT  | ACG  | GCG | GRPH  |
+-------------------|-------|------|------|-----|-------|
+ GraphML(XML)      |       |      |      |     |   +   |
+ GML               |       |      |      |     |   +   |
+ DOT/GraphViz      |       |      |      |     |   +   |
+ DGS/Dynamic Graphs|       |      |      |     |   +   |
+ Inet/Caida maps   |       |      |      |     |   +   |
+ JUNG              |       |      |      |     |   +   |
+ Mascopt           |       |      |      |     |   +   |
 
 (todo: complete filling)
 
 ## Algorithms availability 
-||                           || JUNG || JGT || ACG || GCG|| GRPH ||
-|eccentricity                |       |      |      |  ?  |   +   |
-|radius                      |       |      |      |  ?  |   +   |
-|diameter                    |       |      |      |  ?  |   +   |
-|in/out vertex/edge degrees  |       |      |      |  ?  |   +   |
-|clustering coefficient      |       |      |      |  -  |   +   |
-|cluster                     |  +    |      |      |  ?  |   ?   |
-|density                     |       |      |      |  -  |   +   |
-|connected components        |       |      |      |  -  |   +   | 
-|minimal spanning tree       |       |      |      |  -  |   +   | 
-|spanning                    |  +    |      |      |  -  |   ?   |
-|shortest paths              |  +    |      |      |  -  |   +   |    
-|BFS/RS                      |       |      |      |  -  |   +   | 
-|DFS                         |       |      |   +  |     |   +   |
-|distributions               |       |      |      |  -  |   +   | 
-|maximum clique              |       |      |      |  -  |   +   | 
-|minimum vertex cover        |       |      |      |  -  |   +   | 
-|maximum independent set     |       |      |      |  -  |   +   |  
-|maximum flow                |       |      |      |  -  |   +   | 
-|flow                        |  +    |      |      |  -  |   ?   |
-|(sub)graph isomorphism      |  +    |      |      |  -  |   +   | 
-|clique                      |  +    |      |      |  -  |   ?   |
-|color                       |  +    |      |      |  -  |   ?   |
-|scoring                     |  +    |      |      |  -  |   ?   |
-|tour                        |  +    |      |      |  -  |   ?   |
+                             | JUNG  | JGT  | ACG  | GCG | GRPH  |
+ ----------------------------|-------|------|------|-----|-------|
+ eccentricity                |       |      |      |  ?  |   +   |
+ radius                      |       |      |      |  ?  |   +   |
+ diameter                    |       |      |      |  ?  |   +   |
+ in/out vertex/edge degrees  |       |      |      |  ?  |   +   |
+ clustering coefficient      |       |      |      |  -  |   +   |
+ cluster                     |  +    |      |      |  ?  |   ?   |
+ density                     |       |      |      |  -  |   +   |
+ connected components        |       |      |      |  -  |   +   | 
+ minimal spanning tree       |       |      |      |  -  |   +   | 
+ spanning                    |  +    |      |      |  -  |   ?   |
+ shortest paths              |  +    |      |      |  -  |   +   |    
+ BFS/RS                      |       |      |      |  -  |   +   | 
+ DFS                         |       |      |   +  |     |   +   |
+ distributions               |       |      |      |  -  |   +   | 
+ maximum clique              |       |      |      |  -  |   +   | 
+ minimum vertex cover        |       |      |      |  -  |   +   | 
+ maximum independent set     |       |      |      |  -  |   +   |  
+ maximum flow                |       |      |      |  -  |   +   | 
+ flow                        |  +    |      |      |  -  |   ?   |
+ (sub)graph isomorphism      |  +    |      |      |  -  |   +   | 
+ clique                      |  +    |      |      |  -  |   ?   |
+ color                       |  +    |      |      |  -  |   ?   |
+ scoring                     |  +    |      |      |  -  |   ?   |
+ tour                        |  +    |      |      |  -  |   ?   |
 
 (todo: complete filling)
 
