@@ -9,16 +9,17 @@
 * GRPH (http://www.i3s.unice.fr/~hogie/maven_repository/)
 
 ## Features comparison (Genrics)
-                | JUNG  | JGT  | ACG  | GCG | GRPH  |
-----------------|-------|------|------|-----|-------|
-Generics        |   +   |      |  -   |  ?  |       |
-Generic vertex  |   +   |      |  -   |  +  |       |
-Generic edge    |   +   |      |  -   |  -  |       |
+
+Feature         | JUNG  | JGT  | ACG  | GCG | GRPH
+--------------- | ----- | ---- | ---- | --- | -----
+Generics        |   +   |  ?   |  -   |  ?  |   ?
+Generic vertex  |   +   |  ?   |  -   |  +  |   ?
+Generic edge    |   +   |  ?   |  -   |  -  |   ?
 
 (todo: complete filling)
 
 ## Graph types
-                   | JUNG  | JGT  | ACG  | GCG | GRPH  |
+ Type              | JUNG  | JGT  | ACG  | GCG | GRPH  |
 -------------------|-------|------|------|-----|-------|
  Directed          |   +   |      |      |   + |       |
  Directed Sparce   |   +   |      |      |   ? |       |
@@ -29,7 +30,7 @@ Generic edge    |   +   |      |  -   |  -  |       |
 (todo: complete filling)
 
 ## Export/Import features comparison 
-                   | JUNG  | JGT  | ACG  | GCG | GRPH  |
+ Format            | JUNG  | JGT  | ACG  | GCG | GRPH  |
 -------------------|-------|------|------|-----|-------|
  GraphML(XML)      |       |      |      |     |   +   |
  GML               |       |      |      |     |   +   |
@@ -42,7 +43,7 @@ Generic edge    |   +   |      |  -   |  -  |       |
 (todo: complete filling)
 
 ## Algorithms availability 
-                             | JUNG  | JGT  | ACG  | GCG | GRPH  |
+ Algorithm                   | JUNG  | JGT  | ACG  | GCG | GRPH  |
  ----------------------------|-------|------|------|-----|-------|
  eccentricity                |       |      |      |  ?  |   +   |
  radius                      |       |      |      |  ?  |   +   |
