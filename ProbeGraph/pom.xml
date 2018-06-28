@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>mayton.probes</groupId>
+  <artifactId>ProbeGraph</artifactId>
+  <version>1.0-SNAPSHOT</version>
+
+  <name>ProbeGraph</name>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <jung.version>2.1.1</jung.version>
+    <jgrapht.version>1.2.0</jgrapht.version>
+    <log4j.version>1.2.17</log4j.version>
+    <slf4j.version>1.7.25</slf4j.version>
+  </properties>
+
+  <dependencies>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- JGraphT is a free Java graph library that provides
+         mathematical graph-theory objects and algorithms -->
+    <!-- https://mvnrepository.com/artifact/org.jgrapht/jgrapht-core -->
+    <dependency>
+      <groupId>org.jgrapht</groupId>
+      <artifactId>jgrapht-core</artifactId>
+      <version>${jgrapht.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jgrapht</groupId>
+      <artifactId>jgrapht-ext</artifactId>
+      <version>${jgrapht.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jgrapht</groupId>
+      <artifactId>jgrapht-io</artifactId>
+      <version>${jgrapht.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jgrapht</groupId>
+      <artifactId>jgrapht-guava</artifactId>
+      <version>${jgrapht.version}</version>
+    </dependency>
+
+    <!-- JUNG — the Java Universal Network/Graph Framework
+         -is a software library that provides a common and extendible
+         language for the modeling, analysis, and visualization of
+         data that can be represented as a graph or network. It is
+         written in Java, which allows JUNG-based applications to make
+         use of the extensive built-in capabilities of the Java API,
+         as well as those of other existing third-party Java libraries.   -->
+    <dependency>
+      <groupId>net.sf.jung</groupId>
+      <artifactId>jung-api</artifactId>
+      <version>${jung.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>net.sf.jung</groupId>
+      <artifactId>jung-graph-impl</artifactId>
+      <version>${jung.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>net.sf.jung</groupId>
+      <artifactId>jung-algorithms</artifactId>
+      <version>${jung.version}</version>
+    </dependency>
+
+    <!-- Main APIs that describe Graph data structure.
+         https://commons.apache.org/sandbox/commons-graph/apidocs/org/apache/commons/graph/package-summary.html -->
+    <dependency>
+      <groupId>commons-graph</groupId>
+      <artifactId>commons-graph</artifactId>
+      <version>0.8.1</version>
+    </dependency>
+
+    <!-- Guava's common.graph is a library for modeling graph-structured data, that is,
+         entities and the relationships between them. Examples include webpages
+         and hyperlinks; scientists and the papers that they write; airports and
+         the routes between them; and people and their family ties (family trees).
+         Its purpose is to provide a common and extensible language for
+         working with such data.
+         https://github.com/google/guava/wiki/GraphsExplained -->
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>25.1-jre</version>
+    </dependency>
+
+    <!-- The high performance graph library for Java
+     http://www.i3s.unice.fr/~hogie/software/index.php -->
+    <dependency>
+      <groupId>grph</groupId>
+      <artifactId>grph</artifactId>
+      <version>2.1.2</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>${log4j.version}</version>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>3.0.0</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>3.0.2</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.7.0</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.20.1</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>3.0.2</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-install-plugin</artifactId>
+          <version>2.5.2</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>2.8.2</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+</project>
