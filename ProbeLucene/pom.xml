@@ -57,7 +57,7 @@
 
         <dependency>
             <groupId>com.oracle</groupId>
-            <artifactId>ojdbc8</artifactId>
+            <artifactId>ojdbc8_g</artifactId>
             <version>12.2.0.1</version>
         </dependency>
 
