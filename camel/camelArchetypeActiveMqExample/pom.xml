@@ -11,8 +11,9 @@
   <name>ActiveMQ embedded with Camel</name>
 
   <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+      <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+      <active.mq.version>5.15.7</active.mq.version>
   </properties>
 
   <dependencyManagement>
@@ -48,32 +49,34 @@
       <artifactId>activemq-client</artifactId>
       <version>5.15.3</version>
     </dependency>
+
     <dependency>
       <groupId>org.apache.activemq</groupId>
       <artifactId>activemq-camel</artifactId>
-      <version>5.15.3</version>
+      <version>${active.mq.version}</version>
     </dependency>
-    <dependency>
+
+      <dependency>
       <groupId>org.apache.activemq</groupId>
       <artifactId>activemq-pool</artifactId>
-      <version>5.15.3</version>
+      <version>${active.mq.version}</version>
     </dependency>
 
     <!-- the ActiveMQ broker is optional and can be removed if connecting to a remote broker only -->
     <dependency>
       <groupId>org.apache.activemq</groupId>
       <artifactId>activemq-broker</artifactId>
-      <version>5.15.3</version>
+      <version>${active.mq.version}</version>
     </dependency>
-    <dependency>
+      <dependency>
       <groupId>org.apache.activemq</groupId>
       <artifactId>activemq-spring</artifactId>
-      <version>5.15.3</version>
+      <version>${active.mq.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.activemq</groupId>
       <artifactId>activemq-kahadb-store</artifactId>
-      <version>5.15.3</version>
+      <version>${active.mq.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.xbean</groupId>
