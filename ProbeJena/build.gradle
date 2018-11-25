@@ -1,0 +1,28 @@
+plugins {
+    id 'java'
+}
+
+group 'mayton.probe'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    // Apache Jena Core
+    //
+    // Jena is a Java framework for building Semantic Web applications. It 
+    // provides a programmatic environment for RDF, RDFS and OWL, SPARQL 
+    // and includes a rule-based inference engine. 
+    compile group: 'org.apache.jena', name: 'jena-core', version: '3.9.0'
+
+    // Apache Jena ARQ (SPARQL 1.1 Query Engine)
+    compile group: 'org.apache.jena', name: 'jena-arq', version: '3.9.0'
+
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
