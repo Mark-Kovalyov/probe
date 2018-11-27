@@ -1,21 +1,48 @@
 <?xml version="1.0"?>
 <rdf:RDF
-      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-      xmlns:foaf="http://xmlns.com/foaf/0.1/"
-      xmlns:admin="http://webns.net/mvcb/">
+        xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+        xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+        xmlns:foaf="http://xmlns.com/foaf/0.1/"
+        xmlns:admin="http://webns.net/mvcb/">
 
-<foaf:PersonalProfileDocument rdf:about="">
-  <foaf:maker rdf:resource="#me"/>
-  <foaf:primaryTopic rdf:resource="#me"/>
-  <admin:generatorAgent rdf:resource="http://www.ldodds.com/foaf/foaf-a-matic"/>
-  <admin:errorReportsTo rdf:resource="mailto:leigh@ldodds.com"/>
-</foaf:PersonalProfileDocument>
-<foaf:Person rdf:ID="me">
-<foaf:name>mayton mayton</foaf:name>
-<foaf:title>mayton</foaf:title>
-<foaf:givenname>mayton</foaf:givenname>
-<foaf:family_name>mayton</foaf:family_name>
-<foaf:nick>mayton</foaf:nick>
-<foaf:mbox_sha1sum>1e56aa527fe0201b4fad3d5062d35f42a5cb75f2</foaf:mbox_sha1sum></foaf:Person>
+    <foaf:PersonalProfileDocument rdf:about="">
+        <foaf:maker rdf:resource="#me"/>
+        <foaf:primaryTopic rdf:resource="#me"/>
+        <admin:generatorAgent rdf:resource="http://www.ldodds.com/foaf/foaf-a-matic"/>
+        <admin:errorReportsTo rdf:resource="mailto:leigh@ldodds.com"/>
+    </foaf:PersonalProfileDocument>
+
+    <foaf:Person rdf:ID="me">
+        <foaf:name>Siegfried Sigmund</foaf:name>
+        <foaf:title>Siegfried</foaf:title>
+        <foaf:givenname>Siegfried</foaf:givenname>
+        <foaf:family_name>Sigmund</foaf:family_name>
+        <foaf:nick>Siegfried</foaf:nick>
+        <foaf:mbox_sha1sum>2b0a88819f82a05ac95bf08bd85c31bc942960a6</foaf:mbox_sha1sum>
+        <foaf:homepage rdf:resource="https://en.wikipedia.org/wiki/Nibelungenlied"/>
+        <foaf:phone rdf:resource="tel:+10055555555"/>
+        <foaf:workplaceHomepage rdf:resource="https://en.wikipedia.org/wiki/Franz_Schoenberner"/>
+        <foaf:schoolHomepage rdf:resource="234"/>
+
+        <foaf:knows>
+            <foaf:Person>
+                <foaf:name>Kriemhild</foaf:name>
+                <foaf:mbox_sha1sum>5eace1b1885b9c4074fff9bd7af38e35e401d503</foaf:mbox_sha1sum>
+            </foaf:Person>
+        </foaf:knows>
+
+        <foaf:knows>
+            <foaf:Person>
+                <foaf:name>Hagen</foaf:name>
+                <foaf:mbox_sha1sum>49cfe6f2744704db0ce5b129f36aa46f56b07410</foaf:mbox_sha1sum>
+            </foaf:Person>
+        </foaf:knows>
+
+        <foaf:knows>
+            <foaf:Person>
+                <foaf:name>Gunter</foaf:name>
+                <foaf:mbox_sha1sum>677db1de4097c22013987cd3ac4ba0efbc132d65</foaf:mbox_sha1sum>
+            </foaf:Person>
+        </foaf:knows>
+    </foaf:Person>
 </rdf:RDF>
