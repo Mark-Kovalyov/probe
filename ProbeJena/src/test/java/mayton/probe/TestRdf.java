@@ -7,6 +7,7 @@ import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.riot.RDFLanguages;
 import org.apache.jena.riot.RDFParser;
 import org.apache.jena.riot.system.ErrorHandlerFactory;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.FileInputStream;
@@ -15,6 +16,7 @@ import java.io.InputStream;
 public class TestRdf {
 
     // Example 1 : Common usage¶
+    @Ignore
     @Test
     public void test() {
         Model model = ModelFactory.createDefaultModel() ;
@@ -25,6 +27,7 @@ public class TestRdf {
     }
 
     // Example 2 : Using the RDFDataMgr
+    @Ignore
     @Test
     public void test2() {
         // Create a model and read into it from file
@@ -39,6 +42,7 @@ public class TestRdf {
         RDFDataMgr.read(model, "data2.ttl") ;
     }
 
+    @Ignore
     @Test
     public void test3 () throws Exception {
         // The parsers will do the necessary character set conversion.

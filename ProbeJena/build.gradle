@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'application'
 }
 
 group 'mayton.probe'
@@ -11,7 +12,11 @@ repositories {
     mavenCentral()
 }
 
-dependencies {
+application {
+    mainClassName = "mayton.probe.sdb.SdbH2Load"
+}
+
+dependencies{
 
     // Apache Jena Core
     //
@@ -22,6 +27,32 @@ dependencies {
 
     // Apache Jena ARQ (SPARQL 1.1 Query Engine)
     compile group: 'org.apache.jena', name: 'jena-arq', version: '3.9.0'
-    
+
+    // SDB is a persistence layer for use with Apache Jena that uses
+    // an SQL database to store triples/quads.
+    compile group: 'org.apache.jena', name: 'jena-sdb', version: '3.9.0'
+
+    // TDB is a storage subsystem for Jena and ARQ, it is a native triple
+    // store providing persisent disk based storage of triples/quads.
+    compile group: 'org.apache.jena', name: 'jena-tdb', version: '3.9.0'
+
     testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    runtime group: 'com.h2database', name: 'h2', version: '1.4.197'
+
+    // HSQLDB - Lightweight 100% Java SQL Database Engine
+    runtime group: 'org.hsqldb', name: 'hsqldb', version: '2.4.1'
+
+    // Contains the core Apache Derby database engine, which
+    // also includes the embedded JDBC driver.
+    runtime group: 'org.apache.derby', name: 'derby', version: '10.14.2.0'
+
+    runtime 'log4j:log4j:1.2.17'
+
+}
+
+clean.doFirst {
+    delete "${rootDir}/sdb/h2/**"
+    delete "${rootDir}/sdb/hsql/**"
+    delete "${rootDir}/sdb/derby/**"
 }
