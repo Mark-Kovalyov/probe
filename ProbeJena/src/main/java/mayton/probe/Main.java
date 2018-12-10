@@ -1,13 +1,18 @@
 package mayton.probe;
 
+import org.apache.jena.graph.Triple;
 import org.apache.jena.query.*;
 import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.sparql.core.Quad;
 import org.apache.jena.util.FileManager;
 import org.apache.jena.vocabulary.RDFSyntax;
 
 /**
+ * https://jena.apache.org/documentation/
+ * ----------------------------------------
+ *
  * oaj.jena.rdf.model 	    The Jena core. Creating and manipulating RDF graphs.
  *
  * oaj.riot                 Reading and Writing RDF.
@@ -83,6 +88,9 @@ public class Main {
         }
 
         execution.close();
+
+        Triple triple;
+        Quad quad;
 
     }
 }

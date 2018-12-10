@@ -1,0 +1,78 @@
+Resolved symbolic links for JENA_HOME to /jena/3.9.0
+tdbloader2 - TDB Bulk Loader
+
+Usage: tdbloader2 --loc <Directory> [Options] <Data> ...
+
+Bulk loader for TDB which manipulates the data files directly and so
+can only be used to create new databases.  This command relies on
+POSIX utilities so will only work on POSIX operating systems.
+
+If you wish to bulk load to an existing database please use tdbloader
+instead.
+
+Required options are as follows:
+
+  -l <DatabaseDirectory>
+  --loc <DatabaseDirectory>
+    Sets the location in which the database should be created.
+
+    This location must be a directory and must be empty, if a
+    non-existent path is specified it will be created as a new
+    directory.
+
+  <Data>
+    Specifies the path to one/more data files to load
+
+Common additional options are as follows:
+
+  -h
+  --help
+    Prints this help summary and exits
+
+Advanced additional options are as follows:
+
+  -d
+  --debug
+    Enable debug mode, adds extra debug output
+
+  -j <JvmArgs>
+  --jvm-args <JvmArgs>
+    Sets the arguments that should be passed to the JVM for the
+    JVM based portions of the build.
+
+    Generally it is best to not change these unless you have been
+    specifically advised to.  The scripts will use appropriate
+    defaults if this is not specified.
+
+    In particular be careful increasing the heap size since many
+    parts of TDB actually use memory mapped files that live
+    outside the heap so if the heap is too large the heap may
+    conflict with the memory mapped files for memory space.
+
+  -k
+  --keep-work
+    Keeps the temporary work files around after they are no longer
+    needed.  May be useful for debugging.
+
+  -p <Phase>
+  --phase <Phase>
+    Sets the phase of the build to run, supported values are:
+
+      all      Full bulk load
+      data     Data phase only
+      index    Index phase only, requires the data phase to
+               previously have been run
+
+    When no phase is specified it defaults to all
+
+  -s <SortArgs>
+  --sort-args <SortArgs>
+    Sets the arguments that should be passed to sort for the sort
+    based portions of the build.
+
+    Generally it is best not to change these as the scripts will
+    use appropriate defaults for your system.
+
+  -t
+  --trace
+    Enable trace mode, essentially sets -x within the scripts

@@ -1,0 +1,30 @@
+tdbquery --loc=<path> --query=<query>
+  Control
+      --explain              Explain and log query execution
+      --repeat=N or N,M      Do N times or N warmup and then M times (use for timing to overcome start up costs of Java)
+      --optimize=            Turn the query optimizer on or off (default: on)
+  Time
+      --time                 Time the operation
+  Query Engine
+      --engine=EngineName    Register another engine factory[ref]
+      --unengine=EngineName   Unregister an engine factory
+  Location
+      --loc=DIR              Location (a directory)
+      --tdb=                 Assembler description file
+  Results
+      --results=             Results format (Result set: text, XML, JSON, CSV, TSV; Graph: RDF serialization)
+      --mem=FILE             Execute on an in-memory TDB database (for testing)
+      --desc=                Assembler description file
+  Query
+      --query, --file        File containing a query
+      --syntax, --in         Syntax of the query
+      --base                 Base URI for the query
+  Symbol definition
+      --set                  Set a configuration symbol to a value
+  General
+      -v   --verbose         Verbose
+      -q   --quiet           Run with minimal output
+      --debug                Output information for debugging
+      --help
+      --version              Version information
+      --strict               Operate in strict SPARQL mode (no extensions of any kind)

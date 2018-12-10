@@ -1,0 +1,17 @@
+tdbupdate --desc=assembler [--dump] --update=<request file>
+  Dataset
+      --data=FILE            Data for the datset - triple or quad formats
+      --graph=FILE           Graph for default graph of the datset
+      --namedGraph=FILE      Add a graph into the dataset as a named graph
+      --update=FILE          Update commands to execute
+      --dump                 Dump the resulting graph store
+  Symbol definition
+      --set                  Set a configuration symbol to a value
+      --desc=                Assembler description file
+  General
+      -v   --verbose         Verbose
+      -q   --quiet           Run with minimal output
+      --debug                Output information for debugging
+      --help
+      --version              Version information
+      --strict               Operate in strict SPARQL mode (no extensions of any kind)
