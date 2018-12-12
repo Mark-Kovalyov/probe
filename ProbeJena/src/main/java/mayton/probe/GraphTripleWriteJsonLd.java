@@ -3,24 +3,40 @@ package mayton.probe;
 
 import org.apache.jena.graph.*;
 import org.apache.jena.mem.GraphMem;
+import org.apache.jena.n3.turtle.TurtleReader;
+import org.apache.jena.ontology.impl.OntModelImpl;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.RDFReader;
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.riot.RDFFormat;
 import org.apache.jena.riot.RDFWriter;
 import org.apache.jena.sparql.core.Quad;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+
 public class GraphTripleWriteJsonLd {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
 
-        Graph graph = new GraphMem();
+        Graph graph;
 
-        Node subj = NodeFactory.createURI("org:Siegfrid");
-        Node pred = NodeFactory.createURI("org:hero");
-        Node obj = NodeFactory.createLiteral("true");
+        Model model = ModelFactory.createDefaultModel();
 
-        graph.add(new Triple(subj, pred, obj));
+        model.read(new FileInputStream("input/nibelungs.ttl"), null, "TTL");
 
-        RDFDataMgr.write(System.out, graph, RDFFormat.JSONLD);
+        RDFDataMgr.write(new FileOutputStream("out/nibelungs-jsonld.jsonld"),
+                model, RDFFormat.JSONLD);
+        RDFDataMgr.write(new FileOutputStream("out/nibelungs-jsonld-compact.jsonld"),
+                model, RDFFormat.JSONLD_COMPACT_FLAT);
+        RDFDataMgr.write(new FileOutputStream("out/nibelungs-jsonld-pretty.jsonld"),
+                model, RDFFormat.JSONLD_PRETTY);
+        RDFDataMgr.write(new FileOutputStream("out/nibelungs-jsonld-expand-flat.jsonld"),
+                model, RDFFormat.JSONLD_EXPAND_FLAT);
+
+
     }
 
 }

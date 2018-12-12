@@ -64,7 +64,7 @@ public class SdbH2Load {
         // LayoutTripleNodesIndex - OK
 
         StoreDesc storeDesc = new StoreDesc(
-                LayoutType.LayoutTripleNodesHash,
+                LayoutType.LayoutSimple,
                 DatabaseType.H2
         );
 

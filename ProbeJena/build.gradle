@@ -55,4 +55,5 @@ clean.doFirst {
     delete "${rootDir}/sdb/h2/**"
     delete "${rootDir}/sdb/hsql/**"
     delete "${rootDir}/sdb/derby/**"
+    delete "${rootDir}/out/"
 }
