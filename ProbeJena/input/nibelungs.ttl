@@ -1,4 +1,4 @@
-@prefix :          <http://localhost/> .
+@prefix :          <http://ex.org/> .
 @prefix dc:        <http://purl.org/dc/elements/1.1/> .
 @prefix foaf:      <http://xmlns.com/foaf/0.1/> .
 @prefix rdf:       <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -7,7 +7,7 @@
 @prefix owl:       <http://www.w3.org/2002/07/owl#> .
 @prefix dcterms:   <http://purl.org/dc/terms/> .
 
-:Gunter a foaf:Person;
+:Gunter rdf:type foaf:Person;
   :age 40;
   dc:language "sw-DA"^^xsd:language;
   foaf:gender "Male";

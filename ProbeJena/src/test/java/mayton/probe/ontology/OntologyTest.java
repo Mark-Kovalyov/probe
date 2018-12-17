@@ -2,7 +2,9 @@ package mayton.probe.ontology;
 
 import org.apache.jena.ontology.OntClass;
 import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Resource;
+import org.junit.Test;
 
 /**
  * RDFS 	    http://www.w3.org/2000/01/rdf-schema#
@@ -12,8 +14,9 @@ import org.apache.jena.rdf.model.Resource;
  */
 public class OntologyTest {
 
+    @Test
     public void test() {
-        Model model = null;
+        Model model = ModelFactory.createOntologyModel();
         Resource r = model.getResource( "ns" + "DigitalCamera" );
         OntClass cls = r.as( OntClass.class );
     }

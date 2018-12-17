@@ -1,0 +1,21 @@
+digraph G {
+    ranksep=3;
+    ratio=auto;
+    "1"    [ label="02f5daf5",shape="hexagon",style="filled",color="green" ];
+    "189E" [ label="ca5af2",  shape="box",    style="filled",color="grey" ];
+    "790E" [ label="b4dfef6", shape="box",    style="filled",color="grey" ];
+
+    "289" -> "642E" [ label=" ",color="blue",arrowhead="dot" ];
+    "289" -> "690E" [ label=" ",color="blue",arrowhead="dot" ];
+    "289" -> "700E" [ label=" ",color="blue",arrowhead="dot" ];
+    "290" -> "56E" [ label=" ",color="blue",arrowhead="dot" ];
+    "290" -> "264E" [ label=" ",color="blue",arrowhead="dot" ];
+    "290" -> "510E" [ label=" ",color="blue",arrowhead="dot" ];
+    "290" -> "718E" [ label=" ",color="blue",arrowhead="dot" ];
+
+    "783E" -> "787E" [ color="purple",arrowhead="none" ];
+    "784E" -> "792E" [ color="purple",arrowhead="none" ];
+    "787E" -> "789E" [ color="purple",arrowhead="none" ];
+    "769E" -> "791E" [ color="purple",arrowhead="none" ];
+    "802E" -> "801E" [ color="purple",arrowhead="none" ];
+}
