@@ -52,29 +52,32 @@ public class KadNode {
 
     // Port(s) 	Protocol 	Service 	 Details 	Source
     // =======================================================================
-    // 3246 	udp 	    kademlia 	 Kademlia P2P (mlnet)
-    // 4672     udp                      eMule - often used (unofficial)
+    // 1900     udp         aMule
+    // 52263    udp         aMule
+    // 4665     udp         aMule        eDonkey2000  eDonkey2000 Server Messaging Default Port,
+    //                                   Container Client Message Service, AudioReQuest
+    // 4672     udp         aMule        eMule - often used (unofficial)
     //                                   Extended eMule protocol, Queue Rating, File Reask Ping,
     //                                   Kad. Kad will be 'firewalled' if NAT (Network Address Translation)
     //                                   remaps this port number.
+    // 4662     tcp         aMule        Client-to-client transfers.
+    //
+    // 3246 	udp 	    kademlia 	 Kademlia P2P (mlnet)
     //
     // 4661 TCP (outgoing):              Port on which a server listens for connection (defined by server).
-    // 4662 TCP (outgoing and incoming): Client-to-client transfers.
-
-    // 4665     udp         eDonkey2000  eDonkey2000 Server Messaging Default Port,
-    //                                   Container Client Message Service, AudioReQuest
+    //
     //
     // 5351 	tcp,udp 		         NAT Port Mapping Protocol -
     //                                   client-requested configuration
     //                                   for inbound connections through
     //                                   network address translators (official)
     //
+
+    // 23705
     // 51413 	tcp,udp 	p2p 	     Commonly used by Transmission BitTorrent Client.
     //
     //
 
-    //        4665 UDP (outgoing and incoming): Used for global server searches and global source queries. This is always Client TCP port + 3
-    //        4672 UDP (outgoing and incoming):
 
     //        4711 TCP: WebServer listening port.
     //        4712 TCP: External Connection port. Used to communicate between aMule and other applications such as aMule WebServer or aMuleCMD.
