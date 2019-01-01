@@ -9,9 +9,11 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
+import java.util.concurrent.locks.LockSupport;
 import java.util.zip.GZIPInputStream;
+
+import static mayton.probe.eclipse.rdf.Constants.*;
 
 public class Loader {
 
@@ -20,45 +22,36 @@ public class Loader {
 
         public static void main(String[] args) throws Throwable {
 
-            String industry          = "OpenPermID-bulk-industry-20181223_053443.ttl";
-            String organizationsGzip = "OpenPermID-bulk-organization-20181223_053449.ttl.gz";
-
-            String path = "/db/TR/" + organizationsGzip;
-
             logger.info(":: [1] Start");
 
-            CountingInputStream cis = new CountingInputStream(new FileInputStream(path));
+            CountingInputStream cis = new CountingInputStream(new FileInputStream(SRC_PATH + ASSET_GZIP));
 
             InputStream is = new GZIPInputStream(cis);
 
             CountingInputStream cis2 = new CountingInputStream(is);
 
-            logger.info(":: [2] Model");
+            logger.info(":: [2] Press any key to start");
+
+            // System.in.read();
+
+            logger.info(":: [2.1] Started");
 
             new Thread(() -> {
                 Stats stats = new Stats();
-                stats.setAmount(new File(path).length());
+                stats.setAmount(new File(SRC_PATH + ORGANIZATIONS_GZIP).length());
                 while (true) {
                     stats.setPosition(cis.getByteCount());
                     logger.info(stats.formatStats());
                     try {
-                        Thread.sleep(3_000);
+                        LockSupport.parkNanos(3 * 1000_000_000L);
                     } catch (Exception ex) {
-                    }
-                    ;
+                    };
                 }
             }).start();
 
-
-                //Model model = ModelFactory.createDefaultModel();
-                Model model = Rio.parse(cis2, "", RDFFormat.TURTLE);
-
+            Model model = Rio.parse(cis2, "", RDFFormat.TURTLE);
 
             logger.info(":: [3] Read ttl");
-
-            //RDFDataMgr.read(model, is, Lang.TURTLE);
-
-
 
             is.close();
 
