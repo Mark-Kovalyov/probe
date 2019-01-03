@@ -1,5 +1,6 @@
 package mayton.probe.eclipse.rdf;
 
+import org.apache.commons.io.input.CountingInputStream;
 import org.apache.jena.query.Dataset;
 import org.apache.jena.query.TxnType;
 import org.apache.jena.tdb.TDB;
@@ -23,24 +24,59 @@ import org.slf4j.LoggerFactory;
 import javax.management.MBeanServer;
 import javax.management.MXBean;
 import javax.management.ObjectName;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.lang.management.ManagementFactory;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.locks.LockSupport;
+import java.util.function.Consumer;
 import java.util.zip.GZIPInputStream;
 
 import static mayton.probe.eclipse.rdf.Constants.*;
 
 public class StreamableLoader  {
 
-    static Logger logger = LoggerFactory.getLogger(StreamableLoader.class);
+    static Logger logger = LoggerFactory.getLogger("StreamableLoader");
 
     public static void main(String[] args) throws Exception {
 
-        logger.info("::[1]");
+        String inputFile = args[0];
+        String dataSetPath = args[1];
+
+        logger.info("::[1] input file = '{}', dataSetPath = '{}'", inputFile, dataSetPath);
 
         MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
 
-        InputStream in = new GZIPInputStream(new FileInputStream(SRC_PATH + QUOTES_GZIP));
+        InputStream in;
+
+        long amount;
+
+        if (inputFile.endsWith(".gz")) {
+            // TODO: Remove hardcode!
+            amount = 794_872_433;
+            in = new GZIPInputStream(new FileInputStream(inputFile));
+        } else {
+            amount = new File(inputFile).length();
+            in = new FileInputStream(inputFile);
+        }
+
+        final CountingInputStream cis = new CountingInputStream(in);
+
+        new Thread(() -> {
+            Stats stats = new Stats();
+            stats.setAmount(amount);
+            while (true) {
+                stats.setPosition(cis.getByteCount());
+                logger.info(stats.formatStats());
+                try {
+                    LockSupport.parkNanos(3 * 1000_000_000L);
+                } catch (Exception ex) {
+                };
+            }
+        }).start();
 
         ParserConfig settings = new ParserConfig();
 
@@ -53,17 +89,13 @@ public class StreamableLoader  {
         parser.setParserConfig(settings);
         parser.setParseErrorListener(new ParseErrorLogger());
 
-        Resource[] resources = new Resource[0];
-
-        //parser.setRDFHandler(new ContextStatementCollector(model, valueFactory, resources));
-
         StreamStatementHandler handler = new StreamStatementHandler();
         mbs.registerMBean(handler,
                 new ObjectName("mayton.probe.eclipse.rdf:name=StreamableLoader"));
 
         logger.info("::[3]");
 
-        Dataset dataset = TDB2Factory.connectDataset(TDB2_PATH);
+        Dataset dataset = TDB2Factory.connectDataset(dataSetPath);
 
         logger.info("::[4]");
 
@@ -75,7 +107,7 @@ public class StreamableLoader  {
 
         logger.info("::[5]");
 
-        parser.parse(in, "");
+        parser.parse(cis, "");
 
         logger.info("::[6]");
 

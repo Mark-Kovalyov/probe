@@ -20,7 +20,7 @@ import java.util.Map;
 
 public class StreamStatementHandler implements RDFHandler, StreamStatementHandlerMBean {
 
-    static Logger logger = LoggerFactory.getLogger(StreamStatementHandler.class);
+    static Logger logger = LoggerFactory.getLogger("StreamStatementHandler");
 
     private Dataset dataset;
 

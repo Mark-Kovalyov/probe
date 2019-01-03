@@ -1,5 +1,6 @@
 package mayton.probe.eclipse.rdf;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.time.DurationFormatUtils;
 
 import java.time.Duration;
@@ -9,7 +10,10 @@ import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalUnit;
 
 import static java.lang.String.format;
+import static java.lang.String.valueOf;
 import static java.lang.System.currentTimeMillis;
+import static org.apache.commons.io.FileUtils.byteCountToDisplaySize;
+import static org.apache.commons.lang3.time.DurationFormatUtils.formatDuration;
 
 public class Stats {
 
@@ -57,13 +61,13 @@ public class Stats {
         if (amount != null) {
             percent = (100L * position) / amount;
         }
-        return format("position = %d, amount = %s, percent = %s, elapsed time = %s, time remain = %s ",
-                position,
-                amount == null ? "?" : amount,
-                String.valueOf(percent),
-                DurationFormatUtils.formatDuration(currentTimeMillis() - beginTime, "H:mm:ss", true) ,
+        return format("%s of %s , %s%%, eta=%s, timerem=%s",
+                byteCountToDisplaySize(position),
+                amount == null ? "?" : byteCountToDisplaySize(amount),
+                valueOf(percent),
+                formatDuration(currentTimeMillis() - beginTime, "H:mm:ss", true) ,
                 timeRemain == null ? "?" :
-                        DurationFormatUtils.formatDuration(timeRemain, "H:mm:ss", true)
+                        formatDuration(timeRemain, "H:mm:ss", true)
         );
     }
 }
