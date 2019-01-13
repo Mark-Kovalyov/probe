@@ -1,0 +1,73 @@
+@prefix :          <http://ex.org/> .
+@prefix dc:        <http://purl.org/dc/elements/1.1/> .
+@prefix foaf:      <http://xmlns.com/foaf/0.1/> .
+@prefix rdf:       <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:      <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:       <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:       <http://www.w3.org/2002/07/owl#> .
+@prefix dcterms:   <http://purl.org/dc/terms/> .
+
+:Gunter rdf:type foaf:Person;
+  :age 40;
+  dc:language "sw-DA"^^xsd:language;
+  foaf:gender "Male";
+  foaf:isBrotherTo :Gernot, :Giselher, :Kriemhild;
+  foaf:name "Gunter", "Гунтер"@ru, "Гунтер"@ua;
+  foaf:title "King" .
+
+:Gernot a foaf:Person;
+  foaf:gender "Male";
+  foaf:isBrotherTo :Giselher, :Gunter, :Kriemhild;
+  foaf:name "Gernot", "Гернот"@ru, "Гернот"@ua;
+  foaf:title "King" .
+
+:Giselher a foaf:Person;
+  :image "0123456789ABCDEF"^^xsd:hexBinary;
+  foaf:gender "Male";
+  foaf:isBrotherTo :Gernot, :Gunter, :Kriemhild;
+  foaf:name "Гизельхер"@ru;
+  foaf:title "King" .
+
+:Zigmund a foaf:Person;
+  :age 70;
+  :image "TWFuIGlzIGRpc3Rpbmd1aXNoZWQsIG5vdCBvbmx5IGJ5IGhpcyByZWFzb24sIGJ1dCBieSB0"^^xsd:base64binary;
+  foaf:gender "Male";
+  foaf:name "Зигмунд"@ru, "Зігмунд"@ua;
+  foaf:title "King" .
+
+:Ziglinda a foaf:Person;
+  :age 55;
+  foaf:gender "Female";
+  foaf:name "Зиглинда"@ru, "Зіглінда"@ua;
+  foaf:title "Mom" .
+
+:Siegfried a foaf:Person;
+  :age 26;
+  :friends rdf:nil;
+  :hero true;
+  :loves :Kriemhild;
+  foaf:gender "Male";
+  foaf:name "Siegfried", "Зигфрид"@ru;
+  foaf:sonOf :Ziglinda, :Zigmund .
+
+:Kriemhild a foaf:Person;
+  foaf:gender "Female";
+  foaf:name "Kriemhild", "Кримхильда"@ru, "Крімхільда"@ua .
+
+:Hagen a foaf:Person;
+  foaf:brother :Dankwart;
+  foaf:gender "Male";
+  foaf:name "Hagen", "Хаген"@ru, "Хаген"@ua .
+
+:Dankwart a foaf:Person;
+  foaf:brother :Hagen;
+  foaf:gender "Male";
+  foaf:name "Dankwart", "Данкварт"@ru, "Данкварт"@ua .
+
+:SiegfriedCampaign a :foaf:Group;
+  foaf:member :Siegfried, :Hagen, :Dankwart .
+
+
+
+
+
