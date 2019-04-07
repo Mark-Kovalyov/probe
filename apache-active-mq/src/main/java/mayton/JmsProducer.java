@@ -1,19 +1,31 @@
 package mayton;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.jms.*;
 
+import static mayton.Constants.BROKER_URL;
+import static mayton.Constants.QUEUE_NAME;
+
 public class JmsProducer implements Runnable {
 
-    private String queue;
+    static Logger logger = LoggerFactory.getLogger(JmsProducer.class);
+
+    private String queueName;
     private String brokerUrl;
+
+    public JmsProducer(){
+        this.brokerUrl = BROKER_URL;
+        this.queueName = QUEUE_NAME;
+    }
 
     // "vm://localhost"
     // "TEST.FOO"
-    public void JmsProducer(String brokerUrl, String queue){
+    public JmsProducer(String brokerUrl, String queueName){
         this.brokerUrl = brokerUrl;
-        this.queue = queue;
+        this.queueName = queueName;
     }
 
     public void run() {
@@ -29,7 +41,7 @@ public class JmsProducer implements Runnable {
             Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
             // Create the destination (Topic or Queue)
-            Destination destination = session.createQueue(queue);
+            Destination destination = session.createQueue(queueName);
 
             // Create a MessageProducer from the Session to the Topic or Queue
             MessageProducer producer = session.createProducer(destination);
@@ -40,7 +52,7 @@ public class JmsProducer implements Runnable {
             TextMessage message = session.createTextMessage(text);
 
             // Tell the producer to send the message
-            System.out.println("Sent message: "+ message.hashCode() + " : " + Thread.currentThread().getName());
+            logger.info("Sent message: {} : {}", message.hashCode() , Thread.currentThread().getName());
             producer.send(message);
 
             // Clean up
@@ -48,8 +60,7 @@ public class JmsProducer implements Runnable {
             connection.close();
         }
         catch (Exception e) {
-            System.out.println("Caught: " + e);
-            e.printStackTrace();
+            logger.error(e.toString());
         }
     }
 }
