@@ -91,7 +91,7 @@ public class FixIndexer {
         config.setOpenMode(IndexWriterConfig.OpenMode.CREATE);
         IndexWriter writer = new IndexWriter(directory, config);
 
-        Connection conn = DriverManager.getConnection(getProperty("fix.indexer.jdbc.url", connectionString));
+        Connection conn = DriverManager.getConnection(getProperty("fix.indexer.jdbc.BROKER_URL", connectionString));
 
         Statement st = conn.createStatement();
 
