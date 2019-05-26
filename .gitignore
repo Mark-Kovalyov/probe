@@ -27,10 +27,11 @@ camel/CamelTest/.idea
 avro/.idea
 
 # ProbeLucene
-ProbeLucene/.idea
-ProbeLucene/input
-ProbeLucene/output
-ProbeLucene/logs
+probe-lucene/.idea
+probe-lucene/input
+probe-lucene/output
+probe-lucene/logs
+probe-lucene/target
 
 # Temp files
 *.tmp

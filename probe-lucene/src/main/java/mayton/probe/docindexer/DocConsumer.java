@@ -1,4 +1,4 @@
-package mayton.probe;
+package mayton.probe.docindexer;
 
 import oracle.jdbc.OracleDriver;
 import org.apache.logging.log4j.LogManager;

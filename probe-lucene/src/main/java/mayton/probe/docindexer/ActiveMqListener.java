@@ -1,4 +1,4 @@
-package mayton.probe;
+package mayton.probe.docindexer;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.command.ActiveMQQueue;

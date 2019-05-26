@@ -1,4 +1,4 @@
-package mayton.probe;
+package mayton.probe.docindexer;
 
 public class Constants {
 
