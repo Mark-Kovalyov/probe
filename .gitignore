@@ -33,6 +33,13 @@ probe-lucene/output
 probe-lucene/logs
 probe-lucene/target
 
+# Probe apache-storm
+probe-apache-storm/.idea
+probe-apache-storm/input
+probe-apache-storm/output
+probe-apache-storm/target
+
+
 # Temp files
 *.tmp
 
