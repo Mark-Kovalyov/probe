@@ -34,7 +34,7 @@ public class App {
 
         logger.info("::write");
 
-        OutputStream outStream = new FileOutputStream("tmp/out1.avro");
+        OutputStream outStream = new FileOutputStream("target/out1.avro");
         DatumWriter<GenericRecord> writer = new GenericDatumWriter<>(schema);
         Encoder encoder = EncoderFactory.get().binaryEncoder(outStream, null);
         writer.write(datum, encoder);
@@ -45,7 +45,7 @@ public class App {
 
         DatumReader<GenericRecord> reader = new GenericDatumReader<>(schema);
 
-        InputStream inStream = new FileInputStream("tmp/out1.avro");
+        InputStream inStream = new FileInputStream("target/out1.avro");
 
         Decoder decoder = DecoderFactory.get().binaryDecoder(inStream, null);
 
