@@ -7,9 +7,10 @@ import org.apache.ignite.configuration.DataStorageConfiguration;
 import org.apache.ignite.configuration.ExecutorConfiguration;
 import org.apache.ignite.configuration.IgniteConfiguration;
 
-public class Custom1 {
+public class TestDataStorageConfig {
 
     public static void main(String[] args) {
+
         IgniteConfiguration cfg = new IgniteConfiguration();
         cfg.setExecutorConfiguration(new ExecutorConfiguration("myPool").setSize(1));
 

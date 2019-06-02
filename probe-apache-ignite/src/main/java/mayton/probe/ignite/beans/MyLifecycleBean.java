@@ -1,4 +1,4 @@
-package mayton.probe.ignite;
+package mayton.probe.ignite.beans;
 
 import org.apache.ignite.IgniteException;
 import org.apache.ignite.lifecycle.LifecycleBean;

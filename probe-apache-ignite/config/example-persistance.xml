@@ -1,0 +1,13 @@
+<property name="dataStorageConfiguration">
+    <bean class="org.apache.ignite.configuration.DataStorageConfiguration">
+        <!-- Enabling Apache Ignite Persistent Store. -->
+        <property name="defaultDataRegionConfiguration">
+            <bean class="org.apache.ignite.configuration.DataRegionConfiguration">
+                <property name="persistenceEnabled" value="true"/>
+            </bean>
+        </property>
+
+        <!-- Changing WAL Mode. -->
+        <property name="walMode" value="FSYNC"/>
+    </bean>
+</property>

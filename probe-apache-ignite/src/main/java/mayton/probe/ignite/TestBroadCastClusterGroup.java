@@ -4,7 +4,7 @@ import org.apache.ignite.Ignite;
 import org.apache.ignite.Ignition;
 import org.apache.ignite.cluster.ClusterGroup;
 
-public class GettingStarted {
+public class TestBroadCastClusterGroup {
 
     public static void main(String[] args) {
         try(Ignite ignite = Ignition.start("example-compute.xml")) {

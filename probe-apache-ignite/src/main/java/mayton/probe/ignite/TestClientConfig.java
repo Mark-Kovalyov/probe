@@ -1,18 +1,29 @@
 package mayton.probe.ignite;
 
+import mayton.probe.ignite.entities.Address;
 import org.apache.ignite.Ignition;
 import org.apache.ignite.client.ClientCache;
 import org.apache.ignite.client.ClientException;
 import org.apache.ignite.client.IgniteClient;
 import org.apache.ignite.configuration.ClientConfiguration;
 
-public class Example2 {
+public class TestClientConfig {
 
     public static void main(String[] args) {
 
         ClientConfiguration cfg = new ClientConfiguration().setAddresses("127.0.0.1:10800");
 
         // docker run -it --net=host -e "CONFIG_URI=https://raw.githubusercontent.com/apache/ignite/master/examples/config/example-cache.xml" apacheignite/ignite
+        // OK
+
+        // docker run -it --net=host -e "CONFIG_URI=config/example-cache.xml" apacheignite/ignite
+        //   Spring XML configuration path is invalid: config/example-cache.xml. Note that this path should be either
+        //   absolute or a relative local file system path, relative to META-INF in classpath or valid URL to IGNITE_HOME.
+
+        // docker run -it --net=host -e "CONFIG_URI=file:///home/mayton/git/probe/probe-apache-ignite/config/example-cache.xml" apacheignite/ignite
+        //   Failed to instantiate Spring XML application context [springUrl=file:/home/mayton/git/probe/probe-apache-ignite/config/example-cache.xml,
+        //   err=IOException parsing XML document from URL [file:/home/mayton/git/probe/probe-apache-ignite/config/example-cache.xml];
+        //   nested exception is java.io.FileNotFoundException: /home/mayton/git/probe/probe-apache-ignite/config/example-cache.xml (No such file or directory)]
 
         try (IgniteClient igniteClient = Ignition.startClient(cfg)) {
             System.out.println();

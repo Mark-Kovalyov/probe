@@ -1,4 +1,4 @@
-package mayton.probe.ignite;
+package mayton.probe.ignite.entities;
 
 import org.apache.ignite.binary.BinaryObjectException;
 import org.apache.ignite.binary.BinaryReader;
