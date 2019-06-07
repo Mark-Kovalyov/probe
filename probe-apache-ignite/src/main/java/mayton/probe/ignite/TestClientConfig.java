@@ -11,6 +11,8 @@ public class TestClientConfig {
 
     public static void main(String[] args) {
 
+        System.out.println("java.version = " + System.getProperty("java.version"));
+
         ClientConfiguration cfg = new ClientConfiguration().setAddresses("127.0.0.1:10800");
 
         // docker run -it --net=host -e "CONFIG_URI=https://raw.githubusercontent.com/apache/ignite/master/examples/config/example-cache.xml" apacheignite/ignite

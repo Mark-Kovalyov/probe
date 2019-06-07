@@ -10,7 +10,7 @@ public class DistributedSqlExample {
     // CREATE TABLE                                         WITH "backups=1, affinityKey=city_id"
 
     public static void main(String[] args) {
-
+        System.out.println("java.version = " + System.getProperty("java.version"));
     }
 
 }

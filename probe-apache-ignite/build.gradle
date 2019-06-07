@@ -49,3 +49,9 @@ task(runTestJDBC, dependsOn: 'classes', type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
 }
 
+task(runTestBroadCast, dependsOn: 'classes', type: JavaExec) {
+    main = 'mayton.probe.ignite.TestBroadCastClusterGroup'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+
