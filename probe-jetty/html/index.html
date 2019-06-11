@@ -1,0 +1,20 @@
+<HTML5>
+
+    <HEAD>
+
+</HEAD>
+
+<BODY>
+
+    <h1>Understanding Handler Collections, Wrappers and Scopes</h1>
+
+Complex request handling is typically built from multiple Handlers that can be combined in various ways:<p>
+
+    <li>A Handler Collection holds a collection of other handlers and calls each handler in order. This is useful for combining statistics and logging handlers with the handler that generates the response.
+    <li>A Handler List is a Handler Collection that calls each handler in turn until either an exception is thrown, the response is committed or the request.isHandled() returns true. It can be used to combine handlers that conditionally handle a request.
+    <li>A Handler Wrapper is a handler base class that can be used to daisy chain handlers together in the style of aspect-oriented programming. For example, a standard web application is implemented by a chain of a context, session, security and servlet handlers.
+    <li>A Context Handler Collection uses the longest prefix of the request URI (the contextPath) to select a specific ContextHandler to handle the request.
+
+See also How to Write a Jetty Handler. <p>
+
+</BODY>
