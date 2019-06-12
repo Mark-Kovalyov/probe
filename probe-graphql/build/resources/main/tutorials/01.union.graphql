@@ -1,0 +1,11 @@
+type Cat {
+    name: String,
+    lives: Int
+}
+
+type Dog {
+    name: String,
+    bonesOwned: Int
+}
+
+union Pet = Cat | Dog
