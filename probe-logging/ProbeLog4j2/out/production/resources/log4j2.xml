@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<Configuration status="all" name="SysLogAppenderConfiguration" packages="mayton.probe" >
+<Configuration status="all" name="SysLogAppenderConfiguration" packages="mayton.probe" monitorInterval="30">
 
     <Appenders>
 
         <ExceptionAppender name="ExceptionAppender-1" ignoreExceptions="false">
+
         </ExceptionAppender>
 
         <NullAppender name="NullAppender-1">
+
         </NullAppender>
 
         <Console name="STDOUT">
@@ -29,9 +31,11 @@
     </Appenders>
 
     <Loggers>
+
         <Root level="all">
             <AppenderRef ref="FailoverAppender-1"/>
         </Root>
+
     </Loggers>
 
 </Configuration>
