@@ -20,9 +20,9 @@
             </PatternLayout>
         </File>
 
-        <Syslog name="LinuxSyslogAppender" host="localhost" port="514" protocol="UDP"/>
+        <Syslog name="LinuxSyslogAppender" host="localhost" port="515" protocol="TCP"/>
 
-        <Failover name="FailoverAppender-1" primary="FileAppender-1" retryIntervalSeconds="3">
+        <Failover name="FailoverAppender-1" primary="LinuxSyslogAppender" retryIntervalSeconds="60">
             <Failovers>
                 <AppenderRef ref="FileAppender-2"/>
             </Failovers>

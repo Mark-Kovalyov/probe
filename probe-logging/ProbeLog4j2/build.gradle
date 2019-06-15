@@ -36,6 +36,8 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
+mainClassName = "mayton.probe.ProbeSyslog"
+
 
 //task copyToLib(type: Copy) {
 //    into "$buildDir/output/libs"
@@ -46,4 +48,3 @@ dependencies {
 //
 //manifest.mainAttributes("Main-Class" : "mayton.probe.ProbeSyslog")
 //
-//mainClassName = "mayton.probe.ProbeSyslog"
