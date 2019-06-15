@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Configuration status="all" name="SysLogAppenderConfiguration" packages="">
+
+    <Appenders>
+
+        <Console name="STDOUT">
+            <PatternLayout pattern="%m%n"/>
+        </Console>
+
+        <File name="FileAppender-1" fileName="/ignite-db/logs/app-01.log" ignoreExceptions="false">
+            <PatternLayout>
+                <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</Pattern>
+            </PatternLayout>
+        </File>
+
+        <File name="FileAppender-2" fileName="logs/app-02.log" ignoreExceptions="false">
+            <PatternLayout>
+                <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</Pattern>
+            </PatternLayout>
+        </File>
+
+        <Syslog name="LinuxSyslogAppender" host="localhost" port="514" protocol="UDP"/>
+
+        <Failover name="FailoverAppender-1" primary="FileAppender-1" retryIntervalSeconds="3">
+            <Failovers>
+                <AppenderRef ref="FileAppender-2"/>
+            </Failovers>
+        </Failover>
+
+    </Appenders>
+
+    <Loggers>
+
+        <Root level="all">
+            <AppenderRef ref="FailoverAppender-1"/>
+            <AppenderRef ref="STDOUT"/>
+        </Root>
+
+    </Loggers>
+
+</Configuration>

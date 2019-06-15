@@ -1,0 +1,624 @@
+
+> Task :dependencies
+
+------------------------------------------------------------
+Root project
+------------------------------------------------------------
+
+annotationProcessor - Annotation processors and their dependencies for source set 'main'.
+No dependencies
+
+apiElements - API elements for main. (n)
+No dependencies
+
+archives - Configuration for archive artifacts.
+No dependencies
+
+compile - Dependencies for source set 'main' (deprecated, use 'implementation' instead).
++--- org.apache.logging.log4j:log4j-core:2.11.2
+|    \--- org.apache.logging.log4j:log4j-api:2.11.2
++--- org.apache.logging.log4j:log4j-api:2.11.2
++--- org.apache.logging.log4j:log4j-web:2.11.2
+|    +--- org.apache.logging.log4j:log4j-api:2.11.2
+|    \--- org.apache.logging.log4j:log4j-core:2.11.2 (*)
++--- org.apache.logging.log4j:log4j-iostreams:2.11.2
+|    \--- org.apache.logging.log4j:log4j-api:2.11.2
++--- org.apache.logging.log4j:log4j-nosql:2.9.1
+|    \--- org.apache.logging.log4j:log4j-core:2.9.1 -> 2.11.2 (*)
++--- org.apache.logging.log4j:log4j-flume-ng:2.11.2
+|    +--- org.apache.logging.log4j:log4j-api:2.11.2
+|    +--- org.apache.logging.log4j:log4j-core:2.11.2 (*)
+|    +--- com.sleepycat:je:5.0.73
+|    +--- org.apache.flume:flume-ng-sdk:1.7.0
+|    |    +--- org.apache.avro:avro:1.7.4
+|    |    |    +--- com.thoughtworks.paranamer:paranamer:2.3
+|    |    |    +--- org.xerial.snappy:snappy-java:1.0.4.1
+|    |    |    +--- org.apache.commons:commons-compress:1.4.1
+|    |    |    |    \--- org.tukaani:xz:1.0
+|    |    |    \--- org.slf4j:slf4j-api:1.6.4
+|    |    +--- org.apache.avro:avro-ipc:1.7.4
+|    |    |    +--- org.apache.avro:avro:1.7.4 (*)
+|    |    |    +--- org.mortbay.jetty:jetty:6.1.26
+|    |    |    |    \--- org.mortbay.jetty:jetty-util:6.1.26
+|    |    |    +--- org.mortbay.jetty:jetty-util:6.1.26
+|    |    |    +--- org.apache.velocity:velocity:1.7
+|    |    |    |    +--- commons-collections:commons-collections:3.2.1
+|    |    |    |    \--- commons-lang:commons-lang:2.4 -> 2.5
+|    |    |    \--- org.slf4j:slf4j-api:1.6.4
+|    |    +--- io.netty:netty:3.9.4.Final
+|    |    \--- org.apache.thrift:libthrift:0.9.0
+|    |         +--- org.slf4j:slf4j-api:1.5.8 -> 1.6.4
+|    |         +--- commons-lang:commons-lang:2.5
+|    |         +--- org.apache.httpcomponents:httpclient:4.1.3
+|    |         |    +--- org.apache.httpcomponents:httpcore:4.1.4
+|    |         |    +--- commons-logging:commons-logging:1.1.1
+|    |         |    \--- commons-codec:commons-codec:1.4
+|    |         \--- org.apache.httpcomponents:httpcore:4.1.3 -> 4.1.4
+|    +--- org.codehaus.jackson:jackson-core-asl:1.9.13
+|    \--- org.codehaus.jackson:jackson-mapper-asl:1.9.13
+|         \--- org.codehaus.jackson:jackson-core-asl:1.9.13
++--- org.apache.logging.log4j:log4j-audit-api:1.0.1
+|    +--- org.apache.logging.log4j:log4j-api:2.10.0 -> 2.11.2
+|    +--- org.apache.logging.log4j:log4j-catalog-api:1.0.1
+|    |    +--- com.fasterxml.jackson.core:jackson-core:2.8.5
+|    |    +--- com.fasterxml.jackson.core:jackson-databind:2.8.5
+|    |    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.0 -> 2.8.5
+|    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.8.5
+|    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.5
+|    |    +--- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.5
+|    |    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.5
+|    |    |    +--- com.fasterxml.jackson.core:jackson-core:2.8.5
+|    |    |    \--- com.fasterxml.jackson.core:jackson-databind:2.8.5 (*)
+|    |    +--- com.fasterxml:classmate:1.2.0
+|    |    +--- org.apache.commons:commons-lang3:3.4
+|    |    \--- org.apache.logging.log4j:log4j-api:2.10.0 -> 2.11.2
+|    +--- com.fasterxml.jackson.core:jackson-core:2.8.5
+|    +--- com.fasterxml.jackson.core:jackson-databind:2.8.5 (*)
+|    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.5
+|    \--- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.5 (*)
+\--- org.apache.logging.log4j:log4j-bom:2.11.2
+
+compileClasspath - Compile classpath for source set 'main'.
++--- org.apache.logging.log4j:log4j-core:2.11.2
+|    \--- org.apache.logging.log4j:log4j-api:2.11.2
++--- org.apache.logging.log4j:log4j-api:2.11.2
++--- org.apache.logging.log4j:log4j-web:2.11.2
+|    +--- org.apache.logging.log4j:log4j-api:2.11.2
+|    \--- org.apache.logging.log4j:log4j-core:2.11.2 (*)
++--- org.apache.logging.log4j:log4j-iostreams:2.11.2
+|    \--- org.apache.logging.log4j:log4j-api:2.11.2
++--- org.apache.logging.log4j:log4j-nosql:2.9.1
+|    \--- org.apache.logging.log4j:log4j-core:2.9.1 -> 2.11.2 (*)
++--- org.apache.logging.log4j:log4j-flume-ng:2.11.2
+|    +--- org.apache.logging.log4j:log4j-api:2.11.2
+|    +--- org.apache.logging.log4j:log4j-core:2.11.2 (*)
+|    +--- com.sleepycat:je:5.0.73
+|    \--- org.apache.flume:flume-ng-sdk:1.7.0
+|         +--- org.apache.avro:avro:1.7.4
+|         |    +--- com.thoughtworks.paranamer:paranamer:2.3
+|         |    +--- org.xerial.snappy:snappy-java:1.0.4.1
+|         |    +--- org.apache.commons:commons-compress:1.4.1
+|         |    |    \--- org.tukaani:xz:1.0
+|         |    \--- org.slf4j:slf4j-api:1.6.4
+|         +--- org.apache.avro:avro-ipc:1.7.4
+|         |    +--- org.apache.avro:avro:1.7.4 (*)
+|         |    +--- org.mortbay.jetty:jetty:6.1.26
+|         |    |    \--- org.mortbay.jetty:jetty-util:6.1.26
+|         |    +--- org.mortbay.jetty:jetty-util:6.1.26
+|         |    +--- org.apache.velocity:velocity:1.7
+|         |    |    +--- commons-collections:commons-collections:3.2.1
+|         |    |    \--- commons-lang:commons-lang:2.4 -> 2.5
+|         |    \--- org.slf4j:slf4j-api:1.6.4
+|         +--- io.netty:netty:3.9.4.Final
+|         \--- org.apache.thrift:libthrift:0.9.0
+|              +--- org.slf4j:slf4j-api:1.5.8 -> 1.6.4
+|              +--- commons-lang:commons-lang:2.5
+|              +--- org.apache.httpcomponents:httpclient:4.1.3
+|              |    +--- org.apache.httpcomponents:httpcore:4.1.4
+|              |    +--- commons-logging:commons-logging:1.1.1
+|              |    \--- commons-codec:commons-codec:1.4
+|              \--- org.apache.httpcomponents:httpcore:4.1.3 -> 4.1.4
++--- org.apache.logging.log4j:log4j-audit-api:1.0.1
+|    +--- org.apache.logging.log4j:log4j-api:2.10.0 -> 2.11.2
+|    +--- org.apache.logging.log4j:log4j-catalog-api:1.0.1
+|    |    +--- com.fasterxml.jackson.core:jackson-core:2.8.5
+|    |    +--- com.fasterxml.jackson.core:jackson-databind:2.8.5
+|    |    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.0 -> 2.8.5
+|    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.8.5
+|    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.5
+|    |    +--- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.5
+|    |    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.5
+|    |    |    +--- com.fasterxml.jackson.core:jackson-core:2.8.5
+|    |    |    \--- com.fasterxml.jackson.core:jackson-databind:2.8.5 (*)
+|    |    +--- com.fasterxml:classmate:1.2.0
+|    |    +--- org.apache.commons:commons-lang3:3.4
+|    |    \--- org.apache.logging.log4j:log4j-api:2.10.0 -> 2.11.2
+|    +--- com.fasterxml.jackson.core:jackson-core:2.8.5
+|    +--- com.fasterxml.jackson.core:jackson-databind:2.8.5 (*)
+|    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.5
+|    \--- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.5 (*)
+\--- org.apache.logging.log4j:log4j-bom:2.11.2
+
+compileOnly - Compile only dependencies for source set 'main'.
+No dependencies
+
+default - Configuration for default artifacts.
++--- org.apache.logging.log4j:log4j-core:2.11.2
+|    \--- org.apache.logging.log4j:log4j-api:2.11.2
++--- org.apache.logging.log4j:log4j-api:2.11.2
++--- org.apache.logging.log4j:log4j-web:2.11.2
+|    +--- org.apache.logging.log4j:log4j-api:2.11.2
+|    \--- org.apache.logging.log4j:log4j-core:2.11.2 (*)
++--- org.apache.logging.log4j:log4j-iostreams:2.11.2
+|    \--- org.apache.logging.log4j:log4j-api:2.11.2
++--- org.apache.logging.log4j:log4j-nosql:2.9.1
+|    \--- org.apache.logging.log4j:log4j-core:2.9.1 -> 2.11.2 (*)
++--- org.apache.logging.log4j:log4j-flume-ng:2.11.2
+|    +--- org.apache.logging.log4j:log4j-api:2.11.2
+|    +--- org.apache.logging.log4j:log4j-core:2.11.2 (*)
+|    +--- com.sleepycat:je:5.0.73
+|    +--- org.apache.flume:flume-ng-sdk:1.7.0
+|    |    +--- org.apache.avro:avro:1.7.4
+|    |    |    +--- com.thoughtworks.paranamer:paranamer:2.3
+|    |    |    +--- org.xerial.snappy:snappy-java:1.0.4.1
+|    |    |    +--- org.apache.commons:commons-compress:1.4.1
+|    |    |    |    \--- org.tukaani:xz:1.0
+|    |    |    \--- org.slf4j:slf4j-api:1.6.4
+|    |    +--- org.apache.avro:avro-ipc:1.7.4
+|    |    |    +--- org.apache.avro:avro:1.7.4 (*)
+|    |    |    +--- org.mortbay.jetty:jetty:6.1.26
+|    |    |    |    \--- org.mortbay.jetty:jetty-util:6.1.26
+|    |    |    +--- org.mortbay.jetty:jetty-util:6.1.26
+|    |    |    +--- org.apache.velocity:velocity:1.7
+|    |    |    |    +--- commons-collections:commons-collections:3.2.1
+|    |    |    |    \--- commons-lang:commons-lang:2.4 -> 2.5
+|    |    |    \--- org.slf4j:slf4j-api:1.6.4
+|    |    +--- io.netty:netty:3.9.4.Final
+|    |    \--- org.apache.thrift:libthrift:0.9.0
+|    |         +--- org.slf4j:slf4j-api:1.5.8 -> 1.6.4
+|    |         +--- commons-lang:commons-lang:2.5
+|    |         +--- org.apache.httpcomponents:httpclient:4.1.3
+|    |         |    +--- org.apache.httpcomponents:httpcore:4.1.4
+|    |         |    +--- commons-logging:commons-logging:1.1.1
+|    |         |    \--- commons-codec:commons-codec:1.4
+|    |         \--- org.apache.httpcomponents:httpcore:4.1.3 -> 4.1.4
+|    +--- org.codehaus.jackson:jackson-core-asl:1.9.13
+|    \--- org.codehaus.jackson:jackson-mapper-asl:1.9.13
+|         \--- org.codehaus.jackson:jackson-core-asl:1.9.13
++--- org.apache.logging.log4j:log4j-audit-api:1.0.1
+|    +--- org.apache.logging.log4j:log4j-api:2.10.0 -> 2.11.2
+|    +--- org.apache.logging.log4j:log4j-catalog-api:1.0.1
+|    |    +--- com.fasterxml.jackson.core:jackson-core:2.8.5
+|    |    +--- com.fasterxml.jackson.core:jackson-databind:2.8.5
+|    |    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.0 -> 2.8.5
+|    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.8.5
+|    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.5
+|    |    +--- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.5
+|    |    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.5
+|    |    |    +--- com.fasterxml.jackson.core:jackson-core:2.8.5
+|    |    |    \--- com.fasterxml.jackson.core:jackson-databind:2.8.5 (*)
+|    |    +--- com.fasterxml:classmate:1.2.0
+|    |    +--- org.apache.commons:commons-lang3:3.4
+|    |    \--- org.apache.logging.log4j:log4j-api:2.10.0 -> 2.11.2
+|    +--- com.fasterxml.jackson.core:jackson-core:2.8.5
+|    +--- com.fasterxml.jackson.core:jackson-databind:2.8.5 (*)
+|    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.5
+|    \--- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.5 (*)
+\--- org.apache.logging.log4j:log4j-bom:2.11.2
+
+implementation - Implementation only dependencies for source set 'main'. (n)
+No dependencies
+
+runtime - Runtime dependencies for source set 'main' (deprecated, use 'runtimeOnly' instead).
++--- org.apache.logging.log4j:log4j-core:2.11.2
+|    \--- org.apache.logging.log4j:log4j-api:2.11.2
++--- org.apache.logging.log4j:log4j-api:2.11.2
++--- org.apache.logging.log4j:log4j-web:2.11.2
+|    +--- org.apache.logging.log4j:log4j-api:2.11.2
+|    \--- org.apache.logging.log4j:log4j-core:2.11.2 (*)
++--- org.apache.logging.log4j:log4j-iostreams:2.11.2
+|    \--- org.apache.logging.log4j:log4j-api:2.11.2
++--- org.apache.logging.log4j:log4j-nosql:2.9.1
+|    \--- org.apache.logging.log4j:log4j-core:2.9.1 -> 2.11.2 (*)
++--- org.apache.logging.log4j:log4j-flume-ng:2.11.2
+|    +--- org.apache.logging.log4j:log4j-api:2.11.2
+|    +--- org.apache.logging.log4j:log4j-core:2.11.2 (*)
+|    +--- com.sleepycat:je:5.0.73
+|    +--- org.apache.flume:flume-ng-sdk:1.7.0
+|    |    +--- org.apache.avro:avro:1.7.4
+|    |    |    +--- com.thoughtworks.paranamer:paranamer:2.3
+|    |    |    +--- org.xerial.snappy:snappy-java:1.0.4.1
+|    |    |    +--- org.apache.commons:commons-compress:1.4.1
+|    |    |    |    \--- org.tukaani:xz:1.0
+|    |    |    \--- org.slf4j:slf4j-api:1.6.4
+|    |    +--- org.apache.avro:avro-ipc:1.7.4
+|    |    |    +--- org.apache.avro:avro:1.7.4 (*)
+|    |    |    +--- org.mortbay.jetty:jetty:6.1.26
+|    |    |    |    \--- org.mortbay.jetty:jetty-util:6.1.26
+|    |    |    +--- org.mortbay.jetty:jetty-util:6.1.26
+|    |    |    +--- org.apache.velocity:velocity:1.7
+|    |    |    |    +--- commons-collections:commons-collections:3.2.1
+|    |    |    |    \--- commons-lang:commons-lang:2.4 -> 2.5
+|    |    |    \--- org.slf4j:slf4j-api:1.6.4
+|    |    +--- io.netty:netty:3.9.4.Final
+|    |    \--- org.apache.thrift:libthrift:0.9.0
+|    |         +--- org.slf4j:slf4j-api:1.5.8 -> 1.6.4
+|    |         +--- commons-lang:commons-lang:2.5
+|    |         +--- org.apache.httpcomponents:httpclient:4.1.3
+|    |         |    +--- org.apache.httpcomponents:httpcore:4.1.4
+|    |         |    +--- commons-logging:commons-logging:1.1.1
+|    |         |    \--- commons-codec:commons-codec:1.4
+|    |         \--- org.apache.httpcomponents:httpcore:4.1.3 -> 4.1.4
+|    +--- org.codehaus.jackson:jackson-core-asl:1.9.13
+|    \--- org.codehaus.jackson:jackson-mapper-asl:1.9.13
+|         \--- org.codehaus.jackson:jackson-core-asl:1.9.13
++--- org.apache.logging.log4j:log4j-audit-api:1.0.1
+|    +--- org.apache.logging.log4j:log4j-api:2.10.0 -> 2.11.2
+|    +--- org.apache.logging.log4j:log4j-catalog-api:1.0.1
+|    |    +--- com.fasterxml.jackson.core:jackson-core:2.8.5
+|    |    +--- com.fasterxml.jackson.core:jackson-databind:2.8.5
+|    |    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.0 -> 2.8.5
+|    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.8.5
+|    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.5
+|    |    +--- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.5
+|    |    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.5
+|    |    |    +--- com.fasterxml.jackson.core:jackson-core:2.8.5
+|    |    |    \--- com.fasterxml.jackson.core:jackson-databind:2.8.5 (*)
+|    |    +--- com.fasterxml:classmate:1.2.0
+|    |    +--- org.apache.commons:commons-lang3:3.4
+|    |    \--- org.apache.logging.log4j:log4j-api:2.10.0 -> 2.11.2
+|    +--- com.fasterxml.jackson.core:jackson-core:2.8.5
+|    +--- com.fasterxml.jackson.core:jackson-databind:2.8.5 (*)
+|    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.5
+|    \--- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.5 (*)
+\--- org.apache.logging.log4j:log4j-bom:2.11.2
+
+runtimeClasspath - Runtime classpath of source set 'main'.
++--- org.apache.logging.log4j:log4j-core:2.11.2
+|    \--- org.apache.logging.log4j:log4j-api:2.11.2
++--- org.apache.logging.log4j:log4j-api:2.11.2
++--- org.apache.logging.log4j:log4j-web:2.11.2
+|    +--- org.apache.logging.log4j:log4j-api:2.11.2
+|    \--- org.apache.logging.log4j:log4j-core:2.11.2 (*)
++--- org.apache.logging.log4j:log4j-iostreams:2.11.2
+|    \--- org.apache.logging.log4j:log4j-api:2.11.2
++--- org.apache.logging.log4j:log4j-nosql:2.9.1
+|    \--- org.apache.logging.log4j:log4j-core:2.9.1 -> 2.11.2 (*)
++--- org.apache.logging.log4j:log4j-flume-ng:2.11.2
+|    +--- org.apache.logging.log4j:log4j-api:2.11.2
+|    +--- org.apache.logging.log4j:log4j-core:2.11.2 (*)
+|    +--- com.sleepycat:je:5.0.73
+|    +--- org.apache.flume:flume-ng-sdk:1.7.0
+|    |    +--- org.apache.avro:avro:1.7.4
+|    |    |    +--- com.thoughtworks.paranamer:paranamer:2.3
+|    |    |    +--- org.xerial.snappy:snappy-java:1.0.4.1
+|    |    |    +--- org.apache.commons:commons-compress:1.4.1
+|    |    |    |    \--- org.tukaani:xz:1.0
+|    |    |    \--- org.slf4j:slf4j-api:1.6.4
+|    |    +--- org.apache.avro:avro-ipc:1.7.4
+|    |    |    +--- org.apache.avro:avro:1.7.4 (*)
+|    |    |    +--- org.mortbay.jetty:jetty:6.1.26
+|    |    |    |    \--- org.mortbay.jetty:jetty-util:6.1.26
+|    |    |    +--- org.mortbay.jetty:jetty-util:6.1.26
+|    |    |    +--- org.apache.velocity:velocity:1.7
+|    |    |    |    +--- commons-collections:commons-collections:3.2.1
+|    |    |    |    \--- commons-lang:commons-lang:2.4 -> 2.5
+|    |    |    \--- org.slf4j:slf4j-api:1.6.4
+|    |    +--- io.netty:netty:3.9.4.Final
+|    |    \--- org.apache.thrift:libthrift:0.9.0
+|    |         +--- org.slf4j:slf4j-api:1.5.8 -> 1.6.4
+|    |         +--- commons-lang:commons-lang:2.5
+|    |         +--- org.apache.httpcomponents:httpclient:4.1.3
+|    |         |    +--- org.apache.httpcomponents:httpcore:4.1.4
+|    |         |    +--- commons-logging:commons-logging:1.1.1
+|    |         |    \--- commons-codec:commons-codec:1.4
+|    |         \--- org.apache.httpcomponents:httpcore:4.1.3 -> 4.1.4
+|    +--- org.codehaus.jackson:jackson-core-asl:1.9.13
+|    \--- org.codehaus.jackson:jackson-mapper-asl:1.9.13
+|         \--- org.codehaus.jackson:jackson-core-asl:1.9.13
++--- org.apache.logging.log4j:log4j-audit-api:1.0.1
+|    +--- org.apache.logging.log4j:log4j-api:2.10.0 -> 2.11.2
+|    +--- org.apache.logging.log4j:log4j-catalog-api:1.0.1
+|    |    +--- com.fasterxml.jackson.core:jackson-core:2.8.5
+|    |    +--- com.fasterxml.jackson.core:jackson-databind:2.8.5
+|    |    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.0 -> 2.8.5
+|    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.8.5
+|    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.5
+|    |    +--- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.5
+|    |    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.5
+|    |    |    +--- com.fasterxml.jackson.core:jackson-core:2.8.5
+|    |    |    \--- com.fasterxml.jackson.core:jackson-databind:2.8.5 (*)
+|    |    +--- com.fasterxml:classmate:1.2.0
+|    |    +--- org.apache.commons:commons-lang3:3.4
+|    |    \--- org.apache.logging.log4j:log4j-api:2.10.0 -> 2.11.2
+|    +--- com.fasterxml.jackson.core:jackson-core:2.8.5
+|    +--- com.fasterxml.jackson.core:jackson-databind:2.8.5 (*)
+|    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.5
+|    \--- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.5 (*)
+\--- org.apache.logging.log4j:log4j-bom:2.11.2
+
+runtimeElements - Elements of runtime for main. (n)
+No dependencies
+
+runtimeOnly - Runtime only dependencies for source set 'main'. (n)
+No dependencies
+
+testAnnotationProcessor - Annotation processors and their dependencies for source set 'test'.
+No dependencies
+
+testCompile - Dependencies for source set 'test' (deprecated, use 'testImplementation' instead).
++--- org.apache.logging.log4j:log4j-core:2.11.2
+|    \--- org.apache.logging.log4j:log4j-api:2.11.2
++--- org.apache.logging.log4j:log4j-api:2.11.2
++--- org.apache.logging.log4j:log4j-web:2.11.2
+|    +--- org.apache.logging.log4j:log4j-api:2.11.2
+|    \--- org.apache.logging.log4j:log4j-core:2.11.2 (*)
++--- org.apache.logging.log4j:log4j-iostreams:2.11.2
+|    \--- org.apache.logging.log4j:log4j-api:2.11.2
++--- org.apache.logging.log4j:log4j-nosql:2.9.1
+|    \--- org.apache.logging.log4j:log4j-core:2.9.1 -> 2.11.2 (*)
++--- org.apache.logging.log4j:log4j-flume-ng:2.11.2
+|    +--- org.apache.logging.log4j:log4j-api:2.11.2
+|    +--- org.apache.logging.log4j:log4j-core:2.11.2 (*)
+|    +--- com.sleepycat:je:5.0.73
+|    +--- org.apache.flume:flume-ng-sdk:1.7.0
+|    |    +--- org.apache.avro:avro:1.7.4
+|    |    |    +--- com.thoughtworks.paranamer:paranamer:2.3
+|    |    |    +--- org.xerial.snappy:snappy-java:1.0.4.1
+|    |    |    +--- org.apache.commons:commons-compress:1.4.1
+|    |    |    |    \--- org.tukaani:xz:1.0
+|    |    |    \--- org.slf4j:slf4j-api:1.6.4
+|    |    +--- org.apache.avro:avro-ipc:1.7.4
+|    |    |    +--- org.apache.avro:avro:1.7.4 (*)
+|    |    |    +--- org.mortbay.jetty:jetty:6.1.26
+|    |    |    |    \--- org.mortbay.jetty:jetty-util:6.1.26
+|    |    |    +--- org.mortbay.jetty:jetty-util:6.1.26
+|    |    |    +--- org.apache.velocity:velocity:1.7
+|    |    |    |    +--- commons-collections:commons-collections:3.2.1
+|    |    |    |    \--- commons-lang:commons-lang:2.4 -> 2.5
+|    |    |    \--- org.slf4j:slf4j-api:1.6.4
+|    |    +--- io.netty:netty:3.9.4.Final
+|    |    \--- org.apache.thrift:libthrift:0.9.0
+|    |         +--- org.slf4j:slf4j-api:1.5.8 -> 1.6.4
+|    |         +--- commons-lang:commons-lang:2.5
+|    |         +--- org.apache.httpcomponents:httpclient:4.1.3
+|    |         |    +--- org.apache.httpcomponents:httpcore:4.1.4
+|    |         |    +--- commons-logging:commons-logging:1.1.1
+|    |         |    \--- commons-codec:commons-codec:1.4
+|    |         \--- org.apache.httpcomponents:httpcore:4.1.3 -> 4.1.4
+|    +--- org.codehaus.jackson:jackson-core-asl:1.9.13
+|    \--- org.codehaus.jackson:jackson-mapper-asl:1.9.13
+|         \--- org.codehaus.jackson:jackson-core-asl:1.9.13
++--- org.apache.logging.log4j:log4j-audit-api:1.0.1
+|    +--- org.apache.logging.log4j:log4j-api:2.10.0 -> 2.11.2
+|    +--- org.apache.logging.log4j:log4j-catalog-api:1.0.1
+|    |    +--- com.fasterxml.jackson.core:jackson-core:2.8.5
+|    |    +--- com.fasterxml.jackson.core:jackson-databind:2.8.5
+|    |    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.0 -> 2.8.5
+|    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.8.5
+|    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.5
+|    |    +--- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.5
+|    |    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.5
+|    |    |    +--- com.fasterxml.jackson.core:jackson-core:2.8.5
+|    |    |    \--- com.fasterxml.jackson.core:jackson-databind:2.8.5 (*)
+|    |    +--- com.fasterxml:classmate:1.2.0
+|    |    +--- org.apache.commons:commons-lang3:3.4
+|    |    \--- org.apache.logging.log4j:log4j-api:2.10.0 -> 2.11.2
+|    +--- com.fasterxml.jackson.core:jackson-core:2.8.5
+|    +--- com.fasterxml.jackson.core:jackson-databind:2.8.5 (*)
+|    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.5
+|    \--- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.5 (*)
++--- org.apache.logging.log4j:log4j-bom:2.11.2
+\--- junit:junit:4.12
+     \--- org.hamcrest:hamcrest-core:1.3
+
+testCompileClasspath - Compile classpath for source set 'test'.
++--- org.apache.logging.log4j:log4j-core:2.11.2
+|    \--- org.apache.logging.log4j:log4j-api:2.11.2
++--- org.apache.logging.log4j:log4j-api:2.11.2
++--- org.apache.logging.log4j:log4j-web:2.11.2
+|    +--- org.apache.logging.log4j:log4j-api:2.11.2
+|    \--- org.apache.logging.log4j:log4j-core:2.11.2 (*)
++--- org.apache.logging.log4j:log4j-iostreams:2.11.2
+|    \--- org.apache.logging.log4j:log4j-api:2.11.2
++--- org.apache.logging.log4j:log4j-nosql:2.9.1
+|    \--- org.apache.logging.log4j:log4j-core:2.9.1 -> 2.11.2 (*)
++--- org.apache.logging.log4j:log4j-flume-ng:2.11.2
+|    +--- org.apache.logging.log4j:log4j-api:2.11.2
+|    +--- org.apache.logging.log4j:log4j-core:2.11.2 (*)
+|    +--- com.sleepycat:je:5.0.73
+|    \--- org.apache.flume:flume-ng-sdk:1.7.0
+|         +--- org.apache.avro:avro:1.7.4
+|         |    +--- com.thoughtworks.paranamer:paranamer:2.3
+|         |    +--- org.xerial.snappy:snappy-java:1.0.4.1
+|         |    +--- org.apache.commons:commons-compress:1.4.1
+|         |    |    \--- org.tukaani:xz:1.0
+|         |    \--- org.slf4j:slf4j-api:1.6.4
+|         +--- org.apache.avro:avro-ipc:1.7.4
+|         |    +--- org.apache.avro:avro:1.7.4 (*)
+|         |    +--- org.mortbay.jetty:jetty:6.1.26
+|         |    |    \--- org.mortbay.jetty:jetty-util:6.1.26
+|         |    +--- org.mortbay.jetty:jetty-util:6.1.26
+|         |    +--- org.apache.velocity:velocity:1.7
+|         |    |    +--- commons-collections:commons-collections:3.2.1
+|         |    |    \--- commons-lang:commons-lang:2.4 -> 2.5
+|         |    \--- org.slf4j:slf4j-api:1.6.4
+|         +--- io.netty:netty:3.9.4.Final
+|         \--- org.apache.thrift:libthrift:0.9.0
+|              +--- org.slf4j:slf4j-api:1.5.8 -> 1.6.4
+|              +--- commons-lang:commons-lang:2.5
+|              +--- org.apache.httpcomponents:httpclient:4.1.3
+|              |    +--- org.apache.httpcomponents:httpcore:4.1.4
+|              |    +--- commons-logging:commons-logging:1.1.1
+|              |    \--- commons-codec:commons-codec:1.4
+|              \--- org.apache.httpcomponents:httpcore:4.1.3 -> 4.1.4
++--- org.apache.logging.log4j:log4j-audit-api:1.0.1
+|    +--- org.apache.logging.log4j:log4j-api:2.10.0 -> 2.11.2
+|    +--- org.apache.logging.log4j:log4j-catalog-api:1.0.1
+|    |    +--- com.fasterxml.jackson.core:jackson-core:2.8.5
+|    |    +--- com.fasterxml.jackson.core:jackson-databind:2.8.5
+|    |    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.0 -> 2.8.5
+|    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.8.5
+|    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.5
+|    |    +--- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.5
+|    |    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.5
+|    |    |    +--- com.fasterxml.jackson.core:jackson-core:2.8.5
+|    |    |    \--- com.fasterxml.jackson.core:jackson-databind:2.8.5 (*)
+|    |    +--- com.fasterxml:classmate:1.2.0
+|    |    +--- org.apache.commons:commons-lang3:3.4
+|    |    \--- org.apache.logging.log4j:log4j-api:2.10.0 -> 2.11.2
+|    +--- com.fasterxml.jackson.core:jackson-core:2.8.5
+|    +--- com.fasterxml.jackson.core:jackson-databind:2.8.5 (*)
+|    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.5
+|    \--- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.5 (*)
++--- org.apache.logging.log4j:log4j-bom:2.11.2
+\--- junit:junit:4.12
+     \--- org.hamcrest:hamcrest-core:1.3
+
+testCompileOnly - Compile only dependencies for source set 'test'.
+No dependencies
+
+testImplementation - Implementation only dependencies for source set 'test'. (n)
+No dependencies
+
+testRuntime - Runtime dependencies for source set 'test' (deprecated, use 'testRuntimeOnly' instead).
++--- org.apache.logging.log4j:log4j-core:2.11.2
+|    \--- org.apache.logging.log4j:log4j-api:2.11.2
++--- org.apache.logging.log4j:log4j-api:2.11.2
++--- org.apache.logging.log4j:log4j-web:2.11.2
+|    +--- org.apache.logging.log4j:log4j-api:2.11.2
+|    \--- org.apache.logging.log4j:log4j-core:2.11.2 (*)
++--- org.apache.logging.log4j:log4j-iostreams:2.11.2
+|    \--- org.apache.logging.log4j:log4j-api:2.11.2
++--- org.apache.logging.log4j:log4j-nosql:2.9.1
+|    \--- org.apache.logging.log4j:log4j-core:2.9.1 -> 2.11.2 (*)
++--- org.apache.logging.log4j:log4j-flume-ng:2.11.2
+|    +--- org.apache.logging.log4j:log4j-api:2.11.2
+|    +--- org.apache.logging.log4j:log4j-core:2.11.2 (*)
+|    +--- com.sleepycat:je:5.0.73
+|    +--- org.apache.flume:flume-ng-sdk:1.7.0
+|    |    +--- org.apache.avro:avro:1.7.4
+|    |    |    +--- com.thoughtworks.paranamer:paranamer:2.3
+|    |    |    +--- org.xerial.snappy:snappy-java:1.0.4.1
+|    |    |    +--- org.apache.commons:commons-compress:1.4.1
+|    |    |    |    \--- org.tukaani:xz:1.0
+|    |    |    \--- org.slf4j:slf4j-api:1.6.4
+|    |    +--- org.apache.avro:avro-ipc:1.7.4
+|    |    |    +--- org.apache.avro:avro:1.7.4 (*)
+|    |    |    +--- org.mortbay.jetty:jetty:6.1.26
+|    |    |    |    \--- org.mortbay.jetty:jetty-util:6.1.26
+|    |    |    +--- org.mortbay.jetty:jetty-util:6.1.26
+|    |    |    +--- org.apache.velocity:velocity:1.7
+|    |    |    |    +--- commons-collections:commons-collections:3.2.1
+|    |    |    |    \--- commons-lang:commons-lang:2.4 -> 2.5
+|    |    |    \--- org.slf4j:slf4j-api:1.6.4
+|    |    +--- io.netty:netty:3.9.4.Final
+|    |    \--- org.apache.thrift:libthrift:0.9.0
+|    |         +--- org.slf4j:slf4j-api:1.5.8 -> 1.6.4
+|    |         +--- commons-lang:commons-lang:2.5
+|    |         +--- org.apache.httpcomponents:httpclient:4.1.3
+|    |         |    +--- org.apache.httpcomponents:httpcore:4.1.4
+|    |         |    +--- commons-logging:commons-logging:1.1.1
+|    |         |    \--- commons-codec:commons-codec:1.4
+|    |         \--- org.apache.httpcomponents:httpcore:4.1.3 -> 4.1.4
+|    +--- org.codehaus.jackson:jackson-core-asl:1.9.13
+|    \--- org.codehaus.jackson:jackson-mapper-asl:1.9.13
+|         \--- org.codehaus.jackson:jackson-core-asl:1.9.13
++--- org.apache.logging.log4j:log4j-audit-api:1.0.1
+|    +--- org.apache.logging.log4j:log4j-api:2.10.0 -> 2.11.2
+|    +--- org.apache.logging.log4j:log4j-catalog-api:1.0.1
+|    |    +--- com.fasterxml.jackson.core:jackson-core:2.8.5
+|    |    +--- com.fasterxml.jackson.core:jackson-databind:2.8.5
+|    |    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.0 -> 2.8.5
+|    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.8.5
+|    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.5
+|    |    +--- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.5
+|    |    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.5
+|    |    |    +--- com.fasterxml.jackson.core:jackson-core:2.8.5
+|    |    |    \--- com.fasterxml.jackson.core:jackson-databind:2.8.5 (*)
+|    |    +--- com.fasterxml:classmate:1.2.0
+|    |    +--- org.apache.commons:commons-lang3:3.4
+|    |    \--- org.apache.logging.log4j:log4j-api:2.10.0 -> 2.11.2
+|    +--- com.fasterxml.jackson.core:jackson-core:2.8.5
+|    +--- com.fasterxml.jackson.core:jackson-databind:2.8.5 (*)
+|    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.5
+|    \--- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.5 (*)
++--- org.apache.logging.log4j:log4j-bom:2.11.2
+\--- junit:junit:4.12
+     \--- org.hamcrest:hamcrest-core:1.3
+
+testRuntimeClasspath - Runtime classpath of source set 'test'.
++--- org.apache.logging.log4j:log4j-core:2.11.2
+|    \--- org.apache.logging.log4j:log4j-api:2.11.2
++--- org.apache.logging.log4j:log4j-api:2.11.2
++--- org.apache.logging.log4j:log4j-web:2.11.2
+|    +--- org.apache.logging.log4j:log4j-api:2.11.2
+|    \--- org.apache.logging.log4j:log4j-core:2.11.2 (*)
++--- org.apache.logging.log4j:log4j-iostreams:2.11.2
+|    \--- org.apache.logging.log4j:log4j-api:2.11.2
++--- org.apache.logging.log4j:log4j-nosql:2.9.1
+|    \--- org.apache.logging.log4j:log4j-core:2.9.1 -> 2.11.2 (*)
++--- org.apache.logging.log4j:log4j-flume-ng:2.11.2
+|    +--- org.apache.logging.log4j:log4j-api:2.11.2
+|    +--- org.apache.logging.log4j:log4j-core:2.11.2 (*)
+|    +--- com.sleepycat:je:5.0.73
+|    +--- org.apache.flume:flume-ng-sdk:1.7.0
+|    |    +--- org.apache.avro:avro:1.7.4
+|    |    |    +--- com.thoughtworks.paranamer:paranamer:2.3
+|    |    |    +--- org.xerial.snappy:snappy-java:1.0.4.1
+|    |    |    +--- org.apache.commons:commons-compress:1.4.1
+|    |    |    |    \--- org.tukaani:xz:1.0
+|    |    |    \--- org.slf4j:slf4j-api:1.6.4
+|    |    +--- org.apache.avro:avro-ipc:1.7.4
+|    |    |    +--- org.apache.avro:avro:1.7.4 (*)
+|    |    |    +--- org.mortbay.jetty:jetty:6.1.26
+|    |    |    |    \--- org.mortbay.jetty:jetty-util:6.1.26
+|    |    |    +--- org.mortbay.jetty:jetty-util:6.1.26
+|    |    |    +--- org.apache.velocity:velocity:1.7
+|    |    |    |    +--- commons-collections:commons-collections:3.2.1
+|    |    |    |    \--- commons-lang:commons-lang:2.4 -> 2.5
+|    |    |    \--- org.slf4j:slf4j-api:1.6.4
+|    |    +--- io.netty:netty:3.9.4.Final
+|    |    \--- org.apache.thrift:libthrift:0.9.0
+|    |         +--- org.slf4j:slf4j-api:1.5.8 -> 1.6.4
+|    |         +--- commons-lang:commons-lang:2.5
+|    |         +--- org.apache.httpcomponents:httpclient:4.1.3
+|    |         |    +--- org.apache.httpcomponents:httpcore:4.1.4
+|    |         |    +--- commons-logging:commons-logging:1.1.1
+|    |         |    \--- commons-codec:commons-codec:1.4
+|    |         \--- org.apache.httpcomponents:httpcore:4.1.3 -> 4.1.4
+|    +--- org.codehaus.jackson:jackson-core-asl:1.9.13
+|    \--- org.codehaus.jackson:jackson-mapper-asl:1.9.13
+|         \--- org.codehaus.jackson:jackson-core-asl:1.9.13
++--- org.apache.logging.log4j:log4j-audit-api:1.0.1
+|    +--- org.apache.logging.log4j:log4j-api:2.10.0 -> 2.11.2
+|    +--- org.apache.logging.log4j:log4j-catalog-api:1.0.1
+|    |    +--- com.fasterxml.jackson.core:jackson-core:2.8.5
+|    |    +--- com.fasterxml.jackson.core:jackson-databind:2.8.5
+|    |    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.0 -> 2.8.5
+|    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.8.5
+|    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.5
+|    |    +--- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.5
+|    |    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.5
+|    |    |    +--- com.fasterxml.jackson.core:jackson-core:2.8.5
+|    |    |    \--- com.fasterxml.jackson.core:jackson-databind:2.8.5 (*)
+|    |    +--- com.fasterxml:classmate:1.2.0
+|    |    +--- org.apache.commons:commons-lang3:3.4
+|    |    \--- org.apache.logging.log4j:log4j-api:2.10.0 -> 2.11.2
+|    +--- com.fasterxml.jackson.core:jackson-core:2.8.5
+|    +--- com.fasterxml.jackson.core:jackson-databind:2.8.5 (*)
+|    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.5
+|    \--- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.5 (*)
++--- org.apache.logging.log4j:log4j-bom:2.11.2
+\--- junit:junit:4.12
+     \--- org.hamcrest:hamcrest-core:1.3
+
+testRuntimeOnly - Runtime only dependencies for source set 'test'. (n)
+No dependencies
+
+(*) - dependencies omitted (listed previously)
+
+A web-based, searchable dependency report is available by adding the --scan option.
+
+BUILD SUCCESSFUL in 0s
+1 actionable task: 1 executed
