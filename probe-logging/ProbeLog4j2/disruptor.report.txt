@@ -1,0 +1,11 @@
+$ grep -i -F "disruptor" < failover-logger.log 
+    at com.lmax.disruptor.BatchEventProcessor.processEvents(BatchEventProcessor.java:168)
+    at com.lmax.disruptor.BatchEventProcessor.run(BatchEventProcessor.java:125)
+    at com.lmax.disruptor.BatchEventProcessor.processEvents(BatchEventProcessor.java:168)
+    at com.lmax.disruptor.BatchEventProcessor.run(BatchEventProcessor.java:125)
+    at com.lmax.disruptor.BatchEventProcessor.processEvents(BatchEventProcessor.java:168)
+    at com.lmax.disruptor.BatchEventProcessor.run(BatchEventProcessor.java:125)
+    at com.lmax.disruptor.BatchEventProcessor.processEvents(BatchEventProcessor.java:168)
+    at com.lmax.disruptor.BatchEventProcessor.run(BatchEventProcessor.java:125)
+2019-06-15 23:54:18,068 pool-1-thread-1 DEBUG [AsyncContext@5bc2b487] AsyncLoggerDisruptor: shutting down disruptor for this context.
+2019-06-15 23:54:18,069 pool-1-thread-1 TRACE [AsyncContext@5bc2b487] AsyncLoggerDisruptor: disruptor has been shut down.

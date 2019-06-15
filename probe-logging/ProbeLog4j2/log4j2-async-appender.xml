@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- No need to set system property "log4j2.contextSelector" to any value
+     when using <asyncLogger> or <asyncRoot>. -->
+
+<Configuration status="all" name="AsyncAppenderConfiguration" packages="mayton.probe" >
+
+    <Appenders>
+        <!-- Async Loggers will auto-flush in batches, so switch off immediateFlush. -->
+        <RandomAccessFile name="RandomAccessFileAppender-1" fileName="logs/app-async.log" immediateFlush="false" append="false">
+            <PatternLayout>
+                <Pattern>%d %p %class{1.} [%t] %location %m %ex%n</Pattern>
+            </PatternLayout>
+        </RandomAccessFile>
+
+        <Console name="STDOUT">
+            <PatternLayout pattern="%m%n"/>
+        </Console>
+    </Appenders>
+
+    <Loggers>
+
+        <!-- pattern layout actually uses location, so we need to include it -->
+        <AsyncLogger name="AsyncLogger-1" level="all" includeLocation="true">
+            <AppenderRef ref="RandomAccessFileAppender-1"/>
+        </AsyncLogger>
+
+        <Root level="all" includeLocation="true">
+            <AppenderRef ref="AsyncLogger-1"/>
+            <AppenderRef ref="STDOUT"/>
+        </Root>
+
+    </Loggers>
+</Configuration>
