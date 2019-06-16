@@ -1,0 +1,72 @@
+Cache 'benchmark':
++============================================================================================================+
+|                   Name                    |                             Value                              |
++============================================================================================================+
+| Group                                     |                                                                |
+| Dynamic Deployment ID                     | 7a46b026b61-c9a8d9a4-91a2-454c-9ee5-502f8c4e3415               |
+| System                                    | off                                                            |
+| Mode                                      | PARTITIONED                                                    |
+| Atomicity Mode                            | ATOMIC                                                         |
+| Statistic Enabled                         | off                                                            |
+| Management Enabled                        | off                                                            |
+| On-heap cache enabled                     | off                                                            |
+| Partition Loss Policy                     | IGNORE                                                         |
+| Query Parallelism                         | 1                                                              |
+| Copy On Read                              | on                                                             |
+| Listener Configurations                   |                                                                |
+| Load Previous Value                       | off                                                            |
+| Memory Policy Name                        |                                                                |
+| Node Filter                               | o.a.i.configuration.CacheConfiguration$IgniteAllNodesPredicate |
+| Read From Backup                          | on                                                             |
+| Topology Validator                        |                                                                |
+| Time To Live Eager Flag                   | true                                                           |
+| Write Synchronization Mode                | PRIMARY_SYNC                                                   |
+| Invalidate                                | off                                                            |
+| Affinity Function                         | o.a.i.cache.affinity.rendezvous.RendezvousAffinityFunction     |
+| Affinity Backups                          | 0                                                              |
+| Affinity Partitions                       | 1024                                                           |
+| Affinity Exclude Neighbors                | false                                                          |
+| Affinity Mapper                           | o.a.i.i.processors.cache.CacheDefaultBinaryAffinityKeyMapper   |
+| Rebalance Mode                            | ASYNC                                                          |
+| Rebalance Batch Size                      | 524288                                                         |
+| Rebalance Timeout                         | 10000                                                          |
+| Rebalance Delay                           | 0                                                              |
+| Time Between Rebalance Messages           | 0                                                              |
+| Rebalance Batches Count                   | 2                                                              |
+| Rebalance Cache Order                     | 0                                                              |
+| Eviction Policy Enabled                   | off                                                            |
+| Eviction Policy Factory                   | <n/a>                                                          |
+| Eviction Policy Max Size                  | <n/a>                                                          |
+| Eviction Filter                           | <n/a>                                                          |
+| Near Cache Enabled                        | off                                                            |
+| Near Start Size                           | 0                                                              |
+| Near Eviction Policy Factory              | <n/a>                                                          |
+| Near Eviction Policy Max Size             | <n/a>                                                          |
+| Default Lock Timeout                      | 0                                                              |
+| Metadata type count                       | 0                                                              |
+| Cache Interceptor                         | <n/a>                                                          |
+| Store Enabled                             | off                                                            |
+| Store Class                               | <n/a>                                                          |
+| Store Factory Class                       |                                                                |
+| Store Keep Binary                         | false                                                          |
+| Store Read Through                        | off                                                            |
+| Store Write Through                       | off                                                            |
+| Store Write Coalescing                    | on                                                             |
+| Write-Behind Enabled                      | off                                                            |
+| Write-Behind Flush Size                   | 10240                                                          |
+| Write-Behind Frequency                    | 5000                                                           |
+| Write-Behind Flush Threads Count          | 1                                                              |
+| Write-Behind Batch Size                   | 512                                                            |
+| Concurrent Asynchronous Operations Number | 500                                                            |
+| Loader Factory Class Name                 | <n/a>                                                          |
+| Writer Factory Class Name                 | <n/a>                                                          |
+| Expiry Policy Factory Class Name          | javax.cache.configuration.FactoryBuilder$SingletonFactory      |
+| Query Execution Time Threshold            | 3000                                                           |
+| Query Escaped Names                       | off                                                            |
+| Query Schema Name                         |                                                                |
+| Query Indexed Types                       |                                                                |
+| Maximum payload size for offheap indexes  | -1                                                             |
+| Query Metrics History Size                | 0                                                              |
+| Query SQL functions                       | <n/a>                                                          |
+| Query Indexed Types                       | <n/a>                                                          |
++------------------------------------------------------------------------------------------------------------+

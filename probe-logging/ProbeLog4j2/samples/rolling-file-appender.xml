@@ -1,0 +1,11 @@
+<RollingFile name="RollingFile">
+    <FileName>C:/log/mylog.log</FileName>
+    <FilePattern>C:/log/time-based-logs/%d{yyyy-MM-dd-hh-mm}.log.zip</FilePattern>
+    <PatternLayout>
+        <Pattern>%d{yyyy-MMM-dd HH:mm:ss a} [%t] %-5level %logger{36} - %msg%n</Pattern>
+    </PatternLayout>
+    <Policies>
+        <TimeBasedTriggeringPolicy interval="2" modulate="true" />
+    </Policies>
+    <DefaultRolloverStrategy max="5" />
+</RollingFile>
