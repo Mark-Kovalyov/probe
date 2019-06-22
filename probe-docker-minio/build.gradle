@@ -1,0 +1,29 @@
+//  Minio
+//  ====================================================
+//  docker pull minio/minio
+//  docker run -p 9000:9000 minio/minio server /db/TR
+
+plugins {
+    id 'java'
+}
+
+group 'mayton.probe'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 11
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+task startMinio(type: ExecWait) {
+    command 'docker run --restart=no --detach -p 9000:9000 minio/minio server /db/TR'    
+}
+
+task stopMinio(type: ExecWait) {
+    command 'docker container stop minio/minio'    
+}
