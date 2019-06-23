@@ -1,4 +1,4 @@
-package mayton.probe;
+package mayton.probe.docker;
 
 import javax.annotation.Nonnull;
 import java.util.*;
@@ -10,12 +10,12 @@ import static java.util.Collections.*;
 
 // Linux/MacOS
 
-// docker run -p 9000:9000 --name minio1 \
-//  -e "MINIO_ACCESS_KEY=**************************" \
-//  -e "MINIO_SECRET_KEY=@@@@@@@@@@@@@@@@@@@@@" \
-//  -v /mnt/data:/data \
-//  -v /mnt/config:/root/.minio \
-//  minio/minio server /data
+//docker run -p 9000:9000 --name minio1 \
+//        -e "MINIO_ACCESS_KEY=AKIAIOSFODNN7EXAMPLE" \
+//        -e "MINIO_SECRET_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY" \
+//        -v /mnt/data:/data \
+//        -v /mnt/config:/root/.minio \
+//        minio/minio server /data
 
 // Windows
 
@@ -58,9 +58,9 @@ public final class DockerParams {
 
     private String imageName;
 
-    private String instanceName;
+    private Optional<String> instanceName = Optional.empty();
 
-    private String network;
+    private Optional<String> network = Optional.empty();
 
     private DockerRestart dockerRestart = DockerRestart.NO;
 
@@ -105,8 +105,8 @@ public final class DockerParams {
         return this;
     }
 
-    public DockerParams withInstanceName(String instanceName) {
-        this.instanceName = instanceName;
+    public DockerParams withInstanceName(@Nonnull String instanceName) {
+        this.instanceName = Optional.of(instanceName);
         return this;
     }
 
@@ -153,15 +153,17 @@ public final class DockerParams {
     }
 
     public Optional<String> getInstanceName() {
-        return instanceName == null ? Optional.empty() : Optional.of(instanceName);
+        return instanceName;
     }
 
     public Optional<String> getNetwork() {
-        return network == null ? Optional.empty() : Optional.of(network);
+        return network;
     }
 
     public DockerParams withNetwork(@Nonnull String network) {
-        this.network = network;
+        if (network != null) {
+            this.network = Optional.of(network);
+        }
         return this;
     }
 

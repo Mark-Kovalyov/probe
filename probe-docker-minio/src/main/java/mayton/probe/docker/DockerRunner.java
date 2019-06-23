@@ -1,4 +1,4 @@
-package mayton.probe;
+package mayton.probe.docker;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -7,6 +7,7 @@ import javax.annotation.Nonnull;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 
 import static java.lang.System.getProperty;
 
@@ -20,44 +21,24 @@ public class DockerRunner implements Runnable {
         this.dockerParams = dockerParams;
     }
 
+    private static String[] listToArray(List<String> arg) {
+        String[] arr = new String[arg.size()];
+        for (int i = 0; i < arg.size(); i++) {
+            arr[i] = arg.get(i);
+        }
+        return arr;
+    }
+
     @Override
     public void run() {
-        ProcessBuilder processBuilder = null;
 
-        String commandLine;
+        List<String> commandLineWords = new UnixCommandLineFormatter().format(dockerParams);
+        logger.info("command line : {}", commandLineWords.toString());
+        String[] dockerArguments = listToArray(commandLineWords);
+        ProcessBuilder processBuilder = new ProcessBuilder(dockerArguments);
 
-        if ("linux".equalsIgnoreCase(getProperty("os.name"))) {
-            logger.info("Linux selected");
-            commandLine = new UnixCommandLineFormatter().format(dockerParams);
-            logger.info("command line : {}", commandLine);
-
-            String[] dockerArguments = new String[]{"docker",
-                    "run",
-
-                    "-p", "9000:9000",
-
-                    "-e", "\"MINIO_ACCESS_KEY=**************************\"",
-                    "-e", "\"MINIO_SECRET_KEY=@@@@@@@@@@@@@@@@@@@@@\"",
-
-                    "-v", "/db/TR:/data",
-                    "-v", "/home/mayton/git/probe/probe-docker-minio/docker:/root/.minio",
-
-                    "minio/minio",
-
-                    "server",
-                    "/data"};
-
-            processBuilder = new ProcessBuilder(dockerArguments);
-
-        } else {
-            logger.info("Non-linux selected");
-            // TODO: Implement for Windows
-
-        }
-
-        Process process;
         try {
-            process = processBuilder.start();
+            Process process = processBuilder.start();
 
             logger.info("Process started");
 
@@ -76,12 +57,14 @@ public class DockerRunner implements Runnable {
             }
 
             int exitCode = process.waitFor();
+
             logger.warn("Exited with error code : {}", exitCode);
 
-        } catch (IOException | InterruptedException e) {
+        } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             logger.error(e);
-
+        } catch (IOException e) {
+            logger.error(e);
         }
 
     }
