@@ -33,13 +33,12 @@ dependencies {
     //compile group: 'org.apache.ignite', name: 'ignite-kafka', version: '2.7.5'
     //compile group: 'org.apache.ignite', name: 'ignite-storm', version: '2.7.5'
 
+    compile group: 'com.esotericsoftware', name: 'kryo', version: '4.0.2'
 
     compile group: 'org.apache.ignite', name: 'ignite-visor-console_2.10', version: '2.7.5'
     compile group: 'org.apache.ignite', name: 'ignite-visor-plugins', version: '2.7.5'
 
     compile group: 'org.apache.ignite', name: 'ignite-ml', version: '2.7.5'
-
-
 
     compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.26'
     compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.26'
@@ -76,6 +75,12 @@ task(BenchmarkDataStreamer, dependsOn: 'classes', type: JavaExec) {
     main = 'mayton.probe.ignite.BenchmarkDataStreamer'
     classpath = sourceSets.main.runtimeClasspath
 }
+
+task(ProbeKryo, dependsOn: 'classes', type: JavaExec) {
+    main = 'mayton.probe.ignite.TestKryo'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
 
 task copyToLib(type: Copy) {
     into "$buildDir/libs"

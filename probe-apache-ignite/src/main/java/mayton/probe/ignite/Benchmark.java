@@ -4,7 +4,10 @@ import org.apache.ignite.Ignition;
 import org.apache.ignite.cache.CachePeekMode;
 import org.apache.ignite.client.ClientCache;
 import org.apache.ignite.client.IgniteClient;
+import org.apache.ignite.configuration.CacheConfiguration;
 import org.apache.ignite.configuration.ClientConfiguration;
+import org.apache.ignite.configuration.DataRegionConfiguration;
+import org.apache.ignite.configuration.DataStorageConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +18,12 @@ public class Benchmark {
     static Logger logger = LoggerFactory.getLogger(Benchmark.class);
 
     public static void main(String[] args) {
+
+        DataStorageConfiguration dataStorageConfiguration;
+
+        CacheConfiguration<Object, Object> cacheConfiguration;
+
+        DataRegionConfiguration dataRegionConfiguration;
 
         ClientConfiguration cfg = new ClientConfiguration().setAddresses("127.0.0.1:10800");
 
