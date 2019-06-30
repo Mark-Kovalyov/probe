@@ -7,6 +7,7 @@ import org.apache.ignite.configuration.ClientConfiguration;
 import org.apache.ignite.internal.GridKernalContext;
 import org.apache.ignite.internal.GridKernalContextImpl;
 import org.apache.ignite.internal.processors.datastreamer.DataStreamerImpl;
+import org.apache.ignite.spi.discovery.tcp.TcpDiscoverySpi;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,8 +26,6 @@ public class BenchmarkDataStreamer {
 
         logger.info("Start");
         try (IgniteClient igniteClient = Ignition.startClient(cfg)) {
-
-
 
             final String CACHE_NAME = "benchmark_stream";
 

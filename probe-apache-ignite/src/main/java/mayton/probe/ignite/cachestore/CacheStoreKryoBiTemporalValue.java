@@ -5,6 +5,7 @@ import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 import mayton.probe.ignite.entities.BiTemporalValue;
 import mayton.probe.ignite.entities.BiTemporalValueKryoSerializer;
+import org.apache.ignite.Ignition;
 import org.apache.ignite.cache.store.CacheStore;
 import org.apache.ignite.lang.IgniteBiInClosure;
 import org.jetbrains.annotations.Nullable;
@@ -20,18 +21,23 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 
-public class CacheStoreBiTemporalValue implements CacheStore<Long, BiTemporalValue> {
+public class CacheStoreKryoBiTemporalValue implements CacheStore<Long, BiTemporalValue> {
 
-    static Logger logger = LoggerFactory.getLogger(CacheStoreBiTemporalValue.class);
+    static Logger logger = LoggerFactory.getLogger(CacheStoreKryoBiTemporalValue.class);
 
-    static final String IGNITE_STORAGE = "/ignite-db";
+    static final String IGNITE_STORAGE = "/ignite-db/kryo";
     static final String EXTENSION = ".kryo";
 
     static private final ThreadLocal<Kryo> kryos = ThreadLocal.withInitial(() -> {
+        logger.info(":: init kryos for thread id = {}", Thread.currentThread().getId());
         Kryo kryo = new Kryo();
         kryo.register(BiTemporalValue.class, new BiTemporalValueKryoSerializer());
         return kryo;
     });
+
+    private String formatPath(long key) {
+        return IGNITE_STORAGE + "/" + key + EXTENSION;
+    }
 
     @Override
     public void loadCache(IgniteBiInClosure<Long, BiTemporalValue> clo, @Nullable Object... args) throws CacheLoaderException {
@@ -48,18 +54,15 @@ public class CacheStoreBiTemporalValue implements CacheStore<Long, BiTemporalVal
         logger.info(":: load key = {}", key);
         Kryo kryo = kryos.get();
         BiTemporalValue biTemporalValue = null;
-        try {
-            InputStream is = new FileInputStream(formatPath(key));
+        try(InputStream is = new FileInputStream(formatPath(key))) {
             biTemporalValue = kryo.readObject(new Input(is), BiTemporalValue.class);
-        } catch (FileNotFoundException e) {
-            // Nothing
+        } catch (IOException e) {
+            // Nothing to do
         }
         return biTemporalValue;
     }
 
-    private String formatPath(long key) {
-        return IGNITE_STORAGE + "/" + key + EXTENSION;
-    }
+
 
     @Override
     public Map<Long, BiTemporalValue> loadAll(Iterable<? extends Long> keys) throws CacheLoaderException {

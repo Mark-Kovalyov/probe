@@ -1,4 +1,4 @@
-package mayton.probe.ignite;
+package mayton.probe.ignite.bigdata;
 
 import org.apache.ignite.ml.math.primitives.vector.Vector;
 import org.apache.ignite.ml.math.primitives.vector.impl.DenseVector;

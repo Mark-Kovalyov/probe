@@ -38,7 +38,7 @@
 
                     <property name="cacheStoreFactory" >
                         <bean class="org.apache.ignite.configuration.IgniteReflectionFactory">
-                            <constructor-arg value="mayton.probe.ignite.cachestore.CacheStoreBiTemporalValue" />
+                            <constructor-arg value="mayton.probe.ignite.cachestore.CacheStoreOrcBiTemporalValue" />
                         </bean>
                     </property>
 
