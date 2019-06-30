@@ -8,6 +8,8 @@ import org.apache.ignite.configuration.CacheConfiguration;
 import org.apache.ignite.configuration.ClientConfiguration;
 import org.apache.ignite.configuration.DataRegionConfiguration;
 import org.apache.ignite.configuration.DataStorageConfiguration;
+import org.apache.ignite.spi.discovery.tcp.ipfinder.multicast.TcpDiscoveryMulticastIpFinder;
+import org.apache.ignite.spi.discovery.tcp.ipfinder.vm.TcpDiscoveryVmIpFinder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,20 +21,12 @@ public class Benchmark {
 
     public static void main(String[] args) {
 
-        DataStorageConfiguration dataStorageConfiguration;
-
-        CacheConfiguration<Object, Object> cacheConfiguration;
-
-        DataRegionConfiguration dataRegionConfiguration;
-
         ClientConfiguration cfg = new ClientConfiguration().setAddresses("127.0.0.1:10800");
 
         logger.info("Start");
         try (IgniteClient igniteClient = Ignition.startClient(cfg)) {
 
             final String CACHE_NAME = "benchmark";
-
-
 
             ClientCache<String, Boolean> cache = igniteClient.getOrCreateCache(CACHE_NAME);
 
