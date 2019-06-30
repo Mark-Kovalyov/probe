@@ -2,6 +2,7 @@ package mayton.probe.ignite.cachestore;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
+import com.esotericsoftware.kryo.io.Output;
 import mayton.probe.ignite.entities.BiTemporalValue;
 import mayton.probe.ignite.entities.BiTemporalValueKryoSerializer;
 import org.apache.ignite.cache.store.CacheStore;
@@ -26,6 +27,12 @@ public class CacheStoreBiTemporalValue implements CacheStore<Long, BiTemporalVal
     static final String IGNITE_STORAGE = "/ignite-db";
     static final String EXTENSION = ".kryo";
 
+    static private final ThreadLocal<Kryo> kryos = ThreadLocal.withInitial(() -> {
+        Kryo kryo = new Kryo();
+        kryo.register(BiTemporalValue.class, new BiTemporalValueKryoSerializer());
+        return kryo;
+    });
+
     @Override
     public void loadCache(IgniteBiInClosure<Long, BiTemporalValue> clo, @Nullable Object... args) throws CacheLoaderException {
         logger.info("load cache with set of args");
@@ -39,15 +46,14 @@ public class CacheStoreBiTemporalValue implements CacheStore<Long, BiTemporalVal
     @Override
     public BiTemporalValue load(Long key) throws CacheLoaderException {
         logger.info(":: load key = {}", key);
-        Kryo kryo = new Kryo();
-        kryo.register(BiTemporalValue.class, new BiTemporalValueKryoSerializer());
+        Kryo kryo = kryos.get();
         BiTemporalValue biTemporalValue = null;
         try {
             InputStream is = new FileInputStream(formatPath(key));
             biTemporalValue = kryo.readObject(new Input(is), BiTemporalValue.class);
         } catch (FileNotFoundException e) {
             // Nothing
-        };
+        }
         return biTemporalValue;
     }
 
@@ -64,13 +70,12 @@ public class CacheStoreBiTemporalValue implements CacheStore<Long, BiTemporalVal
     @Override
     public void write(Cache.Entry<? extends Long, ? extends BiTemporalValue> entry) throws CacheWriterException {
         logger.info(":: write key = {}", entry.getKey());
+        Kryo kryo = kryos.get();
         // TODO:
-        try {
-            OutputStream outputStream = new FileOutputStream(formatPath(entry.getKey()));
-
-            outputStream.close();
+        try(Output output = new Output(new FileOutputStream(formatPath(entry.getKey())))) {
+            kryo.writeObject(output, entry.getValue());
         } catch (IOException e) {
-            logger.error(":: FileNotFoundException ", e);
+            logger.error(":: IOException", e);
         }
     }
 
@@ -84,10 +89,14 @@ public class CacheStoreBiTemporalValue implements CacheStore<Long, BiTemporalVal
     @Override
     public void delete(Object key) throws CacheWriterException {
         logger.info(":: delete key = {}", key.toString());
+        if (!new File(formatPath((Long)key)).delete()) {
+            logger.error(":: unable to delete key = {}", key.toString());
+        }
     }
 
     @Override
     public void deleteAll(Collection<?> keys) throws CacheWriterException {
         logger.info(":: delete all");
+
     }
 }

@@ -8,6 +8,8 @@ import org.apache.ignite.configuration.ClientConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Random;
+
 public class ProbeBiTemporal {
 
     static Logger logger = LoggerFactory.getLogger(ProbeBiTemporal.class);
@@ -25,26 +27,18 @@ public class ProbeBiTemporal {
 
             logger.info("cache is ready");
 
-            for(int i = 0; i < 15 ; i++) {
+            BiTemporalValue biTemporalValue = new BiTemporalValue(1000);
 
-                BiTemporalValue btv = cache.get((long)i);
+            Random random = new Random();
 
-                if (btv == null) {
-                    logger.info("null {}", i);
-                } else {
-                    logger.info("received {}", btv.toString());
-                }
+            for(int k = 0;k < 1000 ; k++) {
+                biTemporalValue.getBeginTs()[k] = random.nextLong();
+                biTemporalValue.getEndTs()[k] = random.nextLong();
+                biTemporalValue.getKeys()[k] = random.nextLong();
+                biTemporalValue.getValues()[k] = random.nextDouble();
             }
 
-            logger.info("value received");
-
-
-            for(int i = 10; i < 20; i++) {
-                BiTemporalValue btv = new BiTemporalValue(1);
-                btv.getBeginTs()[0] = 13 * i;
-                logger.info(":: put key = {}, value = ...", i);
-                cache.put((long) i, btv);
-            }
+            cache.put(555L, biTemporalValue);
 
 
         } catch (Exception ex) {
