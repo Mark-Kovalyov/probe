@@ -1,0 +1,17 @@
+version: '3'
+services:
+  db:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/code
+    environment:
+      FLASK_ENV: development
+  db:
+    image: "postgres:11.3"
+  s3:
+    
+  elastic:
+    image: "elasticsearch:7.2.0"
+  kibana:
