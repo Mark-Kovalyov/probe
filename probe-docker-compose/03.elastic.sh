@@ -2,6 +2,9 @@
 
 # sysctl -w vm.max_map_count=262144
 
+# 9200 - Elastic HTTP Rest endpoint
+# 9300 - TCP
+
 docker run -d \
   -p 9200:9200 \
   -p 9300:9300 \

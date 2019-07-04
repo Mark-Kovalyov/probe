@@ -1,6 +1,12 @@
 #!/bin/bash -v
 
-docker run -it --net=host \
+# 10800 (TCP JDBC/ODBC), 
+# 11211 (TCP connector), 
+# 47100 (listener), 
+# 47500 (discovery)
+
+
+docker run -it --net=ignite-network \
  -e "CONFIG_URI=https://raw.githubusercontent.com/apache/ignite/master/examples/config/example-cache.xml" \
     apacheignite/ignite
 

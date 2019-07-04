@@ -1,4 +1,6 @@
-version: '3'
+# See: https://docs.docker.com/compose/compose-file/compose-versioning/
+
+version: '3.7'
 services:
   db:
     build: .
@@ -8,10 +10,12 @@ services:
       - .:/code
     environment:
       FLASK_ENV: development
-  db:
     image: "postgres:11.3"
   s3:
-    
+    image: "minio/minio:RELEASE.2019-06-27T21-13-50Z"
   elastic:
     image: "elasticsearch:7.2.0"
   kibana:
+    image:
+  activemq:
+    image:

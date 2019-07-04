@@ -3,7 +3,7 @@
 docker run \
    -detach \
    -p 5432:5432 \
-   -e POSTGRES_PASSWORD=cyberman123 \
+   -e POSTGRES_PASSWORD=********** \
    -v /pg/pgdata:/var/lib/postgresql/data \
    postgres:11.3
 
