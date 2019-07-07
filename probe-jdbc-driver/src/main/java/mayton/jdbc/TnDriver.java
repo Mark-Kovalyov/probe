@@ -1,7 +1,5 @@
 package mayton.jdbc;
 
-import org.apache.ignite.IgniteJdbcThinDriver;
-
 import java.sql.*;
 import java.util.Properties;
 import java.util.logging.Logger;
@@ -24,12 +22,10 @@ public class TnDriver implements Driver {
 
     public static final String PORT_PATTERN = "(\\:(?<port>\\d{1,5}))?";
 
-    public static final String DOMAIN_HOST_PATTERN = "(?<domainname>[a-z0-9\\.]+)";
+    public static final String DOMAIN_HOST_PATTERN = "(?<host>[a-z0-9\\.]+)";
 
-    //public static final String IP_HOST_PATTERN = "(?<ip>\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3})";
-
-    public static final String TN_DRIVER_URL_PATTERN = "^" + quote("jdbc:tn://") + "" +
-                                                                    DOMAIN_HOST_PATTERN + "" +
+    public static final String TN_DRIVER_URL_PATTERN = "^" + quote("jdbc:tn://") +
+                                                                    DOMAIN_HOST_PATTERN +
                                                                     PORT_PATTERN;
 
     @Override
@@ -39,14 +35,12 @@ public class TnDriver implements Driver {
         // jdbc:postgresql://localhost/test?user=fred&password=secret&ssl=true
         // jdbc:tn://localhost:11211
 
-
-
         Pattern pattern = Pattern.compile(TN_DRIVER_URL_PATTERN, Pattern.CASE_INSENSITIVE);
 
         Matcher matcher = pattern.matcher(url);
 
         if (matcher.matches()) {
-            String host = matcher.group("domainname");
+            String host = matcher.group("host");
             String port = matcher.group("port");
 
             return new TnConnection(host, Integer.parseInt(port));

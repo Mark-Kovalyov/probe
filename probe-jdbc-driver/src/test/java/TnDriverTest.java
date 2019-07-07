@@ -18,27 +18,24 @@ public class TnDriverTest {
         Matcher matcher = pattern.matcher("jdbc:tn://www.tn.com:8080");
         assertTrue(matcher.matches());
 
-        assertNotNull(matcher.group("domainname"));
+        assertNotNull(matcher.group("host"));
         assertNotNull(matcher.group("port"));
 
-        assertEquals("www.tn.com", matcher.group("domainname"));
+        assertEquals("www.tn.com", matcher.group("host"));
         assertEquals("8080", matcher.group("port"));
     }
 
-    @Ignore
     @Test
     public void testUrlIp() {
-
-        logger.info(":: pattern = " + TN_DRIVER_URL_PATTERN);
 
         Pattern pattern = Pattern.compile(TN_DRIVER_URL_PATTERN, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher("jdbc:tn://127.0.0.1:11211");
         assertTrue(matcher.matches());
 
-        assertNotNull(matcher.group("ip"));
+        assertNotNull(matcher.group("host"));
         assertNotNull(matcher.group("port"));
 
-        assertEquals("127.0.0.1", matcher.group("ip"));
+        assertEquals("127.0.0.1", matcher.group("host"));
         assertEquals("11211", matcher.group("port"));
     }
 

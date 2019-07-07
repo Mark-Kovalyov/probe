@@ -1,5 +1,8 @@
 package mayton.jdbc;
 
+import org.apache.commons.io.input.NullInputStream;
+import org.apache.ignite.client.ClientCache;
+
 import java.io.InputStream;
 import java.io.Reader;
 import java.math.BigDecimal;
@@ -7,27 +10,43 @@ import java.net.URL;
 import java.sql.*;
 import java.sql.Date;
 import java.util.*;
+import java.util.logging.Logger;
 
 import static java.lang.System.currentTimeMillis;
 
 public class TnResultSet implements ResultSet {
 
+    static Logger logger = Logger.getLogger(TnConnection.class.getName());
+
+    ClientCache<String, String[]> result;
+
     Collection<TnBiTemporalEntity> cursor;
+    int cursorPosition;
+
+    TnBiTemporalEntity entity;
 
     Iterator<TnBiTemporalEntity> cursorIterator;
 
     public TnResultSet() {
         cursor = new ArrayList<>();
         Random random = new Random();
-        for(int i=0;i<1000;i++) {
+        for (int i = 0; i < 10; i++) {
             cursor.add(new TnBiTemporalEntity(currentTimeMillis(), -1, random.nextInt(3), 10.0 + random.nextGaussian()));
         }
         cursorIterator = cursor.iterator();
+        cursorPosition = 0;
     }
 
     @Override
     public boolean next() throws SQLException {
-        return cursorIterator.hasNext();
+        boolean res = cursorIterator.hasNext();
+        if (res) {
+            entity = cursorIterator.next();
+            cursorPosition++;
+        } else {
+            entity = null;
+        }
+        return res;
     }
 
     @Override
@@ -42,13 +61,7 @@ public class TnResultSet implements ResultSet {
 
     @Override
     public String getString(int columnIndex) throws SQLException {
-        switch (columnIndex) {
-            case 0 : return "beginTs";
-            case 1 : return "endTs";
-            case 2 : return "key";
-            case 3 : return "value";
-            default: return null;
-        }
+        return "";
     }
 
     @Override
@@ -73,7 +86,15 @@ public class TnResultSet implements ResultSet {
 
     @Override
     public long getLong(int columnIndex) throws SQLException {
-        return 0;
+        switch (columnIndex) {
+            case 1 :
+                return entity.getBeginTs();
+            case 2 :
+                return entity.getEndTs();
+            case 3 :
+                return entity.getKey();
+            default: return 0;
+        }
     }
 
     @Override
@@ -83,12 +104,17 @@ public class TnResultSet implements ResultSet {
 
     @Override
     public double getDouble(int columnIndex) throws SQLException {
-        return 0;
+            switch (columnIndex) {
+                case 4 :
+                    return entity.getValue();
+                default:
+                    return 0.0;
+            }
     }
 
     @Override
     public BigDecimal getBigDecimal(int columnIndex, int scale) throws SQLException {
-        return null;
+        return BigDecimal.ZERO;
     }
 
     @Override
@@ -98,37 +124,37 @@ public class TnResultSet implements ResultSet {
 
     @Override
     public Date getDate(int columnIndex) throws SQLException {
-        return null;
+        return new Date(0);
     }
 
     @Override
     public Time getTime(int columnIndex) throws SQLException {
-        return null;
+        return new Time(0);
     }
 
     @Override
     public Timestamp getTimestamp(int columnIndex) throws SQLException {
-        return null;
+        return new Timestamp(0);
     }
 
     @Override
     public InputStream getAsciiStream(int columnIndex) throws SQLException {
-        return null;
+        return new NullInputStream(0);
     }
 
     @Override
     public InputStream getUnicodeStream(int columnIndex) throws SQLException {
-        return null;
+        return new NullInputStream(0);
     }
 
     @Override
     public InputStream getBinaryStream(int columnIndex) throws SQLException {
-        return null;
+        return new NullInputStream(0);
     }
 
     @Override
     public String getString(String columnLabel) throws SQLException {
-        return null;
+        return "";
     }
 
     @Override
@@ -168,7 +194,7 @@ public class TnResultSet implements ResultSet {
 
     @Override
     public BigDecimal getBigDecimal(String columnLabel, int scale) throws SQLException {
-        return null;
+        return BigDecimal.ZERO;
     }
 
     @Override
@@ -178,32 +204,32 @@ public class TnResultSet implements ResultSet {
 
     @Override
     public Date getDate(String columnLabel) throws SQLException {
-        return null;
+        return new Date(0);
     }
 
     @Override
     public Time getTime(String columnLabel) throws SQLException {
-        return null;
+        return new Time(0);
     }
 
     @Override
     public Timestamp getTimestamp(String columnLabel) throws SQLException {
-        return null;
+        return new Timestamp(0);
     }
 
     @Override
     public InputStream getAsciiStream(String columnLabel) throws SQLException {
-        return null;
+        return new NullInputStream(0);
     }
 
     @Override
     public InputStream getUnicodeStream(String columnLabel) throws SQLException {
-        return null;
+        return new NullInputStream(0);
     }
 
     @Override
     public InputStream getBinaryStream(String columnLabel) throws SQLException {
-        return null;
+        return new NullInputStream(0);
     }
 
     @Override
@@ -598,7 +624,8 @@ public class TnResultSet implements ResultSet {
 
     @Override
     public Object getObject(int columnIndex, Map<String, Class<?>> map) throws SQLException {
-        return null;
+
+        return new Object();
     }
 
     @Override

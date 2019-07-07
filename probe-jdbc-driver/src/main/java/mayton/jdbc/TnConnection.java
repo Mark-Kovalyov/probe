@@ -20,9 +20,13 @@ public class TnConnection implements Connection {
     String schemaName = null;
 
     public TnConnection(String host, int port) {
-        if (port < 0 || port > 65535) throw new IllegalArgumentException("Incorrect port");
+        if (port < 0 || port > 65535) {
+            throw new IllegalArgumentException("Incorrect port");
+        }
+
         ClientConfiguration cfg = new ClientConfiguration().setAddresses(host + ":" + port);
         client = Ignition.startClient(cfg);
+        logger.info(":: connected");
     }
 
     @Override
