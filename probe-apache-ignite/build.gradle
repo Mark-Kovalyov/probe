@@ -17,7 +17,7 @@ application {
 }
 
 ext {
-    igniteVersion = '2.7.0'
+    igniteVersion = '2.7.5'
     igniteHome = '/ignite/2.7.0'
 }
 

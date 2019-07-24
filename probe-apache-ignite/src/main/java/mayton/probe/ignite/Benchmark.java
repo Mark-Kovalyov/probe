@@ -1,8 +1,12 @@
 package mayton.probe.ignite;
 
 import org.apache.ignite.Ignition;
+import org.apache.ignite.cache.CacheAtomicityMode;
 import org.apache.ignite.cache.CachePeekMode;
+import org.apache.ignite.cache.affinity.AffinityFunction;
+import org.apache.ignite.cache.affinity.rendezvous.RendezvousAffinityFunction;
 import org.apache.ignite.client.ClientCache;
+import org.apache.ignite.client.ClientCacheConfiguration;
 import org.apache.ignite.client.IgniteClient;
 import org.apache.ignite.configuration.CacheConfiguration;
 import org.apache.ignite.configuration.ClientConfiguration;
@@ -21,14 +25,29 @@ public class Benchmark {
 
     public static void main(String[] args) {
 
-        ClientConfiguration cfg = new ClientConfiguration().setAddresses("127.0.0.1:10800");
+        ClientConfiguration cfg = new ClientConfiguration().setAddresses(
+                "10.0.0.1:10800",
+                "10.0.0.2:10800");
 
         logger.info("Start");
+
         try (IgniteClient igniteClient = Ignition.startClient(cfg)) {
 
-            final String CACHE_NAME = "benchmark";
+            final String CACHE_NAME = "benchmarkBackup";
 
-            ClientCache<String, Boolean> cache = igniteClient.getOrCreateCache(CACHE_NAME);
+            RendezvousAffinityFunction rendezvousAffinityFunction = new RendezvousAffinityFunction();
+            rendezvousAffinityFunction.setExcludeNeighbors(true);
+            rendezvousAffinityFunction.setPartitions(20);
+
+            ClientCacheConfiguration ccc = new ClientCacheConfiguration()
+                    .setBackups(1)
+                    .setAtomicityMode(CacheAtomicityMode.ATOMIC)
+                    .setName(CACHE_NAME).setA
+
+            ClientCache<String, Boolean> cache = igniteClient.getOrCreateCache(ccc);
+
+
+
 
             logger.info("Current cache.size = {}", cache.size(CachePeekMode.ALL));
 
