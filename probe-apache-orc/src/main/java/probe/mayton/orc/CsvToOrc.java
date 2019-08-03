@@ -67,24 +67,29 @@ public class CsvToOrc {
         conf.set("key", "valyue");
 
         TypeDescription schema = TypeDescription.fromString(
-                "struct<startIpNum:string,"  + // 0
-                        "endIpNum:string,"   + // 1
-                        "country:string,"    + // 2
-                        "region:string,"     + // 3
-                        "city:string,"       + // 4
-                        "postalCode:string," + // 5
-                        "latitude:float,"    + // 6
-                        "longitude:float,"   + // 7
-                        "dmaCode:string,"    + // 8
+                "struct<startIpNum:bigint,"  +
+                        "endIpNum:bigint,"   +
+                        "country:string,"    +
+                        "region:string,"     +
+                        "city:string,"       +
+                        "postalCode:string," +
+                        "latitude:float,"    +
+                        "longitude:float,"   +
+                        "dmaCode:string,"    +
                         "areaCode:string>");
 
         Properties props = getProps();
 
         String maxMindCsvFile = props.getProperty("maxMindCsvFile");
 
-        CSVParser csvParser = new CSVParser(
-                new FileReader(maxMindCsvFile),
-                CSVFormat.DEFAULT);
+        FileReader reader = new FileReader(maxMindCsvFile);
+
+        CSVParser csvParser = CSVFormat.DEFAULT
+                .withQuote('"')
+                .withDelimiter(',')
+                .withSkipHeaderRecord(true)
+                .withFirstRecordAsHeader()
+                .parse(reader);
 
         int cnt = 0;
 
@@ -96,30 +101,52 @@ public class CsvToOrc {
                         .rowIndexStride(0)
                          /* Set the distance between entries in the row index. The minimum value is 1000 to prevent the
                           * index from overwhelming the data. If the stride is set to 0, no indexes will be included in the file.*/
-                        .compress(CompressionKind.ZLIB) // { SNAPPY | ZLIB | NONE | LZO | LZ4 }
+                        .compress(CompressionKind.NONE) // { SNAPPY | ZLIB | NONE | LZO | LZ4 }
         );
+
+        // Original CSV :  432 144 345
+        // Orc.NONE     :   92 272 349
+        // Orc.ZLIB     :   38 126 025
 
         VectorizedRowBatch batch = schema.createRowBatch();
 
-            BytesColumnVector startIpNum = (BytesColumnVector) batch.cols[0];
-            BytesColumnVector endIpNum = (BytesColumnVector) batch.cols[0];
-            DoubleColumnVector latitude = (DoubleColumnVector) batch.cols[6];
-            DoubleColumnVector longitude = (DoubleColumnVector) batch.cols[7];
+            LongColumnVector   startIpNum = (LongColumnVector) batch.cols[0];
+            LongColumnVector   endIpNum   = (LongColumnVector) batch.cols[1];
+            BytesColumnVector  country    = (BytesColumnVector) batch.cols[2];
+            BytesColumnVector  region     = (BytesColumnVector) batch.cols[3];
+            BytesColumnVector  city       = (BytesColumnVector) batch.cols[4];
+            BytesColumnVector  postalCode = (BytesColumnVector) batch.cols[5];
+            DoubleColumnVector latitude   = (DoubleColumnVector) batch.cols[6];
+            DoubleColumnVector longitude  = (DoubleColumnVector) batch.cols[7];
+            BytesColumnVector  dmaCode    = (BytesColumnVector) batch.cols[8];
+            BytesColumnVector  areaCode   = (BytesColumnVector) batch.cols[9];
 
 
         Iterator<CSVRecord> i = csvParser.iterator();
         while (i.hasNext()) {
             CSVRecord record = i.next();
             int row = batch.size++;
-            startIpNum.vector[row] = record.get(0).getBytes();
-            endIpNum.vector[row] = record.get(0).getBytes();
-            //z.vector[row] = 3.0 + random.nextGaussian();
+            startIpNum.vector[row] = ip(record.get(0));
+            endIpNum.vector[row]   = ip(record.get(1));
+            country.vector[row]    = record.get(2).getBytes();
+            region.vector[row]     = record.get(3).getBytes();
+            city.vector[row]       = record.get(4).getBytes();
+            postalCode.vector[row] = record.get(5).getBytes();
+            latitude.vector[row]   = Double.parseDouble(record.get(6));
+            longitude.vector[row]  = Double.parseDouble(record.get(7));
+            dmaCode.vector[row]    = record.get(8).getBytes();
+            areaCode.vector[row]   = record.get(9).getBytes();
 
             if (batch.size == batch.getMaxSize()) {
                 writer.addRowBatch(batch);
                 batch.reset();
             }
             cnt++;
+        }
+
+        if (batch.size != 0) {
+            writer.addRowBatch(batch);
+            batch.reset();
         }
 
         writer.close();
