@@ -6,10 +6,7 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.hive.ql.exec.vector.BytesColumnVector;
-import org.apache.hadoop.hive.ql.exec.vector.DoubleColumnVector;
-import org.apache.hadoop.hive.ql.exec.vector.LongColumnVector;
-import org.apache.hadoop.hive.ql.exec.vector.VectorizedRowBatch;
+import org.apache.hadoop.hive.ql.exec.vector.*;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.apache.orc.CompressionKind;
@@ -23,22 +20,9 @@ import java.util.Properties;
 
 import static probe.mayton.orc.Utils.ip;
 
-public class CsvToOrc {
+public class CsvToStructuredOrc {
 
-    static Logger logger = Logger.getLogger(CsvToOrc.class);
-
-    // Sample:
-    // -----------------------------------------------------------------------------------------
-    //startIpNum,endIpNum,country,region,city,postalCode,latitude,longitude,dmaCode,areaCode
-    //1.0.0.0,1.7.255.255,"AU","","","",-27.0000,133.0000,,
-    //1.9.0.0,1.9.255.255,"MY","","","",2.5000,112.5000,,
-    //1.10.10.0,1.10.10.255,"AU","","","",-27.0000,133.0000,,
-    //1.11.0.0,1.11.255.255,"KR","","","",37.0000,127.5000,,
-    //1.12.0.0,1.15.255.255,"CN","","","",35.0000,105.0000,,
-    //1.16.0.0,1.19.255.255,"KR","","","",37.0000,127.5000,,
-    //1.21.0.0,1.21.255.255,"JP","","","",36.0000,138.0000,,
-    //1.22.0.0,1.22.255.255,"IN","","","",20.0000,77.0000,,
-    //1.23.0.0,1.23.15.255,"IN","02","Hyderabad","",17.3753,78.4744,,
+    static Logger logger = Logger.getLogger(CsvToStructuredOrc.class);
 
     public static Properties getProps() throws IOException {
         Properties properties = new Properties();
@@ -57,14 +41,12 @@ public class CsvToOrc {
         conf.set("key", "valyue");
 
         TypeDescription schema = TypeDescription.fromString(
-                "struct<startIpNum:bigint,"  +
-                        "endIpNum:bigint,"   +
+                "struct<ipBlock:struct<startIpNum:bigint,endIpNum:bigint>,"   +
                         "country:string,"    +
                         "region:string,"     +
                         "city:string,"       +
                         "postalCode:string," +
-                        "latitude:float,"    +
-                        "longitude:float,"   +
+                        "coordinates:struct<latitude:float,longitude:float>,"   +
                         "dmaCode:string,"    +
                         "areaCode:string>");
 
@@ -84,32 +66,29 @@ public class CsvToOrc {
         int cnt = 0;
 
         Writer writer = OrcFile.createWriter(
-                new Path("files/maxmind.orc"),
+                new Path("files/maxmind-structured.orc"),
                 OrcFile.writerOptions(conf)
                         .setSchema(schema)
                         .overwrite(true)
                         .rowIndexStride(0)
-                         /* Set the distance between entries in the row index. The minimum value is 1000 to prevent the
-                          * index from overwhelming the data. If the stride is set to 0, no indexes will be included in the file.*/
-                        .compress(CompressionKind.NONE) // { SNAPPY | ZLIB | NONE | LZO | LZ4 }
+                        .compress(CompressionKind.NONE)
         );
-
-        // Original CSV :  432 144 345
-        // Orc.NONE     :   92 272 349
-        // Orc.ZLIB     :   38 126 025
 
         VectorizedRowBatch batch = schema.createRowBatch();
 
-            LongColumnVector   startIpNum = (LongColumnVector) batch.cols[0];
-            LongColumnVector   endIpNum   = (LongColumnVector) batch.cols[1];
-            BytesColumnVector  country    = (BytesColumnVector) batch.cols[2];
-            BytesColumnVector  region     = (BytesColumnVector) batch.cols[3];
-            BytesColumnVector  city       = (BytesColumnVector) batch.cols[4];
-            BytesColumnVector  postalCode = (BytesColumnVector) batch.cols[5];
-            DoubleColumnVector latitude   = (DoubleColumnVector) batch.cols[6];
-            DoubleColumnVector longitude  = (DoubleColumnVector) batch.cols[7];
-            BytesColumnVector  dmaCode    = (BytesColumnVector) batch.cols[8];
-            BytesColumnVector  areaCode   = (BytesColumnVector) batch.cols[9];
+        LongColumnVector   startIpNum = (LongColumnVector) batch.cols[0];
+        LongColumnVector   endIpNum   = (LongColumnVector) batch.cols[1];
+        BytesColumnVector  country    = (BytesColumnVector) batch.cols[2];
+        BytesColumnVector  region     = (BytesColumnVector) batch.cols[3];
+        BytesColumnVector  city       = (BytesColumnVector) batch.cols[4];
+        BytesColumnVector  postalCode = (BytesColumnVector) batch.cols[5];
+        StructColumnVector coordinates = new StructColumnVector();
+
+        DoubleColumnVector latitude   = (DoubleColumnVector) batch.cols[6];
+        DoubleColumnVector longitude  = (DoubleColumnVector) batch.cols[7];
+        BytesColumnVector  dmaCode    = (BytesColumnVector) batch.cols[8];
+        BytesColumnVector  areaCode   = (BytesColumnVector) batch.cols[9];
+
 
 
         Iterator<CSVRecord> i = csvParser.iterator();
