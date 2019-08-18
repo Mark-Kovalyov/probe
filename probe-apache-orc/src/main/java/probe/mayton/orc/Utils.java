@@ -1,8 +1,17 @@
 package probe.mayton.orc;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
+
 public class Utils {
 
-    public static int ip(String ips) {
+
+
+    public static int ip(@NotNull String ips) {
         int[] ip = new int[4];
         String[] parts = ips.split("\\.");
         for (int i = 0; i < 4; i++) {

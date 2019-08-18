@@ -1,6 +1,5 @@
 package probe.mayton.orc;
 
-import com.google.common.primitives.Bytes;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -13,6 +12,7 @@ import org.apache.orc.CompressionKind;
 import org.apache.orc.OrcFile;
 import org.apache.orc.TypeDescription;
 import org.apache.orc.Writer;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
 import java.util.Iterator;
@@ -24,6 +24,7 @@ public class CsvToStructuredOrc {
 
     static Logger logger = Logger.getLogger(CsvToStructuredOrc.class);
 
+    @NotNull
     public static Properties getProps() throws IOException {
         Properties properties = new Properties();
         if (new File("sensitive.properties").exists()) {
@@ -38,9 +39,11 @@ public class CsvToStructuredOrc {
         PropertyConfigurator.configure("log4j.properties");
 
         Configuration conf = new Configuration();
-        conf.set("key", "valyue");
 
         TypeDescription schema = TypeDescription.fromString(
+                "struct<ipBlock:struct<startIpNum:bigint,endIpNum:bigint>>");
+
+        /*TypeDescription schema = TypeDescription.fromString(
                 "struct<ipBlock:struct<startIpNum:bigint,endIpNum:bigint>,"   +
                         "country:string,"    +
                         "region:string,"     +
@@ -48,7 +51,7 @@ public class CsvToStructuredOrc {
                         "postalCode:string," +
                         "coordinates:struct<latitude:float,longitude:float>,"   +
                         "dmaCode:string,"    +
-                        "areaCode:string>");
+                        "areaCode:string>");*/
 
         Properties props = getProps();
 
@@ -76,19 +79,11 @@ public class CsvToStructuredOrc {
 
         VectorizedRowBatch batch = schema.createRowBatch();
 
+
+
         LongColumnVector   startIpNum = (LongColumnVector) batch.cols[0];
         LongColumnVector   endIpNum   = (LongColumnVector) batch.cols[1];
-        BytesColumnVector  country    = (BytesColumnVector) batch.cols[2];
-        BytesColumnVector  region     = (BytesColumnVector) batch.cols[3];
-        BytesColumnVector  city       = (BytesColumnVector) batch.cols[4];
-        BytesColumnVector  postalCode = (BytesColumnVector) batch.cols[5];
-        StructColumnVector coordinates = new StructColumnVector();
-
-        DoubleColumnVector latitude   = (DoubleColumnVector) batch.cols[6];
-        DoubleColumnVector longitude  = (DoubleColumnVector) batch.cols[7];
-        BytesColumnVector  dmaCode    = (BytesColumnVector) batch.cols[8];
-        BytesColumnVector  areaCode   = (BytesColumnVector) batch.cols[9];
-
+        StructColumnVector ipBlock    = new StructColumnVector(2, startIpNum, endIpNum);
 
 
         Iterator<CSVRecord> i = csvParser.iterator();
@@ -97,14 +92,14 @@ public class CsvToStructuredOrc {
             int row = batch.size++;
             startIpNum.vector[row] = ip(record.get(0));
             endIpNum.vector[row]   = ip(record.get(1));
-            country.vector[row]    = record.get(2).getBytes();
+            /*country.vector[row]    = record.get(2).getBytes();
             region.vector[row]     = record.get(3).getBytes();
             city.vector[row]       = record.get(4).getBytes();
             postalCode.vector[row] = record.get(5).getBytes();
             latitude.vector[row]   = Double.parseDouble(record.get(6));
             longitude.vector[row]  = Double.parseDouble(record.get(7));
             dmaCode.vector[row]    = record.get(8).getBytes();
-            areaCode.vector[row]   = record.get(9).getBytes();
+            areaCode.vector[row]   = record.get(9).getBytes();*/
 
             if (batch.size == batch.getMaxSize()) {
                 writer.addRowBatch(batch);
