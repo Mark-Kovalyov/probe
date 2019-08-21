@@ -7,9 +7,24 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-public class Utils {
+public final class Utils {
 
+    private Utils() {
 
+    }
+
+    @NotNull
+    public static Properties getProps() throws IOException {
+        Properties properties = new Properties();
+        if (new File("sensitive.properties").exists()) {
+            properties.load(new FileInputStream("sensitive.properties"));
+        } else {
+            properties.put("omskCsvFile",    "~/omskCsvFile.csv");
+            properties.put("maxMindCsvFile", "~/maxMindCsvFile.csv");
+            properties.put("primeOrcFile",   "~/prime-orc-file.csv");
+        }
+        return properties;
+    }
 
     public static int ip(@NotNull String ips) {
         int[] ip = new int[4];

@@ -43,7 +43,7 @@ public class CsvToStructuredOrc {
         TypeDescription schema = TypeDescription.fromString(
                 "struct<ipBlock:struct<startIpNum:bigint,endIpNum:bigint>>");
 
-        /*TypeDescription schema = TypeDescription.fromString(
+        /*
                 "struct<ipBlock:struct<startIpNum:bigint,endIpNum:bigint>,"   +
                         "country:string,"    +
                         "region:string,"     +
@@ -51,7 +51,8 @@ public class CsvToStructuredOrc {
                         "postalCode:string," +
                         "coordinates:struct<latitude:float,longitude:float>,"   +
                         "dmaCode:string,"    +
-                        "areaCode:string>");*/
+                        "areaCode:string>
+                        */
 
         Properties props = getProps();
 
@@ -68,30 +69,28 @@ public class CsvToStructuredOrc {
 
         int cnt = 0;
 
-        Writer writer = OrcFile.createWriter(
+        try(Writer writer = OrcFile.createWriter(
                 new Path("files/maxmind-structured.orc"),
                 OrcFile.writerOptions(conf)
                         .setSchema(schema)
                         .overwrite(true)
                         .rowIndexStride(0)
                         .compress(CompressionKind.NONE)
-        );
+        )) {
 
-        VectorizedRowBatch batch = schema.createRowBatch();
-
-
-
-        LongColumnVector   startIpNum = (LongColumnVector) batch.cols[0];
-        LongColumnVector   endIpNum   = (LongColumnVector) batch.cols[1];
-        StructColumnVector ipBlock    = new StructColumnVector(2, startIpNum, endIpNum);
+            VectorizedRowBatch batch = schema.createRowBatch();
 
 
-        Iterator<CSVRecord> i = csvParser.iterator();
-        while (i.hasNext()) {
-            CSVRecord record = i.next();
-            int row = batch.size++;
-            startIpNum.vector[row] = ip(record.get(0));
-            endIpNum.vector[row]   = ip(record.get(1));
+            LongColumnVector startIpNum = (LongColumnVector) batch.cols[0];
+            LongColumnVector endIpNum = (LongColumnVector) batch.cols[1];
+            //StructColumnVector ipBlock = new StructColumnVector(2, startIpNum, endIpNum);
+
+            Iterator<CSVRecord> i = csvParser.iterator();
+            while (i.hasNext()) {
+                CSVRecord record = i.next();
+                int row = batch.size++;
+                startIpNum.vector[row] = ip(record.get(0));
+                endIpNum.vector[row] = ip(record.get(1));
             /*country.vector[row]    = record.get(2).getBytes();
             region.vector[row]     = record.get(3).getBytes();
             city.vector[row]       = record.get(4).getBytes();
@@ -101,19 +100,19 @@ public class CsvToStructuredOrc {
             dmaCode.vector[row]    = record.get(8).getBytes();
             areaCode.vector[row]   = record.get(9).getBytes();*/
 
-            if (batch.size == batch.getMaxSize()) {
+                if (batch.size == batch.getMaxSize()) {
+                    writer.addRowBatch(batch);
+                    batch.reset();
+                }
+                cnt++;
+            }
+
+            if (batch.size != 0) {
                 writer.addRowBatch(batch);
                 batch.reset();
             }
-            cnt++;
-        }
 
-        if (batch.size != 0) {
-            writer.addRowBatch(batch);
-            batch.reset();
         }
-
-        writer.close();
 
         logger.info("Finished. Records : " + cnt);
 

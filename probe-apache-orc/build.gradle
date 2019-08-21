@@ -24,12 +24,12 @@ dependencies {
 
 }
 
-/*task syncProps(type: Copy) {
-    from file("sensitive.properties")
-    into file("$buildDir/")
-}*/
+task(omsk2orc, dependsOn: 'classes', type: JavaExec) {
+    main = 'probe.mayton.orc.OmskToOrc'
+    classpath = sourceSets.main.runtimeClasspath
+}
 
-task(csv2orc, dependsOn: 'classes', type: JavaExec) {
-    main = 'probe.mayton.orc.CsvToOrc'
+task(maxMind2orc, dependsOn: 'classes', type: JavaExec) {
+    main = 'probe.mayton.orc.MaxMindCsvToOrc'
     classpath = sourceSets.main.runtimeClasspath
 }
