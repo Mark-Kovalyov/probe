@@ -74,7 +74,7 @@ public class StreamableLoader  {
                 try {
                     LockSupport.parkNanos(3 * 1000_000_000L);
                 } catch (Exception ex) {
-                };
+                }
             }
         }).start();
 

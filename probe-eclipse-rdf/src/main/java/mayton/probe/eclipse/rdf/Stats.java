@@ -17,6 +17,8 @@ import static org.apache.commons.lang3.time.DurationFormatUtils.formatDuration;
 
 public class Stats {
 
+    private String units;
+
     private Long amount;
 
     private long position;
@@ -69,5 +71,13 @@ public class Stats {
                 timeRemain == null ? "?" :
                         formatDuration(timeRemain, "H:mm:ss", true)
         );
+    }
+
+    public String getUnits() {
+        return units;
+    }
+
+    public void setUnits(String units) {
+        this.units = units;
     }
 }
