@@ -1,0 +1,19 @@
+plugins {
+    id 'java'
+}
+
+apply plugin: "maven"
+
+group 'mayton.libs'
+version '1.1'
+
+sourceCompatibility = 11
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.apache.commons:commons-lang3:3.9'
+    compile 'commons-io:commons-io:2.6'
+}

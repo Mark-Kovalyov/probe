@@ -54,7 +54,10 @@ public class StreamStatementHandler implements RDFHandler, StreamStatementHandle
         String pred = predRes.toString();
         String obj = objVal.stringValue();
 
-        predMap.computeIfAbsent(pred, (p) -> predMap.put(p, 1));
+        // TODO: Refactor with Syncrhonized map abilities
+        synchronized (predMap) {
+            predMap.put(pred, 1);
+        }
 
         Model model = dataset.getDefaultModel();
 

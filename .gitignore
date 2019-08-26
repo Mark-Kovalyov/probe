@@ -39,4 +39,4 @@ secured.*
 dependency-reduced-pom.xml
 
 # All sensitive information
-sentitive.properties
+sensitive.properties

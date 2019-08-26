@@ -1,5 +1,6 @@
 package mayton.probe.eclipse.rdf;
 
+import mayton.lib.SofarTracker;
 import org.apache.commons.io.input.CountingInputStream;
 import org.eclipse.rdf4j.model.Model;
 import org.eclipse.rdf4j.rio.RDFFormat;
@@ -37,11 +38,10 @@ public class Loader {
             logger.info(":: [2.1] Started");
 
             new Thread(() -> {
-                Stats stats = new Stats();
-                stats.setAmount(new File(SRC_PATH + ORGANIZATIONS_GZIP).length());
+                SofarTracker sofarTracker = SofarTracker.createFileSizeTracker(new File(SRC_PATH + ORGANIZATIONS_GZIP).length());
                 while (true) {
-                    stats.setPosition(cis.getByteCount());
-                    logger.info(stats.formatStats());
+                    sofarTracker.update(cis.getByteCount());
+                    logger.info(sofarTracker.toString());
                     try {
                         LockSupport.parkNanos(3 * 1000_000_000L);
                     } catch (Exception ex) {
