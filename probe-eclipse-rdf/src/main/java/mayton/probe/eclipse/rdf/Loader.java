@@ -9,12 +9,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.Properties;
 import java.util.concurrent.locks.LockSupport;
 import java.util.zip.GZIPInputStream;
-
-import static mayton.probe.eclipse.rdf.Constants.*;
 
 public class Loader {
 
@@ -23,9 +23,13 @@ public class Loader {
 
         public static void main(String[] args) throws Throwable {
 
+            Properties props = PropertyUtils.getDefaultProperties();
+            String inputFile = props.getProperty("inputFile");
+            String dataSetPath = props.getProperty("dataSetPath");
+
             logger.info(":: [1] Start");
 
-            CountingInputStream cis = new CountingInputStream(new FileInputStream(SRC_PATH + ASSET_GZIP));
+            CountingInputStream cis = new CountingInputStream(new FileInputStream(inputFile));
 
             InputStream is = new GZIPInputStream(cis);
 
@@ -33,19 +37,17 @@ public class Loader {
 
             logger.info(":: [2] Press any key to start");
 
-            // System.in.read();
-
             logger.info(":: [2.1] Started");
 
             new Thread(() -> {
-                SofarTracker sofarTracker = SofarTracker.createFileSizeTracker(new File(SRC_PATH + ORGANIZATIONS_GZIP).length());
+                SofarTracker sofarTracker = SofarTracker.createFileSizeTracker(new File(inputFile).length());
                 while (true) {
                     sofarTracker.update(cis.getByteCount());
                     logger.info(sofarTracker.toString());
                     try {
                         LockSupport.parkNanos(3 * 1000_000_000L);
                     } catch (Exception ex) {
-                    };
+                    }
                 }
             }).start();
 

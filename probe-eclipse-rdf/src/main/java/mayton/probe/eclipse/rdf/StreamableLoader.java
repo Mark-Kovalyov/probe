@@ -1,6 +1,7 @@
 package mayton.probe.eclipse.rdf;
 
 import mayton.lib.SofarTracker;
+import mayton.probe.eclipse.rdf.jmx.StreamStatementHandler;
 import org.apache.commons.io.input.CountingInputStream;
 import org.apache.jena.query.Dataset;
 import org.apache.jena.query.TxnType;
@@ -31,9 +32,7 @@ public class StreamableLoader  {
 
     public static void main(String[] args) throws Exception {
 
-        Properties props = new Properties();
-        props.load(new FileInputStream("sensitive.properties"));
-
+        Properties props = PropertyUtils.getDefaultProperties();
         String inputFile = props.getProperty("inputFile");
         String dataSetPath = props.getProperty("dataSetPath");
 
@@ -83,7 +82,7 @@ public class StreamableLoader  {
             parser.setParserConfig(settings);
             parser.setParseErrorListener(new ParseErrorLogger());
 
-            StreamStatementHandler handler = new StreamStatementHandler();
+            StreamStatementHandler handler = new StreamStatementHandler(10_000);
 
             mbs.registerMBean(handler,
                     new ObjectName("mayton.probe.eclipse.rdf:name=StreamableLoader"));
@@ -107,9 +106,9 @@ public class StreamableLoader  {
 
             logger.info("::[6]");
 
-            ReportHelper.printMap("Subjects   map:", handler.subjMap);
-            ReportHelper.printMap("Predicates map:", handler.predMap);
-            ReportHelper.printMap("Object     map:", handler.objMap);
+            ReportUtils.printMap("Subjects   map:", handler.subjMap);
+            ReportUtils.printMap("Predicates map:", handler.predMap);
+            ReportUtils.printMap("Object     map:", handler.objMap);
 
             dataset.commit();
             dataset.close();

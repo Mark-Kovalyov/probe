@@ -4,6 +4,7 @@ import org.apache.jena.ontology.OntClass;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Resource;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -14,6 +15,7 @@ import org.junit.Test;
  */
 public class OntologyTest {
 
+    @Ignore
     @Test
     public void test() {
         Model model = ModelFactory.createOntologyModel();

@@ -1,4 +1,4 @@
-package mayton.probe.eclipse.rdf;
+package mayton.probe.eclipse.rdf.jmx;
 
 /////////////////////////////////////////
 import org.apache.jena.query.Dataset;
@@ -24,9 +24,15 @@ public class StreamStatementHandler implements RDFHandler, StreamStatementHandle
 
     private Dataset dataset;
 
-    public Map<String,Integer> subjMap = new HashMap<>();
-    public Map<String,Integer> predMap = new HashMap<>();
-    public Map<String,Integer> objMap  = new HashMap<>();
+    public Map<String,Integer> subjMap;
+    public Map<String,Integer> predMap;
+    public Map<String,Integer> objMap;
+
+    public StreamStatementHandler(int approxMapSize) {
+        subjMap = new HashMap<>(approxMapSize);
+        predMap = new HashMap<>(approxMapSize);
+        objMap = new HashMap<>(approxMapSize);
+    }
 
     @Override
     public void startRDF() throws RDFHandlerException {

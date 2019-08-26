@@ -1,11 +1,12 @@
 package mayton.probe.eclipse.rdf;
 
+import mayton.probe.eclipse.rdf.jmx.StreamStatementHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
-public class ReportHelper {
+public class ReportUtils {
 
     static Logger logger = LoggerFactory.getLogger(StreamStatementHandler.class);
 

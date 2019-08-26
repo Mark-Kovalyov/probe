@@ -11,6 +11,7 @@ import org.apache.jena.rdf.model.RDFWriter;
 import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.riot.RDFFormat;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.*;
@@ -22,6 +23,7 @@ import static org.junit.Assert.assertTrue;
 
 public class MemGraphTest {
 
+    @Ignore
     @Test
     public void testTriple(){
 
