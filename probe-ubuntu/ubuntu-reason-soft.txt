@@ -1,0 +1,85 @@
+# System
+
+apt install -y mc tmux htop zfsutils-linux tree \
+               btrfs-progs \
+               nrg2iso \
+               unrar-free unrar \
+               openssh-server \
+               hexedit 
+
+# Crypto
+
+apt install -y steghide
+
+# Steganography
+
+apt install -y steghide \
+               libimage-exiftool-perl \
+               binwalk \
+               foremost \
+               pngcheck
+
+
+# Disk tools
+
+apt install -y smartmontools \
+               fdupes
+
+docker
+
+# Programming
+
+apt install -y gcc clang \
+               nodejs elixir \
+               openjdk-11-jdk-headless \
+               hugs cabal-install haskell-stack \
+               swi-prolog \
+               gprolog \
+               clisp \
+               cmake \
+               jq \
+               python-pip
+
+
+# Before ORC-utils compiled
+
+apt-get install -y cmake gcc g++ git libsasl2-dev libssl-dev make tzdata
+
+apt install -y git subversion
+
+wget https://dl.google.com/go/go1.12.6.linux-amd64.tar.gz
+
+# DBMS (PG,sqlite)
+
+apt install -y postgresql-client-common 
+apt install -y postgresql postgresql-contrib
+
+# Audio
+
+apt install -y lame flac mpg321 sox
+
+# Archivators
+
+apt install -y p7zip-full zpaq
+
+# Network
+
+apt install -y nmap net-tools 
+                    aircrack-ng
+                    nfs-kernel-server
+                    arp-scan
+
+
+# Math
+
+apt install -y octave gnuplot-x11
+
+# Ninnx
+
+apt install -y nginx-core \
+               memcached
+
+
+# Video
+
+apt install -y ffmpeg
