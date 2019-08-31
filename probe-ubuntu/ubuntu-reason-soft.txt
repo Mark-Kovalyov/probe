@@ -64,9 +64,9 @@ apt install -y p7zip-full zpaq
 
 # Network
 
-apt install -y nmap net-tools 
-                    aircrack-ng
-                    nfs-kernel-server
+apt install -y nmap net-tools \
+                    aircrack-ng \
+                    nfs-kernel-server \
                     arp-scan
 
 
