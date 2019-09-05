@@ -10,11 +10,23 @@ def fibo(a : Int, b : Int) : Stream[Int] = a #:: (if (a < 0x7FFFFFFF) fibo(b, a 
 
 fibo(1,1).force
 
-// 
-// 10 ^ 308 .... 2 ^ 2048
+// Factorial
 
-// 10 ^ 3        2 ^ 10 =                     1 024
-// 10 ^ 5        2 ^ 16 =                    16 384
-// 10 ^ 10       2 ^ 31 =             2 147 483 648
-// 10 ^ 19       2 ^ 63 = 9 223 372 036 854 775 807
-// 	
+def fact(a : Int) : Int = {
+	var prod = 1
+	for(x <- 1 to a) prod = prod * x
+	prod
+}
+
+def fact(x: BigInt): BigInt = {
+
+    @tailrec 
+    def facttail(x: BigInt, accum: BigInt): BigInt =
+      if (x == 0)
+        accum
+      else
+        facttail(x - 1, accum * x)
+
+    facttail(x, 1)
+}
+
