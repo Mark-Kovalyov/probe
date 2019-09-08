@@ -1,6 +1,6 @@
 package otfried.org
 
-object lists {
+object Lists {
 
   def main(args : Array[String]) : Unit = {
 

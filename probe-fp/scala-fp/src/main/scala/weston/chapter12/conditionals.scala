@@ -1,5 +1,5 @@
 package weston.chapter12.conditionals
 
-class conditionals {
-
+object conditionals {
+  
 }

@@ -1,12 +1,12 @@
 package weston.chapter10
 
-object anonymousFunc {
+object AnonymousFunc {
 
   def f1 () : Unit = {
-    (a: String, b: String) => {
+    /*(a: String, b: String) => {
     val comparison = a.compare (b)
     comparison
-    }
+    }*/
   }
 
 }

@@ -1,6 +1,6 @@
 package weston.chapter10
 
-object lambdasVsClosures {
+object LambdasVsClosures {
 
   // A closure is a special type of lambda. It’s an anonymous function but it also captures
   //something from its environment when created.
