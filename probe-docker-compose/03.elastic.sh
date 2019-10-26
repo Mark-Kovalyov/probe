@@ -11,4 +11,4 @@ docker run -d \
   -e "discovery.type=single-node" \
   -e "ES_JAVA_OPTS=-Xms512m -Xmx512m" \
   -v /nosql/elastic/data:/usr/share/elasticsearch/data \
-  elasticsearch:7.2.0
+  elasticsearch:7.4.0
