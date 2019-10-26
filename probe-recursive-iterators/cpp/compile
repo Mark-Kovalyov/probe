@@ -1,0 +1,10 @@
+#!/bin/bash
+
+clang++ TreeIterator.cpp \
+        -o TreeIterator \
+        -std=c++14 \
+        -I /usr/local/include/boost/ \
+        -l boost_context \
+        -l boost_system \
+        -l boost_thread \
+        -l pthread
