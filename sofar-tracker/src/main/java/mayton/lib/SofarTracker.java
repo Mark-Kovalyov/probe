@@ -17,6 +17,14 @@ public class SofarTracker {
     private static final String UNKNOWN_INTERVAL_PLACEHOLDER = "??:??:??";
     private static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
+    public long getSize() {
+        return size;
+    }
+
+    public long getPosition() {
+        return position;
+    }
+
     enum UnitTypes {
         UNITS, BYTES
     }
@@ -46,6 +54,7 @@ public class SofarTracker {
         this.units = units;
         this.size = size;
         this.startTime = System.currentTimeMillis();
+        this.currentTime = startTime;
         this.unitType = unitType;
     }
 
