@@ -19,7 +19,7 @@ import java.util.Map;
 
 import static mayton.semanticweb.Constants.TABLE_NAME;
 
-public class AnalyzerHandler implements RDFHandler {
+public class AnalyzerHandler implements RDFHandler, Trackable {
 
     public SofarTracker sofarTracker;
 
@@ -30,8 +30,7 @@ public class AnalyzerHandler implements RDFHandler {
     //          key       filteredName    xsd:dataType
     private Map<IRI, Pair<String,         String>> predicates = new LinkedHashMap<>(24);
 
-    public AnalyzerHandler(SofarTracker sofarTracker) {
-        this.sofarTracker = sofarTracker;
+    public AnalyzerHandler() {
         cnt = 0;
     }
 
@@ -90,5 +89,10 @@ public class AnalyzerHandler implements RDFHandler {
 
     public Map<IRI, Pair<String, String>> getPredicates() {
         return Collections.unmodifiableMap(predicates);
+    }
+
+    @Override
+    public void bind(SofarTracker sofarTracker) {
+        this.sofarTracker = sofarTracker;
     }
 }

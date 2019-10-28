@@ -1,10 +1,11 @@
 package mayton.semanticweb;
 
+import mayton.lib.SofarTracker;
 import org.eclipse.rdf4j.model.Statement;
 import org.eclipse.rdf4j.rio.RDFHandler;
 import org.eclipse.rdf4j.rio.RDFHandlerException;
 
-public class CountingHandler implements RDFHandler {
+public class CountingHandler implements RDFHandler, Trackable {
 
     private long statements = 0;
 
@@ -35,5 +36,10 @@ public class CountingHandler implements RDFHandler {
 
     public long getStatements() {
         return statements;
+    }
+
+    @Override
+    public void bind(SofarTracker sofarTracker) {
+
     }
 }

@@ -9,16 +9,18 @@ import org.eclipse.rdf4j.rio.Rio;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
 import java.io.*;
 import java.util.Map;
 import java.util.Properties;
+import java.util.UUID;
 
 
 public class TRLoader {
 
     static Logger logger = LoggerFactory.getLogger(TRLoader.class);
 
-    public static long statements(InputStream inputStream, RDFFormat rdfFormat, String baseUri) throws IOException {
+    public static long countStatements(InputStream inputStream, RDFFormat rdfFormat, String baseUri) throws IOException {
         logger.info(":: Estimation");
         /*RDFParser rdfParser = Rio.createParser(rdfFormat);
         CountingHandler countingHandler = new CountingHandler();
@@ -29,7 +31,7 @@ public class TRLoader {
         return 42_520_959;
     }
 
-    public static Map<IRI, Pair<String, String>> processTRDDLCreator(InputStream inputStream, long statements, RDFFormat rdfFormat, String namespace) throws Exception {
+    public static Map<IRI, Pair<String, String>> ddlAndPredicates(InputStream inputStream, long statements, RDFFormat rdfFormat, String namespace) throws Exception {
 
         logger.info(":: process DDL for table");
 
@@ -39,9 +41,10 @@ public class TRLoader {
 
         logger.info("{}", sofarTracker.toString());
 
-        AnalyzerHandler trddl = new AnalyzerHandler(sofarTracker);
+        AnalyzerHandler analyzerHandler = new AnalyzerHandler();
+        analyzerHandler.bind(sofarTracker);
 
-        rdfParser.setRDFHandler(trddl);
+        rdfParser.setRDFHandler(analyzerHandler);
 
         new Thread(new SofarWatchDog(sofarTracker)).start();
 
@@ -49,53 +52,60 @@ public class TRLoader {
 
         logger.info(":: finish processing DDL");
 
-        return trddl.getPredicates();
+        return analyzerHandler.getPredicates();
 
     }
 
-    public static long processDatabaseLoader(InputStream inputStream, long statements, RDFFormat rdfFormat, Map<IRI, Pair<String, String>> predicates, String namespace) throws Exception {
+    public static long load(@Nonnull InputStream inputStream, long statements, RDFFormat rdfFormat, Map<IRI, Pair<String, String>> predicates, String namespace, PrintWriter pw) throws Exception {
 
-        logger.info(":: start processing database loading");
+        logger.info(":: start loading");
 
-        TRDatabaseSQLWriterHandler handler = new TRDatabaseSQLWriterHandler(predicates, new PrintWriter(("sql/out.sql")));
-
+        TRDatabaseSQLWriterHandler handler = new TRDatabaseSQLWriterHandler(predicates, pw);
+        SofarTracker sofarTracker = SofarTracker.createUnitLikeTracker("statements", statements);
+        handler.bind(sofarTracker);
         RDFParser rdfParser = Rio.createParser(rdfFormat);
-
         rdfParser.setRDFHandler(handler);
+        new Thread(new SofarWatchDog(sofarTracker)).start();
 
         rdfParser.parse(inputStream, namespace);
 
+        logger.info(":: finish loading");
+
+        // TODO add row counter
         return 0L;
     }
 
 
-    public static void processFile(String path, String namespace) throws Exception {
+    public static void processFile(String path, String namespace, RDFFormat rdfFormat, PrintWriter printWriter) throws Exception {
 
-        InputStream inputStream = new FileInputStream(path);
+        // Count statements
+        long statements = countStatements(new FileInputStream(path), rdfFormat, namespace);
 
-        long statements = statements(inputStream, RDFFormat.TURTLE, namespace);
+        // Process generate table DDL & gather stats
+        Map<IRI, Pair<String, String>> predicates = ddlAndPredicates(new FileInputStream(path), statements, rdfFormat, namespace);
 
-        inputStream = new FileInputStream(path);
-
-        Map<IRI, Pair<String, String>> predicates = processTRDDLCreator(inputStream, statements, RDFFormat.TURTLE, namespace);
-
-        inputStream = new FileInputStream(path);
-
-        processDatabaseLoader(inputStream, statements, RDFFormat.TURTLE, predicates, namespace);
+        // Load
+        long dataRows = load(new FileInputStream(path), statements, rdfFormat, predicates, namespace, printWriter);
 
     }
 
-
+    // postgres=# create database tr;
+    // postgres=# GRANT ALL PRIVILEGES ON DATABASE tr TO mayton;
+    //
+    // $
 
     public static void main(String[] args) throws Exception {
 
         Properties properties = new Properties();
         properties.load(new FileInputStream("sensitive.properties"));
-
         String path = properties.getProperty("source");
         String namespace = properties.getProperty("namespace");
 
-        processFile(path, namespace);
+        PrintWriter printWriter = new PrintWriter(("sql/out-" + UUID.randomUUID().toString() + ".sql"));
+
+        processFile(path, namespace, RDFFormat.TURTLE, printWriter);
+
+        printWriter.flush();
 
     }
 

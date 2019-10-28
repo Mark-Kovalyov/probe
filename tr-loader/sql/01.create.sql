@@ -1,5 +1,5 @@
 create table rt_org(
-    id varchar(255) primary key,
+    id varchar(255),
     has_primary_instrument text, 
     has_registered_phone_number text, 
     has_primary_economic_sector text, 
@@ -22,5 +22,5 @@ create table rt_org(
     has_inactive_date text, 
     has_u_r_l text, 
     has_i_p_o_date text, 
-    type text
+    "TYPE" text
 );

@@ -1,5 +1,6 @@
 package mayton.semanticweb;
 
+import mayton.lib.SofarTracker;
 import org.apache.commons.lang3.tuple.Pair;
 import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Resource;
@@ -12,7 +13,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class TRDatabaseSQLWriterHandler implements RDFHandler {
+import static mayton.semanticweb.Utils.*;
+
+public class TRDatabaseSQLWriterHandler implements RDFHandler, Trackable {
 
     private Map<IRI, Pair<String, String>> predicates;
 
@@ -22,9 +25,14 @@ public class TRDatabaseSQLWriterHandler implements RDFHandler {
 
     private Map<IRI, String> currentDmlOperatorFields = new LinkedHashMap<>(24);
 
+    private SofarTracker sofarTracker;
+
+    private long cnt = 0;
+
     public TRDatabaseSQLWriterHandler(Map<IRI, Pair<String, String>> predicates, PrintWriter pw) {
         this.pw = pw;
         this.predicates = predicates;
+        this.cnt = 0;
     }
 
     @Override
@@ -34,6 +42,7 @@ public class TRDatabaseSQLWriterHandler implements RDFHandler {
 
     @Override
     public void endRDF() throws RDFHandlerException {
+        sofarTracker.update(sofarTracker.getSize());
         processInsert(null);
         pw.println("commit;");
         pw.close();
@@ -47,21 +56,42 @@ public class TRDatabaseSQLWriterHandler implements RDFHandler {
     public void processInsert(Statement st) {
         pw.print("INSERT INTO ");
         pw.print(Constants.TABLE_NAME);
-        pw.print("(id, ");
-        pw.print(currentDmlOperatorFields.keySet().stream().map(IRI::getLocalName).map(name -> Utils.formatFieldName(name)).collect(Collectors.joining(",")));
-        pw.print(") VALUES (");
+        pw.print("(ID, ");
+        pw.print(currentDmlOperatorFields.keySet()
+                .stream()
+                .map(IRI::getLocalName)
+                .map(name -> formatFieldName(name))
+                .collect(Collectors.joining(",")));
+
+        pw.print(") VALUES ('");
+
         if (st == null) {
-            pw.print(subject);
+            pw.print(filterNamespaces(subject.stringValue()));
         } else {
-            pw.print(st.getSubject().toString());
+            pw.print(filterNamespaces(st.getSubject().stringValue()));
         }
-        pw.print(currentDmlOperatorFields.values().stream().map(value -> "'" + Utils.wrapPostgresLiteral(value) + "'").collect(Collectors.joining(",")));
+        pw.print("',");
+
+        pw.print(currentDmlOperatorFields.values()
+                .stream()
+                //.map(value -> trimQuotes(value))          // "12345" => 12345
+                .map(Utils::filterNamespaces)               // http://permid.org/123/ => 123/
+                .map(Utils::filterDateTime)                 // "2004-11-18T00:00:00Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> => "2004-11-18T00:00:00Z"
+                .map(value -> value.endsWith("/") ? value.substring(0, value.length() - 1) : value) // 12345/ => 12345
+                .map(Utils::wrapPostgresLiteral)            // Hello \t world =>
+                .map(value -> "'" + value + "'")
+                .collect(Collectors.joining(",")));
+
         pw.print(");");
         pw.println();
     }
 
     @Override
     public void handleStatement(Statement st) throws RDFHandlerException {
+        cnt++;
+        synchronized (sofarTracker) {
+            sofarTracker.update(cnt);
+        }
         if (subject == null) {
             subject = st.getSubject();
         } else if (subject.equals(st.getSubject())) {
@@ -78,5 +108,10 @@ public class TRDatabaseSQLWriterHandler implements RDFHandler {
     @Override
     public void handleComment(String comment) throws RDFHandlerException {
 
+    }
+
+    @Override
+    public void bind(SofarTracker sofarTracker) {
+        this.sofarTracker = sofarTracker;
     }
 }
