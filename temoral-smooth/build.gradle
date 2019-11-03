@@ -19,3 +19,8 @@ dependencies {
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
+
+task(temporal-smooth, dependsOn: 'classes', type: JavaExec) {
+    main = 'mayton.video.TemporalSmooth'
+    classpath = sourceSets.main.runtimeClasspath
+}
