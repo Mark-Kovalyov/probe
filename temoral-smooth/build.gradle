@@ -1,0 +1,21 @@
+plugins {
+    id 'java'
+}
+
+group 'mayton.video'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+
+    compile ( 'com.google.guava:guava:28.1-jre',
+              'mayton:mtn-image:1.1')
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}

@@ -22,3 +22,5 @@ docker run --name='activemq' -d \
  -p 61616:61616 \
  -p 61613:61613 \
  webcenter/activemq:5.14.3
+
+# Consider: docker pull rmohr/activemq:5.10.0
