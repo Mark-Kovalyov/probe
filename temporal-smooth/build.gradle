@@ -5,7 +5,7 @@ plugins {
 group 'mayton.video'
 version '1.0-SNAPSHOT'
 
-sourceCompatibility = 1.8
+sourceCompatibility = 11
 
 repositories {
     mavenLocal()
@@ -15,7 +15,7 @@ repositories {
 dependencies {
 
     compile (   'com.google.guava:guava:28.1-jre',
-                'mayton:mtn-image:1.1.1',
+                'mayton.libs:image:1.0',
                 'mayton.libs:sofar-tracker:1.4',
                 'org.slf4j:slf4j-log4j12:1.7.28',
                 'org.slf4j:slf4j-api:1.7.28'
