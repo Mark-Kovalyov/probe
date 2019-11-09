@@ -5,7 +5,7 @@ plugins {
 apply plugin: "maven"
 
 group 'mayton.libs'
-version '1.4'
+version '1.4.1'
 
 sourceCompatibility = 11
 
