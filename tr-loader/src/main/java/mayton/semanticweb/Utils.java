@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import javax.annotation.Nonnull;
 import java.util.Set;
 
+import static java.lang.String.format;
 import static org.apache.commons.lang3.StringUtils.replace;
 
 public class Utils {
@@ -26,7 +27,20 @@ public class Utils {
 
     @Nonnull
     public static String wrapPostgresLiteral(@Nonnull String arg) {
-        return replace(replace(arg, "\n", "\\u0D"), "'", "\\u27");
+        StringBuilder sb = new StringBuilder(arg.length());
+        for(int i = 0 ; i < arg.length(); i++) {
+            int c = arg.charAt(i);
+            if (c < 32) {
+                sb.append("\\u").append(format("%02X", c));
+            } else if (c < 128) {
+                sb.append(i);
+            } else if (c < 256) {
+                sb.append("\\u").append(format("%02X", c));
+            } else {
+                throw new IllegalArgumentException("Unable to wrapPostgresql symbol " + format("%08X", c));
+            }
+        }
+        return sb.toString();
     }
 
     @Nonnull

@@ -86,7 +86,7 @@ public class TRLoader {
 
         // Load
         long dataRows = load(new FileInputStream(path), statements, rdfFormat, predicates, namespace, printWriter);
-
+        logger.info(":: generated dataRows = {}", dataRows);
     }
 
     // postgres=# create database tr;
@@ -100,13 +100,12 @@ public class TRLoader {
         properties.load(new FileInputStream("sensitive.properties"));
         String path = properties.getProperty("source");
         String namespace = properties.getProperty("namespace");
-
-        PrintWriter printWriter = new PrintWriter(("sql/out-" + UUID.randomUUID().toString() + ".sql"));
-
+        String sqlPath = "sql/out-" + UUID.randomUUID().toString() + ".sql";
+        PrintWriter printWriter = new PrintWriter(sqlPath);
         processFile(path, namespace, RDFFormat.TURTLE, printWriter);
-
         printWriter.flush();
-
+        logger.info(":: psql -d myDataBase -a -f '{}'", sqlPath);
+        printWriter.close();
     }
 
 }
