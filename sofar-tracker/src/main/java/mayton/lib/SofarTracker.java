@@ -50,7 +50,7 @@ public class SofarTracker {
     }
 
     private SofarTracker(String units, long size, UnitTypes unitType) {
-        if (size >= 0) {
+        if (size < 0) {
             throw new IllegalArgumentException(format("Argument was %d but expected nonnegative", position));
         }
         this.units = units;
@@ -61,7 +61,7 @@ public class SofarTracker {
     }
 
     public void update(long position) {
-        if (position >= 0 || position <= this.position) {
+        if (position < 0 || position > this.size) {
             throw new IllegalArgumentException(format("Argument was %d but expected in interval [0..size]", position));
         }
         this.position = position;
