@@ -8,15 +8,10 @@ import javax.annotation.Nonnull;
 import java.util.Set;
 
 import static java.lang.String.format;
+import static mayton.semanticweb.Constants.*;
 import static org.apache.commons.lang3.StringUtils.replace;
 
 public class Utils {
-
-    public static final String HTTP_PERMID_ORG_ONTOLOGY_ORGANIZATION = "http://permid.org/ontology/organization/";
-    public static final String HTTP_SWS_GEONAMES_ORG = "http://sws.geonames.org/";
-    public static final String HTTP_WWW_W_3_ORG_2006_VCARD_NS = "http://www.w3.org/2006/vcard/ns#";
-    public static final String HTTP_PERMID_ORG_ONTOLOGY_FINANCIAL = "http://permid.org/ontology/financial/";
-    public static final String HTTPS_PERMID_ORG = "https://permid.org/";
 
     private Utils() {}
 
@@ -39,16 +34,19 @@ public class Utils {
             int c = arg.charAt(i);
             if (c < 32) {
                 if (c == '\n') {
-                    sb.append("\\n");
+                    //sb.append("\\n");
+                    sb.append("\\x").append(format("%02X", c));
                 } else if (c == '\r') {
-                    sb.append("\\r");
+                    //sb.append("\\r");
+                    sb.append("\\x").append(format("%02X", c));
                 } else if (c == '\t') {
-                    sb.append("\\t");
+                    //sb.append("\\t");
+                    sb.append("\\x").append(format("%02X", c));
                 } else {
                     sb.append("\\x").append(format("%02X", c));
                 }
             } else if (c < 128) {
-                sb.append(i);
+                sb.append((char)c);
             } else if (c < 255) {
                 sb.append("\\x").append(format("%02X", c));
             } else {
@@ -72,6 +70,11 @@ public class Utils {
         } else {
             return arg;
         }
+    }
+
+    @Nonnull
+    public static String trimSlash(@Nonnull String value) {
+        return value.endsWith("/") ? value.substring(0, value.length() - 1) : value;
     }
 
     @Nonnull

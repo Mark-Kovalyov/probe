@@ -1,4 +1,6 @@
-create table rt_org(
+drop table org;
+
+create table org(
     id varchar(255),
     has_primary_instrument text, 
     has_registered_phone_number text, 

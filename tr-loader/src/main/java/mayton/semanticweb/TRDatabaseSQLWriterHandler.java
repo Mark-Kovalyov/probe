@@ -82,7 +82,7 @@ public class TRDatabaseSQLWriterHandler implements RDFHandler, Trackable {
                 //.map(value -> trimQuotes(value))          // "12345" => 12345
                 .map(Utils::filterNamespaces)               // http://permid.org/123/ => 123/
                 .map(Utils::filterDateTime)                 // "2004-11-18T00:00:00Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> => "2004-11-18T00:00:00Z"
-                .map(value -> value.endsWith("/") ? value.substring(0, value.length() - 1) : value) // 12345/ => 12345
+                .map(Utils::trimSlash)                      // 12345/ => 12345
                 .map(Utils::wrapPostgresLiteral)            // слон => U&'\0441\043B\043E\043D'
                 .collect(Collectors.joining(",")));
 

@@ -10,13 +10,12 @@ import org.eclipse.rdf4j.rio.RDFHandlerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
 import java.io.PrintWriter;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-import static mayton.semanticweb.Utils.filterNamespaces;
-import static mayton.semanticweb.Utils.formatFieldName;
+import static mayton.semanticweb.Utils.*;
 
 // INSERT INTO public."Item" ("Id", name)
 // VALUES  ('1', 'name1'),
@@ -37,12 +36,22 @@ public class TRDatabaseMultilineSQLWriterHandler implements RDFHandler, Trackabl
 
     private SofarTracker sofarTracker;
 
-    private long cnt = 0;
+    private int batchSize = 100;
 
-    public TRDatabaseMultilineSQLWriterHandler(Map<IRI, Pair<String, String>> predicates, PrintWriter pw) {
+    private long cnt = 0;
+    private long insertCnt = 0;
+
+    public TRDatabaseMultilineSQLWriterHandler(@Nonnull Map<IRI, Pair<String, String>> predicates, PrintWriter pw) {
         this.pw = pw;
         this.predicates = predicates;
         this.cnt = 0;
+    }
+
+    public TRDatabaseMultilineSQLWriterHandler(@Nonnull Map<IRI, Pair<String, String>> predicates, PrintWriter pw, int batchSize) {
+        this.pw = pw;
+        this.predicates = predicates;
+        this.cnt = 0;
+        this.batchSize = batchSize;
     }
 
     @Override
@@ -50,25 +59,29 @@ public class TRDatabaseMultilineSQLWriterHandler implements RDFHandler, Trackabl
         this.sofarTracker = sofarTracker;
     }
 
+    private void printInsert() {
+        pw.println();
+        pw.printf("INSERT INTO %s (ID", Constants.TABLE_NAME);
+        for(IRI key : predicates.keySet()) {
+            pw.print(",");
+            pw.print(predicates.get(key).getKey());
+        }
+        pw.print(") VALUES");
+        pw.println();
+        insertCnt = 0;
+    }
+
     @Override
     public void startRDF() throws RDFHandlerException {
-        pw.print("INSERT INTO ");
-        pw.print(Constants.TABLE_NAME);
-        pw.print("(ID, ");
-        pw.print(currentDmlOperatorFields.keySet()
-                .stream()
-                .map(IRI::getLocalName)
-                .map(name -> formatFieldName(name))
-                .collect(Collectors.joining(",")));
-
-        pw.print(") VALUES ('");
+        pw.printf("TRUNCATE TABLE %s;\n", Constants.TABLE_NAME);
+        printInsert();
     }
 
     @Override
     public void endRDF() throws RDFHandlerException {
         sofarTracker.update(sofarTracker.getSize());
         processInsert(null);
-        pw.println("commit;");
+        pw.print(";");
         pw.close();
     }
 
@@ -78,22 +91,33 @@ public class TRDatabaseMultilineSQLWriterHandler implements RDFHandler, Trackabl
     }
 
     public void processInsert(Statement st) {
+        if (insertCnt > 0) {
+            pw.print(",\n");
+        }
+        pw.print("(");
         if (st == null) {
             pw.print(filterNamespaces(subject.stringValue()));
         } else {
             pw.print(filterNamespaces(st.getSubject().stringValue()));
         }
-        pw.print("',");
-        pw.print(currentDmlOperatorFields.values()
-                .stream()
-                .map(Utils::filterNamespaces)
-                .map(Utils::filterDateTime)
-                .map(value -> value.endsWith("/") ? value.substring(0, value.length() - 1) : value)
-                .map(Utils::wrapPostgresLiteral)
-                .collect(Collectors.joining(",")));
-
-        pw.print(");");
-        pw.println();
+        for(IRI key : predicates.keySet()) {
+            pw.print(",");
+            if (currentDmlOperatorFields.containsKey(key)) {
+                String value = currentDmlOperatorFields.get(key);
+                pw.print(wrapPostgresLiteral(
+                            trimSlash(
+                                    filterDateTime(
+                                            filterNamespaces(value)))));
+            } else {
+                pw.print("null");
+            }
+        }
+        pw.print(")");
+        insertCnt++;
+        if (insertCnt > batchSize) {
+            pw.print(";\n");
+            printInsert();
+        }
     }
 
     @Override
@@ -115,7 +139,7 @@ public class TRDatabaseMultilineSQLWriterHandler implements RDFHandler, Trackabl
 
     @Override
     public void handleComment(String comment) throws RDFHandlerException {
-
+        logger.info(":: hanlde comment = {}", comment);
     }
 
 
