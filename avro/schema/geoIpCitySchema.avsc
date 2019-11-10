@@ -1,0 +1,19 @@
+{
+   "type" : "record",
+   "name" : "geoipcity",
+   "fields" : [
+       {
+       // TODO:
+       "name" : "ID",    "type" : "int" },
+        String startIpNum;
+    String endIpNum;
+    String country;
+    String region;
+    String city;
+    String postalCode;
+    String latitude;
+    String longitude;
+    String dmaCode;
+    String areaCode;
+    ]
+}

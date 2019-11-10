@@ -1,6 +1,7 @@
 package mayton.probeavro;
 
 import org.apache.avro.Schema;
+import org.apache.avro.data.Json;
 import org.apache.avro.generic.GenericData;
 import org.apache.avro.generic.GenericDatumReader;
 import org.apache.avro.generic.GenericDatumWriter;
@@ -12,6 +13,19 @@ import org.slf4j.LoggerFactory;
 
 import java.io.*;
 
+/**
+ * See : DatumWriter
+ *       SpecificDatumWriter
+ *       GenericDatumWriter
+ *       Json.Writer, ProtobufDatumWriter, ReflectDatumWriter, ThriftDatumWriter,
+ *       Encoder:
+ *       EncoderFactory *
+ *       DatumReader
+ *       GenericDatumReader
+ *       Json.ObjectReader, Json.Reader, ProtobufDatumReader, ReflectDatumReader, ThriftDatumReader.
+ *
+ *       Decoder:
+ */
 public class App {
 
     static Logger logger = LoggerFactory.getLogger(App.class);
@@ -34,7 +48,7 @@ public class App {
 
         logger.info("::write");
 
-        OutputStream outStream = new FileOutputStream("target/out1.avro");
+        OutputStream outStream = new FileOutputStream("target/datum-out1.avro");
         DatumWriter<GenericRecord> writer = new GenericDatumWriter<>(schema);
         Encoder encoder = EncoderFactory.get().binaryEncoder(outStream, null);
         writer.write(datum, encoder);
@@ -55,6 +69,16 @@ public class App {
         logger.info(":: right = {}", result.get("right").toString());
 
         logger.info("::end");
+
+        // TODO:
+        OutputStream jsonStream = new FileOutputStream("target/json-out1.avro");
+        Json.ObjectWriter objectWriter = new Json.ObjectWriter();
+
+        Schema schema2 = parser.parse(new FileInputStream("schema/StringPair.avsc"));
+
+        Encoder jsonEncoder = EncoderFactory.get().jsonEncoder(schema2, jsonStream);
+
+        objectWriter.write(new GeoIpCity(), jsonEncoder);
     }
 
     public static void main(String[] args) throws IOException {
