@@ -8,6 +8,7 @@ import org.eclipse.rdf4j.rio.RDFParser;
 import org.eclipse.rdf4j.rio.Rio;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 
 import javax.annotation.Nonnull;
 import java.io.*;
@@ -77,16 +78,19 @@ public class TRLoader {
 
 
     public static void processFile(String path, String namespace, RDFFormat rdfFormat, PrintWriter printWriter) throws Exception {
-
+        MDC.put("mode", "Count");
         // Count statements
         long statements = countStatements(new FileInputStream(path), rdfFormat, namespace);
 
+        MDC.put("mode", "DDL and stats");
         // Process generate table DDL & gather stats
         Map<IRI, Pair<String, String>> predicates = ddlAndPredicates(new FileInputStream(path), statements, rdfFormat, namespace);
 
+        MDC.put("mode", "Generate SQL");
         // Load
         long dataRows = load(new FileInputStream(path), statements, rdfFormat, predicates, namespace, printWriter);
         logger.info(":: generated dataRows = {}", dataRows);
+        MDC.remove("mode");
     }
 
     // postgres=# create database tr;
@@ -98,13 +102,17 @@ public class TRLoader {
 
         Properties properties = new Properties();
         properties.load(new FileInputStream("sensitive.properties"));
-        String path = properties.getProperty("source");
+        String source = properties.getProperty("source");
         String namespace = properties.getProperty("namespace");
-        String sqlPath = "sql/out-" + UUID.randomUUID().toString() + ".sql";
-        PrintWriter printWriter = new PrintWriter(sqlPath);
-        processFile(path, namespace, RDFFormat.TURTLE, printWriter);
+        String dest = properties.getProperty("dest");
+        logger.info("source = {}", source);
+        logger.info("dest   = {}", dest);
+        logger.info("namespace = {}", namespace);
+        new File(dest.substring(0, dest.lastIndexOf('/'))).mkdirs();
+        PrintWriter printWriter = new PrintWriter(dest);
+        processFile(source, namespace, RDFFormat.TURTLE, printWriter);
         printWriter.flush();
-        logger.info(":: psql -d myDataBase -a -f '{}'", sqlPath);
+        logger.info(":: psql -d myDataBase -a -f '{}'", source);
         printWriter.close();
     }
 

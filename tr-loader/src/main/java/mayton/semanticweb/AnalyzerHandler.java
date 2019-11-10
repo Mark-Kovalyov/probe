@@ -1,8 +1,6 @@
 package mayton.semanticweb;
 
-import com.google.common.base.CaseFormat;
 import mayton.lib.SofarTracker;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Resource;
@@ -41,9 +39,7 @@ public class AnalyzerHandler implements RDFHandler, Trackable {
 
     @Override
     public void endRDF() throws RDFHandlerException {
-        synchronized (sofarTracker) {
-            sofarTracker.update(sofarTracker.getSize());
-        }
+        sofarTracker.update(sofarTracker.getSize());
         logger.info("create table {}(", TABLE_NAME);
         logger.info("     id varchar(255) primary key,");
         predicates.entrySet().stream().forEach(item -> {
@@ -77,9 +73,7 @@ public class AnalyzerHandler implements RDFHandler, Trackable {
         // TODO: Detect type
         predicates.put(predicate, Pair.of(fieldName, ""));
         cnt++;
-        synchronized (sofarTracker) {
-            sofarTracker.update(cnt);
-        }
+        sofarTracker.update(cnt);
     }
 
     @Override
