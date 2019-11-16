@@ -92,4 +92,20 @@ public class GeoIpCity {
     public void setAreaCode(String areaCode) {
         this.areaCode = areaCode;
     }
+
+    @Override
+    public String toString() {
+        return "GeoIpCity{" +
+                "startIpNum='" + startIpNum + '\'' +
+                ", endIpNum='" + endIpNum + '\'' +
+                ", country='" + country + '\'' +
+                ", region='" + region + '\'' +
+                ", city='" + city + '\'' +
+                ", postalCode='" + postalCode + '\'' +
+                ", latitude='" + latitude + '\'' +
+                ", longitude='" + longitude + '\'' +
+                ", dmaCode='" + dmaCode + '\'' +
+                ", areaCode='" + areaCode + '\'' +
+                '}';
+    }
 }

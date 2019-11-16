@@ -79,6 +79,7 @@ public class App {
         Encoder jsonEncoder = EncoderFactory.get().jsonEncoder(schema2, jsonStream);
 
         objectWriter.write(new GeoIpCity(), jsonEncoder);
+
     }
 
     public static void main(String[] args) throws IOException {
