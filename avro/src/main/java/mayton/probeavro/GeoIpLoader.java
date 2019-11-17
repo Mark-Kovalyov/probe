@@ -13,6 +13,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
+import java.util.Properties;
 
 public class GeoIpLoader {
 
@@ -20,11 +21,12 @@ public class GeoIpLoader {
 
     public static void main(String[] args) throws Exception {
 
-        // startIpNum,endIpNum,country,region,city,postalCode,latitude,longitude,dmaCode,areaCode
-        // 1.0.0.0,1.7.255.255,"AU","","","",-27.0000,133.0000,,
-        OutputStream outputStream = new FileOutputStream("target/geo-ip-city.avro");
+        Properties properties = new Properties();
+        properties.load(new FileInputStream("sensitive.properties"));
 
-        CSVParser parser = CSVParser.parse(new FileInputStream("/db/geoip/03.GeoIPCity.csv"), StandardCharsets.UTF_8,
+        OutputStream outputStream = new FileOutputStream(properties.getProperty("target"));
+
+        CSVParser parser = CSVParser.parse(new FileInputStream(properties.getProperty("source")), StandardCharsets.UTF_8,
                 CSVFormat.DEFAULT
                         .withDelimiter(',')
                         .withFirstRecordAsHeader());
@@ -36,8 +38,8 @@ public class GeoIpLoader {
 
             CSVRecord rec = irec.next();
             GeoIpCityAvroEntity entity = GeoIpCityAvroEntity.newBuilder()
-                    .setStartIpNum((int) NetworkUtils.parseIpV4(rec.get(0) == null ? "0.0.0.0" : rec.get(0)))
-                    .setEndIpNum((int) NetworkUtils.parseIpV4(rec.get(1) == null ? "0.0.0.0" : rec.get(1)))
+                    .setStartIpNum((int) NetworkUtils.parseIpV4(rec.get(0)))
+                    .setEndIpNum((int) NetworkUtils.parseIpV4(rec.get(1)))
                     .setCountry(rec.get(2))
                     .setRegion(rec.get(3))
                     .setCity(rec.get(4))
