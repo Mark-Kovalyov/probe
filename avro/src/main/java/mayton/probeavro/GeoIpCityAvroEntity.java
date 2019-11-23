@@ -14,8 +14,8 @@ import org.apache.avro.message.SchemaStore;
 
 @org.apache.avro.specific.AvroGenerated
 public class GeoIpCityAvroEntity extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = 5635000212995893608L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"GeoIpCityAvroEntity\",\"namespace\":\"mayton.probeavro\",\"fields\":[{\"name\":\"startIpNum\",\"type\":\"int\"},{\"name\":\"endIpNum\",\"type\":\"int\"},{\"name\":\"country\",\"type\":[\"string\",\"null\"]},{\"name\":\"region\",\"type\":[\"string\",\"null\"]},{\"name\":\"city\",\"type\":[\"string\",\"null\"]},{\"name\":\"postalCode\",\"type\":[\"string\",\"null\"]},{\"name\":\"latitude\",\"type\":\"double\"},{\"name\":\"longitude\",\"type\":\"double\"},{\"name\":\"dmaCode\",\"type\":[\"string\",\"null\"]},{\"name\":\"areaCode\",\"type\":[\"string\",\"null\"]}]}");
+  private static final long serialVersionUID = 5948632558952090480L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"GeoIpCityAvroEntity\",\"namespace\":\"mayton.probeavro\",\"fields\":[{\"name\":\"startIpNum\",\"type\":\"int\"},{\"name\":\"endIpNum\",\"type\":\"int\"},{\"name\":\"country\",\"type\":[\"string\",\"null\"]},{\"name\":\"region\",\"type\":[\"string\",\"null\"]},{\"name\":\"city\",\"type\":[\"string\",\"null\"]},{\"name\":\"postalCode\",\"type\":[\"string\",\"null\"]},{\"name\":\"latitude\",\"type\":\"double\"},{\"name\":\"longitude\",\"type\":\"double\"},{\"name\":\"dmaCode\",\"type\":\"string\",\"default\":\"0\"},{\"name\":\"areaCode\",\"type\":\"string\",\"default\":\"0\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static SpecificData MODEL$ = new SpecificData();
@@ -957,21 +957,9 @@ public class GeoIpCityAvroEntity extends org.apache.avro.specific.SpecificRecord
 
     out.writeDouble(this.longitude);
 
-    if (this.dmaCode == null) {
-      out.writeIndex(1);
-      out.writeNull();
-    } else {
-      out.writeIndex(0);
-      out.writeString(this.dmaCode);
-    }
+    out.writeString(this.dmaCode);
 
-    if (this.areaCode == null) {
-      out.writeIndex(1);
-      out.writeNull();
-    } else {
-      out.writeIndex(0);
-      out.writeString(this.areaCode);
-    }
+    out.writeString(this.areaCode);
 
   }
 
@@ -1016,19 +1004,9 @@ public class GeoIpCityAvroEntity extends org.apache.avro.specific.SpecificRecord
 
       this.longitude = in.readDouble();
 
-      if (in.readIndex() != 0) {
-        in.readNull();
-        this.dmaCode = null;
-      } else {
-        this.dmaCode = in.readString(this.dmaCode instanceof Utf8 ? (Utf8)this.dmaCode : null);
-      }
+      this.dmaCode = in.readString(this.dmaCode instanceof Utf8 ? (Utf8)this.dmaCode : null);
 
-      if (in.readIndex() != 0) {
-        in.readNull();
-        this.areaCode = null;
-      } else {
-        this.areaCode = in.readString(this.areaCode instanceof Utf8 ? (Utf8)this.areaCode : null);
-      }
+      this.areaCode = in.readString(this.areaCode instanceof Utf8 ? (Utf8)this.areaCode : null);
 
     } else {
       for (int i = 0; i < 10; i++) {
@@ -1086,21 +1064,11 @@ public class GeoIpCityAvroEntity extends org.apache.avro.specific.SpecificRecord
           break;
 
         case 8:
-          if (in.readIndex() != 0) {
-            in.readNull();
-            this.dmaCode = null;
-          } else {
-            this.dmaCode = in.readString(this.dmaCode instanceof Utf8 ? (Utf8)this.dmaCode : null);
-          }
+          this.dmaCode = in.readString(this.dmaCode instanceof Utf8 ? (Utf8)this.dmaCode : null);
           break;
 
         case 9:
-          if (in.readIndex() != 0) {
-            in.readNull();
-            this.areaCode = null;
-          } else {
-            this.areaCode = in.readString(this.areaCode instanceof Utf8 ? (Utf8)this.areaCode : null);
-          }
+          this.areaCode = in.readString(this.areaCode instanceof Utf8 ? (Utf8)this.areaCode : null);
           break;
 
         default:
