@@ -119,5 +119,4 @@ psql -c '\ COPY geoipcuty FROM /db/geoip/03.GeoIPCity.csv CSV HEADER QUOTE '"'  
 
 analyze;
 
-select * from vgeoipcity where ip2num('176.36.249.218') between startip and endip;
 
