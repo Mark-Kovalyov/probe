@@ -1,36 +1,50 @@
 package mayton.files;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.BiFunction;
+import java.util.regex.Pattern;
 
 public class FileStats {
 
+    int depth = 0;
     Map<String, StatsEntity> map = new HashMap<>();
-    Map<String, Set<String>> profiles = new HashMap<>();
+    Map<String, Map<String, StatsEntity>> subFolderMap = new HashMap<>();
 
     // /mozilla-central/layout : [xml:20k], [xvg:2k], [xhtml:1.5k] ...
     // /mozilla-central/layout : [js:], [html: ], [build]
 
-    String detectExtension(String name) {
+    @NotNull
+    String detectExtension(@NotNull String name) {
         int l = name.lastIndexOf('.');
-        return l < 0 ? null : name.substring(l + 1);
+        String ext = l < 0 ? null : name.substring(l + 1).toLowerCase();
+        if (ext == null) {
+            ext = "";
+        } else if (!pattern.matcher(ext).matches()) {
+            System.err.printf("Extension '%s' doesn't look like extension! Skipped.\n", ext);
+            ext = "";
+        }
+        return ext;
     }
 
-    void processFile(File file, int level) {
+    static Pattern pattern = Pattern.compile("[a-z0-9]+");
+
+    void processFile(@NotNull File file, int level) {
         String ext = detectExtension(file.getName());
-        if (ext == null) {
-            ext = "<empty>";
-        }
         if (map.containsKey(ext)) {
             StatsEntity entity = map.get(ext);
             entity.setCount(entity.getCount() + 1);
             entity.setLength(entity.getLength() + file.length());
         } else {
             map.put(ext, new StatsEntity(1, file.length()));
+        }
+        if (level > depth) {
+            //
         }
     }
 
@@ -52,6 +66,9 @@ public class FileStats {
 
     public void go(String[] args) throws Exception {
         processFolder(new File(args[0]), 0);
+        if (args.length > 1) {
+            depth = Integer.parseInt(args[1]);
+        }
         System.out.printf("Extension;Count;Length\n");
         long allCnt = 0;
         long allLength = 0;
