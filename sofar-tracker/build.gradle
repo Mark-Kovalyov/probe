@@ -5,7 +5,7 @@ plugins {
 apply plugin: "maven"
 
 group 'mayton.libs'
-version '1.4'
+version '1.4.3'
 
 sourceCompatibility = 11
 
@@ -16,4 +16,10 @@ repositories {
 dependencies {
     compile 'org.apache.commons:commons-lang3:3.9'
     compile 'commons-io:commons-io:2.6'
+    compile 'org.jetbrains:annotations:18.0.0'
+    testCompile 'junit:junit:4.12'
+}
+
+test {
+    useJUnit()
 }

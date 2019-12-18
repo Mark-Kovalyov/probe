@@ -50,7 +50,9 @@ public class SofarTracker {
     }
 
     private SofarTracker(String units, long size, UnitTypes unitType) {
-        assert size >= 0 : "Argument was %d but expected nonnegative";
+        if (size < 0) {
+            throw new IllegalArgumentException(format("Argument was %d but expected nonnegative", position));
+        }
         this.units = units;
         this.size = size;
         this.startTime = System.currentTimeMillis();
@@ -59,7 +61,9 @@ public class SofarTracker {
     }
 
     public void update(long position) {
-        assert position >= 0 || position <= this.position : "Argument was %d but expected in interval [0..size]";
+        if (position < 0 || position > this.size) {
+            throw new IllegalArgumentException(format("Argument was %d but expected in interval [0..size]", position));
+        }
         this.position = position;
         this.currentTime = System.currentTimeMillis();
     }

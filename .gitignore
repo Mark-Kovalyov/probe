@@ -40,3 +40,7 @@ dependency-reduced-pom.xml
 
 # All sensitive information
 sensitive.properties
+
+# Postgresql sequred files
+.pgpass
+

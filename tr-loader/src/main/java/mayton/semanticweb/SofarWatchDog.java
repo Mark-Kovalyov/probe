@@ -22,7 +22,7 @@ public class SofarWatchDog implements Runnable {
                 synchronized (sofarTracker) {
                     logger.info(sofarTracker.toString());
                     if (sofarTracker.getPosition() == sofarTracker.getSize()) {
-                        logger.info("Sofat tracker watcher is finished!");
+                        logger.info("Sofar tracker watcher is finished!");
                         break;
                     }
                 }

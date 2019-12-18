@@ -4,10 +4,12 @@ import mayton.lib.SofarTracker;
 import org.apache.commons.lang3.tuple.Pair;
 import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.rio.RDFFormat;
+import org.eclipse.rdf4j.rio.RDFHandler;
 import org.eclipse.rdf4j.rio.RDFParser;
 import org.eclipse.rdf4j.rio.Rio;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 
 import javax.annotation.Nonnull;
 import java.io.*;
@@ -60,9 +62,10 @@ public class TRLoader {
 
         logger.info(":: start loading");
 
-        TRDatabaseSQLWriterHandler handler = new TRDatabaseSQLWriterHandler(predicates, pw);
+        //TRDatabaseSQLWriterHandler handler = new TRDatabaseSQLWriterHandler(predicates, pw);
+        RDFHandler handler = new TRDatabaseMultilineSQLWriterHandler(predicates, pw);
         SofarTracker sofarTracker = SofarTracker.createUnitLikeTracker("statements", statements);
-        handler.bind(sofarTracker);
+        ((Trackable)handler).bind(sofarTracker);
         RDFParser rdfParser = Rio.createParser(rdfFormat);
         rdfParser.setRDFHandler(handler);
         new Thread(new SofarWatchDog(sofarTracker)).start();
@@ -77,16 +80,18 @@ public class TRLoader {
 
 
     public static void processFile(String path, String namespace, RDFFormat rdfFormat, PrintWriter printWriter) throws Exception {
-
+        MDC.put("mode", "Count");
         // Count statements
         long statements = countStatements(new FileInputStream(path), rdfFormat, namespace);
-
+        MDC.put("mode", "DDL and stats");
         // Process generate table DDL & gather stats
         Map<IRI, Pair<String, String>> predicates = ddlAndPredicates(new FileInputStream(path), statements, rdfFormat, namespace);
 
+        MDC.put("mode", "Generate SQL");
         // Load
         long dataRows = load(new FileInputStream(path), statements, rdfFormat, predicates, namespace, printWriter);
-
+        logger.info(":: generated dataRows = {}", dataRows);
+        MDC.remove("mode");
     }
 
     // postgres=# create database tr;
@@ -98,15 +103,24 @@ public class TRLoader {
 
         Properties properties = new Properties();
         properties.load(new FileInputStream("sensitive.properties"));
-        String path = properties.getProperty("source");
+        String source = properties.getProperty("source");
         String namespace = properties.getProperty("namespace");
-
-        PrintWriter printWriter = new PrintWriter(("sql/out-" + UUID.randomUUID().toString() + ".sql"));
-
-        processFile(path, namespace, RDFFormat.TURTLE, printWriter);
-
+        String dest = properties.getProperty("dest");
+        logger.info("source = {}", source);
+        logger.info("dest   = {}", dest);
+        logger.info("namespace = {}", namespace);
+        new File(dest.substring(0, dest.lastIndexOf('/'))).mkdirs();
+        PrintWriter printWriter = new PrintWriter(dest);
+        processFile(source, namespace, RDFFormat.TURTLE, printWriter);
         printWriter.flush();
-
+        // DETAIL:  Cannot enlarge string buffer containing 0 bytes by 1 694 763 225 more bytes.
+        logger.info(":: psql -d {} -a -f '{}'", properties.get("dbname"), dest);
+        // > select count(*) from org;
+        //  count
+        //---------
+        // 5 131 497
+        //(1 row)
+        printWriter.close();
     }
 
 }

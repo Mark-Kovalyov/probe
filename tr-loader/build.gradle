@@ -20,7 +20,7 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
-task(load, dependsOn: 'classes', type: JavaExec) {
+task(sqlgen, dependsOn: 'classes', type: JavaExec) {
     main = 'mayton.semanticweb.TRLoader'
     classpath = sourceSets.main.runtimeClasspath
 }

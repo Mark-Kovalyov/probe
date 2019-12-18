@@ -1,0 +1,17 @@
+{
+   "namespace" : "mayton.probeavro",
+   "type"      : "record",
+   "name"      : "GeoIpCityAvroEntity",
+   "fields" : [
+       { "name" : "startIpNum",  "type" : "int" },
+       { "name" : "endIpNum",    "type" : "int" },
+       { "name" : "country",     "type" : ["string", "null"] },
+       { "name" : "region",      "type" : ["string", "null"] },
+       { "name" : "city",        "type" : ["string", "null"] },
+       { "name" : "postalCode",  "type" : ["string", "null"] },
+       { "name" : "latitude",    "type" : "double" },
+       { "name" : "longitude",   "type" : "double" },
+       { "name" : "dmaCode",     "type" : "string", "default" : "0" },
+       { "name" : "areaCode",    "type" : "string", "default" : "0" }
+    ]
+}
