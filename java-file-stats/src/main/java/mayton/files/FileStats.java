@@ -87,7 +87,13 @@ public class FileStats {
             allCnt += entityEntry.getValue().getCount();
             allLength += entityEntry.getValue().getLength();
         }
-        System.out.printf(";%s;%s\n", allCnt, allLength);
+        System.out.printf(";%s;%s\n\n", allCnt, allLength);
+
+        for(Map.Entry<String, Map<String, StatsEntity>> subFolderEntry : subFolderMap.entrySet()) {
+            System.out.printf("folder = %s\n", subFolderEntry.getKey());
+            Map<String, StatsEntity> subFolderEntryValue = subFolderEntry.getValue();
+
+        }
     }
 
     public static void main(String[] args) throws Exception {

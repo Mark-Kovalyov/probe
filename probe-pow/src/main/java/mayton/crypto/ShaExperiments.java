@@ -5,17 +5,15 @@ import org.apache.hadoop.util.bloom.BloomFilter;
 import org.apache.hadoop.util.bloom.Key;
 import org.apache.hadoop.util.hash.Hash;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.Collections;
+import java.util.Properties;
 import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
 
-public class Main {
+public class ShaExperiments {
 
     // Facts:
     // ======
@@ -35,8 +33,11 @@ public class Main {
     //
 
     public static void main(String[] args) throws Exception {
-        GZIPInputStream inputStream = new GZIPInputStream(new FileInputStream("/db/1.2billion/1.2billion.txt.gz"));
+        Properties properties = new Properties();
+        properties.load(new FileInputStream("sensitive.properties"));
+        GZIPInputStream inputStream = new GZIPInputStream(new FileInputStream(properties.getProperty("inputFile")));
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        PrintWriter printWriter = new PrintWriter(new FileOutputStream(properties.getProperty("outputFileSha1")));
         String line = null;
         MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
         Pattern pattern = Pattern.compile("[A-Za-z0-9]+");
@@ -52,7 +53,7 @@ public class Main {
                 messageDigest.reset();
                 messageDigest.update(line.getBytes(StandardCharsets.UTF_8));
                 byte[] result = messageDigest.digest();
-                //System.out.printf("%s %s\n", line, Hex.encodeHexString(result));
+                printWriter.printf("%s %s\n", Hex.encodeHexString(result), line);
                 Key key = new Key(result);
                 if (bloomFilter.membershipTest(key)) {
                     System.err.printf("Bloom collision detected on key = %s", Hex.encodeHexString(result));

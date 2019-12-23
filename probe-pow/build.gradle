@@ -1,20 +1,42 @@
 plugins {
     id 'java'
+    id 'application'
 }
+
+apply plugin : "java"
 
 group 'org.example'
 version '1.0-SNAPSHOT'
 
-sourceCompatibility = 1.8
+sourceCompatibility = 11
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-
+    compile group: 'org.jetbrains', name: 'annotations', version: '18.0.0'
     compile 'org.apache.hadoop:hadoop-common:3.2.1'
     compile group: 'commons-codec', name: 'commons-codec', version: '1.13'
 
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile 'junit:junit:4.12'
+}
+
+application {
+    mainClassName = 'mayton.crypto.Main'
+}
+
+task lengthSplitter(type: JavaExec) {
+    group = "Execution"
+    description = "Run the main class with JavaExecTask"
+    classpath = sourceSets.main.runtimeClasspath
+    main = "mayton.crypto.LengthSplitter"
+    /*if (project.hasProperty('args')) {
+        args(myargs.split(','))
+    }*/
+    // have to use : gradle lengthSplitter '-Pargs=-x,7,--no-kidding,/Users/rogers/tests/file.txt'
+}
+
+task ffmpeg(type: Exec) {
+
 }
