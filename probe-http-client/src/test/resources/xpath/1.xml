@@ -1,0 +1,37 @@
+<html lang="ru">
+    <head>
+    </head>
+    <body>
+        <ul>
+            <li>
+                <a href="viewforum.php?f=124">Арт-хаус и авторское кино</a>
+            </li>
+
+            <li>
+                <a href="viewforum.php?f=93">DVD</a>, <a href="viewforum.php?f=2198">HD</a>,
+                <a href="viewforum.php?f=352">3D</a>
+            </li>
+
+            <li>
+                <a href="viewforum.php?f=46">Док. фильмы</a>,
+                <a href="viewforum.php?f=255">Спорт</a>
+            </li>
+
+            <li>
+                <a href="viewforum.php?f=33">Аниме</a>,
+                <a href="viewforum.php?f=4">Мультфильмы</a>
+            </li>
+
+            <li>
+                <a href="viewforum.php?f=921">Мультсериалы</a>,
+                <a href="viewforum.php?f=24">Юмор</a>
+            </li>
+
+            <li>
+                <a rel="nofollow" href="index.php?c=18">Сериалы</a>
+            </li>
+
+        </ul>
+
+    </body>
+</html>

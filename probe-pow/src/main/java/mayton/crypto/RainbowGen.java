@@ -33,10 +33,9 @@ public class RainbowGen {
                 print(" --> ");
                 byte[] hash = getShaFromLine(line);
                 for (int i = 0; i < ( t / 2 ); i++) {
-                    //print(Hex.encodeHexString(hash));
-                    print(Utils.encodeBase64(hash));
+                    print(encodeBase64(hash));
                     print(" --> ");
-                    String reduct = Utils.encodeBase64(subArray(hash, 0, limitHash));
+                    String reduct = encodeBase64(subArray(hash, 0, limitHash));
                     print(reduct);
                     if (i < t / 2 - 1) {
                         print(" --> ");

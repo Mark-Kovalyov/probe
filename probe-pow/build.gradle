@@ -15,10 +15,9 @@ repositories {
 }
 
 dependencies {
-    compile group: 'org.jetbrains', name: 'annotations', version: '18.0.0'
+    compile 'org.jetbrains:annotations:18.0.0'
     compile 'org.apache.hadoop:hadoop-common:3.2.1'
-    compile group: 'commons-codec', name: 'commons-codec', version: '1.13'
-
+    compile 'commons-codec:commons-codec:1.13'
     testCompile 'junit:junit:4.12'
 }
 
