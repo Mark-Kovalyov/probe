@@ -11,6 +11,8 @@ import javax.xml.xpath.XPathFactory;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
+import static org.junit.Assert.assertEquals;
+
 public class XPathTest {
 
     @Test
@@ -22,7 +24,7 @@ public class XPathTest {
         XPath xPath = XPathFactory.newInstance().newXPath();
         String expression = "/html/body/ul/li/a";
         NodeList nodeList = (NodeList) xPath.compile(expression).evaluate(xmlDocument, XPathConstants.NODESET);
-
+        assertEquals(11, nodeList.getLength());
     }
 
 }
