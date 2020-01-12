@@ -5,6 +5,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import javax.annotation.concurrent.ThreadSafe;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -19,6 +20,10 @@ public class Utils {
 
     public static void println(String arg) {
         System.out.println(arg);
+    }
+
+    public static PrintStream printf(String format, Object ...args) {
+        return System.out.printf(format, args);
     }
 
     public static void println(int arg) {
