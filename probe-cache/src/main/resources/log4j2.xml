@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Configuration status="info">
+
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%highlight{%d{yyyy-MM-dd HH:mm:ss.SSS} %T [%-5level] %msg%n}{FATAL=red, ERROR=red, WARN=yellow, INFO=green, DEBUG=white, TRACE=white}"/>
+        </Console>
+    </Appenders>
+
+    <Loggers>
+
+        <Logger name="Main" level="trace" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+
+        <Logger name="JcsExample" level="trace" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+
+        <Root level="info">
+            <AppenderRef ref="Console"/>
+        </Root>
+
+    </Loggers>
+
+</Configuration>

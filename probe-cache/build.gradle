@@ -1,0 +1,39 @@
+plugins {
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 11
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    // Logging Log2j 2.0
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.13.0'
+    // Brigde for Commons Logging
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-jcl', version: '2.13.0'
+
+
+    implementation group: 'com.google.guava', name: 'guava', version: '28.2-jre'
+    implementation group: 'org.apache.commons', name: 'commons-jcs-core', version: '2.2.1'
+    implementation group: 'org.ehcache', name: 'ehcache', version: '3.8.1'
+    implementation group: 'org.infinispan', name: 'infinispan-core', version: '10.0.1.Final'
+
+    //testimplementation group: 'junit', name: 'junit', version: '4.12'
+}
+
+task(Main, dependsOn: 'classes', type: JavaExec) {
+    main = 'mayton.cache.jcs.Main'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task(JcsExample, dependsOn: 'classes', type: JavaExec) {
+    main = 'mayton.cache.jcs.JcsExample'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
