@@ -1,0 +1,183 @@
+Tools
+=====
+
+# mkfs.ext4
+Usage: mkfs.ext4 [-c|-l filename] [-b block-size] [-C cluster-size]
+    [-i bytes-per-inode] [-I inode-size] [-J journal-options]
+    [-G flex-group-size] [-N number-of-inodes] [-d root-directory]
+    [-m reserved-blocks-percentage] [-o creator-os]
+    [-g blocks-per-group] [-L volume-label] [-M last-mounted-directory]
+    [-O feature[,...]] [-r fs-revision] [-E extended-option[,...]]
+    [-t fs-type] [-T usage-type ] [-U UUID] [-e errors_behavior][-z undo_file]
+    [-jnqvDFSV] device [blocks-count]
+
+
+# tune2fs
+tune2fs 1.44.1 (24-Mar-2018)
+Usage: tune2fs [-c max_mounts_count] [-e errors_behavior] [-f] [-g group]
+    [-i interval[d|m|w]] [-j] [-J journal_options] [-l]
+    [-m reserved_blocks_percent] [-o [^]mount_options[,...]]
+    [-r reserved_blocks_count] [-u user] [-C mount_count]
+    [-L volume_label] [-M last_mounted_dir]
+    [-O [^]feature[,...]] [-Q quota_options]
+    [-E extended-option[,...]] [-T last_check_time] [-U UUID]
+    [-I new_inode_size] [-z undo_file] device
+
+# resize2fs
+resize2fs 1.44.1 (24-Mar-2018)
+Usage: resize2fs [-d debug_flags] [-f] [-F] [-M] [-P] [-p] 
+       device [-b|-s|new_size] [-S RAID-stride] [-z undo_file]
+
+
+Different block size
+====================
+
+# mkfs.ext4 -b 512 /dev/sda4
+mkfs.ext4: invalid block size - 512
+
+---------
+
+# mkfs.ext4 -b 1024 /dev/sda4
+mke2fs 1.44.1 (24-Mar-2018)
+/dev/sda4 contains a ext4 file system
+    last mounted on /backup on Tue Jan 14 09:54:56 2020
+Proceed anyway? (y,N) y
+Warning: specified blocksize 1024 is less than device physical sectorsize 4096
+Creating filesystem with 125000704 1k blocks and 7812608 inodes
+Filesystem UUID: ec99df56-8037-49d3-b9d9-d647d5ef5d9d
+Superblock backups stored on blocks: 
+    8193, 24577, 40961, 57345, 73729, 204801, 221185, 401409, 663553, 
+    1024001, 1990657, 2809857, 5120001, 5971969, 17915905, 19668993, 
+    25600001, 53747713
+
+Allocating group tables: done                            
+Writing inode tables: done                            
+Creating journal (262144 blocks): done
+Writing superblocks and filesystem accounting information: done
+
+Analyze
+=======
+
+# tune2fs -l /dev/sda4
+tune2fs 1.44.1 (24-Mar-2018)
+Filesystem volume name:   <none>
+Last mounted on:          <not available>
+Filesystem UUID:          ec99df56-8037-49d3-b9d9-d647d5ef5d9d
+Filesystem magic number:  0xEF53
+Filesystem revision #:    1 (dynamic)
+Filesystem features:      has_journal ext_attr resize_inode dir_index filetype extent 64bit flex_bg sparse_super large_file huge_file dir_nlink extra_isize metadata_csum
+Filesystem flags:         signed_directory_hash 
+Default mount options:    user_xattr acl
+Filesystem state:         clean
+Errors behavior:          Continue
+Filesystem OS type:       Linux
+Inode count:                7 812 608
+Block count:              125 000 704
+Reserved block count:       6 250 035
+Free blocks:              122 731 865
+Free inodes:                7 812 597
+First block:              1
+Block size:               1024
+Fragment size:            1024
+Group descriptor size:    64
+Reserved GDT blocks:      256
+Blocks per group:         8192
+Fragments per group:      8192
+Inodes per group:         512
+Inode blocks per group:   128
+RAID stride:              4
+RAID stripe width:        4
+Flex block group size:    16
+Filesystem created:       Tue Jan 14 10:18:21 2020
+Last mount time:          n/a
+Last write time:          Tue Jan 14 10:18:30 2020
+Mount count:              0
+Maximum mount count:      -1
+Last checked:             Tue Jan 14 10:18:21 2020
+Check interval:           0 (<none>)
+Lifetime writes:          258 MB
+Reserved blocks uid:      0 (user root)
+Reserved blocks gid:      0 (group root)
+First inode:              11
+Inode size:	          256
+Required extra isize:     32
+Desired extra isize:      32
+Journal inode:            8
+Default directory hash:   half_md4
+Directory Hash Seed:      2f6705e1-b946-41b1-a68f-9d70e5f0fdb5
+Journal backup:           inode blocks
+Checksum type:            crc32c
+Checksum:                 0xbb52c3b8
+
+With 16 million nodes
+=====================
+
+# mkfs.ext4 -b 1024 -N 16000000 /dev/sda4
+mke2fs 1.44.1 (24-Mar-2018)
+/dev/sda4 contains a ext4 file system
+    created on Tue Jan 14 10:18:21 2020
+Proceed anyway? (y,N) y
+Warning: specified blocksize 1024 is less than device physical sectorsize 4096
+Creating filesystem with 125000704 1k blocks and 15991432 inodes
+Filesystem UUID: a2867125-dc6b-4ef1-94a0-7e80590f6739
+Superblock backups stored on blocks: 
+    8193, 24577, 40961, 57345, 73729, 204801, 221185, 401409, 663553, 
+    1024001, 1990657, 2809857, 5120001, 5971969, 17915905, 19668993, 
+    25600001, 53747713
+
+Allocating group tables: done                            
+Writing inode tables: done                            
+Creating journal (262144 blocks): done
+Writing superblocks and filesystem accounting information: done
+
+
+# tune2fs -l /dev/sda4
+tune2fs 1.44.1 (24-Mar-2018)
+Filesystem volume name:   <none>
+Last mounted on:          <not available>
+Filesystem UUID:          a2867125-dc6b-4ef1-94a0-7e80590f6739
+Filesystem magic number:  0xEF53
+Filesystem revision #:    1 (dynamic)
+Filesystem features:      has_journal ext_attr resize_inode dir_index filetype extent 64bit flex_bg sparse_super large_file huge_file dir_nlink extra_isize metadata_csum
+Filesystem flags:         signed_directory_hash 
+Default mount options:    user_xattr acl
+Filesystem state:         clean
+Errors behavior:          Continue
+Filesystem OS type:       Linux
+Inode count:              15991432
+Block count:              125000704
+Reserved block count:     6250035
+Free blocks:              120687159
+Free inodes:              15991421
+First block:              1
+Block size:               1024
+Fragment size:            1024
+Group descriptor size:    64
+Reserved GDT blocks:      256
+Blocks per group:         8192
+Fragments per group:      8192
+Inodes per group:         1048
+Inode blocks per group:   262
+RAID stride:              4
+RAID stripe width:        4
+Flex block group size:    16
+Filesystem created:       Tue Jan 14 10:26:17 2020
+Last mount time:          n/a
+Last write time:          Tue Jan 14 10:26:26 2020
+Mount count:              0
+Maximum mount count:      -1
+Last checked:             Tue Jan 14 10:26:17 2020
+Check interval:           0 (<none>)
+Lifetime writes:          258 MB
+Reserved blocks uid:      0 (user root)
+Reserved blocks gid:      0 (group root)
+First inode:              11
+Inode size:	          256
+Required extra isize:     32
+Desired extra isize:      32
+Journal inode:            8
+Default directory hash:   half_md4
+Directory Hash Seed:      d1c661fe-1bc3-4c61-8208-e89b6dffae73
+Journal backup:           inode blocks
+Checksum type:            crc32c
+Checksum:                 0x7649df94
