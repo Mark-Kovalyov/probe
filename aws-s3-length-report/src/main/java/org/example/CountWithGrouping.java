@@ -16,9 +16,6 @@ import java.util.*;
 
 public class CountWithGrouping {
 
-    // prefix = asset
-    // key    = asset/eq.....
-    //
 
     public static String subPrefix(String prefix, String key) {
         String sub = key.substring(prefix.length() + 1);
