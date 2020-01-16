@@ -13,11 +13,11 @@
     <properties>
         <hibernate.version></hibernate.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jooq.version>3.11.1</jooq.version>
-        <querydsl.version>4.2.1</querydsl.version>
+        <jooq.version>3.12.3</jooq.version>
+        <querydsl.version>4.2.2</querydsl.version>
         <slf4j.version>1.7.25</slf4j.version>
-        <java.source.version>1.8</java.source.version>
-        <java.target.version>1.8</java.target.version>
+        <java.source.version>11</java.source.version>
+        <java.target.version>11</java.target.version>
     </properties>
 
     <dependencies>
@@ -43,14 +43,8 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.0</version>
+            <version>1.18.10</version>
             <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.17</version>
         </dependency>
 
         <dependency>
@@ -72,12 +66,6 @@
             <artifactId>querydsl-jpa</artifactId>
             <version>${querydsl.version}</version>
             <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>${slf4j.version}</version>
         </dependency>
 
         <dependency>
@@ -108,13 +96,13 @@
         <dependency>
             <groupId>p6spy</groupId>
             <artifactId>p6spy</artifactId>
-            <version>3.6.0</version>
+            <version>3.8.6</version>
         </dependency>
 
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>1.4.196</version>
+            <version>1.4.200</version>
             <scope>test</scope>
         </dependency>
 
@@ -126,7 +114,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.7.0</version>
+                <version>3.8.1</version>
                 <configuration>
                     <source>${java.source.version}</source>
                     <target>${java.target.version}</target>

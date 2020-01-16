@@ -1,8 +1,6 @@
 package mayton.probe.hibernate;
 
 import mayton.probe.GeoIpCity;
-import mayton.probe.Log4jUtils;
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -16,11 +14,12 @@ import javax.persistence.criteria.Root;
 import java.net.ServerSocket;
 import java.util.List;
 
+
 public class CriteriaTest {
 
     @BeforeClass
     public void beforeClass(){
-        Log4jUtils.init();
+
     }
 
     @Test

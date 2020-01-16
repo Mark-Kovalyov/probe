@@ -1,6 +1,5 @@
 package mayton.probe.jpa;
 
-import mayton.probe.Log4jUtils;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
@@ -16,7 +15,6 @@ public class JPAGeoTest {
 
     @BeforeClass
     public static void beforeClass() {
-        Log4jUtils.init();
     }
 
     @Before

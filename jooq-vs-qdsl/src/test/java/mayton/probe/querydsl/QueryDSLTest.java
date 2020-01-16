@@ -1,7 +1,6 @@
 package mayton.probe.querydsl;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import mayton.probe.Log4jUtils;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -14,7 +13,7 @@ public class QueryDSLTest {
 
     @BeforeClass
     public static void beforeClass(){
-        Log4jUtils.init();
+
     }
 
     @Ignore

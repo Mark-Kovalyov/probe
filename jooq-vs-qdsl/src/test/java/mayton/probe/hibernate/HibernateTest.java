@@ -2,8 +2,6 @@ package mayton.probe.hibernate;
 
 import mayton.probe.GeoIpCity;
 import mayton.probe.GeoIpCityPk;
-import mayton.probe.Log4jUtils;
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -28,7 +26,6 @@ public class HibernateTest {
 
     @BeforeClass
     public static void beforeClass() {
-        Log4jUtils.init();
         factory = new Configuration().configure().buildSessionFactory();
     }
 
