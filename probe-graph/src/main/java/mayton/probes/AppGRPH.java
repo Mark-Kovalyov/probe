@@ -1,5 +1,6 @@
 package mayton.probes;
 
+/*
 import com.carrotsearch.hppc.cursors.IntCursor;
 import grph.Grph;
 import grph.in_memory.InMemoryGrph;
@@ -8,13 +9,14 @@ import org.slf4j.LoggerFactory;
 
 import toools.collections.primitive.LucIntSet;
 import toools.io.file.RegularFile;
+*/
 
 public class AppGRPH {
 
-    static Logger logger = LoggerFactory.getLogger(AppGRPH.class);
 
     public static void main(String[] args) throws Exception {
 
+/*
         // Creating a 4x4 grid and display it in a graphical view:
         Grph g = new InMemoryGrph();
         g.grid(4, 4);
@@ -29,11 +31,6 @@ public class AppGRPH {
         f.setContent(g.toGrphText().getBytes());
 
         LucIntSet vertices = g.getVertices();
-
-
-
-
-
-
+*/
     }
 }
