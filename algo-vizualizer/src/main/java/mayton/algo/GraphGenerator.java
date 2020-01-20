@@ -23,16 +23,21 @@ public class GraphGenerator {
         }
     }
 
-    public static void exportToGraphviz(Graph graph) throws IOException {
-        PrintWriter pw = new PrintWriter(new FileWriter(props.getProperty("dest.graph")));
+    public static void exportToGraphviz(Graph graph, String filename) throws IOException {
+        PrintWriter pw = new PrintWriter(new FileWriter(props.getProperty("dest.graph") + filename));
         pw.println("digraph {\n" +
                 "    graph [pad=\"0.212,0.055\" bgcolor=lightgray  splines=line]\n" +
                 "    node [style=filled]");
+
         graph.nodeList.stream().forEach(node -> {
-            pw.printf("a [fillcolor=\"#d62728\" pos=\"%d,%d!\"]", node.point.x, node.point.y);
+            pw.printf("    %s [pos=\"%d,%d\"]\n", node.name, node.point.x, node.point.y);
         });
 
+        graph.edgeList.stream().forEach(edge -> {
+            pw.printf("    %s -> %s [label=\"%d/%d\"]\n", edge.from.name, edge.to.name, edge.flow, edge.capacity);
+        });
 
+        pw.println("}");
         pw.close();
     }
 
@@ -42,20 +47,21 @@ public class GraphGenerator {
         List<Edge> edgeList = new ArrayList<>();
         graph.edgeList = edgeList;
         graph.nodeList = nodeList;
-        int nodes = 1000;
+        int nodes = 25;
+        String filename = "out-25.gv";
         int sqSize = (int) Math.sqrt(nodes);
         Map<Point, Node> positionNodeMap = new HashMap<>();
         // Nodes
+        int cnt = 0;
         for (int i = 0; i < sqSize; i++) {
             for (int j = 0; j < sqSize; j++) {
-                Node node = new Node();
-                node.stampedLock = new StampedLock();
+                Node node = new Node("v" + cnt++);
                 node.point = new Point(i, j);
-                node.color = Color.GRAY;
-                node.outgoingEdges = new ArrayList<>();
                 positionNodeMap.put(node.point, node);
+                nodeList.add(node);
             }
         }
+        Random random = new Random();
         // Horizontal Edges
         for (int i = 0; i < sqSize; i++) {
             for (int j = 0; j < sqSize - 1; j++) {
@@ -64,11 +70,15 @@ public class GraphGenerator {
                 long stamp1 = node1.stampedLock.writeLock();
                 long stamp2 = node2.stampedLock.writeLock();
                 try {
-                    node1.outgoingEdges.add(new Edge(node1, node2));
+                    int capacity = Math.abs(1 + random.nextInt(100));
+                    Edge edge = new Edge(node1, node2, 0, capacity);
+                    node1.outgoingEdges.add(edge);
+                    edgeList.add(edge);
                 } finally {
                     node1.stampedLock.unlockWrite(stamp1);
                     node2.stampedLock.unlockWrite(stamp2);
                 }
+
             }
         }
 
@@ -80,7 +90,10 @@ public class GraphGenerator {
                 long stamp1 = node1.stampedLock.writeLock();
                 long stamp2 = node2.stampedLock.writeLock();
                 try {
-                    node1.outgoingEdges.add(new Edge(node1, node2));
+                    int capacity = Math.abs(1 + random.nextInt(100));
+                    Edge edge = new Edge(node1, node2, 0, capacity);
+                    node1.outgoingEdges.add(edge);
+                    edgeList.add(edge);
                 } finally {
                     node1.stampedLock.unlockWrite(stamp1);
                     node2.stampedLock.unlockWrite(stamp2);
@@ -89,7 +102,7 @@ public class GraphGenerator {
         }
 
         // Assume that
-        exportToGraphviz(graph);
+        exportToGraphviz(graph, filename);
     }
 
 
