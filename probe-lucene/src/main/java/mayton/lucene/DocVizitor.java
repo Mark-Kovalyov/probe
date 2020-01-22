@@ -27,6 +27,7 @@ public class DocVizitor extends SimpleFileVisitor<Path> {
     static Logger logger = LogManager.getLogger(DocVizitor.class);
     int commitAfter = 100;
     int commits = 0;
+    int files = 0;
 
     private IndexWriter writer;
 
@@ -52,7 +53,7 @@ public class DocVizitor extends SimpleFileVisitor<Path> {
 
     @Override
     public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
-        if (dir.toString().startsWith(".")) {
+        if (dir.toString().startsWith(".") && !dir.startsWith("./")) {
             logger.info(":: Skipped folder {}", dir.toString());
             return FileVisitResult.SKIP_SUBTREE;
         } else {
@@ -75,9 +76,10 @@ public class DocVizitor extends SimpleFileVisitor<Path> {
                 document.add(new StringField("path", file.toString(), Field.Store.YES));
                 writer.addDocument(document);
                 commits++;
+                files++;
                 if (commits > commitAfter) {
                     writer.commit();
-                    logger.info(":: commit");
+                    logger.info(":: commit, files = {}", files);
                     commits = 0;
                 }
             }
