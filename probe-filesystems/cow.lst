@@ -1,0 +1,5 @@
+FileSystems with COW:
+- XFS
+- ZFS
+- ReizerFS
+- BtrFS

@@ -55,6 +55,12 @@ mkfs.reiserfs 3.6.27
 Block sizes smaller than 4k are not supported.
 
 
+Other tools
+===========
+
+debugreiserfs  fsck.reiserfs  mkfs.reiserfs  mkreiserfs  resize_reiserfs
+
+
 Links
 =====
 
