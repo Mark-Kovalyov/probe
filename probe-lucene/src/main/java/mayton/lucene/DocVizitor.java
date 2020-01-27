@@ -12,10 +12,7 @@ import org.apache.lucene.index.IndexWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.FileVisitResult;
-import java.nio.file.NoSuchFileException;
-import java.nio.file.Path;
-import java.nio.file.SimpleFileVisitor;
+import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.HashSet;
 import java.util.Set;
@@ -74,6 +71,8 @@ public class DocVizitor extends SimpleFileVisitor<Path> {
                 document.add(new TextField("body", IOUtils.toString(new FileInputStream(fileObject), "utf-8"), Field.Store.NO));
                 document.add(new StringField("length", String.valueOf(fileObject.length()), Field.Store.YES));
                 document.add(new StringField("path", file.toString(), Field.Store.YES));
+                // TODO: format
+                document.add(new StringField("lastUpdate", String.valueOf(fileObject.lastModified()), Field.Store.YES));
                 writer.addDocument(document);
                 commits++;
                 files++;

@@ -5,6 +5,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.core.SimpleAnalyzer;
+import org.apache.lucene.analysis.ru.RussianAnalyzer;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.Directory;
@@ -12,6 +13,7 @@ import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -23,13 +25,15 @@ public class Indexer {
         Options options = new Options();
         options.addOption(new Option("s", "sourceDir", true, "Source Dir"));
         options.addOption(new Option("i", "indexDir", true, "Index Dir"));
+        options.addOption(new Option("a", "analyzer", true, "( core.SimpleAnalyzer | en.EnglishAnalyzer | ru.RussianAnalyzer ... )"));
         //options.addOption(new Option("e", "extensions", true, "Comma-separated extensions ex: txt,html"));
         return options;
     }
 
     static Logger logger = LogManager.getLogger(Indexer.class);
 
-    public static void main(String[] args) throws IOException, ParseException {
+    public static void main(String[] args) throws IOException, ParseException, ClassNotFoundException, NoSuchMethodException,
+            IllegalAccessException, InvocationTargetException, InstantiationException {
         if (args.length == 0) {
             HelpFormatter formatter = new HelpFormatter();
             formatter.printHelp( "Indexer", createOptions() );
@@ -37,7 +41,11 @@ public class Indexer {
         }
         CommandLineParser parser = new DefaultParser();
         CommandLine cmd = parser.parse(createOptions(), args);
-        Analyzer analyzer = new SimpleAnalyzer(); //new EnglishAnalyzer();
+
+        String analyzerClassName = cmd.hasOption('a') ? cmd.getOptionValue('a') : "core.SimpleAnalyzer";
+
+        Class<?> c = Class.forName("org.apache.lucene.analysis." + analyzerClassName);
+        Analyzer analyzer = (Analyzer) c.getDeclaredConstructor().newInstance();
         logger.info(":: detected Analyzer of instance = {}", analyzer.getClass());
         String indexDir = cmd.hasOption("i") ?
                 cmd.getOptionValue("i") + "/" + Version.LATEST :

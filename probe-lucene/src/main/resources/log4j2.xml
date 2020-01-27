@@ -5,12 +5,12 @@
 
         <File name="file" fileName="logs/app.log">
             <PatternLayout>
-                <Pattern>%d %m %X{startIpNum} %n</Pattern>
+                <Pattern>%d %m  %n</Pattern>
             </PatternLayout>
         </File>
 
         <Console name="STDOUT" target="SYSTEM_OUT">
-            <PatternLayout pattern="%m %X{startIpNum} %n"/>
+            <PatternLayout pattern="%m  %n"/>
         </Console>
 
     </Appenders>
