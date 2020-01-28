@@ -1,6 +1,5 @@
 package mayton.probe;
 
-import oracle.jdbc.OracleDriver;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.io.FileUtils;
@@ -74,7 +73,7 @@ public class FixIndexer {
         try(Reader reader = messageClob.getCharacterStream()){
             String message = IOUtils.toString(reader);
             document.add(new TextField("message", message,Field.Store.NO));
-        };
+        }
     }
 
     public static void main(String[] args) throws Exception {
@@ -82,7 +81,6 @@ public class FixIndexer {
 
         String outputDir        = "output/fix-indexer";
         String connectionString = "jdbc:oracle:thin:fix/fix@127.0.0.1:1521/XE";
-        DriverManager.registerDriver(new OracleDriver());
 
         Analyzer analyzer = new SohAnalyzer();
         Directory directory = FSDirectory.open(Paths.get(getProperty("fix.indexer.outputDir", outputDir)));

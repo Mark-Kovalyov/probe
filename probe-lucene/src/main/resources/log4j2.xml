@@ -3,21 +3,24 @@
 
     <Appenders>
 
-        <File name="file" fileName="logs/app.log">
-            <PatternLayout>
-                <Pattern>%d %m  %n</Pattern>
-            </PatternLayout>
-        </File>
+        <RollingFile name="Rolling1" fileName="log/app.log"
+                                  filePattern="log/app-%d{yyyy-MM-dd-hh}.log" ignoreExceptions="false">
+
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5p] %-3tid : %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy filePattern="log/app-%d{yyyy-MM-dd-hh}.log" />
+            </Policies>
+        </RollingFile>
 
         <Console name="STDOUT" target="SYSTEM_OUT">
-            <PatternLayout pattern="%m  %n"/>
+            <PatternLayout pattern="[%-5p] %-3tid : %m%n"/>
         </Console>
 
     </Appenders>
 
     <Loggers>
         <Root level="trace">
-            <AppenderRef ref="file"   level="DEBUG"/>
+            <AppenderRef ref="Rolling1"   level="DEBUG"/>
             <AppenderRef ref="STDOUT" level="INFO"/>
         </Root>
     </Loggers>

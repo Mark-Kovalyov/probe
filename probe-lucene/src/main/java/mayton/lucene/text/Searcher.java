@@ -1,4 +1,4 @@
-package mayton.lucene;
+package mayton.lucene.text;
 
 import org.apache.commons.cli.*;
 import org.apache.logging.log4j.LogManager;

@@ -1,6 +1,5 @@
 package mayton.probe.docindexer;
 
-import oracle.jdbc.OracleDriver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
@@ -37,8 +36,6 @@ public class DocConsumer implements Consumer<InputStream> {
         logger.info("Begin");
 
         String outputDir = "/db/lucene/doc-indexer";
-
-        DriverManager.registerDriver(new OracleDriver());
 
         Directory directory = FSDirectory.open(Paths.get(outputDir));
 

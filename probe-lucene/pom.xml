@@ -10,12 +10,13 @@
     <packaging>jar</packaging>
 
     <properties>
-        <java.lang.version>11</java.lang.version>
-        <java.target.version>11</java.target.version>
+        <java.lang.version>1.8</java.lang.version>
+        <java.target.version>1.8</java.target.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <lucene.version>8.4.1</lucene.version>
         <commons.csv.version>1.7</commons.csv.version>
         <active.mq.version>5.7.0</active.mq.version>
+        <destClass>mayton.lucene.text.Indexer</destClass>
     </properties>
 
     <dependencies>
@@ -33,9 +34,15 @@
         </dependency>
 
         <dependency>
-            <groupId>org.apache.activemq</groupId>
-            <artifactId>activemq-core</artifactId>
-            <version>${active.mq.version}</version>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-facet</artifactId>
+            <version>${lucene.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-analyzers-morfologik</artifactId>
+            <version>${lucene.version}</version>
         </dependency>
 
         <dependency>
@@ -48,12 +55,6 @@
             <groupId>org.apache.lucene</groupId>
             <artifactId>lucene-queryparser</artifactId>
             <version>${lucene.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.lucene</groupId>
-            <artifactId>lucene-snowball</artifactId>
-            <version>3.0.3</version>
         </dependency>
 
         <dependency>
@@ -90,12 +91,6 @@
         </dependency>
 
         <dependency>
-            <groupId>com.oracle</groupId>
-            <artifactId>ojdbc8_g</artifactId>
-            <version>12.2.0.1</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.6</version>
@@ -103,7 +98,29 @@
 
     </dependencies>
 
+    <profiles>
+        <profile>
+            <id>indexer</id>
+            <activation>
+                <property>
+                    <name>destClass</name>
+                    <value>mayton.lucene.text.Indexer</value>
+                </property>
+            </activation>
+        </profile>
+        <profile>
+            <id>bitempIndexer</id>
+            <activation>
+                <property>
+                    <name>destClass</name>
+                    <value>mayton.lucene.bitemporal.BitempIndexer</value>
+                </property>
+            </activation>
+        </profile>
+    </profiles>
+
     <build>
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -130,7 +147,8 @@
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <manifestEntries>
-                                        <Main-Class>mayton.lucene.Indexer</Main-Class>
+                                        <!-- TODO: Replace with ${destClass} -->
+                                        <Main-Class>mayton.lucene.bitemporal.BitempIndexer</Main-Class>
                                         <CreatedBy>mtn</CreatedBy>
                                         <Built-By>mtn</Built-By>
                                     </manifestEntries>

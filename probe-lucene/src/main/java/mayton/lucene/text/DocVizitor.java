@@ -1,4 +1,4 @@
-package mayton.lucene;
+package mayton.lucene.text;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
@@ -12,6 +12,7 @@ import org.apache.lucene.index.IndexWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.HashSet;
@@ -25,6 +26,7 @@ public class DocVizitor extends SimpleFileVisitor<Path> {
     int commitAfter = 100;
     int commits = 0;
     int files = 0;
+    boolean ignoreAccessDenied = true;
 
     private IndexWriter writer;
 
@@ -44,8 +46,9 @@ public class DocVizitor extends SimpleFileVisitor<Path> {
         add("xhtml");
     }});
 
-    public DocVizitor(IndexWriter writer) {
+    public DocVizitor(IndexWriter writer, boolean ignoreAccessDenied) {
         this.writer = writer;
+        this.ignoreAccessDenied = ignoreAccessDenied;
     }
 
     @Override
@@ -64,11 +67,11 @@ public class DocVizitor extends SimpleFileVisitor<Path> {
             Document document = new Document();
             String path = file.toString();
             String lowerPath = path.toLowerCase();
-            int index = lowerPath.indexOf(".");
+            int index = lowerPath.indexOf('.');
             if (index >= 0 && textExtensions.contains(lowerPath.substring(index + 1))) {
                 File fileObject = new File(path);
                 logger.info(":: {}", path);
-                document.add(new TextField("body", IOUtils.toString(new FileInputStream(fileObject), "utf-8"), Field.Store.NO));
+                document.add(new TextField("body", IOUtils.toString(new FileInputStream(fileObject), StandardCharsets.UTF_8), Field.Store.NO));
                 document.add(new StringField("length", String.valueOf(fileObject.length()), Field.Store.YES));
                 document.add(new StringField("path", file.toString(), Field.Store.YES));
                 // TODO: format
@@ -90,6 +93,17 @@ public class DocVizitor extends SimpleFileVisitor<Path> {
             return FileVisitResult.TERMINATE;
         }
         return FileVisitResult.CONTINUE;
+    }
+
+    @Override
+    public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
+        logger.warn(":: visitFileFailed for {}", file.toString());
+        if (ignoreAccessDenied) {
+            logger.warn(":: skip siblings");
+            return FileVisitResult.SKIP_SIBLINGS;
+        } else {
+            return super.visitFileFailed(file, exc);
+        }
     }
 
 
