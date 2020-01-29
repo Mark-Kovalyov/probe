@@ -8,7 +8,7 @@
 
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5p] %-3tid : %m%n"/>
             <Policies>
-                <TimeBasedTriggeringPolicy filePattern="log/app-%d{yyyy-MM-dd-hh}.log" />
+                <!--TimeBasedTriggeringPolicy filePattern="log/app-%d{yyyy-MM-dd-hh}.log" /-->
             </Policies>
         </RollingFile>
 
