@@ -1,6 +1,5 @@
-package mayton.probe.codecs;
+package mayton.lucene;
 
-import mayton.probe.FixIndexer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.codecs.bloom.FuzzySet;
@@ -8,9 +7,9 @@ import org.apache.lucene.util.BytesRef;
 
 import java.io.IOException;
 
-public class ProbeBloom {
+public class LuceneFuzzySet {
 
-    static Logger logger = LogManager.getLogger(ProbeBloom.class);
+    static Logger logger = LogManager.getLogger(LuceneFuzzySet.class);
 
     public static void main(String[] args) throws IOException {
 

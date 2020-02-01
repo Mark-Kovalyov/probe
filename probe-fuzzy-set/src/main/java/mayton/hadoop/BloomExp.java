@@ -1,4 +1,4 @@
-package mayton;
+package mayton.hadoop;
 
 import com.googlecode.concurrenttrees.common.KeyValuePair;
 import com.googlecode.concurrenttrees.radix.ConcurrentRadixTree;
@@ -43,7 +43,7 @@ public class BloomExp {
         double N = (double) n;
         return (int) (ceil(M / N) * LN2); // M / N * 0.7
     }
-    
+
     static int getOptimalM(long n, double p) {
         // TODO: Check
         return - (int)((n * log(p)) /  (LN2 * LN2));
