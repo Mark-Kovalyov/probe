@@ -13,7 +13,10 @@ import org.apache.hadoop.util.bloom.Key;
 import org.apache.hadoop.util.hash.Hash;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
+import java.util.Properties;
+import java.util.zip.GZIPInputStream;
 
 import static java.lang.Math.*;
 
@@ -110,29 +113,33 @@ public class BloomExp {
         }
     }
 
-    public static void probeBloom(String path, String file) throws IOException {
+    public static void probeBloom(String path, String inputFile, String outputFile) throws IOException {
 
         int n = 88_405_430;
 
-        generateTable(n);
-
-        System.exit(0);
+        //generateTable(n);
 
         // 1 649 813 008 bits = 206 226 626
         BloomFilter bloomFilter = new BloomFilter(1_649_813_008, 13, Hash.MURMUR_HASH);
 
-        PrintWriter pw = new PrintWriter(path + "/hashkiller-dict-potential-duplicates.txt");
+        PrintWriter pw = new PrintWriter(path + "/" + outputFile);
 
-        BufferedReader br = new BufferedReader(new FileReader(path + "/"+ file));
+        InputStream inputStream = inputFile.endsWith(".gz")
+                ? new GZIPInputStream(new FileInputStream(path + "/"+ inputFile))
+                : new FileInputStream(path + "/"+ inputFile);
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
 
         String line;
         long cnt = 0;
         long duplicates = 0;
         while ((line = br.readLine()) != null) {
-            Key key = new Key(line.getBytes("utf-8"));
+            if (line.length() == 0) {
+                continue;
+            }
+            Key key = new Key(line.getBytes(StandardCharsets.UTF_8));
             if (bloomFilter.membershipTest(key)) {
                 duplicates++;
-                //println("DUP: "+line);
                 pw.println(line);
             }
             bloomFilter.add(key);
@@ -147,7 +154,7 @@ public class BloomExp {
         println("Lines:      " + cnt);
         println("Duplicates: " + duplicates);
 
-        DataOutputStream dos = new DataOutputStream(new FileOutputStream(path + "/hashkiller-dict-bloom.dat"));
+        /*DataOutputStream dos = new DataOutputStream(new FileOutputStream(path + "/hashkiller-dict-bloom.dat"));
 
         bloomFilter.write(dos);
 
@@ -161,7 +168,7 @@ public class BloomExp {
 
         bloomFilter2.readFields(di);
 
-        println("Vectorsize = "+bloomFilter.getVectorSize());
+        println("Vectorsize = "+bloomFilter.getVectorSize());*/
 
     }
 
@@ -194,10 +201,8 @@ public class BloomExp {
     }
 
     public static void main(String[] args) throws Exception {
-
-        probeBloom("c:/db","hashkiller-dict.txt");
-
-        //probeRadix("c:/db","hashkiller-dict-emails.txt");
-
+        Properties p = new Properties();
+        p.load(new FileInputStream("sensitive.properties"));
+        probeBloom(p.getProperty("path"), p.getProperty("inputFile"), p.getProperty("duplicates"));
     }
 }

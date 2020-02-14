@@ -6,14 +6,14 @@
         <RollingFile name="Rolling1" fileName="log/app.log"
                                   filePattern="log/app-%d{yyyy-MM-dd-hh}.log" ignoreExceptions="false">
 
-            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5p] %-3tid : %m%n"/>
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5p] %-3tid : %c %m%n"/>
             <Policies>
                 <!--TimeBasedTriggeringPolicy filePattern="log/app-%d{yyyy-MM-dd-hh}.log" /-->
             </Policies>
         </RollingFile>
 
         <Console name="STDOUT" target="SYSTEM_OUT">
-            <PatternLayout pattern="[%-5p] %-3tid : %m%n"/>
+            <PatternLayout pattern="%highlight{[%-5p] %-3tid : %c %m%n}"/>
         </Console>
 
     </Appenders>

@@ -13,8 +13,16 @@ repositories {
 }
 
 dependencies {
+    // The core reader and writer for ORC files. Uses the vectorized
+    // column batch for the in memory representation.
+    compile group: 'org.apache.orc', name: 'orc-core', version: '1.6.2'
+    // An implementation of Hadoop's mapred and mapreduce input and output
+    // formats for ORC files. They use the core reader and writer, but
+    // present the data to the user in Writable objects.
+    compile group: 'org.apache.orc', name: 'orc-mapreduce', version: '1.6.2'
+    // Tools
+    compile group: 'org.apache.orc', name: 'orc-tools', version: '1.6.2'
 
-    compile group: 'org.apache.orc', name: 'orc-core', version: '1.5.5'
     compile group: 'org.apache.commons', name: 'commons-csv', version: '1.7'
     compile group: 'log4j', name: 'log4j', version: '1.2.17'
 

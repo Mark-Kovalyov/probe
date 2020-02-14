@@ -5,10 +5,9 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.hive.ql.exec.vector.BytesColumnVector;
-import org.apache.hadoop.hive.ql.exec.vector.DoubleColumnVector;
-import org.apache.hadoop.hive.ql.exec.vector.LongColumnVector;
-import org.apache.hadoop.hive.ql.exec.vector.VectorizedRowBatch;
+import org.apache.hadoop.hive.common.type.HiveDecimal;
+import org.apache.hadoop.hive.ql.exec.vector.*;
+import org.apache.hadoop.hive.serde2.io.HiveDecimalWritable;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.apache.orc.CompressionKind;
@@ -17,12 +16,14 @@ import org.apache.orc.TypeDescription;
 import org.apache.orc.Writer;
 
 import java.io.*;
+import java.math.BigDecimal;
 import java.util.Iterator;
 import java.util.Properties;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static probe.mayton.orc.Utils.getProps;
 import static probe.mayton.orc.Utils.ip;
+import static probe.mayton.orc.schemas.SchemaStorage.maxMindSchema;
 
 /**
  * <pre>
@@ -47,19 +48,6 @@ public class MaxMindCsvToOrc {
 
         Configuration conf = new Configuration();
 
-        TypeDescription schema = TypeDescription.createStruct()
-                .addField("startIpNum", TypeDescription.createLong())
-                .addField("endIpNum",   TypeDescription.createLong())
-                .addField("country",    TypeDescription.createString())
-                .addField("region",     TypeDescription.createString())
-                .addField("city",       TypeDescription.createString())
-                .addField("postalCode", TypeDescription.createString())
-                .addField("latitude",   TypeDescription.createDouble())
-                .addField("longitude",  TypeDescription.createDouble())
-                .addField("dmaCode",    TypeDescription.createString())
-                .addField("areaCode",   TypeDescription.createString());
-
-
         Properties props = getProps();
 
         String maxMindCsvFile = props.getProperty("maxMindCsvFile");
@@ -76,14 +64,34 @@ public class MaxMindCsvToOrc {
 
         int cnt = 0;
 
-        try(Writer writer = OrcFile.createWriter(
-                new Path("files/" + maxMindOrcFile),
+        // ORC provides three level of indexes within each file:
+        //
+        //   - file level   - statistics about the values in each column across the entire file
+        //   - stripe level - statistics about the values in each column for each stripe
+        //   - row level    - statistics about the values in each column for each set of 10,000 rows within a stripe
+
+        /*
+            default blockSizeValue = 67 108 864
+            default rowIndexStride = 10 000
+            blockPadding = true
+            compress = ZLIB
+            enforceBufSize= false
+            encodingStrategy = speed
+            compressintStr = speed
+            bloomFilterColumns = ""
+            bloomVersion = 'utf-8'
+            writeVariableLengthBlocks = false
+            directEncodingColumns = ""
+         */
+
+        try (Writer writer = OrcFile.createWriter(
+                new Path(maxMindOrcFile),
                 OrcFile.writerOptions(conf)
-                        .setSchema(schema)
+                        .setSchema(maxMindSchema)
                         .blockSize(4L * 1024 * 1024)
                         .stripeSize(256L * 1024 * 1024)
                         .useUTCTimestamp(true)
-                        .rowIndexStride(1000)
+                        .rowIndexStride(10_000) // default rowIndexStride = 10 000
                         .bloomFilterColumns("country,region,city,dmaCode,areaCode")
                         .enforceBufferSize()
                         .overwrite(true)
@@ -95,7 +103,7 @@ public class MaxMindCsvToOrc {
             // Orc.SNAPPY   :  116 356 823
             // Orc.ZLIB     :   72 376 814
 
-            VectorizedRowBatch batch = schema.createRowBatch();
+            VectorizedRowBatch batch = maxMindSchema.createRowBatch();
 
             LongColumnVector startIpNum = (LongColumnVector) batch.cols[0];
             LongColumnVector endIpNum = (LongColumnVector) batch.cols[1];
