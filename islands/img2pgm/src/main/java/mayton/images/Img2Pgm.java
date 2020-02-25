@@ -22,21 +22,13 @@ public class Img2Pgm {
         BufferedImage image = ImageIO.read(new FileInputStream(args[0]));
         PrintWriter pgm = new PrintWriter(new FileWriter(args[1]));
         pgm.printf("P5\n");
+        pgm.printf("# Generated with java Img2Pgm converter\n");
         pgm.printf("%d %d\n", image.getWidth(), image.getHeight());
-        int cnt = 0;
         for (int y = 0; y < image.getWidth(); y++) {
-
             for (int x = 0; x < image.getHeight(); x++) {
                 int color = image.getRGB(x, y);
                 int gray = (int) (255.0 * getYPixelDouble(color));
-                cnt++;
-                if (cnt >= MAX_PIXELS_PER_LINE) {
-                    pgm.println();
-                    cnt = 0;
-                }
-                pgm.print(gray);
-                pgm.print(" ");
-
+                pgm.println(gray);
             }
         }
         pgm.close();
