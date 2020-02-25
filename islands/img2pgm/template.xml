@@ -47,10 +47,10 @@
           <artifactId>maven-jar-plugin</artifactId>
           <version>3.0.2</version>
             <configuration>
-                <finalName>img2ppm</finalName>
+                <finalName>artifactName</finalName>
                 <archive>
                     <manifest>
-                        <mainClass>mayton.images.Img2Ppm</mainClass>
+                        <mainClass>mainClassName</mainClass>
                     </manifest>
                 </archive>
             </configuration>

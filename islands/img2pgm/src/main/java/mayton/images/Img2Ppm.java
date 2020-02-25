@@ -4,29 +4,37 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
 
-public class Img2Pgm {
-
-    public static final double GK = 0.587;
-    public static final double BK = 0.114;
-    public static final double RK = 0.299;
+public class Img2Ppm {
 
     public static final int MAX_SYMBOLS_PER_LINE = 70;
 
-    public static double getYPixelDouble(int color) {
-        return (GK * ((color & 0x00FF00) >> 8) + BK * (color & 0x0000FF) + RK * ((color & 0xFF0000) >> 16)) / 255.0;
+    public static int getRPixel(int color) {
+        return (0x00FF0000&color)>>16;
     }
+
+    public static int getGPixel(int color) {
+        return (0x0000FF00&color)>>8;
+    }
+
+    public static int getBPixel(int color) {
+        return (0xFF&color);
+    }
+
 
     public static void main(String[] args) throws IOException {
         BufferedImage image = ImageIO.read(new FileInputStream(args[0]));
         PrintWriter pgm = new PrintWriter(new FileWriter(args[1]));
-        pgm.printf("P5\n");
-        pgm.printf("# Generated with java Img2Pgm converter\n");
+        pgm.printf("P6\n");
+        pgm.printf("# Generated with java Img2Ppm converter\n");
         pgm.printf("%d %d\n", image.getWidth(), image.getHeight());
         for (int y = 0; y < image.getWidth(); y++) {
             for (int x = 0; x < image.getHeight(); x++) {
                 int color = image.getRGB(x, y);
-                int gray = (int) (255.0 * getYPixelDouble(color));
-                pgm.println(gray);
+                pgm.print(getRPixel(color));
+                pgm.print(" ");
+                pgm.print(getGPixel(color));
+                pgm.print(" ");
+                pgm.println(getBPixel(color));
             }
         }
         pgm.close();
