@@ -18,6 +18,7 @@ https://docs.microsoft.com/en-us/sql/relational-databases/data-compression/page-
 
 ### Table
 
+```
  USE AdventureWorks2012;  
  GO  
  EXEC sp_estimate_data_compression_savings 'Production', 'TransactionHistory', NULL, NULL, 'ROW' ;  
@@ -25,10 +26,11 @@ https://docs.microsoft.com/en-us/sql/relational-databases/data-compression/page-
  ALTER TABLE Production.TransactionHistory REBUILD PARTITION = ALL  
  WITH (DATA_COMPRESSION = ROW);   
  GO  
-
+```
 
 ### Index
 
+```
  USE AdventureWorks2012;   
  GO  
  SELECT name, index_id  
@@ -44,6 +46,7 @@ https://docs.microsoft.com/en-us/sql/relational-databases/data-compression/page-
 
  ALTER INDEX IX_TransactionHistory_ProductID ON Production.TransactionHistory REBUILD PARTITION = ALL WITH (DATA_COMPRESSION = PAGE);  
  GO  
+```
 
 ## MySQL 8.0 (InnoDB engine)
 
@@ -51,17 +54,21 @@ https://dev.mysql.com/doc/refman/8.0/en/innodb-compression-usage.html
 
 ### In file
 
+```
  SET GLOBAL innodb_file_per_table=1;
  CREATE TABLE t1
   (c1 INT PRIMARY KEY)
   ROW_FORMAT=COMPRESSED
  KEY_BLOCK_SIZE=8;
+```
 
 ### In general tablespace
 
+```
  mysql> CREATE TABLESPACE `ts2` ADD DATAFILE 'ts2.ibd' FILE_BLOCK_SIZE = 8192 Engine=InnoDB;
 
  mysql> CREATE TABLE t4 (c1 INT PRIMARY KEY) TABLESPACE ts2 ROW_FORMAT=COMPRESSED KEY_BLOCK_SIZE=8;
+```
 
 ## MySQL 8.0 (MyISAM)
 
