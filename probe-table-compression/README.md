@@ -6,6 +6,10 @@ Oracle Advanced Compression (12c)
 
 https://www.oracle.com/technetwork/database/options/compression/advanced-compression-wp-12c-1896128.pdf
 
+Oracle Advanced Compression Whitepaper (11g)
+
+https://www.oracle.com/technetwork/database/advanced-compression-whitepaper-130502.pdf
+
 Oracle Advanced Compression FAQ
 
 https://www.oracle.com/ocom/groups/public/@otn/documents/webcontent/3861046.pdf
