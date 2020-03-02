@@ -52,7 +52,7 @@ https://docs.microsoft.com/en-us/sql/relational-databases/data-compression/page-
 
 https://dev.mysql.com/doc/refman/8.0/en/innodb-compression-usage.html
 
-### In file
+### In File-Per-Table Tablespace
 
 ```
  SET GLOBAL innodb_file_per_table=1;
