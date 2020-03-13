@@ -6,12 +6,16 @@
 service postgresql status
 ```
 
-## Show data directory
+## Connect as superuser
 
 Under postgres
 ```
 sudo -u postgres bash
 psql
+```
+
+## Show data directory
+```
 # SHOW data_directory;
        data_directory        
 -----------------------------
@@ -20,7 +24,8 @@ psql
 
 ## Show databases
 
-```postgres=# \l
+```
+postgres=# \l
                                      List of databases
       Name    |  Owner   | Encoding |   Collate   |    Ctype    |   Access privileges   
    -----------+----------+----------+-------------+-------------+-----------------------
@@ -34,6 +39,12 @@ psql
               |          |          |             |             | postgres=CTc/postgres    
 ```
 
+## Show accessable schemas
+
+```
+
+```
+
 ## Show users
 
 ```
@@ -44,6 +55,26 @@ psql
  john      |                                                            | {}        | 
  postgres  | Superuser, Create role, Create DB, Replication, Bypass RLS | {}        | 
 
+```
+
+## Show current user
+
+```
+postgres=# select current_user;
+ current_user 
+--------------
+ postgres
+(1 row)
+```
+
+## Show current schema
+
+```
+postgres=# select current_schema;
+ current_schema 
+----------------
+ public
+(1 row)
 ```
 
 ## Show tablespaces
@@ -90,3 +121,26 @@ CREATE TABLESPACE geospace OWNER john LOCATION '/pg/geospace';
 ```
 $ psql -d johndb -U john -h localhost -p 5432
 ```
+
+## Execute external SQL script (deploy new database)
+
+```
+$ psql -f ......
+```
+
+## Set new owner to database
+
+```
+$ ALTER DATABASE target_database OWNER TO new_onwer;
+```
+
+## Grant all privileges
+
+```
+$ GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO new_user;
+```
+
+## Demo/Booking
+```
+select * from bookings.*
+``` 
