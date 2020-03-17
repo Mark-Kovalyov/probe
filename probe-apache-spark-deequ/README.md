@@ -4,9 +4,21 @@
 
 ## General Links
 
-**Spark** https://spark.apache.org/ 
+**Spark** (org.apache.spark) https://spark.apache.org/
 
-**ORC** https://orc.apache.org/
+Apache Spark is a fast and general-purpose cluster computing system. 
+It provides high-level APIs in Java, Scala, Python and R, and an 
+optimized engine that supports general execution graphs. 
+It also supports a rich set of higher-level tools including 
+Spark SQL for SQL and structured data processing, MLlib 
+for machine learning, GraphX for graph processing, and Spark Streaming.
+
+- Spark SQL http://spark.apache.org/docs/latest/sql-programming-guide.html
+- MLIB http://spark.apache.org/docs/latest/ml-guide.html
+- GraphX http://spark.apache.org/docs/latest/graphx-programming-guide.html
+- Spark Streaming http://spark.apache.org/docs/latest/streaming-programming-guide.html 
+
+**ORC** (org.apache.orc) https://orc.apache.org/  
 
 **Spark + ORC** https://spark.apache.org/docs/latest/sql-data-sources-orc.html
 
@@ -25,6 +37,44 @@
 - https://github.com/awslabs/deequ    
 - https://github.com/apache/spark
 - https://github.com/apache/orc
+
+# Types
+
+- org.apache.spark.sql.DataFrame
+- org.apache.spark.sql.SparkSession
+- org.apache.spark.sql.Row
+- org.apache.spark.sql.Dataset
+- org.apache.spark.sql.DataFrameWriter
+- org.apache.hadoop.hive.ql.io.orc.OrcInputFormat
+
+## Spark-shell
+
+Display type:
+```
+scala> :type -v sc
+// Type signature
+org.apache.spark.SparkContext
+
+// Internal Type structure
+TypeRef(TypeSymbol(class SparkContext extends Logging))
+```
+
+## Spark Session
+
+Already defined since 2.0
+```
+scala> :type spark
+org.apache.spark.sql.SparkSession
+
+scala> :type spark.sparkContext
+org.apache.spark.SparkContext
+
+scala> :type spark.sqlContext
+org.apache.spark.sql.SQLContext
+```
+
+## Web UI
+
 
 ## Create a Cluster With Spark
 
@@ -54,41 +104,80 @@ https://docs.aws.amazon.com/emr/latest/ReleaseGuide/emr-spark-configure.html
 https://console.aws.amazon.com/elasticmapreduce/
 
 ## Spark CLI
+Must be Java-8
+```
+$ java -version
+java version "1.8.0_212"
+Java(TM) SE Runtime Environment (build 1.8.0_212-b10)
+Java HotSpot(TM) 64-Bit Server VM (build 25.212-b10, mixed mode)
+```
+
+## Shell (+4g)
 
 Retieve RDD from text file
 ```
-$ spark-shell --master "local[4]"
+$ ./spark-shell --master "local[4]" --driver-memory 4G
 
-scala> val inputFile = sc.textFile("/tmp/show-spark/input.txt"
+scala> val inputFile = sc.textFile("/bigdata/GeoIPCity.utf-8.csv")
+inputFile: org.apache.spark.rdd.RDD[String] = /bigdata/GeoIPCity.utf-8.csv MapPartitionsRDD[1] at textFile at <console>:24
 ```
 
 Count words:
 ```
-val counts = inputFile.flatMap(line => line.split(" ")).map(word => (word, 1)).reduceByKey(_ + _);
+scala> val counts = inputFile.flatMap(line => line.split(" ")).map(word => (word, 1)).reduceByKey(_ + _)
+counts: org.apache.spark.rdd.RDD[(String, Int)] = ShuffledRDD[4] at reduceByKey at <console>:25
 ```
 
-Debug
+Debug execution plan
 ```
-counts.toDebugString
+scala> counts.toDebugString
+res1: String =
+(13) ShuffledRDD[4] at reduceByKey at <console>:25 []
+ +-(13) MapPartitionsRDD[3] at map at <console>:25 []
+    |   MapPartitionsRDD[2] at flatMap at <console>:25 []
+    |   /bigdata/GeoIPCity.utf-8.csv MapPartitionsRDD[1] at textFile at <console>:24 []
+    |   /bigdata/GeoIPCity.utf-8.csv HadoopRDD[0] at textFile at <console>:24 []
 ```
 
-Save
+Save Result
 ```
-counts.save(...)
+counts.saveAsTextFile("/bigdata/res1-text")
+
+20/03/14 23:06:57 WARN BlockManager: Block rdd_4_11 could not be removed as it was not found on disk or in memory
+20/03/14 23:06:57 WARN BlockManager: Putting block rdd_4_11 failed
+```
+
+Fix (+4g):
+```
+$ ./spark-shell --master "local[4]" --driver-memory 4G
+```
+OK
+
+Trying to save as binary
+```
+scala> counts.saveAsObjectFile("/bigdata/res1-obj")
+java.lang.IllegalArgumentException: Unsupported class file major version 55
+  at org.apache.xbean.asm6.ClassReader.<init>(ClassReader.java:166)
 ```
 
 Repartition (create new variable due to immutability)
 ```
-val repartitioned = counts.repartition(5)
+val repartitioned = counts.repartition(2)
 ```
 
-Persist
+Persist disk only
 ```
-result.persist(StorageLevel.DISK_ONLY)
+counts.persist(org.apache.spark.storage.StorageLevel.DISK_ONLY)
 ```
 
-Storage levels:
+Unpersist from memory
+```
+scala> counts.unpersist()
+res6: counts.type = ShuffledRDD[4] at reduceByKey at <console>:25
+```
 
+
+### Storage levels:
 |Level|
 |-----|
 |MEMORY_ONLY|
@@ -96,6 +185,28 @@ Storage levels:
 |MEMORY_AND_DISK|
 |MEMORY_AND_DISK_SER|
 |DISK_ONLY|
+
+### File Formats
+
+|Format|Structured|Desc|
+|------|----------|----|
+|Text|no|
+|JSON|semi|
+|CSV|yes|
+|Sequence|yes|Hadoop key-valye|
+|Protocol Buffers|yes|
+|Object files|yes|High speed|
+
+### Consider Hadoop formats:
+
+|Format|Structured|Splittable|Schema evolution|Desc|
+|------|----------|----------|----------------|----|
+|AVRO  |          |yes       |yes, was mainly designed for Schema evolution. Fields can renamed, added, deleted while old files can still be read with the new schema|Uses JSON for defining, but binary for store |
+
+
+
+
+
 
 
 ## Diagrams
@@ -115,7 +226,11 @@ Spark Avro| org.apache.spark:spark-avro:2.4.3 |
 
 # RDD 
 
-Resillent Distributed Datasets
+- Resillent Distributed Datasets
+
+# DAG
+
+- Direct Acyclic Graph
 
 # Transformations 
 (map, flatMap, filter, distinct)
