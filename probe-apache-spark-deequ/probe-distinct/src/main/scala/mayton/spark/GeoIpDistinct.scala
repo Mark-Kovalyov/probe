@@ -1,7 +1,7 @@
 package mayton.spark
 
 import org.apache.spark.rdd.RDD
-import org.apache.spark.sql.{Column, DataFrame, DataFrameReader, Dataset, SparkSession}
+import org.apache.spark.sql.{Column, DataFrame, DataFrameReader, Dataset, Encoders, SparkSession}
 import org.apache.spark.{HashPartitioner, Partitioner, SparkContext}
 import org.apache.spark.storage.StorageLevel
 
@@ -32,6 +32,10 @@ object GeoIpDistinct {
 
     val sc : SparkContext = spark.sparkContext
 
+    val s1 : RDD[Int] = sc.parallelize(List(1,2,3))
+    val s2 : RDD[Int] = sc.parallelize(List(2,3))
+
+
 
     // -------------------------- Start script here: ---------------------------------------------------------------
 
@@ -53,7 +57,7 @@ object GeoIpDistinct {
     // TODO: How to get from name? Or index from name?
     val column : Column = geoCity("country")
 
-    val countryColumn : Dataset[String] = geoCity.map(row => row.getString(2))
+    val countryColumn : Dataset[String] = geoCity.map(row => row.getString(2))(Encoders.STRING)
 
     countryColumn.persist(StorageLevel.DISK_ONLY)
 

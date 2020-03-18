@@ -203,6 +203,21 @@ res6: counts.type = ShuffledRDD[4] at reduceByKey at <console>:25
 |------|----------|----------|----------------|----|
 |AVRO  |          |yes       |yes, was mainly designed for Schema evolution. Fields can renamed, added, deleted while old files can still be read with the new schema|Uses JSON for defining, but binary for store |
 
+### Concepts
+
+https://data-flair.training/blogs/apache-spark-rdd-vs-dataframe-vs-dataset/
+
+|Class    |Data Representation|
+|---------|-----|
+|RDD|RDD is a distributed collection of data elements spread across many machines in the cluster. RDDs are a set of Java or Scala objects representing data.|
+|DataFrame|A DataFrame is a distributed collection of data organized into named columns. It is conceptually equal to a table in a relational database.|
+|DataSet|It is an extension of DataFrame API that provides the functionality of – type-safe, object-oriented programming interface of the RDD API and performance benefits of the Catalyst query optimizer and off heap storage mechanism of a DataFrame API.|
+
+|Class    |Schema|Data Sources|
+|---------|------|------------|
+|RDD|-|Text files|
+|DataFrame|+|Avro,CSV,JSON,HDFS,Hivetables|
+|DataSet|?|?|
 
 
 
