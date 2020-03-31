@@ -42,7 +42,19 @@ postgres=# \l
 ## Show accessable schemas
 
 ```
+demo=> \dn
+   List of schemas
+   Name   |  Owner   
+----------+----------
+ bookings | postgres
+ public   | postgres
+(2 rows)
 
+```
+
+## Change search path for schema objects
+```
+SET search_path TO geoip, bookings, public;
 ```
 
 ## Show users
@@ -143,4 +155,9 @@ $ GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO new_user;
 ## Demo/Booking
 ```
 select * from bookings.*
-``` 
+```
+
+## Grant privileges on schema
+```
+GRANT USAGE ON SCHEMA bookings TO new_user;
+```
