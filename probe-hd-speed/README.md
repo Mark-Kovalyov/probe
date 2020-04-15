@@ -26,14 +26,14 @@ With IOPing:
 
 ## By devices
 
-|Model                                |Size   |Cached reads   |Buffered reads|
-+-------------------------------------+-------+---------------|--------------|
-|Segate (ST500DM002-1BD142(KC48))     |500 Gb |10479.25 MB/sec|125.52 MB/sec |
-|WD 4T Blue                           |4 Tb   |               |              |
-|WD 2T Green                          |2 Tb   |               |              |
-|WD                                   |1 Tb   |               |              |
-|WD                                   |500 Gb |               |              |
-|WD                                   |500 Gb |               |              |
+|Model                                |Size   |Cached reads   |Buffered reads|SATA               |LS  |PS  |Cache|RPM |Seek(min/avg/max/mdev)         |
++-------------------------------------+-------+---------------|--------------|-------------------|----|----|-----|----|-------------------------------|
+|Segate (ST500DM002-1BD142(KC48))     |500 Gb |10479.25 MB/sec|125.52 MB/sec |                   |    |    |     |    |                               |
+|WD 4T Blue                           |4 Tb   |               |              |                   |    |    |     |    |4.88 ms/17.1 ms/41.1 ms/5.40 ms|
+|WD 2T Green                          |2 Tb   |               |              |                   |    |    |     |    |6.03 ms/20.4 ms/34.6 ms/5.15 ms|
+|WD                                   |1 Tb   |               |              |                   |    |    |     |    |                               |
+|WDC WD40EZRZ-22GXCB0                 |500 Gb |10644.91 MB/sec|134.08 MB/sec |1.0,2.0,2.5,2.6,3.0| 512|4096| ?   |5400|6.04 ms/15.1 ms/31.0 ms/4.90 ms|
+|WD                                   |500 Gb |               |              |                   |    |    |     |    |                               |
 
 # With 
 ```
