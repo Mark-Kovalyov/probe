@@ -42,7 +42,7 @@ public class Benchmark {
             ClientCacheConfiguration ccc = new ClientCacheConfiguration()
                     .setBackups(1)
                     .setAtomicityMode(CacheAtomicityMode.ATOMIC)
-                    .setName(CACHE_NAME).setA
+                    .setName(CACHE_NAME);
 
             ClientCache<String, Boolean> cache = igniteClient.getOrCreateCache(ccc);
 
