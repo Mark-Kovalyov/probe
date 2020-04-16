@@ -9,6 +9,11 @@ https://support.binarylane.com.au/support/solutions/articles/1000055889-how-to-b
 
 ## Examples:
 
+General disk info:
+```
+$ hdparm -I /dev/???
+```
+
 Random read-write perf:
 ```
 ./fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=test --filename=test --bs=4k --iodepth=64 --size=4G --readwrite=randrw --rwmixread=75
@@ -19,21 +24,30 @@ Random read perf:
 ./fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=test --filename=test --bs=4k --iodepth=64 --size=4G --readwrite=randread
 ```
 
+
+
 With IOPing:
 ```
-./ioping -c 10 .
+./ioping -R /dev/???
 ```
 
 ## By devices
 
-|Model                                |Size   |Cached reads   |Buffered reads|SATA               |LS  |PS  |Cache|RPM |Seek(min/avg/max/mdev)         |
+### Sata Hard Drives
+|Model                                |Size   |Cached reads   |Buffered reads|SATA modes         |LS  |PS  |Cache|RPM |Seek(min/avg/max/mdev)         |
 |-------------------------------------|-------|---------------|--------------|-------------------|----|----|-----|----|-------------------------------|
-|Segate (ST500DM002-1BD142(KC48))     |500 Gb |10479.25 MB/sec|125.52 MB/sec |                   |    |    |     |    |                               |
-|WD 4T Blue                           |4 Tb   |               |              |                   |    |    |     |    |4.88 ms/17.1 ms/41.1 ms/5.40 ms|
-|WD 2T Green                          |2 Tb   |               |              |                   |    |    |     |    |6.03 ms/20.4 ms/34.6 ms/5.15 ms|
-|WD                                   |1 Tb   |               |              |                   |    |    |     |    |                               |
+|WDC WD40EZRZ-22GXCB0 (Blue)          |4 Tb   |               |              |                   | 512|4096| ?   |5400|4.88 ms/17.1 ms/41.1 ms/5.40 ms|
+|WDC WD20EURX-63T0FY0 (Green)         |2 Tb   |               |              |                   | 512|4096| ?   |5400|6.03 ms/20.4 ms/34.6 ms/5.15 ms|
+|WDC WD10EALX-089BA0                  |1 Tb   |10195.64 MB/sec|124.75 MB/sec |                   | 512| 512| ?   |7200|5.00 ms/18.4 ms/40.7 ms/6.47 ms|
 |WDC WD40EZRZ-22GXCB0                 |500 Gb |10644.91 MB/sec|134.08 MB/sec |1.0,2.0,2.5,2.6,3.0| 512|4096| ?   |5400|6.04 ms/15.1 ms/31.0 ms/4.90 ms|
-|WD                                   |500 Gb |               |              |                   |    |    |     |    |                               |
+|Segate (ST500DM002-1BD142(KC48))     |500 Gb |10479.25 MB/sec|125.52 MB/sec |                   |    |    |     |    |                               |
+|WD                                   |80 Gb  |               |              |                   |    |    |     |    |                               |
+
+Where:
+* PS - Physical Sector Size
+* LS - Logical Sector Size
+
+### SSD drives
 
 # With 
 ```
