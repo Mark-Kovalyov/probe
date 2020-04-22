@@ -1,5 +1,7 @@
 package mayton.network.dht;
 
+import com.hankcs.algorithm.AhoCorasickDoubleArrayTrie;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;

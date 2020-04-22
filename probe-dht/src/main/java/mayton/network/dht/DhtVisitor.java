@@ -1,5 +1,9 @@
 package mayton.network.dht;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -9,6 +13,8 @@ import java.nio.file.attribute.BasicFileAttributes;
 
 public class DhtVisitor extends SimpleFileVisitor<Path> {
 
+    private static Logger logger = LogManager.getLogger(DhtVisitor.class);
+
     public DhtVisitor() {
         super();
     }
@@ -17,7 +23,7 @@ public class DhtVisitor extends SimpleFileVisitor<Path> {
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
         String path = file.getFileName().toString();
         if (path.endsWith(".pdf")) {
-            System.out.println(path);
+
         }
         return FileVisitResult.CONTINUE;
     }

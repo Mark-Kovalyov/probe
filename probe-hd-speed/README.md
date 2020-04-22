@@ -34,14 +34,14 @@ With IOPing:
 ## By devices
 
 ### Sata Hard Drives
-|Model                                |Size   |Cached reads   |Buffered reads|SATA modes         |LS  |PS  |Cache|RPM |Seek(min/avg/max/mdev)         |
-|-------------------------------------|-------|---------------|--------------|-------------------|----|----|-----|----|-------------------------------|
-|WDC WD40EZRZ-22GXCB0 (Blue)          |4 Tb   |               |              |                   | 512|4096| ?   |5400|4.88 ms/17.1 ms/41.1 ms/5.40 ms|
-|WDC WD20EURX-63T0FY0 (Green)         |2 Tb   |               |              |                   | 512|4096| ?   |5400|6.03 ms/20.4 ms/34.6 ms/5.15 ms|
-|WDC WD10EALX-089BA0                  |1 Tb   |10195.64 MB/sec|124.75 MB/sec |                   | 512| 512| ?   |7200|5.00 ms/18.4 ms/40.7 ms/6.47 ms|
-|WDC WD40EZRZ-22GXCB0                 |500 Gb |10644.91 MB/sec|134.08 MB/sec |1.0,2.0,2.5,2.6,3.0| 512|4096| ?   |5400|6.04 ms/15.1 ms/31.0 ms/4.90 ms|
-|Segate (ST500DM002-1BD142(KC48))     |500 Gb |10479.25 MB/sec|125.52 MB/sec |                   |    |    |     |    |                               |
-|WD                                   |80 Gb  |               |              |                   |    |    |     |    |                               |
+|Model                                |Size   |Cached reads   |Buffered reads|SATA modes         |LS  |PS  |Cache|RPM |Seek(min/avg/max/mdev)         |NCQ|
+|-------------------------------------|-------|---------------|--------------|-------------------|----|----|-----|----|-------------------------------|---|
+|WDC WD40EZRZ-22GXCB0 (Blue)          |4 Tb   |9223.85 MB/sec |180.27 MB/sec |1.0,2.0,2.5,2.6,3.0| 512|4096| ?   |5400|4.88 ms/17.1 ms/41.1 ms/5.40 ms|yes|
+|WDC WD20EURX-63T0FY0 (Green)         |2 Tb   |9391.60 MB/sec |139.04 MB/sec |1.0,2.0,2.5,2.6,3.0| 512|4096| ?   |5400|6.03 ms/20.4 ms/34.6 ms/5.15 ms|yes|
+|WDC WD10EALX-089BA0                  |1 Tb   |10195.64 MB/sec|124.75 MB/sec |                   | 512| 512| ?   |7200|5.00 ms/18.4 ms/40.7 ms/6.47 ms|   |
+|WDC WD40EZRZ-22GXCB0                 |500 Gb |10644.91 MB/sec|134.08 MB/sec |1.0,2.0,2.5,2.6,3.0| 512|4096| ?   |5400|6.04 ms/15.1 ms/31.0 ms/4.90 ms|   |
+|Segate (ST500DM002-1BD142(KC48))     |500 Gb |10479.25 MB/sec|125.52 MB/sec |                   |    |    |     |    |                               |   |
+|WDC WD800JD-60LSA5                   |80 Gb  |9882.41 MB/sec |57.62 MB/sec  |                   | 512| 512| 8M  |    |3.92 ms/14.1 ms/24.1 ms/4.08 ms|no |
 
 Where:
 * PS - Physical Sector Size

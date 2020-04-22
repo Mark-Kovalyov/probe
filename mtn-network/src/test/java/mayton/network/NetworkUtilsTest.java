@@ -1,9 +1,16 @@
-import mayton.lib.NetworkUtils;
+package mayton.network;
+
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
 public class NetworkUtilsTest {
+
+    @Test
+    public void testFormat() {
+        assertEquals("0.0.0.0", NetworkUtils.formatIpV4(0));
+        assertEquals("255.255.255.255", NetworkUtils.formatIpV4(4294967295L));
+    }
 
     @Test
     public void test() {
@@ -33,3 +40,4 @@ public class NetworkUtilsTest {
     }
 
 }
+

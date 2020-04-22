@@ -2,6 +2,8 @@ package mayton.network.dht;
 
 import org.apache.commons.codec.binary.BinaryCodec;
 import org.apache.commons.codec.net.QuotedPrintableCodec;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.net.*;
@@ -10,7 +12,6 @@ import java.util.Collections;
 import static java.net.SocketOptions.SO_REUSEPORT;
 
 public class DhtClient {
-
 
 
     // Torrent client
@@ -33,27 +34,51 @@ public class DhtClient {
     //74 5F 70 65 65 72 73 31 3A 74 34 3A 38 2B 00 00 31  : t_peers1:t4:8+  1
     //3A 76 34 3A 55 54 B2 3C 31 3A 79 31 3A 71           : :v4:UT <1:y1:q
 
+    private static Logger logger = LogManager.getLogger(DhtClient.class);
 
+    static KadListener amule_port_4665;
+    static KadListener amule_port_4672;
+    static KadListener torrent_port_51413;
+
+    private static void stopAll() {
+        amule_port_4665.stop();
+        amule_port_4672.stop();
+        torrent_port_51413.stop();
+    }
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
-        KadListener amule1 = new KadListener("A-Mule#1", 4665);
-        KadListener amule2 = new KadListener("A-Mule#2", 4672);
-        KadListener torrent = new KadListener("Transmisssion", 51413);
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            public void run() {
+                logger.info("Receive shutdown hook signal!");
+                stopAll();
+            }
+        });
 
-        Thread thead1 = new Thread(amule1);
-        Thread thead2 = new Thread(amule2);
-        Thread thead3 = new Thread(torrent);
+        amule_port_4665 = new KadListener("A-Mule#1", 4665);
+        amule_port_4672 = new KadListener("A-Mule#2", 4672);
+        torrent_port_51413 = new KadListener("Transmisssion", 51413);
+
+        Thread thead1 = new Thread(amule_port_4665);
+        Thread thead2 = new Thread(amule_port_4672);
+        Thread thead3 = new Thread(torrent_port_51413);
 
         thead1.start();
         thead2.start();
         thead3.start();
 
-        thead1.join();
-        thead2.join();
-        thead3.join();
+        Thread waiter = new Thread(() -> {
+            try { thead1.join(); } catch (InterruptedException ex) {}
+            try { thead2.join(); } catch (InterruptedException ex) {}
+            try { thead3.join(); } catch (InterruptedException ex) {}
+        });
+
+        waiter.start();
+        waiter.join();
 
     }
+
+
 
 
 }
