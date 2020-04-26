@@ -1,18 +1,12 @@
 package mayton.network.dht;
 
-import org.apache.commons.codec.binary.BinaryCodec;
-import org.apache.commons.codec.net.QuotedPrintableCodec;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-import java.net.*;
-import java.util.Collections;
-
-import static java.net.SocketOptions.SO_REUSEPORT;
+import static mayton.network.dht.ConsoleUtils.println;
 
 public class DhtClient {
-
 
     // Torrent client
     // tcp        0      0 0.0.0.0:9091            0.0.0.0:*               LISTEN      8852/transmission-g
@@ -34,30 +28,70 @@ public class DhtClient {
     //74 5F 70 65 65 72 73 31 3A 74 34 3A 38 2B 00 00 31  : t_peers1:t4:8+  1
     //3A 76 34 3A 55 54 B2 3C 31 3A 79 31 3A 71           : :v4:UT <1:y1:q
 
+    //        4711 TCP: WebServer listening port.
+    //        4712 TCP: External Connection port. Used to communicate between aMule and other applications such as aMule WebServer or aMuleCMD.
+    //
+    //
+    // $ tcpdump -i wlp7s0 udp port 4665 or port 51413 -vv -X
+    // $ tcpdump -i wlp7s0 udp portrange 1000-65536 -vv -X
+
+    // $ tcpdump -i wlp7s0 udp port '(4665 or 4672 or 51413)' -vv -X
+
+    // $ tshark -i wlp7s0 -f "udp port 51413"
+    // $ tshark -i wlp7s0 -R "bittorrent" -any_other_options
+    // $ tcpdump -Xs 0 -ni wlp7s0 `cpp -P tcpdump-gre-utp.cpp`
+    // ed2k://|file|eMule0.42f-Sources.zip|2407949|CC8C3B104AD58678F69858F1F9B736E9|/
+    //
+
+    //
+
+
     private static Logger logger = LogManager.getLogger(DhtClient.class);
 
-    static KadListener amule_port_4665;
-    static KadListener amule_port_4672;
-    static KadListener torrent_port_51413;
+    static DhtListener amule_port_4665;
+    static DhtListener amule_port_4672;
+    static DhtListener torrent_port_51413;
 
-    private static void stopAll() {
+    static Thread amule_port_4665_thread;
+    static Thread amule_port_4672_thread;
+    static Thread torrent_port_51413_thread;
+
+    private static void stopAll() throws InterruptedException {
         amule_port_4665.stop();
         amule_port_4672.stop();
         torrent_port_51413.stop();
+
+        amule_port_4665_thread.join();
+        amule_port_4672_thread.join();
+        torrent_port_51413_thread.join();
+
+        Stats result = new Stats();
+
+        println(amule_port_4665.threadName + ": " + amule_port_4665.stats);
+        println(amule_port_4672.threadName + ": " + amule_port_4672.stats);
+        println(torrent_port_51413.threadName + ": " + torrent_port_51413.stats);
+
+        result.sumStats(amule_port_4665.stats);
+        result.sumStats(amule_port_4672.stats);
+        result.sumStats(torrent_port_51413.stats);
+
+        println("Overall: " + result);
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
-        Runtime.getRuntime().addShutdownHook(new Thread() {
-            public void run() {
-                logger.info("Receive shutdown hook signal!");
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            logger.info("Receive shutdown hook signal!");
+            try {
                 stopAll();
+            } catch (InterruptedException e) {
+                logger.error(e);
             }
-        });
+        }));
 
-        amule_port_4665 = new KadListener("A-Mule#1", 4665);
-        amule_port_4672 = new KadListener("A-Mule#2", 4672);
-        torrent_port_51413 = new KadListener("Transmisssion", 51413);
+        amule_port_4665    = new DhtListener("A-Mule/4665", 4665);
+        amule_port_4672    = new DhtListener("A-Mule/4672", 4672);
+        torrent_port_51413 = new DhtListener("Transm/51413", 51413);
 
         Thread thead1 = new Thread(amule_port_4665);
         Thread thead2 = new Thread(amule_port_4672);

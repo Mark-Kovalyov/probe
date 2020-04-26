@@ -58,10 +58,22 @@
             <version>1.9</version>
         </dependency>
 
+        <!--
+
+        -->
         <dependency>
             <groupId>com.github.atomashpolskiy</groupId>
             <artifactId>bt-dht</artifactId>
             <version>1.9</version>
+        </dependency>
+
+        <!-- The file stream parser that de/encodes "B-encode" data format.
+             https://github.com/soulaway/beecoder
+        -->
+        <dependency>
+            <groupId>com.github.soulaway</groupId>
+            <artifactId>beecoder</artifactId>
+            <version>1.0</version>
         </dependency>
 
         <dependency>
@@ -94,6 +106,9 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
+
+
+
     </dependencies>
 
     <build>

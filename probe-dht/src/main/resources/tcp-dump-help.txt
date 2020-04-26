@@ -1,0 +1,9 @@
+OpenSSL 1.1.0g  2 Nov 2017
+Usage: tcpdump [-aAbdDefhHIJKlLnNOpqStuUvxX#] [ -B size ] [ -c count ]
+		[ -C file_size ] [ -E algo:secret ] [ -F file ] [ -G seconds ]
+		[ -i interface ] [ -j tstamptype ] [ -M secret ] [ --number ]
+		[ -Q in|out|inout ]
+		[ -r file ] [ -s snaplen ] [ --time-stamp-precision precision ]
+		[ --immediate-mode ] [ -T type ] [ --version ] [ -V file ]
+		[ -w file ] [ -W filecount ] [ -y datalinktype ] [ -z postrotate-command ]
+		[ -Z user ] [ expression ]

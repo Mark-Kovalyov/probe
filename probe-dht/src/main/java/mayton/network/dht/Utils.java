@@ -8,37 +8,24 @@ import java.util.Map;
 
 import static java.lang.String.format;
 
-/**
- *
- * Example:
- *
- * magnet:?xt=urn:ed2k:354B15E68FB8F36D7CD88FF94116CDC1
- * &xl=10826029
- * &dn=mediawiki-1.15.1.tar.gz
- * &xt=urn:tree:tiger:7N5OAMRNGMSSEUE3ORHOKWN4WWIQ5X4EBOOTLJY
- * &xt=urn:sha1:XRX2PEFXOOEJFRVUCX6HMZMKS5TWG4K5
- * &xt=urn:aich:7ZDRR3ZQW4JMHUQZUMJGQN2VNGLV3CVN
- * &xt=urn:btih:QHQXPYWMACKDWKP47RRVIV7VOURXFE5Q
- * &tr=http%3A%2F%2Ftracker.example.org%2Fannounce.php%3Fuk%3D1111111111%26
- * &tr=wss%3A%2F%2Ftracker.webtorrent.io
- * &as=http%3A%2F%2Fdownload.wikimedia.org%2Fmediawiki%2F1.15%2Fmediawiki-1.15.1.tar.gz
- * &ws=http%3A%2F%2Fdownload.wikimedia.org%2Fmediawiki%2F1.15%2Fmediawiki-1.15.1.tar.gz
- * &xs=http%3A%2F%2Fcache.example.org%2FXRX2PEFXOOEJFRVUCX6HMZMKS5TWG4K5
- * &xs=dchub://example.org
- */
 public class Utils {
 
     public static String wrapValue(Object value) {
         if (value instanceof byte[]) {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder("'");
             byte[] buf = (byte[]) value;
             for (byte b : buf) {
-                int unsigned = b < 0 ? (int) b + 128 : (int)b;
-                sb.append(String.format("%02X ", unsigned));
+                int byteValue = b < 0 ? (int) b + 128 : (int)b;
+                /*if (byteValue >= 30 && byteValue < 128)
+                    sb.append((char) byteValue);
+                else
+                    sb.append(String.format("\\u02X", byteValue));*/
+                sb.append(format("%02X ",byteValue));
             }
+            sb.append("'");
             return sb.toString();
         } else {
-            return "'" + String.valueOf(value) + "'";
+            return "'" + value.toString() + "'";
         }
     }
 
@@ -51,16 +38,28 @@ public class Utils {
     @NotNull
     public static String dumpDEncodedMap(Map<String, Object> res, int offset) {
         StringBuilder s = new StringBuilder();
+        s.append(" { ");
+        boolean first = true;
         for(Map.Entry<String, Object> item : res.entrySet()) {
-            s.append(indent(offset));
+            if (!first) s.append(",");
             if (item.getValue() instanceof HashMap) {
+                s.append("\n" + indent(offset) + " { 'hashMap' : ");
                 s.append(dumpDEncodedMap((Map<String, Object>) item.getValue(), offset + 4));
+                s.append("\n" + indent(offset) + " } ");
             } else {
-                s.append(item.getKey()).append(" : ").append(wrapValue(item.getValue()));
+                s.append("'" + item.getKey() + "'")
+                        .append(" : ")
+                        .append(wrapValue(item.getValue()));
             }
+            first = false;
         }
-        s.append("\n");
+        s.append(" } ");
         return s.toString();
+    }
+
+    @NotNull
+    public static String binhex(@NotNull byte[] data) {
+        return binhex(data, false);
     }
 
     @NotNull

@@ -21,7 +21,7 @@ public class GeoDb {
 
     private static Logger logger = LogManager.getLogger(GeoDb.class);
 
-    private AhoCorasickDoubleArrayTrie<String> trie = new AhoCorasickDoubleArrayTrie<String>();
+    private AhoCorasickDoubleArrayTrie<String> trie = new AhoCorasickDoubleArrayTrie<>();
 
     private static GeoDb geoDb = null;
 
@@ -60,15 +60,35 @@ public class GeoDb {
         return geoDb;
     }
 
-    public Optional<GeoRecord> findFirst(long ipv4) {
-        // TODO: Optimize this fat and ugly loop into less complexity algorithm
-        for(int i=0;i<geoRecords.size();i++) {
-            GeoRecord gr = geoRecords.get(i);
+    public static Optional<GeoRecord> findFirstFast(long ipv4, List<GeoRecord> geoRecordsArg) {
+        // TODO:
+        int length = geoRecordsArg.size();
+        int upperIndex = 0;
+        int lowerIndex = length - 1;
+        GeoRecord upperBound = geoRecordsArg.get(upperIndex);
+        GeoRecord lowerBound = geoRecordsArg.get(lowerIndex);
+        boolean upperLocated = false;
+        boolean lowerLocated = false;
+        do {
+
+        } while (!upperLocated || !lowerLocated);
+
+        return Optional.empty();
+    }
+
+    @Deprecated
+    public static Optional<GeoRecord> findFirstStuped(long ipv4, List<GeoRecord> geoRecordsArg) {
+        for (int i = 0; i < geoRecordsArg.size(); i++) {
+            GeoRecord gr = geoRecordsArg.get(i);
             if (ipv4 >= gr.beginIp && ipv4 <= gr.endIp) {
                 return Optional.of(gr);
             }
         }
         return Optional.empty();
+    }
+
+    public Optional<GeoRecord> findFirst(long ipv4) {
+        return findFirstStuped(ipv4, geoRecords);
     }
 
 
