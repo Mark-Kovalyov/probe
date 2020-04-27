@@ -18,7 +18,7 @@ public class DhtListener implements Runnable {
 
     private Logger logger;
 
-    AtomicBoolean stopped = new AtomicBoolean(false);
+    public AtomicBoolean stopped = new AtomicBoolean(false);
 
     public int port;
     public String threadName;
@@ -27,7 +27,7 @@ public class DhtListener implements Runnable {
 
     public DhtListener(String threadName, int port) {
         this.port = port;
-        this.threadName = threadName;
+        this.threadName = threadName + "/" + port;
         logger = LogManager.getLogger("DhtListener." + threadName);
     }
 

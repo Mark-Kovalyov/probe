@@ -3,6 +3,7 @@
 mvn clean package -DskipTests
 
 mvn dependency:copy-dependencies -DoutputDirectory=target
+cp sensitive.properties target/
 
 cd target
 

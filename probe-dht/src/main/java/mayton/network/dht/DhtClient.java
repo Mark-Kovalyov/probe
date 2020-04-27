@@ -51,19 +51,25 @@ public class DhtClient {
     static DhtListener amule_port_4665;
     static DhtListener amule_port_4672;
     static DhtListener torrent_port_51413;
+    static DhtListener vuze_port_16680;
+    static DhtListener vuze_port_49001;
 
     static Thread amule_port_4665_thread;
     static Thread amule_port_4672_thread;
     static Thread torrent_port_51413_thread;
+    static Thread vuze_port_16680_thread;
+    static Thread vuze_port_49001_thread;
 
     private static void stopAll() throws InterruptedException {
-        amule_port_4665.stop();
-        amule_port_4672.stop();
-        torrent_port_51413.stop();
+        //amule_port_4665.stop();
+        //amule_port_4672.stop();
+        //torrent_port_51413.stop();
+        //vuze_port_16680.stop();
+        //vuze_port_49001.stop();
 
-        amule_port_4665_thread.join();
-        amule_port_4672_thread.join();
-        torrent_port_51413_thread.join();
+        //amule_port_4665_thread.join();
+        //amule_port_4672_thread.join();
+        //torrent_port_51413_thread.join();
 
         Stats result = new Stats();
 
@@ -80,31 +86,45 @@ public class DhtClient {
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
+        String id = Config.emuleKadClientId;
+
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             logger.info("Receive shutdown hook signal!");
             try {
                 stopAll();
             } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
                 logger.error(e);
             }
         }));
 
-        amule_port_4665    = new DhtListener("A-Mule/4665", 4665);
-        amule_port_4672    = new DhtListener("A-Mule/4672", 4672);
-        torrent_port_51413 = new DhtListener("Transm/51413", 51413);
+        amule_port_4665    = new DhtListener("A-Mule", 4665);
+        amule_port_4672    = new DhtListener("A-Mule", 4672);
+        torrent_port_51413 = new DhtListener("Transm", 51413);
+        vuze_port_16680    = new DhtListener("Vuze", 16680); // Used for the 'LAN peer finder' functionality.
+        vuze_port_49001    = new DhtListener("Vuze", 49001); // Used for Mainline DHT (if that plugin is installed)
 
-        Thread thead1 = new Thread(amule_port_4665);
-        Thread thead2 = new Thread(amule_port_4672);
-        Thread thead3 = new Thread(torrent_port_51413);
+        amule_port_4665_thread = new Thread(amule_port_4665);
+        amule_port_4665_thread.start();
 
-        thead1.start();
-        thead2.start();
-        thead3.start();
+        amule_port_4672_thread = new Thread(amule_port_4672);
+        amule_port_4672_thread.start();
+
+        torrent_port_51413_thread = new Thread(torrent_port_51413);
+        torrent_port_51413_thread.start();
+
+        vuze_port_16680_thread = new Thread(vuze_port_16680);
+        vuze_port_16680_thread.start();
+
+        vuze_port_49001_thread = new Thread(vuze_port_49001);
+        vuze_port_49001_thread.start();
 
         Thread waiter = new Thread(() -> {
-            try { thead1.join(); } catch (InterruptedException ex) {}
-            try { thead2.join(); } catch (InterruptedException ex) {}
-            try { thead3.join(); } catch (InterruptedException ex) {}
+            try { amule_port_4665_thread.join(); } catch (InterruptedException ex) {}
+            try { amule_port_4672_thread.join(); } catch (InterruptedException ex) {}
+            try { torrent_port_51413_thread.join(); } catch (InterruptedException ex) {}
+            try { vuze_port_16680_thread.join(); } catch (InterruptedException ex) {}
+            try { vuze_port_49001_thread.join(); } catch (InterruptedException ex) {}
         });
 
         waiter.start();
