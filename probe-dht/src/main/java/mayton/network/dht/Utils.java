@@ -14,13 +14,12 @@ public class Utils {
         if (value instanceof byte[]) {
             StringBuilder sb = new StringBuilder("'");
             byte[] buf = (byte[]) value;
+            boolean first = true;
             for (byte b : buf) {
                 int byteValue = b < 0 ? (int) b + 128 : (int)b;
-                /*if (byteValue >= 30 && byteValue < 128)
-                    sb.append((char) byteValue);
-                else
-                    sb.append(String.format("\\u02X", byteValue));*/
-                sb.append(format("%02X ",byteValue));
+                if (!first) sb.append(' ');
+                sb.append(format("%02X",byteValue));
+                first = false;
             }
             sb.append("'");
             return sb.toString();

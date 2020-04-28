@@ -15,7 +15,7 @@ import java.util.List;
 import static com.github.soulaway.beecoder.BeeCoder.INSTANCE;
 import static org.junit.Assert.assertArrayEquals;
 
-public class KadCoderTest {
+public class BeeCoderTest {
 
     static Logger logger;
     static BeeCoder beeCoder;
@@ -23,7 +23,7 @@ public class KadCoderTest {
     @BeforeClass
     public static void beforeClass() {
         BasicConfigurator.configure();
-        logger = LoggerFactory.getLogger(KadCoderTest.class);
+        logger = LoggerFactory.getLogger(BeeCoderTest.class);
         beeCoder = INSTANCE;
     }
 

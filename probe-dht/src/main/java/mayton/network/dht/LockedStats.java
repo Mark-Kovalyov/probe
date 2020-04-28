@@ -56,7 +56,6 @@ public class LockedStats {
     }
 
 
-
     public int getPacketsRejected() {
         long stamp = stampedLock.tryOptimisticRead();
         int res = 0;
