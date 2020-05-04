@@ -1,0 +1,31 @@
+person: !!map
+  name: "Mike"
+  secondname: &mikesFamily "Thomson"
+  occupation: !!str 'programmer'
+  age: !!int 23
+  gpa: !!float 3.5
+  fav_num: !!float 1e+10
+  male: !!bool true
+  birthday: &mikesBirthday !!timestamp 1954-01-02 16:44:00 # This is Standard date
+  flaws: null
+  hobbies:
+    - movies
+    - bike
+    - hacking
+    - singing
+  movies: !!seq ["Star Wars", "Dark Knigth"]
+  friends:
+    - name: "Jessica" # Woo-hoo
+      age: 22
+    - { name: "Bob", age: 26 }
+    - name: "Tom"
+      secondname: *mikesFamily
+      birthday: *mikesBirthday
+  md5: >
+    e4d909c290d0fb1ca068ffaddf22cbd0
+  signature: |
+    Mike
+    MIT
+    mikemike@gmail.com
+
+
