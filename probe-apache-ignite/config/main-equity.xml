@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="main-equity.cfg" class="org.apache.ignite.configuration.IgniteConfiguration">
+
+        <!-- every 15 seconds -->
+        <property name="metricsLogFrequency" value="#{15 * 1000}"/>
+
+        <property name="dataStorageConfiguration">
+            <bean class="org.apache.ignite.configuration.DataStorageConfiguration">
+
+                <property name="defaultDataRegionConfiguration">
+                    <bean class="org.apache.ignite.configuration.DataRegionConfiguration">
+                        <property name="persistenceEnabled" value="true"/>
+                    </bean>
+                </property>
+
+                <!-- DFLT_PAGE_SIZE = 4096 bytes -->
+                <property name="pageSize"       value="4096" />
+
+                <!-- Changing WAL Mode ::= { LOG_ONLY | FSYNC | BACKGROUND | NONE }  -->
+                <property name="walMode"        value="BACKGROUND"/>
+                <property name="walPath"        value="/bigdata/ignite/wal"/>
+                <property name="walArchivePath" value="/bigdata/ignite/wal-archive"/>
+                <property name="storagePath"    value="/bigdata/ignite/db"/>
+
+            </bean>
+        </property>
+
+
+        <property name="cacheConfiguration">
+            <list>
+                <bean class="org.apache.ignite.configuration.CacheConfiguration">
+                    <property name="name"          value="equity-cache"/>
+                    <property name="cacheMode"     value="PARTITIONED"/>
+                    <property name="atomicityMode" value="ATOMIC"/>
+                    <property name="backups"       value="0"/>
+                    <property name="writeSynchronizationMode" value="FULL_ASYNC"/>
+
+                    <property name="readThrough"  value="true"/>
+                    <property name="writeThrough" value="true"/>
+
+                    <property name="cacheStoreFactory" >
+                        <bean class="org.apache.ignite.configuration.IgniteReflectionFactory">
+                            <constructor-arg value="mayton.probe.ignite.cachestore.CacheStoreOrcBiTemporalValue" />
+                        </bean>
+                    </property>
+
+
+                    <!-- The LRU works only with on heap -->
+                    <property name="onheapCacheEnabled" value="true"/>
+                    <property name="evictionPolicy">
+                        <bean class="org.apache.ignite.cache.eviction.lru.LruEvictionPolicy">
+                            <property name="maxSize" value="1000"/>
+                        </bean>
+                    </property>
+                </bean>
+            </list>
+
+        </property>
+
+        <property name="lifecycleBeans">
+            <list>
+                <bean class = "mayton.probe.ignite.beans.MyLifecycleBean"/>
+            </list>
+        </property>
+
+    </bean>
+
+</beans>

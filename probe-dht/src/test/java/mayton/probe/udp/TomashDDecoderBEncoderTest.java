@@ -22,9 +22,8 @@ public class TomashDDecoderBEncoderTest {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         beEncoder.encode(new BEString("Hello".getBytes()), bos);
 
-        Byte
         BDecoder decoder = new BDecoder();
-        decoder.decode(new ByteBuffer(bos.toByteArray()));
+        //decoder.decode(new ByteBuffer(bos.toByteArray()));
     }
 
 }

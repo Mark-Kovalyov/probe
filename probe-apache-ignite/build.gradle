@@ -27,10 +27,9 @@ dependencies {
     compile "org.apache.ignite:ignite-spring:${igniteVersion}"
     compile "org.apache.ignite:ignite-indexing:${igniteVersion}"
 
-    //compile group: 'org.apache.ignite', name: 'ignite-zookeeper', version: '2.8.0'
-    //compile group: 'org.apache.ignite', name: 'ignite-tools', version: '2.8.0'
-    //compile group: 'org.apache.ignite', name: 'ignite-kafka', version: '2.8.0'
-    //compile group: 'org.apache.ignite', name: 'ignite-storm', version: '2.8.0'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.13.2'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.13.2'
+    testCompile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.13.2'
 
     compile group: 'org.apache.orc', name: 'orc-core', version: '1.5.5'
 
@@ -86,10 +85,6 @@ task(ProbeBiTemporal, dependsOn: 'classes', type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
 }
 
-//task cleanLib(type: Delete) {
-//    delete "$buildDir/libs"
-//}
-    
 task copyToLib(type: Copy) {
     dependsOn build
     into "$buildDir/libs"
@@ -100,26 +95,6 @@ task syncIgniteConfig(type: Copy) {
     into "$igniteHome/config" from "config/mayton-config-bitemporal.xml"
 }
 
-task syncIgniteJar(type: Copy) {
-    dependsOn copyToLib
-    into    "$igniteHome/libs/probe"
-    from    "$buildDir/libs/ignite-prob-1.0-SNAPSHOT.jar",
-            "$buildDir/libs/slf4j-api-1.7.26.jar",
-            "$buildDir/libs/slf4j-log4j12-1.7.7.jar",
-            "$buildDir/libs/log4j-1.2.17.jar",
-            "$buildDir/libs/kryo-4.0.2.jar",
-            "$buildDir/libs/objenesis-2.5.1.jar",
-            "$buildDir/libs/minlog-1.3.0.jar",
-            "$buildDir/libs/reflectasm-1.11.3.jar",
-            "$buildDir/libs/orc-core-1.5.5.jar",
-            "$buildDir/libs/orc-shims-1.5.5.jar",
-            "$buildDir/libs/hadoop-annotations-2.2.0.jar",
-            "$buildDir/libs/hadoop-auth-2.2.0.jar",
-            "$buildDir/libs/hadoop-common-2.2.0.jar",
-            "$buildDir/libs/hadoop-hdfs-2.2.0.jar",
-            "$buildDir/libs/hive-storage-api-2.6.0.jar";
-
-}
 
 
 
