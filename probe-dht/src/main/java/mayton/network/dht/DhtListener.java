@@ -104,13 +104,15 @@ public class DhtListener implements Runnable, DhtListenerMBean {
             arraycopy(packetData, offset, packetDataCropped, 0, packetDataCropped.length);
             try {
                 Map<String, Object> res = decoder.decode(ByteBuffer.wrap(packetDataCropped));
+                String countryCity = GeoUtils.decodeCountryCity(packet.getAddress().getHostAddress());
                 logger.info("{} :: Received DHT UDP packet : from {}:{} ({}) with offset = {} data:  {}\n",
                         threadName,
                         packet.getAddress(),
-                        GeoUtils.decodeCountryCity(packet.getAddress().getHostAddress()),
+                        countryCity,
                         packet.getPort(),
                         offset,
                         binhex(packetDataCropped, true));
+                JmsComponent.instance.publish(String.format("Received DHT UDP packet : from %s:%s (%s)", threadName, packet.getAddress(), countryCity));
                 logger.trace("Decoded with structure : {}", Utils.dumpDEncodedMap(res, 0));
             } catch (Exception ex2) {
                 logger.error("Unable to parse datagram: {}, with length = {}", binhex(packetDataCropped), packetDataCropped.length);
