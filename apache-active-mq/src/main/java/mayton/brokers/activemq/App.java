@@ -1,4 +1,4 @@
-package mayton;
+package mayton.brokers.activemq;
 
 /**
  * Hello world!

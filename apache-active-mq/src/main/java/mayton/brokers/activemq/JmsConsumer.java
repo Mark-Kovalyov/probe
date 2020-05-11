@@ -1,4 +1,4 @@
-package mayton;
+package mayton.brokers.activemq;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.slf4j.Logger;
@@ -6,8 +6,8 @@ import org.slf4j.LoggerFactory;
 
 import javax.jms.*;
 
-import static mayton.Constants.BROKER_URL;
-import static mayton.Constants.QUEUE_NAME;
+import static mayton.brokers.Constants.ACTIVEMQ_BROKER_URL;
+import static mayton.brokers.Constants.ACTIVEMQ_QUEUE_NAME;
 
 public class JmsConsumer implements Runnable, ExceptionListener {
 
@@ -19,7 +19,7 @@ public class JmsConsumer implements Runnable, ExceptionListener {
         try {
 
             // Create a ConnectionFactory
-            ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(BROKER_URL);
+            ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(ACTIVEMQ_BROKER_URL);
 
             // Create a Connection
             Connection connection = connectionFactory.createConnection();
@@ -32,7 +32,7 @@ public class JmsConsumer implements Runnable, ExceptionListener {
             Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
             // Create the destination (Topic or Queue)
-            Destination destination = session.createQueue(QUEUE_NAME);
+            Destination destination = session.createQueue(ACTIVEMQ_QUEUE_NAME);
 
             // Create a MessageConsumer from the Session to the Topic or Queue
             MessageConsumer consumer = session.createConsumer(destination);

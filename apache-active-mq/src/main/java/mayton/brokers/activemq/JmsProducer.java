@@ -1,4 +1,4 @@
-package mayton;
+package mayton.brokers.activemq;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.slf4j.Logger;
@@ -6,8 +6,8 @@ import org.slf4j.LoggerFactory;
 
 import javax.jms.*;
 
-import static mayton.Constants.BROKER_URL;
-import static mayton.Constants.QUEUE_NAME;
+import static mayton.brokers.Constants.ACTIVEMQ_BROKER_URL;
+import static mayton.brokers.Constants.ACTIVEMQ_QUEUE_NAME;
 
 public class JmsProducer implements Runnable {
 
@@ -17,8 +17,8 @@ public class JmsProducer implements Runnable {
     private String brokerUrl;
 
     public JmsProducer(){
-        this.brokerUrl = BROKER_URL;
-        this.queueName = QUEUE_NAME;
+        this.brokerUrl = ACTIVEMQ_BROKER_URL;
+        this.queueName = ACTIVEMQ_QUEUE_NAME;
     }
 
     // "vm://localhost"

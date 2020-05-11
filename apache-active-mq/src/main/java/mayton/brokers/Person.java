@@ -1,4 +1,4 @@
-package mayton;
+package mayton.brokers;
 
 import lombok.Data;
 
