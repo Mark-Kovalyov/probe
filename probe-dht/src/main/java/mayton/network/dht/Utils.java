@@ -42,13 +42,13 @@ public class Utils {
         for(Map.Entry<String, Object> item : res.entrySet()) {
             if (!first) s.append(",");
             if (item.getValue() instanceof HashMap) {
-                s.append("\n" + indent(offset) + " { 'hashMap' : ");
-                s.append(dumpDEncodedMap((Map<String, Object>) item.getValue(), offset + 4));
-                s.append("\n" + indent(offset) + " } ");
+                s.append("\n" + indent(offset) + " { 'hashMap' : ")
+                 .append(dumpDEncodedMap((Map<String, Object>) item.getValue(), offset + 4))
+                 .append("\n" + indent(offset) + " } ");
             } else {
                 s.append("'" + item.getKey() + "'")
-                        .append(" : ")
-                        .append(wrapValue(item.getValue()));
+                 .append(" : ")
+                 .append(wrapValue(item.getValue()));
             }
             first = false;
         }

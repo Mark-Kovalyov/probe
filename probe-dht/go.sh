@@ -7,7 +7,7 @@ cp sensitive.properties target/
 
 cd target
 
-java -jar probe-dht-1.0-SNAPSHOT.jar 2>&1 | tee probe-dht-1.0-SNAPSHOT.log
+java -jar probe-dht-1.0-SNAPSHOT.jar
 
 cd ..
 

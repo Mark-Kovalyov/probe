@@ -112,7 +112,6 @@ public class DhtListener implements Runnable, DhtListenerMBean {
                         packet.getPort(),
                         offset,
                         binhex(packetDataCropped, true));
-                JmsComponent.instance.publish(String.format("Received DHT UDP packet : from %s:%s (%s)", threadName, packet.getAddress(), countryCity));
                 logger.trace("Decoded with structure : {}", Utils.dumpDEncodedMap(res, 0));
             } catch (Exception ex2) {
                 logger.error("Unable to parse datagram: {}, with length = {}", binhex(packetDataCropped), packetDataCropped.length);

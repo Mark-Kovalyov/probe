@@ -9,6 +9,7 @@ import javax.jms.*;
 import java.util.Optional;
 
 @ThreadSafe
+@Deprecated
 public class JmsComponent {
 
     private static Logger logger = LogManager.getLogger(JmsComponent.class);
