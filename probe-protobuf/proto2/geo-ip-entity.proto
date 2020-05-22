@@ -1,0 +1,19 @@
+syntax = "proto2";
+
+package mayton.geo;
+
+option java_package = "mayton.geo";
+option java_outer_classname = "GeoIpCityEntity";
+
+message Person {
+       required int32 startIpNum = 1;
+       required int32 endIpNum = 2;
+       optional string country = 3;
+       optional string region = 4;
+       optional string city = 5;
+       optional string postalCode = 6;
+       required double latitude = 7;
+       required double longitude = 8;
+       optional string dmaCode = 9;
+       optional string areaCode = 10;
+}
