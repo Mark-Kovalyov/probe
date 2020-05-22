@@ -1,0 +1,13 @@
+@startuml
+start
+if (is_image_quad_class?) then (yes)
+  fork
+    :recognize_and_fill_chromokey;
+  fork again
+    :generate_HoughSpace;
+  end fork
+  :generate_GeneticPopulation;
+else (monoproc)
+  :skip_this_image_class;
+endif
+@enduml
