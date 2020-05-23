@@ -21,4 +21,9 @@ clang -cl-std=clc++ test.cl
 OpenCL C       =>
                      Clang => LLVM => SPIR-V LLVM IR Translator => SPIR => OpenCL
 C++ for OpenCL =>
+
 ```
+
+## Install OPenCL
+
+apt install ocl-icd-opencl-dev

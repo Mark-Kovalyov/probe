@@ -1,0 +1,1 @@
+protoc -I=../proto2/geo-ip-entity --java_out=src/main/generated proto2/geo-ip-entity.proto

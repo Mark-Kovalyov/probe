@@ -1,0 +1,15 @@
+
+
+cartesianProduct = foldr f [[]]
+ where
+   f l a = [ x:xs | x <- l, xs <- a ]
+
+a = cartesianProduct [ 
+ [1,2,3],
+ [4,5,6],
+ [7,8],
+ [9,10]
+]
+
+
+[[]] => [[9],[10]] => [[7,9],[7,10],[8,9],[8,10]] ...
