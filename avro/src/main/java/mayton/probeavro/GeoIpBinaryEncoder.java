@@ -1,6 +1,5 @@
 package mayton.probeavro;
 
-import mayton.lib.NetworkUtils;
 import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -39,8 +38,8 @@ public class GeoIpBinaryEncoder {
             while (irec.hasNext()) {
 
                 CSVRecord rec = irec.next();
-                int startIpNum = (int) NetworkUtils.parseIpV4(rec.get(0));
-                int endIpNum = (int) NetworkUtils.parseIpV4(rec.get(1));
+                int startIpNum = 0;//(int) NetworkUtils.parseIpV4(rec.get(0));
+                int endIpNum = 0;//(int) NetworkUtils.parseIpV4(rec.get(1));
 
                 GeoIpCityAvroEntity entity = GeoIpCityAvroEntity.newBuilder()
                         .setStartIpNum(startIpNum)

@@ -1,6 +1,6 @@
 package mayton.probeavro;
 
-import mayton.lib.NetworkUtils;
+
 import org.apache.avro.Schema;
 import org.apache.avro.generic.GenericData;
 import org.apache.avro.generic.GenericDatumWriter;
@@ -59,8 +59,8 @@ public class GeoIpJsonEncoder {
                 jsonEncoder.startItem();
 
                 CSVRecord rec = irec.next();
-                int startIpNum = (int) NetworkUtils.parseIpV4(rec.get(0));
-                int endIpNum = (int) NetworkUtils.parseIpV4(rec.get(1));
+                int startIpNum = 0;//(int) NetworkUtils.parseIpV4(rec.get(0));
+                int endIpNum = 0;//(int) NetworkUtils.parseIpV4(rec.get(1));
 
 
                 //jsonEncoder.writeString("startIpNum");

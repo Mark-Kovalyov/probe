@@ -359,6 +359,7 @@ public class GeoIpCityAvroEntity extends org.apache.avro.specific.SpecificRecord
   /**
    * RecordBuilder for GeoIpCityAvroEntity instances.
    */
+  @org.apache.avro.specific.AvroGenerated
   public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<GeoIpCityAvroEntity>
     implements org.apache.avro.data.RecordBuilder<GeoIpCityAvroEntity> {
 
