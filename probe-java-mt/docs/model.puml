@@ -1,0 +1,5 @@
+@startuml
+Object <|-- CyclicBarrier
+Object <|-- Lock
+Lock <|-- ReentrantLock
+@enduml

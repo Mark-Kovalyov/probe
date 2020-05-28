@@ -5,17 +5,10 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.example</groupId>
-  <artifactId>probe-java-mt</artifactId>
-  <packaging>pom</packaging>
+  <artifactId>probe-aws</artifactId>
   <version>1.0-SNAPSHOT</version>
 
-  <modules>
-    <module>atomic</module>
-    <module>cyclycb</module>
-      <module>locks</module>
-  </modules>
-
-  <name>probe-java-mt</name>
+  <name>probe-aws</name>
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
 
