@@ -1,0 +1,720 @@
+SUN:
+  - { "Alg.Alias.AlgorithmParameters.1.2.840.10040.4.1" : "DSA" }
+  - { "Alg.Alias.AlgorithmParameters.1.3.14.3.2.12" : "DSA" }
+  - { "Alg.Alias.AlgorithmParameters.OID.1.2.840.10040.4.1" : "DSA" }
+  - { "Alg.Alias.CertificateFactory.X509" : "X.509" }
+  - { "Alg.Alias.KeyFactory.1.2.840.10040.4.1" : "DSA" }
+  - { "Alg.Alias.KeyFactory.1.3.14.3.2.12" : "DSA" }
+  - { "Alg.Alias.KeyFactory.OID.1.2.840.10040.4.1" : "DSA" }
+  - { "Alg.Alias.KeyPairGenerator.1.2.840.10040.4.1" : "DSA" }
+  - { "Alg.Alias.KeyPairGenerator.1.3.14.3.2.12" : "DSA" }
+  - { "Alg.Alias.KeyPairGenerator.OID.1.2.840.10040.4.1" : "DSA" }
+  - { "Alg.Alias.MessageDigest.1.3.14.3.2.26" : "SHA" }
+  - { "Alg.Alias.MessageDigest.2.16.840.1.101.3.4.2.1" : "SHA-256" }
+  - { "Alg.Alias.MessageDigest.2.16.840.1.101.3.4.2.10" : "SHA3-512" }
+  - { "Alg.Alias.MessageDigest.2.16.840.1.101.3.4.2.2" : "SHA-384" }
+  - { "Alg.Alias.MessageDigest.2.16.840.1.101.3.4.2.3" : "SHA-512" }
+  - { "Alg.Alias.MessageDigest.2.16.840.1.101.3.4.2.4" : "SHA-224" }
+  - { "Alg.Alias.MessageDigest.2.16.840.1.101.3.4.2.5" : "SHA-512/224" }
+  - { "Alg.Alias.MessageDigest.2.16.840.1.101.3.4.2.6" : "SHA-512/256" }
+  - { "Alg.Alias.MessageDigest.2.16.840.1.101.3.4.2.7" : "SHA3-224" }
+  - { "Alg.Alias.MessageDigest.2.16.840.1.101.3.4.2.8" : "SHA3-256" }
+  - { "Alg.Alias.MessageDigest.2.16.840.1.101.3.4.2.9" : "SHA3-384" }
+  - { "Alg.Alias.MessageDigest.OID.1.3.14.3.2.26" : "SHA" }
+  - { "Alg.Alias.MessageDigest.OID.2.16.840.1.101.3.4.2.1" : "SHA-256" }
+  - { "Alg.Alias.MessageDigest.OID.2.16.840.1.101.3.4.2.10" : "SHA3-512" }
+  - { "Alg.Alias.MessageDigest.OID.2.16.840.1.101.3.4.2.2" : "SHA-384" }
+  - { "Alg.Alias.MessageDigest.OID.2.16.840.1.101.3.4.2.3" : "SHA-512" }
+  - { "Alg.Alias.MessageDigest.OID.2.16.840.1.101.3.4.2.4" : "SHA-224" }
+  - { "Alg.Alias.MessageDigest.OID.2.16.840.1.101.3.4.2.5" : "SHA-512/224" }
+  - { "Alg.Alias.MessageDigest.OID.2.16.840.1.101.3.4.2.6" : "SHA-512/256" }
+  - { "Alg.Alias.MessageDigest.OID.2.16.840.1.101.3.4.2.7" : "SHA3-224" }
+  - { "Alg.Alias.MessageDigest.OID.2.16.840.1.101.3.4.2.8" : "SHA3-256" }
+  - { "Alg.Alias.MessageDigest.OID.2.16.840.1.101.3.4.2.9" : "SHA3-384" }
+  - { "Alg.Alias.MessageDigest.SHA-1" : "SHA" }
+  - { "Alg.Alias.MessageDigest.SHA1" : "SHA" }
+  - { "Alg.Alias.Signature.1.2.840.10040.4.3" : "SHA1withDSA" }
+  - { "Alg.Alias.Signature.1.3.14.3.2.13" : "SHA1withDSA" }
+  - { "Alg.Alias.Signature.1.3.14.3.2.27" : "SHA1withDSA" }
+  - { "Alg.Alias.Signature.2.16.840.1.101.3.4.3.1" : "SHA224withDSA" }
+  - { "Alg.Alias.Signature.2.16.840.1.101.3.4.3.2" : "SHA256withDSA" }
+  - { "Alg.Alias.Signature.DSA" : "SHA1withDSA" }
+  - { "Alg.Alias.Signature.DSAWithSHA1" : "SHA1withDSA" }
+  - { "Alg.Alias.Signature.DSS" : "SHA1withDSA" }
+  - { "Alg.Alias.Signature.OID.1.2.840.10040.4.3" : "SHA1withDSA" }
+  - { "Alg.Alias.Signature.OID.2.16.840.1.101.3.4.3.1" : "SHA224withDSA" }
+  - { "Alg.Alias.Signature.OID.2.16.840.1.101.3.4.3.2" : "SHA256withDSA" }
+  - { "Alg.Alias.Signature.RawDSA" : "NONEwithDSA" }
+  - { "Alg.Alias.Signature.SHA-1/DSA" : "SHA1withDSA" }
+  - { "Alg.Alias.Signature.SHA/DSA" : "SHA1withDSA" }
+  - { "Alg.Alias.Signature.SHA1/DSA" : "SHA1withDSA" }
+  - { "Alg.Alias.Signature.SHAwithDSA" : "SHA1withDSA" }
+  - { "AlgorithmParameterGenerator.DSA" : "sun.security.provider.DSAParameterGenerator" }
+  - { "AlgorithmParameterGenerator.DSA ImplementedIn" : "Software" }
+  - { "AlgorithmParameterGenerator.DSA KeySize" : "2048" }
+  - { "AlgorithmParameters.DSA" : "sun.security.provider.DSAParameters" }
+  - { "AlgorithmParameters.DSA ImplementedIn" : "Software" }
+  - { "CertPathBuilder.PKIX" : "sun.security.provider.certpath.SunCertPathBuilder" }
+  - { "CertPathBuilder.PKIX ImplementedIn" : "Software" }
+  - { "CertPathBuilder.PKIX ValidationAlgorithm" : "RFC5280" }
+  - { "CertPathValidator.PKIX" : "sun.security.provider.certpath.PKIXCertPathValidator" }
+  - { "CertPathValidator.PKIX ImplementedIn" : "Software" }
+  - { "CertPathValidator.PKIX ValidationAlgorithm" : "RFC5280" }
+  - { "CertStore.Collection" : "sun.security.provider.certpath.CollectionCertStore" }
+  - { "CertStore.Collection ImplementedIn" : "Software" }
+  - { "CertStore.com.sun.security.IndexedCollection" : "sun.security.provider.certpath.IndexedCollectionCertStore" }
+  - { "CertStore.com.sun.security.IndexedCollection ImplementedIn" : "Software" }
+  - { "CertificateFactory.X.509" : "sun.security.provider.X509Factory" }
+  - { "CertificateFactory.X.509 ImplementedIn" : "Software" }
+  - { "Configuration.JavaLoginConfig" : "sun.security.provider.ConfigFile$Spi" }
+  - { "KeyFactory.DSA" : "sun.security.provider.DSAKeyFactory" }
+  - { "KeyFactory.DSA ImplementedIn" : "Software" }
+  - { "KeyPairGenerator.DSA" : "sun.security.provider.DSAKeyPairGenerator$Current" }
+  - { "KeyPairGenerator.DSA ImplementedIn" : "Software" }
+  - { "KeyPairGenerator.DSA KeySize" : "2048" }
+  - { "KeyStore.CaseExactJKS" : "sun.security.provider.JavaKeyStore$CaseExactJKS" }
+  - { "KeyStore.DKS" : "sun.security.provider.DomainKeyStore$DKS" }
+  - { "KeyStore.JKS" : "sun.security.provider.JavaKeyStore$DualFormatJKS" }
+  - { "KeyStore.JKS ImplementedIn" : "Software" }
+  - { "KeyStore.PKCS12" : "sun.security.pkcs12.PKCS12KeyStore$DualFormatPKCS12" }
+  - { "MessageDigest.MD2" : "sun.security.provider.MD2" }
+  - { "MessageDigest.MD5" : "sun.security.provider.MD5" }
+  - { "MessageDigest.MD5 ImplementedIn" : "Software" }
+  - { "MessageDigest.SHA" : "sun.security.provider.SHA" }
+  - { "MessageDigest.SHA ImplementedIn" : "Software" }
+  - { "MessageDigest.SHA-224" : "sun.security.provider.SHA2$SHA224" }
+  - { "MessageDigest.SHA-256" : "sun.security.provider.SHA2$SHA256" }
+  - { "MessageDigest.SHA-384" : "sun.security.provider.SHA5$SHA384" }
+  - { "MessageDigest.SHA-512" : "sun.security.provider.SHA5$SHA512" }
+  - { "MessageDigest.SHA-512/224" : "sun.security.provider.SHA5$SHA512_224" }
+  - { "MessageDigest.SHA-512/256" : "sun.security.provider.SHA5$SHA512_256" }
+  - { "MessageDigest.SHA3-224" : "sun.security.provider.SHA3$SHA224" }
+  - { "MessageDigest.SHA3-256" : "sun.security.provider.SHA3$SHA256" }
+  - { "MessageDigest.SHA3-384" : "sun.security.provider.SHA3$SHA384" }
+  - { "MessageDigest.SHA3-512" : "sun.security.provider.SHA3$SHA512" }
+  - { "Policy.JavaPolicy" : "sun.security.provider.PolicySpiFile" }
+  - { "Provider.id className" : "sun.security.provider.Sun" }
+  - { "Provider.id info" : "SUN (DSA key/parameter generation; DSA signing; SHA-1, MD5 digests; SecureRandom; X.509 certificates; PKCS12, JKS & DKS keystores; PKIX CertPathValidator; PKIX CertPathBuilder; LDAP, Collection CertStores, JavaPolicy Policy; JavaLoginConfig Configuration)" }
+  - { "Provider.id name" : "SUN" }
+  - { "Provider.id version" : "11" }
+  - { "SecureRandom.DRBG" : "sun.security.provider.DRBG" }
+  - { "SecureRandom.DRBG ImplementedIn" : "Software" }
+  - { "SecureRandom.DRBG ThreadSafe" : "true" }
+  - { "SecureRandom.SHA1PRNG" : "sun.security.provider.SecureRandom" }
+  - { "SecureRandom.SHA1PRNG ImplementedIn" : "Software" }
+  - { "SecureRandom.SHA1PRNG ThreadSafe" : "true" }
+  - { "Signature.NONEwithDSA" : "sun.security.provider.DSA$RawDSA" }
+  - { "Signature.NONEwithDSA KeySize" : "1024" }
+  - { "Signature.NONEwithDSA SupportedKeyClasses" : "java.security.interfaces.DSAPublicKey|java.security.interfaces.DSAPrivateKey" }
+  - { "Signature.NONEwithDSAinP1363Format" : "sun.security.provider.DSA$RawDSAinP1363Format" }
+  - { "Signature.SHA1withDSA" : "sun.security.provider.DSA$SHA1withDSA" }
+  - { "Signature.SHA1withDSA ImplementedIn" : "Software" }
+  - { "Signature.SHA1withDSA KeySize" : "1024" }
+  - { "Signature.SHA1withDSA SupportedKeyClasses" : "java.security.interfaces.DSAPublicKey|java.security.interfaces.DSAPrivateKey" }
+  - { "Signature.SHA1withDSAinP1363Format" : "sun.security.provider.DSA$SHA1withDSAinP1363Format" }
+  - { "Signature.SHA224withDSA" : "sun.security.provider.DSA$SHA224withDSA" }
+  - { "Signature.SHA224withDSA KeySize" : "2048" }
+  - { "Signature.SHA224withDSA SupportedKeyClasses" : "java.security.interfaces.DSAPublicKey|java.security.interfaces.DSAPrivateKey" }
+  - { "Signature.SHA224withDSAinP1363Format" : "sun.security.provider.DSA$SHA224withDSAinP1363Format" }
+  - { "Signature.SHA256withDSA" : "sun.security.provider.DSA$SHA256withDSA" }
+  - { "Signature.SHA256withDSA KeySize" : "2048" }
+  - { "Signature.SHA256withDSA SupportedKeyClasses" : "java.security.interfaces.DSAPublicKey|java.security.interfaces.DSAPrivateKey" }
+  - { "Signature.SHA256withDSAinP1363Format" : "sun.security.provider.DSA$SHA256withDSAinP1363Format" }
+SunRsaSign:
+  - { "Alg.Alias.AlgorithmParameters.1.2.840.113549.1.1.10" : "RSASSA-PSS" }
+  - { "Alg.Alias.AlgorithmParameters.OID.1.2.840.113549.1.1.10" : "RSASSA-PSS" }
+  - { "Alg.Alias.KeyFactory.1.2.840.113549.1.1" : "RSA" }
+  - { "Alg.Alias.KeyFactory.1.2.840.113549.1.1.10" : "RSASSA-PSS" }
+  - { "Alg.Alias.KeyFactory.OID.1.2.840.113549.1.1" : "RSA" }
+  - { "Alg.Alias.KeyFactory.OID.1.2.840.113549.1.1.10" : "RSASSA-PSS" }
+  - { "Alg.Alias.KeyPairGenerator.1.2.840.113549.1.1" : "RSA" }
+  - { "Alg.Alias.KeyPairGenerator.1.2.840.113549.1.1.10" : "RSASSA-PSS" }
+  - { "Alg.Alias.KeyPairGenerator.OID.1.2.840.113549.1.1" : "RSA" }
+  - { "Alg.Alias.KeyPairGenerator.OID.1.2.840.113549.1.1.10" : "RSASSA-PSS" }
+  - { "Alg.Alias.Signature.1.2.840.113549.1.1.10" : "RSASSA-PSS" }
+  - { "Alg.Alias.Signature.1.2.840.113549.1.1.11" : "SHA256withRSA" }
+  - { "Alg.Alias.Signature.1.2.840.113549.1.1.12" : "SHA384withRSA" }
+  - { "Alg.Alias.Signature.1.2.840.113549.1.1.13" : "SHA512withRSA" }
+  - { "Alg.Alias.Signature.1.2.840.113549.1.1.14" : "SHA224withRSA" }
+  - { "Alg.Alias.Signature.1.2.840.113549.1.1.15" : "SHA512/224withRSA" }
+  - { "Alg.Alias.Signature.1.2.840.113549.1.1.16" : "SHA512/256withRSA" }
+  - { "Alg.Alias.Signature.1.2.840.113549.1.1.2" : "MD2withRSA" }
+  - { "Alg.Alias.Signature.1.2.840.113549.1.1.4" : "MD5withRSA" }
+  - { "Alg.Alias.Signature.1.2.840.113549.1.1.5" : "SHA1withRSA" }
+  - { "Alg.Alias.Signature.1.3.14.3.2.29" : "SHA1withRSA" }
+  - { "Alg.Alias.Signature.OID.1.2.840.113549.1.1.10" : "RSASSA-PSS" }
+  - { "Alg.Alias.Signature.OID.1.2.840.113549.1.1.11" : "SHA256withRSA" }
+  - { "Alg.Alias.Signature.OID.1.2.840.113549.1.1.12" : "SHA384withRSA" }
+  - { "Alg.Alias.Signature.OID.1.2.840.113549.1.1.13" : "SHA512withRSA" }
+  - { "Alg.Alias.Signature.OID.1.2.840.113549.1.1.14" : "SHA224withRSA" }
+  - { "Alg.Alias.Signature.OID.1.2.840.113549.1.1.15" : "SHA512/224withRSA" }
+  - { "Alg.Alias.Signature.OID.1.2.840.113549.1.1.16" : "SHA512/256withRSA" }
+  - { "Alg.Alias.Signature.OID.1.2.840.113549.1.1.2" : "MD2withRSA" }
+  - { "Alg.Alias.Signature.OID.1.2.840.113549.1.1.4" : "MD5withRSA" }
+  - { "Alg.Alias.Signature.OID.1.2.840.113549.1.1.5" : "SHA1withRSA" }
+  - { "AlgorithmParameters.RSASSA-PSS" : "sun.security.rsa.PSSParameters" }
+  - { "KeyFactory.RSA" : "sun.security.rsa.RSAKeyFactory$Legacy" }
+  - { "KeyFactory.RSASSA-PSS" : "sun.security.rsa.RSAKeyFactory$PSS" }
+  - { "KeyPairGenerator.RSA" : "sun.security.rsa.RSAKeyPairGenerator$Legacy" }
+  - { "KeyPairGenerator.RSASSA-PSS" : "sun.security.rsa.RSAKeyPairGenerator$PSS" }
+  - { "Provider.id className" : "sun.security.rsa.SunRsaSign" }
+  - { "Provider.id info" : "Sun RSA signature provider" }
+  - { "Provider.id name" : "SunRsaSign" }
+  - { "Provider.id version" : "11" }
+  - { "Signature.MD2withRSA" : "sun.security.rsa.RSASignature$MD2withRSA" }
+  - { "Signature.MD2withRSA SupportedKeyClasses" : "java.security.interfaces.RSAPublicKey|java.security.interfaces.RSAPrivateKey" }
+  - { "Signature.MD5withRSA" : "sun.security.rsa.RSASignature$MD5withRSA" }
+  - { "Signature.MD5withRSA SupportedKeyClasses" : "java.security.interfaces.RSAPublicKey|java.security.interfaces.RSAPrivateKey" }
+  - { "Signature.RSASSA-PSS" : "sun.security.rsa.RSAPSSSignature" }
+  - { "Signature.RSASSA-PSS SupportedKeyClasses" : "java.security.interfaces.RSAPublicKey|java.security.interfaces.RSAPrivateKey" }
+  - { "Signature.SHA1withRSA" : "sun.security.rsa.RSASignature$SHA1withRSA" }
+  - { "Signature.SHA1withRSA SupportedKeyClasses" : "java.security.interfaces.RSAPublicKey|java.security.interfaces.RSAPrivateKey" }
+  - { "Signature.SHA224withRSA" : "sun.security.rsa.RSASignature$SHA224withRSA" }
+  - { "Signature.SHA224withRSA SupportedKeyClasses" : "java.security.interfaces.RSAPublicKey|java.security.interfaces.RSAPrivateKey" }
+  - { "Signature.SHA256withRSA" : "sun.security.rsa.RSASignature$SHA256withRSA" }
+  - { "Signature.SHA256withRSA SupportedKeyClasses" : "java.security.interfaces.RSAPublicKey|java.security.interfaces.RSAPrivateKey" }
+  - { "Signature.SHA384withRSA" : "sun.security.rsa.RSASignature$SHA384withRSA" }
+  - { "Signature.SHA384withRSA SupportedKeyClasses" : "java.security.interfaces.RSAPublicKey|java.security.interfaces.RSAPrivateKey" }
+  - { "Signature.SHA512/224withRSA" : "sun.security.rsa.RSASignature$SHA512_224withRSA" }
+  - { "Signature.SHA512/224withRSA SupportedKeyClasses" : "java.security.interfaces.RSAPublicKey|java.security.interfaces.RSAPrivateKey" }
+  - { "Signature.SHA512/256withRSA" : "sun.security.rsa.RSASignature$SHA512_256withRSA" }
+  - { "Signature.SHA512/256withRSA SupportedKeyClasses" : "java.security.interfaces.RSAPublicKey|java.security.interfaces.RSAPrivateKey" }
+  - { "Signature.SHA512withRSA" : "sun.security.rsa.RSASignature$SHA512withRSA" }
+  - { "Signature.SHA512withRSA SupportedKeyClasses" : "java.security.interfaces.RSAPublicKey|java.security.interfaces.RSAPrivateKey" }
+SunEC:
+  - { "Alg.Alias.AlgorithmParameters.1.2.840.10045.2.1" : "EC" }
+  - { "Alg.Alias.AlgorithmParameters.EllipticCurve" : "EC" }
+  - { "Alg.Alias.AlgorithmParameters.OID.1.2.840.10045.2.1" : "EC" }
+  - { "Alg.Alias.KeyAgreement.1.3.101.110" : "X25519" }
+  - { "Alg.Alias.KeyAgreement.1.3.101.111" : "X448" }
+  - { "Alg.Alias.KeyAgreement.OID.1.3.101.110" : "X25519" }
+  - { "Alg.Alias.KeyAgreement.OID.1.3.101.111" : "X448" }
+  - { "Alg.Alias.KeyFactory.1.3.101.110" : "X25519" }
+  - { "Alg.Alias.KeyFactory.1.3.101.111" : "X448" }
+  - { "Alg.Alias.KeyFactory.EllipticCurve" : "EC" }
+  - { "Alg.Alias.KeyFactory.OID.1.3.101.110" : "X25519" }
+  - { "Alg.Alias.KeyFactory.OID.1.3.101.111" : "X448" }
+  - { "Alg.Alias.KeyPairGenerator.1.3.101.110" : "X25519" }
+  - { "Alg.Alias.KeyPairGenerator.1.3.101.111" : "X448" }
+  - { "Alg.Alias.KeyPairGenerator.EllipticCurve" : "EC" }
+  - { "Alg.Alias.KeyPairGenerator.OID.1.3.101.110" : "X25519" }
+  - { "Alg.Alias.KeyPairGenerator.OID.1.3.101.111" : "X448" }
+  - { "Alg.Alias.Signature.1.2.840.10045.4.1" : "SHA1withECDSA" }
+  - { "Alg.Alias.Signature.1.2.840.10045.4.3.1" : "SHA224withECDSA" }
+  - { "Alg.Alias.Signature.1.2.840.10045.4.3.2" : "SHA256withECDSA" }
+  - { "Alg.Alias.Signature.1.2.840.10045.4.3.3" : "SHA384withECDSA" }
+  - { "Alg.Alias.Signature.1.2.840.10045.4.3.4" : "SHA512withECDSA" }
+  - { "Alg.Alias.Signature.OID.1.2.840.10045.4.1" : "SHA1withECDSA" }
+  - { "Alg.Alias.Signature.OID.1.2.840.10045.4.3.1" : "SHA224withECDSA" }
+  - { "Alg.Alias.Signature.OID.1.2.840.10045.4.3.2" : "SHA256withECDSA" }
+  - { "Alg.Alias.Signature.OID.1.2.840.10045.4.3.3" : "SHA384withECDSA" }
+  - { "Alg.Alias.Signature.OID.1.2.840.10045.4.3.4" : "SHA512withECDSA" }
+  - { "AlgorithmParameters.EC" : "sun.security.util.ECParameters" }
+  - { "AlgorithmParameters.EC ImplementedIn" : "Software" }
+  - { "AlgorithmParameters.EC KeySize" : "256" }
+  - { "AlgorithmParameters.EC SupportedCurves" : "[secp112r1,1.3.132.0.6]|[secp112r2,1.3.132.0.7]|[secp128r1,1.3.132.0.28]|[secp128r2,1.3.132.0.29]|[secp160k1,1.3.132.0.9]|[secp160r1,1.3.132.0.8]|[secp160r2,1.3.132.0.30]|[secp192k1,1.3.132.0.31]|[secp192r1,NIST P-192,X9.62 prime192v1,1.2.840.10045.3.1.1]|[secp224k1,1.3.132.0.32]|[secp224r1,NIST P-224,1.3.132.0.33]|[secp256k1,1.3.132.0.10]|[secp256r1,NIST P-256,X9.62 prime256v1,1.2.840.10045.3.1.7]|[secp384r1,NIST P-384,1.3.132.0.34]|[secp521r1,NIST P-521,1.3.132.0.35]|[X9.62 prime192v2,1.2.840.10045.3.1.2]|[X9.62 prime192v3,1.2.840.10045.3.1.3]|[X9.62 prime239v1,1.2.840.10045.3.1.4]|[X9.62 prime239v2,1.2.840.10045.3.1.5]|[X9.62 prime239v3,1.2.840.10045.3.1.6]|[sect113r1,1.3.132.0.4]|[sect113r2,1.3.132.0.5]|[sect131r1,1.3.132.0.22]|[sect131r2,1.3.132.0.23]|[sect163k1,NIST K-163,1.3.132.0.1]|[sect163r1,1.3.132.0.2]|[sect163r2,NIST B-163,1.3.132.0.15]|[sect193r1,1.3.132.0.24]|[sect193r2,1.3.132.0.25]|[sect233k1,NIST K-233,1.3.132.0.26]|[sect233r1,NIST B-233,1.3.132.0.27]|[sect239k1,1.3.132.0.3]|[sect283k1,NIST K-283,1.3.132.0.16]|[sect283r1,NIST B-283,1.3.132.0.17]|[sect409k1,NIST K-409,1.3.132.0.36]|[sect409r1,NIST B-409,1.3.132.0.37]|[sect571k1,NIST K-571,1.3.132.0.38]|[sect571r1,NIST B-571,1.3.132.0.39]|[X9.62 c2tnb191v1,1.2.840.10045.3.0.5]|[X9.62 c2tnb191v2,1.2.840.10045.3.0.6]|[X9.62 c2tnb191v3,1.2.840.10045.3.0.7]|[X9.62 c2tnb239v1,1.2.840.10045.3.0.11]|[X9.62 c2tnb239v2,1.2.840.10045.3.0.12]|[X9.62 c2tnb239v3,1.2.840.10045.3.0.13]|[X9.62 c2tnb359v1,1.2.840.10045.3.0.18]|[X9.62 c2tnb431r1,1.2.840.10045.3.0.20]|[brainpoolP160r1,1.3.36.3.3.2.8.1.1.1]|[brainpoolP192r1,1.3.36.3.3.2.8.1.1.3]|[brainpoolP224r1,1.3.36.3.3.2.8.1.1.5]|[brainpoolP256r1,1.3.36.3.3.2.8.1.1.7]|[brainpoolP320r1,1.3.36.3.3.2.8.1.1.9]|[brainpoolP384r1,1.3.36.3.3.2.8.1.1.11]|[brainpoolP512r1,1.3.36.3.3.2.8.1.1.13]" }
+  - { "AlgorithmParameters.EC SupportedKeyClasses" : "java.security.interfaces.ECPublicKey|java.security.interfaces.ECPrivateKey" }
+  - { "KeyAgreement.ECDH" : "sun.security.ec.ECDHKeyAgreement" }
+  - { "KeyAgreement.ECDH ImplementedIn" : "Software" }
+  - { "KeyAgreement.ECDH KeySize" : "256" }
+  - { "KeyAgreement.ECDH SupportedKeyClasses" : "java.security.interfaces.ECPublicKey|java.security.interfaces.ECPrivateKey" }
+  - { "KeyAgreement.X25519" : "sun.security.ec.XDHKeyAgreement.X25519" }
+  - { "KeyAgreement.X25519 ImplementedIn" : "Software" }
+  - { "KeyAgreement.X448" : "sun.security.ec.XDHKeyAgreement.X448" }
+  - { "KeyAgreement.X448 ImplementedIn" : "Software" }
+  - { "KeyAgreement.XDH" : "sun.security.ec.XDHKeyAgreement" }
+  - { "KeyAgreement.XDH ImplementedIn" : "Software" }
+  - { "KeyFactory.EC" : "sun.security.ec.ECKeyFactory" }
+  - { "KeyFactory.EC ImplementedIn" : "Software" }
+  - { "KeyFactory.EC KeySize" : "256" }
+  - { "KeyFactory.EC SupportedKeyClasses" : "java.security.interfaces.ECPublicKey|java.security.interfaces.ECPrivateKey" }
+  - { "KeyFactory.X25519" : "sun.security.ec.XDHKeyFactory.X25519" }
+  - { "KeyFactory.X25519 ImplementedIn" : "Software" }
+  - { "KeyFactory.X448" : "sun.security.ec.XDHKeyFactory.X448" }
+  - { "KeyFactory.X448 ImplementedIn" : "Software" }
+  - { "KeyFactory.XDH" : "sun.security.ec.XDHKeyFactory" }
+  - { "KeyFactory.XDH ImplementedIn" : "Software" }
+  - { "KeyPairGenerator.EC" : "sun.security.ec.ECKeyPairGenerator" }
+  - { "KeyPairGenerator.EC ImplementedIn" : "Software" }
+  - { "KeyPairGenerator.EC KeySize" : "256" }
+  - { "KeyPairGenerator.EC SupportedKeyClasses" : "java.security.interfaces.ECPublicKey|java.security.interfaces.ECPrivateKey" }
+  - { "KeyPairGenerator.X25519" : "sun.security.ec.XDHKeyPairGenerator.X25519" }
+  - { "KeyPairGenerator.X25519 ImplementedIn" : "Software" }
+  - { "KeyPairGenerator.X448" : "sun.security.ec.XDHKeyPairGenerator.X448" }
+  - { "KeyPairGenerator.X448 ImplementedIn" : "Software" }
+  - { "KeyPairGenerator.XDH" : "sun.security.ec.XDHKeyPairGenerator" }
+  - { "KeyPairGenerator.XDH ImplementedIn" : "Software" }
+  - { "Provider.id className" : "sun.security.ec.SunEC" }
+  - { "Provider.id info" : "Sun Elliptic Curve provider (EC, ECDSA, ECDH)" }
+  - { "Provider.id name" : "SunEC" }
+  - { "Provider.id version" : "11" }
+  - { "Signature.NONEwithECDSA" : "sun.security.ec.ECDSASignature$Raw" }
+  - { "Signature.NONEwithECDSA ImplementedIn" : "Software" }
+  - { "Signature.NONEwithECDSA KeySize" : "256" }
+  - { "Signature.NONEwithECDSA SupportedKeyClasses" : "java.security.interfaces.ECPublicKey|java.security.interfaces.ECPrivateKey" }
+  - { "Signature.NONEwithECDSAinP1363Format" : "sun.security.ec.ECDSASignature$RawinP1363Format" }
+  - { "Signature.SHA1withECDSA" : "sun.security.ec.ECDSASignature$SHA1" }
+  - { "Signature.SHA1withECDSA ImplementedIn" : "Software" }
+  - { "Signature.SHA1withECDSA KeySize" : "256" }
+  - { "Signature.SHA1withECDSA SupportedKeyClasses" : "java.security.interfaces.ECPublicKey|java.security.interfaces.ECPrivateKey" }
+  - { "Signature.SHA1withECDSAinP1363Format" : "sun.security.ec.ECDSASignature$SHA1inP1363Format" }
+  - { "Signature.SHA224withECDSA" : "sun.security.ec.ECDSASignature$SHA224" }
+  - { "Signature.SHA224withECDSA ImplementedIn" : "Software" }
+  - { "Signature.SHA224withECDSA KeySize" : "256" }
+  - { "Signature.SHA224withECDSA SupportedKeyClasses" : "java.security.interfaces.ECPublicKey|java.security.interfaces.ECPrivateKey" }
+  - { "Signature.SHA224withECDSAinP1363Format" : "sun.security.ec.ECDSASignature$SHA224inP1363Format" }
+  - { "Signature.SHA256withECDSA" : "sun.security.ec.ECDSASignature$SHA256" }
+  - { "Signature.SHA256withECDSA ImplementedIn" : "Software" }
+  - { "Signature.SHA256withECDSA KeySize" : "256" }
+  - { "Signature.SHA256withECDSA SupportedKeyClasses" : "java.security.interfaces.ECPublicKey|java.security.interfaces.ECPrivateKey" }
+  - { "Signature.SHA256withECDSAinP1363Format" : "sun.security.ec.ECDSASignature$SHA256inP1363Format" }
+  - { "Signature.SHA384withECDSA" : "sun.security.ec.ECDSASignature$SHA384" }
+  - { "Signature.SHA384withECDSA ImplementedIn" : "Software" }
+  - { "Signature.SHA384withECDSA KeySize" : "256" }
+  - { "Signature.SHA384withECDSA SupportedKeyClasses" : "java.security.interfaces.ECPublicKey|java.security.interfaces.ECPrivateKey" }
+  - { "Signature.SHA384withECDSAinP1363Format" : "sun.security.ec.ECDSASignature$SHA384inP1363Format" }
+  - { "Signature.SHA512withECDSA" : "sun.security.ec.ECDSASignature$SHA512" }
+  - { "Signature.SHA512withECDSA ImplementedIn" : "Software" }
+  - { "Signature.SHA512withECDSA KeySize" : "256" }
+  - { "Signature.SHA512withECDSA SupportedKeyClasses" : "java.security.interfaces.ECPublicKey|java.security.interfaces.ECPrivateKey" }
+  - { "Signature.SHA512withECDSAinP1363Format" : "sun.security.ec.ECDSASignature$SHA512inP1363Format" }
+SunJSSE:
+  - { "Alg.Alias.KeyFactory.1.2.840.113549.1.1" : "RSA" }
+  - { "Alg.Alias.KeyFactory.OID.1.2.840.113549.1.1" : "RSA" }
+  - { "Alg.Alias.KeyManagerFactory.PKIX" : "NewSunX509" }
+  - { "Alg.Alias.KeyPairGenerator.1.2.840.113549.1.1" : "RSA" }
+  - { "Alg.Alias.KeyPairGenerator.OID.1.2.840.113549.1.1" : "RSA" }
+  - { "Alg.Alias.SSLContext.SSL" : "TLS" }
+  - { "Alg.Alias.SSLContext.SSLv3" : "TLSv1" }
+  - { "Alg.Alias.Signature.1.2.840.113549.1.1.2" : "MD2withRSA" }
+  - { "Alg.Alias.Signature.1.2.840.113549.1.1.4" : "MD5withRSA" }
+  - { "Alg.Alias.Signature.1.2.840.113549.1.1.5" : "SHA1withRSA" }
+  - { "Alg.Alias.Signature.1.3.14.3.2.29" : "SHA1withRSA" }
+  - { "Alg.Alias.Signature.OID.1.2.840.113549.1.1.2" : "MD2withRSA" }
+  - { "Alg.Alias.Signature.OID.1.2.840.113549.1.1.4" : "MD5withRSA" }
+  - { "Alg.Alias.Signature.OID.1.2.840.113549.1.1.5" : "SHA1withRSA" }
+  - { "Alg.Alias.Signature.OID.1.3.14.3.2.29" : "SHA1withRSA" }
+  - { "Alg.Alias.TrustManagerFactory.SunPKIX" : "PKIX" }
+  - { "Alg.Alias.TrustManagerFactory.X.509" : "PKIX" }
+  - { "Alg.Alias.TrustManagerFactory.X509" : "PKIX" }
+  - { "KeyFactory.RSA" : "sun.security.rsa.RSAKeyFactory$Legacy" }
+  - { "KeyManagerFactory.NewSunX509" : "sun.security.ssl.KeyManagerFactoryImpl$X509" }
+  - { "KeyManagerFactory.SunX509" : "sun.security.ssl.KeyManagerFactoryImpl$SunX509" }
+  - { "KeyPairGenerator.RSA" : "sun.security.rsa.RSAKeyPairGenerator$Legacy" }
+  - { "KeyStore.PKCS12" : "sun.security.pkcs12.PKCS12KeyStore" }
+  - { "Provider.id className" : "com.sun.net.ssl.internal.ssl.Provider" }
+  - { "Provider.id info" : "Sun JSSE provider(PKCS12, SunX509/PKIX key/trust factories, SSLv3/TLSv1/TLSv1.1/TLSv1.2/TLSv1.3/DTLSv1.0/DTLSv1.2)" }
+  - { "Provider.id name" : "SunJSSE" }
+  - { "Provider.id version" : "11" }
+  - { "SSLContext.DTLS" : "sun.security.ssl.SSLContextImpl$DTLSContext" }
+  - { "SSLContext.DTLSv1.0" : "sun.security.ssl.SSLContextImpl$DTLS10Context" }
+  - { "SSLContext.DTLSv1.2" : "sun.security.ssl.SSLContextImpl$DTLS12Context" }
+  - { "SSLContext.Default" : "sun.security.ssl.SSLContextImpl$DefaultSSLContext" }
+  - { "SSLContext.TLS" : "sun.security.ssl.SSLContextImpl$TLSContext" }
+  - { "SSLContext.TLSv1" : "sun.security.ssl.SSLContextImpl$TLS10Context" }
+  - { "SSLContext.TLSv1.1" : "sun.security.ssl.SSLContextImpl$TLS11Context" }
+  - { "SSLContext.TLSv1.2" : "sun.security.ssl.SSLContextImpl$TLS12Context" }
+  - { "SSLContext.TLSv1.3" : "sun.security.ssl.SSLContextImpl$TLS13Context" }
+  - { "Signature.MD2withRSA" : "sun.security.rsa.RSASignature$MD2withRSA" }
+  - { "Signature.MD5andSHA1withRSA" : "sun.security.ssl.RSASignature" }
+  - { "Signature.MD5withRSA" : "sun.security.rsa.RSASignature$MD5withRSA" }
+  - { "Signature.SHA1withRSA" : "sun.security.rsa.RSASignature$SHA1withRSA" }
+  - { "TrustManagerFactory.PKIX" : "sun.security.ssl.TrustManagerFactoryImpl$PKIXFactory" }
+  - { "TrustManagerFactory.SunX509" : "sun.security.ssl.TrustManagerFactoryImpl$SimpleFactory" }
+SunJCE:
+  - { "Alg.Alias.AlgorithmParameterGenerator.1.2.840.113549.1.3.1" : "DiffieHellman" }
+  - { "Alg.Alias.AlgorithmParameterGenerator.DH" : "DiffieHellman" }
+  - { "Alg.Alias.AlgorithmParameterGenerator.OID.1.2.840.113549.1.3.1" : "DiffieHellman" }
+  - { "Alg.Alias.AlgorithmParameters.1.2.840.113549.1.12.1.1" : "PBEWithSHA1AndRC4_128" }
+  - { "Alg.Alias.AlgorithmParameters.1.2.840.113549.1.12.1.2" : "PBEWithSHA1AndRC4_40" }
+  - { "Alg.Alias.AlgorithmParameters.1.2.840.113549.1.12.1.3" : "PBEWithSHA1AndDESede" }
+  - { "Alg.Alias.AlgorithmParameters.1.2.840.113549.1.12.1.5" : "PBEWithSHA1AndRC2_128" }
+  - { "Alg.Alias.AlgorithmParameters.1.2.840.113549.1.12.1.6" : "PBEWithSHA1AndRC2_40" }
+  - { "Alg.Alias.AlgorithmParameters.1.2.840.113549.1.3.1" : "DiffieHellman" }
+  - { "Alg.Alias.AlgorithmParameters.1.2.840.113549.1.5.13" : "PBES2" }
+  - { "Alg.Alias.AlgorithmParameters.1.2.840.113549.1.5.3" : "PBEWithMD5AndDES" }
+  - { "Alg.Alias.AlgorithmParameters.DH" : "DiffieHellman" }
+  - { "Alg.Alias.AlgorithmParameters.OID.1.2.840.113549.1.12.1.1" : "PBEWithSHA1AndRC4_128" }
+  - { "Alg.Alias.AlgorithmParameters.OID.1.2.840.113549.1.12.1.2" : "PBEWithSHA1AndRC4_40" }
+  - { "Alg.Alias.AlgorithmParameters.OID.1.2.840.113549.1.12.1.3" : "PBEWithSHA1AndDESede" }
+  - { "Alg.Alias.AlgorithmParameters.OID.1.2.840.113549.1.12.1.5" : "PBEWithSHA1AndRC2_128" }
+  - { "Alg.Alias.AlgorithmParameters.OID.1.2.840.113549.1.12.1.6" : "PBEWithSHA1AndRC2_40" }
+  - { "Alg.Alias.AlgorithmParameters.OID.1.2.840.113549.1.3.1" : "DiffieHellman" }
+  - { "Alg.Alias.AlgorithmParameters.OID.1.2.840.113549.1.5.13" : "PBES2" }
+  - { "Alg.Alias.AlgorithmParameters.OID.1.2.840.113549.1.5.3" : "PBEWithMD5AndDES" }
+  - { "Alg.Alias.AlgorithmParameters.Rijndael" : "AES" }
+  - { "Alg.Alias.AlgorithmParameters.TripleDES" : "DESede" }
+  - { "Alg.Alias.Cipher.1.2.840.113549.1.12.1.1" : "PBEWithSHA1AndRC4_128" }
+  - { "Alg.Alias.Cipher.1.2.840.113549.1.12.1.2" : "PBEWithSHA1AndRC4_40" }
+  - { "Alg.Alias.Cipher.1.2.840.113549.1.12.1.3" : "PBEWithSHA1AndDESede" }
+  - { "Alg.Alias.Cipher.1.2.840.113549.1.12.1.5" : "PBEWithSHA1AndRC2_128" }
+  - { "Alg.Alias.Cipher.1.2.840.113549.1.12.1.6" : "PBEWithSHA1AndRC2_40" }
+  - { "Alg.Alias.Cipher.1.2.840.113549.1.5.3" : "PBEWithMD5AndDES" }
+  - { "Alg.Alias.Cipher.1.2.840.113549.1.9.16.3.18" : "ChaCha20-Poly1305" }
+  - { "Alg.Alias.Cipher.2.16.840.1.101.3.4.1.1" : "AES_128/ECB/NoPadding" }
+  - { "Alg.Alias.Cipher.2.16.840.1.101.3.4.1.2" : "AES_128/CBC/NoPadding" }
+  - { "Alg.Alias.Cipher.2.16.840.1.101.3.4.1.21" : "AES_192/ECB/NoPadding" }
+  - { "Alg.Alias.Cipher.2.16.840.1.101.3.4.1.22" : "AES_192/CBC/NoPadding" }
+  - { "Alg.Alias.Cipher.2.16.840.1.101.3.4.1.23" : "AES_192/OFB/NoPadding" }
+  - { "Alg.Alias.Cipher.2.16.840.1.101.3.4.1.24" : "AES_192/CFB/NoPadding" }
+  - { "Alg.Alias.Cipher.2.16.840.1.101.3.4.1.25" : "AESWrap_192" }
+  - { "Alg.Alias.Cipher.2.16.840.1.101.3.4.1.26" : "AES_192/GCM/NoPadding" }
+  - { "Alg.Alias.Cipher.2.16.840.1.101.3.4.1.3" : "AES_128/OFB/NoPadding" }
+  - { "Alg.Alias.Cipher.2.16.840.1.101.3.4.1.4" : "AES_128/CFB/NoPadding" }
+  - { "Alg.Alias.Cipher.2.16.840.1.101.3.4.1.41" : "AES_256/ECB/NoPadding" }
+  - { "Alg.Alias.Cipher.2.16.840.1.101.3.4.1.42" : "AES_256/CBC/NoPadding" }
+  - { "Alg.Alias.Cipher.2.16.840.1.101.3.4.1.43" : "AES_256/OFB/NoPadding" }
+  - { "Alg.Alias.Cipher.2.16.840.1.101.3.4.1.44" : "AES_256/CFB/NoPadding" }
+  - { "Alg.Alias.Cipher.2.16.840.1.101.3.4.1.45" : "AESWrap_256" }
+  - { "Alg.Alias.Cipher.2.16.840.1.101.3.4.1.46" : "AES_256/GCM/NoPadding" }
+  - { "Alg.Alias.Cipher.2.16.840.1.101.3.4.1.5" : "AESWrap_128" }
+  - { "Alg.Alias.Cipher.2.16.840.1.101.3.4.1.6" : "AES_128/GCM/NoPadding" }
+  - { "Alg.Alias.Cipher.OID.1.2.840.113549.1.12.1.1" : "PBEWithSHA1AndRC4_128" }
+  - { "Alg.Alias.Cipher.OID.1.2.840.113549.1.12.1.2" : "PBEWithSHA1AndRC4_40" }
+  - { "Alg.Alias.Cipher.OID.1.2.840.113549.1.12.1.3" : "PBEWithSHA1AndDESede" }
+  - { "Alg.Alias.Cipher.OID.1.2.840.113549.1.12.1.5" : "PBEWithSHA1AndRC2_128" }
+  - { "Alg.Alias.Cipher.OID.1.2.840.113549.1.12.1.6" : "PBEWithSHA1AndRC2_40" }
+  - { "Alg.Alias.Cipher.OID.1.2.840.113549.1.5.3" : "PBEWithMD5AndDES" }
+  - { "Alg.Alias.Cipher.OID.1.2.840.113549.1.9.16.3.18" : "ChaCha20-Poly1305" }
+  - { "Alg.Alias.Cipher.OID.2.16.840.1.101.3.4.1.1" : "AES_128/ECB/NoPadding" }
+  - { "Alg.Alias.Cipher.OID.2.16.840.1.101.3.4.1.2" : "AES_128/CBC/NoPadding" }
+  - { "Alg.Alias.Cipher.OID.2.16.840.1.101.3.4.1.21" : "AES_192/ECB/NoPadding" }
+  - { "Alg.Alias.Cipher.OID.2.16.840.1.101.3.4.1.22" : "AES_192/CBC/NoPadding" }
+  - { "Alg.Alias.Cipher.OID.2.16.840.1.101.3.4.1.23" : "AES_192/OFB/NoPadding" }
+  - { "Alg.Alias.Cipher.OID.2.16.840.1.101.3.4.1.24" : "AES_192/CFB/NoPadding" }
+  - { "Alg.Alias.Cipher.OID.2.16.840.1.101.3.4.1.25" : "AESWrap_192" }
+  - { "Alg.Alias.Cipher.OID.2.16.840.1.101.3.4.1.26" : "AES_192/GCM/NoPadding" }
+  - { "Alg.Alias.Cipher.OID.2.16.840.1.101.3.4.1.3" : "AES_128/OFB/NoPadding" }
+  - { "Alg.Alias.Cipher.OID.2.16.840.1.101.3.4.1.4" : "AES_128/CFB/NoPadding" }
+  - { "Alg.Alias.Cipher.OID.2.16.840.1.101.3.4.1.41" : "AES_256/ECB/NoPadding" }
+  - { "Alg.Alias.Cipher.OID.2.16.840.1.101.3.4.1.42" : "AES_256/CBC/NoPadding" }
+  - { "Alg.Alias.Cipher.OID.2.16.840.1.101.3.4.1.43" : "AES_256/OFB/NoPadding" }
+  - { "Alg.Alias.Cipher.OID.2.16.840.1.101.3.4.1.44" : "AES_256/CFB/NoPadding" }
+  - { "Alg.Alias.Cipher.OID.2.16.840.1.101.3.4.1.45" : "AESWrap_256" }
+  - { "Alg.Alias.Cipher.OID.2.16.840.1.101.3.4.1.46" : "AES_256/GCM/NoPadding" }
+  - { "Alg.Alias.Cipher.OID.2.16.840.1.101.3.4.1.5" : "AESWrap_128" }
+  - { "Alg.Alias.Cipher.OID.2.16.840.1.101.3.4.1.6" : "AES_128/GCM/NoPadding" }
+  - { "Alg.Alias.Cipher.RC4" : "ARCFOUR" }
+  - { "Alg.Alias.Cipher.Rijndael" : "AES" }
+  - { "Alg.Alias.Cipher.TripleDES" : "DESede" }
+  - { "Alg.Alias.KeyAgreement.1.2.840.113549.1.3.1" : "DiffieHellman" }
+  - { "Alg.Alias.KeyAgreement.DH" : "DiffieHellman" }
+  - { "Alg.Alias.KeyAgreement.OID.1.2.840.113549.1.3.1" : "DiffieHellman" }
+  - { "Alg.Alias.KeyFactory.1.2.840.113549.1.3.1" : "DiffieHellman" }
+  - { "Alg.Alias.KeyFactory.DH" : "DiffieHellman" }
+  - { "Alg.Alias.KeyFactory.OID.1.2.840.113549.1.3.1" : "DiffieHellman" }
+  - { "Alg.Alias.KeyGenerator.1.2.840.113549.2.10" : "HmacSHA384" }
+  - { "Alg.Alias.KeyGenerator.1.2.840.113549.2.11" : "HmacSHA512" }
+  - { "Alg.Alias.KeyGenerator.1.2.840.113549.2.7" : "HmacSHA1" }
+  - { "Alg.Alias.KeyGenerator.1.2.840.113549.2.8" : "HmacSHA224" }
+  - { "Alg.Alias.KeyGenerator.1.2.840.113549.2.9" : "HmacSHA256" }
+  - { "Alg.Alias.KeyGenerator.OID.1.2.840.113549.2.10" : "HmacSHA384" }
+  - { "Alg.Alias.KeyGenerator.OID.1.2.840.113549.2.11" : "HmacSHA512" }
+  - { "Alg.Alias.KeyGenerator.OID.1.2.840.113549.2.7" : "HmacSHA1" }
+  - { "Alg.Alias.KeyGenerator.OID.1.2.840.113549.2.8" : "HmacSHA224" }
+  - { "Alg.Alias.KeyGenerator.OID.1.2.840.113549.2.9" : "HmacSHA256" }
+  - { "Alg.Alias.KeyGenerator.RC4" : "ARCFOUR" }
+  - { "Alg.Alias.KeyGenerator.Rijndael" : "AES" }
+  - { "Alg.Alias.KeyGenerator.SunTls12KeyMaterial" : "SunTlsKeyMaterial" }
+  - { "Alg.Alias.KeyGenerator.SunTls12MasterSecret" : "SunTlsMasterSecret" }
+  - { "Alg.Alias.KeyGenerator.SunTls12RsaPremasterSecret" : "SunTlsRsaPremasterSecret" }
+  - { "Alg.Alias.KeyGenerator.SunTlsExtendedMasterSecret" : "SunTlsMasterSecret" }
+  - { "Alg.Alias.KeyGenerator.TripleDES" : "DESede" }
+  - { "Alg.Alias.KeyPairGenerator.1.2.840.113549.1.3.1" : "DiffieHellman" }
+  - { "Alg.Alias.KeyPairGenerator.DH" : "DiffieHellman" }
+  - { "Alg.Alias.KeyPairGenerator.OID.1.2.840.113549.1.3.1" : "DiffieHellman" }
+  - { "Alg.Alias.Mac.1.2.840.113549.2.10" : "HmacSHA384" }
+  - { "Alg.Alias.Mac.1.2.840.113549.2.11" : "HmacSHA512" }
+  - { "Alg.Alias.Mac.1.2.840.113549.2.7" : "HmacSHA1" }
+  - { "Alg.Alias.Mac.1.2.840.113549.2.8" : "HmacSHA224" }
+  - { "Alg.Alias.Mac.1.2.840.113549.2.9" : "HmacSHA256" }
+  - { "Alg.Alias.Mac.OID.1.2.840.113549.2.10" : "HmacSHA384" }
+  - { "Alg.Alias.Mac.OID.1.2.840.113549.2.11" : "HmacSHA512" }
+  - { "Alg.Alias.Mac.OID.1.2.840.113549.2.7" : "HmacSHA1" }
+  - { "Alg.Alias.Mac.OID.1.2.840.113549.2.8" : "HmacSHA224" }
+  - { "Alg.Alias.Mac.OID.1.2.840.113549.2.9" : "HmacSHA256" }
+  - { "Alg.Alias.SecretKeyFactory.1.2.840.113549.1.12.1.1" : "PBEWithSHA1AndRC4_128" }
+  - { "Alg.Alias.SecretKeyFactory.1.2.840.113549.1.12.1.2" : "PBEWithSHA1AndRC4_40" }
+  - { "Alg.Alias.SecretKeyFactory.1.2.840.113549.1.12.1.3" : "PBEWithSHA1AndDESede" }
+  - { "Alg.Alias.SecretKeyFactory.1.2.840.113549.1.12.1.5" : "PBEWithSHA1AndRC2_128" }
+  - { "Alg.Alias.SecretKeyFactory.1.2.840.113549.1.12.1.6" : "PBEWithSHA1AndRC2_40" }
+  - { "Alg.Alias.SecretKeyFactory.1.2.840.113549.1.5.12" : "PBKDF2WithHmacSHA1" }
+  - { "Alg.Alias.SecretKeyFactory.1.2.840.113549.1.5.3" : "PBEWithMD5AndDES" }
+  - { "Alg.Alias.SecretKeyFactory.OID.1.2.840.113549.1.12.1.1" : "PBEWithSHA1AndRC4_128" }
+  - { "Alg.Alias.SecretKeyFactory.OID.1.2.840.113549.1.12.1.2" : "PBEWithSHA1AndRC4_40" }
+  - { "Alg.Alias.SecretKeyFactory.OID.1.2.840.113549.1.12.1.3" : "PBEWithSHA1AndDESede" }
+  - { "Alg.Alias.SecretKeyFactory.OID.1.2.840.113549.1.12.1.5" : "PBEWithSHA1AndRC2_128" }
+  - { "Alg.Alias.SecretKeyFactory.OID.1.2.840.113549.1.12.1.6" : "PBEWithSHA1AndRC2_40" }
+  - { "Alg.Alias.SecretKeyFactory.OID.1.2.840.113549.1.5.12" : "PBKDF2WithHmacSHA1" }
+  - { "Alg.Alias.SecretKeyFactory.OID.1.2.840.113549.1.5.3" : "PBEWithMD5AndDES" }
+  - { "Alg.Alias.SecretKeyFactory.PBE" : "PBEWithMD5AndDES" }
+  - { "Alg.Alias.SecretKeyFactory.TripleDES" : "DESede" }
+  - { "AlgorithmParameterGenerator.DiffieHellman" : "com.sun.crypto.provider.DHParameterGenerator" }
+  - { "AlgorithmParameters.AES" : "com.sun.crypto.provider.AESParameters" }
+  - { "AlgorithmParameters.Blowfish" : "com.sun.crypto.provider.BlowfishParameters" }
+  - { "AlgorithmParameters.ChaCha20-Poly1305" : "com.sun.crypto.provider.ChaCha20Poly1305Parameters" }
+  - { "AlgorithmParameters.DES" : "com.sun.crypto.provider.DESParameters" }
+  - { "AlgorithmParameters.DESede" : "com.sun.crypto.provider.DESedeParameters" }
+  - { "AlgorithmParameters.DiffieHellman" : "com.sun.crypto.provider.DHParameters" }
+  - { "AlgorithmParameters.GCM" : "com.sun.crypto.provider.GCMParameters" }
+  - { "AlgorithmParameters.OAEP" : "com.sun.crypto.provider.OAEPParameters" }
+  - { "AlgorithmParameters.PBE" : "com.sun.crypto.provider.PBEParameters" }
+  - { "AlgorithmParameters.PBES2" : "com.sun.crypto.provider.PBES2Parameters$General" }
+  - { "AlgorithmParameters.PBEWithHmacSHA1AndAES_128" : "com.sun.crypto.provider.PBES2Parameters$HmacSHA1AndAES_128" }
+  - { "AlgorithmParameters.PBEWithHmacSHA1AndAES_256" : "com.sun.crypto.provider.PBES2Parameters$HmacSHA1AndAES_256" }
+  - { "AlgorithmParameters.PBEWithHmacSHA224AndAES_128" : "com.sun.crypto.provider.PBES2Parameters$HmacSHA224AndAES_128" }
+  - { "AlgorithmParameters.PBEWithHmacSHA224AndAES_256" : "com.sun.crypto.provider.PBES2Parameters$HmacSHA224AndAES_256" }
+  - { "AlgorithmParameters.PBEWithHmacSHA256AndAES_128" : "com.sun.crypto.provider.PBES2Parameters$HmacSHA256AndAES_128" }
+  - { "AlgorithmParameters.PBEWithHmacSHA256AndAES_256" : "com.sun.crypto.provider.PBES2Parameters$HmacSHA256AndAES_256" }
+  - { "AlgorithmParameters.PBEWithHmacSHA384AndAES_128" : "com.sun.crypto.provider.PBES2Parameters$HmacSHA384AndAES_128" }
+  - { "AlgorithmParameters.PBEWithHmacSHA384AndAES_256" : "com.sun.crypto.provider.PBES2Parameters$HmacSHA384AndAES_256" }
+  - { "AlgorithmParameters.PBEWithHmacSHA512AndAES_128" : "com.sun.crypto.provider.PBES2Parameters$HmacSHA512AndAES_128" }
+  - { "AlgorithmParameters.PBEWithHmacSHA512AndAES_256" : "com.sun.crypto.provider.PBES2Parameters$HmacSHA512AndAES_256" }
+  - { "AlgorithmParameters.PBEWithMD5AndDES" : "com.sun.crypto.provider.PBEParameters" }
+  - { "AlgorithmParameters.PBEWithMD5AndTripleDES" : "com.sun.crypto.provider.PBEParameters" }
+  - { "AlgorithmParameters.PBEWithSHA1AndDESede" : "com.sun.crypto.provider.PBEParameters" }
+  - { "AlgorithmParameters.PBEWithSHA1AndRC2_128" : "com.sun.crypto.provider.PBEParameters" }
+  - { "AlgorithmParameters.PBEWithSHA1AndRC2_40" : "com.sun.crypto.provider.PBEParameters" }
+  - { "AlgorithmParameters.PBEWithSHA1AndRC4_128" : "com.sun.crypto.provider.PBEParameters" }
+  - { "AlgorithmParameters.PBEWithSHA1AndRC4_40" : "com.sun.crypto.provider.PBEParameters" }
+  - { "AlgorithmParameters.RC2" : "com.sun.crypto.provider.RC2Parameters" }
+  - { "Cipher.AES" : "com.sun.crypto.provider.AESCipher$General" }
+  - { "Cipher.AES SupportedKeyFormats" : "RAW" }
+  - { "Cipher.AES SupportedModes" : "ECB|CBC|PCBC|CTR|CTS|CFB|OFB|CFB8|CFB16|CFB24|CFB32|CFB40|CFB48|CFB56|CFB64|OFB8|OFB16|OFB24|OFB32|OFB40|OFB48|OFB56|OFB64|GCM|CFB72|CFB80|CFB88|CFB96|CFB104|CFB112|CFB120|CFB128|OFB72|OFB80|OFB88|OFB96|OFB104|OFB112|OFB120|OFB128" }
+  - { "Cipher.AES SupportedPaddings" : "NOPADDING|PKCS5PADDING|ISO10126PADDING" }
+  - { "Cipher.AESWrap" : "com.sun.crypto.provider.AESWrapCipher$General" }
+  - { "Cipher.AESWrap SupportedKeyFormats" : "RAW" }
+  - { "Cipher.AESWrap SupportedModes" : "ECB" }
+  - { "Cipher.AESWrap SupportedPaddings" : "NOPADDING" }
+  - { "Cipher.AESWrap_128" : "com.sun.crypto.provider.AESWrapCipher$AES128" }
+  - { "Cipher.AESWrap_192" : "com.sun.crypto.provider.AESWrapCipher$AES192" }
+  - { "Cipher.AESWrap_256" : "com.sun.crypto.provider.AESWrapCipher$AES256" }
+  - { "Cipher.AES_128/CBC/NoPadding" : "com.sun.crypto.provider.AESCipher$AES128_CBC_NoPadding" }
+  - { "Cipher.AES_128/CFB/NoPadding" : "com.sun.crypto.provider.AESCipher$AES128_CFB_NoPadding" }
+  - { "Cipher.AES_128/ECB/NoPadding" : "com.sun.crypto.provider.AESCipher$AES128_ECB_NoPadding" }
+  - { "Cipher.AES_128/GCM/NoPadding" : "com.sun.crypto.provider.AESCipher$AES128_GCM_NoPadding" }
+  - { "Cipher.AES_128/OFB/NoPadding" : "com.sun.crypto.provider.AESCipher$AES128_OFB_NoPadding" }
+  - { "Cipher.AES_192/CBC/NoPadding" : "com.sun.crypto.provider.AESCipher$AES192_CBC_NoPadding" }
+  - { "Cipher.AES_192/CFB/NoPadding" : "com.sun.crypto.provider.AESCipher$AES192_CFB_NoPadding" }
+  - { "Cipher.AES_192/ECB/NoPadding" : "com.sun.crypto.provider.AESCipher$AES192_ECB_NoPadding" }
+  - { "Cipher.AES_192/GCM/NoPadding" : "com.sun.crypto.provider.AESCipher$AES192_GCM_NoPadding" }
+  - { "Cipher.AES_192/OFB/NoPadding" : "com.sun.crypto.provider.AESCipher$AES192_OFB_NoPadding" }
+  - { "Cipher.AES_256/CBC/NoPadding" : "com.sun.crypto.provider.AESCipher$AES256_CBC_NoPadding" }
+  - { "Cipher.AES_256/CFB/NoPadding" : "com.sun.crypto.provider.AESCipher$AES256_CFB_NoPadding" }
+  - { "Cipher.AES_256/ECB/NoPadding" : "com.sun.crypto.provider.AESCipher$AES256_ECB_NoPadding" }
+  - { "Cipher.AES_256/GCM/NoPadding" : "com.sun.crypto.provider.AESCipher$AES256_GCM_NoPadding" }
+  - { "Cipher.AES_256/OFB/NoPadding" : "com.sun.crypto.provider.AESCipher$AES256_OFB_NoPadding" }
+  - { "Cipher.ARCFOUR" : "com.sun.crypto.provider.ARCFOURCipher" }
+  - { "Cipher.ARCFOUR SupportedKeyFormats" : "RAW" }
+  - { "Cipher.ARCFOUR SupportedModes" : "ECB" }
+  - { "Cipher.ARCFOUR SupportedPaddings" : "NOPADDING" }
+  - { "Cipher.Blowfish" : "com.sun.crypto.provider.BlowfishCipher" }
+  - { "Cipher.Blowfish SupportedKeyFormats" : "RAW" }
+  - { "Cipher.Blowfish SupportedModes" : "ECB|CBC|PCBC|CTR|CTS|CFB|OFB|CFB8|CFB16|CFB24|CFB32|CFB40|CFB48|CFB56|CFB64|OFB8|OFB16|OFB24|OFB32|OFB40|OFB48|OFB56|OFB64" }
+  - { "Cipher.Blowfish SupportedPaddings" : "NOPADDING|PKCS5PADDING|ISO10126PADDING" }
+  - { "Cipher.ChaCha20" : "com.sun.crypto.provider.ChaCha20Cipher$ChaCha20Only" }
+  - { "Cipher.ChaCha20 SupportedKeyFormats" : "RAW" }
+  - { "Cipher.ChaCha20-Poly1305" : "com.sun.crypto.provider.ChaCha20Cipher$ChaCha20Poly1305" }
+  - { "Cipher.ChaCha20-Poly1305 SupportedKeyFormats" : "RAW" }
+  - { "Cipher.DES" : "com.sun.crypto.provider.DESCipher" }
+  - { "Cipher.DES SupportedKeyFormats" : "RAW" }
+  - { "Cipher.DES SupportedModes" : "ECB|CBC|PCBC|CTR|CTS|CFB|OFB|CFB8|CFB16|CFB24|CFB32|CFB40|CFB48|CFB56|CFB64|OFB8|OFB16|OFB24|OFB32|OFB40|OFB48|OFB56|OFB64" }
+  - { "Cipher.DES SupportedPaddings" : "NOPADDING|PKCS5PADDING|ISO10126PADDING" }
+  - { "Cipher.DESede" : "com.sun.crypto.provider.DESedeCipher" }
+  - { "Cipher.DESede SupportedKeyFormats" : "RAW" }
+  - { "Cipher.DESede SupportedModes" : "ECB|CBC|PCBC|CTR|CTS|CFB|OFB|CFB8|CFB16|CFB24|CFB32|CFB40|CFB48|CFB56|CFB64|OFB8|OFB16|OFB24|OFB32|OFB40|OFB48|OFB56|OFB64" }
+  - { "Cipher.DESede SupportedPaddings" : "NOPADDING|PKCS5PADDING|ISO10126PADDING" }
+  - { "Cipher.DESedeWrap" : "com.sun.crypto.provider.DESedeWrapCipher" }
+  - { "Cipher.DESedeWrap SupportedKeyFormats" : "RAW" }
+  - { "Cipher.DESedeWrap SupportedModes" : "CBC" }
+  - { "Cipher.DESedeWrap SupportedPaddings" : "NOPADDING" }
+  - { "Cipher.PBEWithHmacSHA1AndAES_128" : "com.sun.crypto.provider.PBES2Core$HmacSHA1AndAES_128" }
+  - { "Cipher.PBEWithHmacSHA1AndAES_256" : "com.sun.crypto.provider.PBES2Core$HmacSHA1AndAES_256" }
+  - { "Cipher.PBEWithHmacSHA224AndAES_128" : "com.sun.crypto.provider.PBES2Core$HmacSHA224AndAES_128" }
+  - { "Cipher.PBEWithHmacSHA224AndAES_256" : "com.sun.crypto.provider.PBES2Core$HmacSHA224AndAES_256" }
+  - { "Cipher.PBEWithHmacSHA256AndAES_128" : "com.sun.crypto.provider.PBES2Core$HmacSHA256AndAES_128" }
+  - { "Cipher.PBEWithHmacSHA256AndAES_256" : "com.sun.crypto.provider.PBES2Core$HmacSHA256AndAES_256" }
+  - { "Cipher.PBEWithHmacSHA384AndAES_128" : "com.sun.crypto.provider.PBES2Core$HmacSHA384AndAES_128" }
+  - { "Cipher.PBEWithHmacSHA384AndAES_256" : "com.sun.crypto.provider.PBES2Core$HmacSHA384AndAES_256" }
+  - { "Cipher.PBEWithHmacSHA512AndAES_128" : "com.sun.crypto.provider.PBES2Core$HmacSHA512AndAES_128" }
+  - { "Cipher.PBEWithHmacSHA512AndAES_256" : "com.sun.crypto.provider.PBES2Core$HmacSHA512AndAES_256" }
+  - { "Cipher.PBEWithMD5AndDES" : "com.sun.crypto.provider.PBEWithMD5AndDESCipher" }
+  - { "Cipher.PBEWithMD5AndTripleDES" : "com.sun.crypto.provider.PBEWithMD5AndTripleDESCipher" }
+  - { "Cipher.PBEWithSHA1AndDESede" : "com.sun.crypto.provider.PKCS12PBECipherCore$PBEWithSHA1AndDESede" }
+  - { "Cipher.PBEWithSHA1AndRC2_128" : "com.sun.crypto.provider.PKCS12PBECipherCore$PBEWithSHA1AndRC2_128" }
+  - { "Cipher.PBEWithSHA1AndRC2_40" : "com.sun.crypto.provider.PKCS12PBECipherCore$PBEWithSHA1AndRC2_40" }
+  - { "Cipher.PBEWithSHA1AndRC4_128" : "com.sun.crypto.provider.PKCS12PBECipherCore$PBEWithSHA1AndRC4_128" }
+  - { "Cipher.PBEWithSHA1AndRC4_40" : "com.sun.crypto.provider.PKCS12PBECipherCore$PBEWithSHA1AndRC4_40" }
+  - { "Cipher.RC2" : "com.sun.crypto.provider.RC2Cipher" }
+  - { "Cipher.RC2 SupportedKeyFormats" : "RAW" }
+  - { "Cipher.RC2 SupportedModes" : "ECB|CBC|PCBC|CTR|CTS|CFB|OFB|CFB8|CFB16|CFB24|CFB32|CFB40|CFB48|CFB56|CFB64|OFB8|OFB16|OFB24|OFB32|OFB40|OFB48|OFB56|OFB64" }
+  - { "Cipher.RC2 SupportedPaddings" : "NOPADDING|PKCS5PADDING|ISO10126PADDING" }
+  - { "Cipher.RSA" : "com.sun.crypto.provider.RSACipher" }
+  - { "Cipher.RSA SupportedKeyClasses" : "java.security.interfaces.RSAPublicKey|java.security.interfaces.RSAPrivateKey" }
+  - { "Cipher.RSA SupportedModes" : "ECB" }
+  - { "Cipher.RSA SupportedPaddings" : "NOPADDING|PKCS1PADDING|OAEPPADDING|OAEPWITHMD5ANDMGF1PADDING|OAEPWITHSHA1ANDMGF1PADDING|OAEPWITHSHA-1ANDMGF1PADDING|OAEPWITHSHA-224ANDMGF1PADDING|OAEPWITHSHA-256ANDMGF1PADDING|OAEPWITHSHA-384ANDMGF1PADDING|OAEPWITHSHA-512ANDMGF1PADDING|OAEPWITHSHA-512/224ANDMGF1PADDING|OAEPWITHSHA-512/256ANDMGF1PADDING" }
+  - { "KeyAgreement.DiffieHellman" : "com.sun.crypto.provider.DHKeyAgreement" }
+  - { "KeyAgreement.DiffieHellman SupportedKeyClasses" : "javax.crypto.interfaces.DHPublicKey|javax.crypto.interfaces.DHPrivateKey" }
+  - { "KeyFactory.DiffieHellman" : "com.sun.crypto.provider.DHKeyFactory" }
+  - { "KeyGenerator.AES" : "com.sun.crypto.provider.AESKeyGenerator" }
+  - { "KeyGenerator.ARCFOUR" : "com.sun.crypto.provider.KeyGeneratorCore$ARCFOURKeyGenerator" }
+  - { "KeyGenerator.Blowfish" : "com.sun.crypto.provider.BlowfishKeyGenerator" }
+  - { "KeyGenerator.ChaCha20" : "com.sun.crypto.provider.KeyGeneratorCore$ChaCha20KeyGenerator" }
+  - { "KeyGenerator.DES" : "com.sun.crypto.provider.DESKeyGenerator" }
+  - { "KeyGenerator.DESede" : "com.sun.crypto.provider.DESedeKeyGenerator" }
+  - { "KeyGenerator.HmacMD5" : "com.sun.crypto.provider.HmacMD5KeyGenerator" }
+  - { "KeyGenerator.HmacSHA1" : "com.sun.crypto.provider.HmacSHA1KeyGenerator" }
+  - { "KeyGenerator.HmacSHA224" : "com.sun.crypto.provider.KeyGeneratorCore$HmacSHA2KG$SHA224" }
+  - { "KeyGenerator.HmacSHA256" : "com.sun.crypto.provider.KeyGeneratorCore$HmacSHA2KG$SHA256" }
+  - { "KeyGenerator.HmacSHA384" : "com.sun.crypto.provider.KeyGeneratorCore$HmacSHA2KG$SHA384" }
+  - { "KeyGenerator.HmacSHA512" : "com.sun.crypto.provider.KeyGeneratorCore$HmacSHA2KG$SHA512" }
+  - { "KeyGenerator.RC2" : "com.sun.crypto.provider.KeyGeneratorCore$RC2KeyGenerator" }
+  - { "KeyGenerator.SunTls12Prf" : "com.sun.crypto.provider.TlsPrfGenerator$V12" }
+  - { "KeyGenerator.SunTlsKeyMaterial" : "com.sun.crypto.provider.TlsKeyMaterialGenerator" }
+  - { "KeyGenerator.SunTlsMasterSecret" : "com.sun.crypto.provider.TlsMasterSecretGenerator" }
+  - { "KeyGenerator.SunTlsPrf" : "com.sun.crypto.provider.TlsPrfGenerator$V10" }
+  - { "KeyGenerator.SunTlsRsaPremasterSecret" : "com.sun.crypto.provider.TlsRsaPremasterSecretGenerator" }
+  - { "KeyPairGenerator.DiffieHellman" : "com.sun.crypto.provider.DHKeyPairGenerator" }
+  - { "KeyStore.JCEKS" : "com.sun.crypto.provider.JceKeyStore" }
+  - { "Mac.HmacMD5" : "com.sun.crypto.provider.HmacMD5" }
+  - { "Mac.HmacMD5 SupportedKeyFormats" : "RAW" }
+  - { "Mac.HmacPBESHA1" : "com.sun.crypto.provider.HmacPKCS12PBESHA1" }
+  - { "Mac.HmacPBESHA1 SupportedKeyFormats" : "RAW" }
+  - { "Mac.HmacSHA1" : "com.sun.crypto.provider.HmacSHA1" }
+  - { "Mac.HmacSHA1 SupportedKeyFormats" : "RAW" }
+  - { "Mac.HmacSHA224" : "com.sun.crypto.provider.HmacCore$HmacSHA224" }
+  - { "Mac.HmacSHA224 SupportedKeyFormats" : "RAW" }
+  - { "Mac.HmacSHA256" : "com.sun.crypto.provider.HmacCore$HmacSHA256" }
+  - { "Mac.HmacSHA256 SupportedKeyFormats" : "RAW" }
+  - { "Mac.HmacSHA384" : "com.sun.crypto.provider.HmacCore$HmacSHA384" }
+  - { "Mac.HmacSHA384 SupportedKeyFormats" : "RAW" }
+  - { "Mac.HmacSHA512" : "com.sun.crypto.provider.HmacCore$HmacSHA512" }
+  - { "Mac.HmacSHA512 SupportedKeyFormats" : "RAW" }
+  - { "Mac.HmacSHA512/224" : "com.sun.crypto.provider.HmacCore$HmacSHA512_224" }
+  - { "Mac.HmacSHA512/256" : "com.sun.crypto.provider.HmacCore$HmacSHA512_256" }
+  - { "Mac.PBEWithHmacSHA1" : "com.sun.crypto.provider.PBMAC1Core$HmacSHA1" }
+  - { "Mac.PBEWithHmacSHA1 SupportedKeyFormatS" : "RAW" }
+  - { "Mac.PBEWithHmacSHA224" : "com.sun.crypto.provider.PBMAC1Core$HmacSHA224" }
+  - { "Mac.PBEWithHmacSHA224 SupportedKeyFormats" : "RAW" }
+  - { "Mac.PBEWithHmacSHA256" : "com.sun.crypto.provider.PBMAC1Core$HmacSHA256" }
+  - { "Mac.PBEWithHmacSHA256 SupportedKeyFormats" : "RAW" }
+  - { "Mac.PBEWithHmacSHA384" : "com.sun.crypto.provider.PBMAC1Core$HmacSHA384" }
+  - { "Mac.PBEWithHmacSHA384 SupportedKeyFormats" : "RAW" }
+  - { "Mac.PBEWithHmacSHA512" : "com.sun.crypto.provider.PBMAC1Core$HmacSHA512" }
+  - { "Mac.PBEWithHmacSHA512 SupportedKeyFormats" : "RAW" }
+  - { "Mac.SslMacMD5" : "com.sun.crypto.provider.SslMacCore$SslMacMD5" }
+  - { "Mac.SslMacMD5 SupportedKeyFormats" : "RAW" }
+  - { "Mac.SslMacSHA1" : "com.sun.crypto.provider.SslMacCore$SslMacSHA1" }
+  - { "Mac.SslMacSHA1 SupportedKeyFormats" : "RAW" }
+  - { "Provider.id className" : "com.sun.crypto.provider.SunJCE" }
+  - { "Provider.id info" : "SunJCE Provider (implements RSA, DES, Triple DES, AES, Blowfish, ARCFOUR, RC2, PBE, Diffie-Hellman, HMAC, ChaCha20)" }
+  - { "Provider.id name" : "SunJCE" }
+  - { "Provider.id version" : "11" }
+  - { "SecretKeyFactory.DES" : "com.sun.crypto.provider.DESKeyFactory" }
+  - { "SecretKeyFactory.DESede" : "com.sun.crypto.provider.DESedeKeyFactory" }
+  - { "SecretKeyFactory.PBEWithHmacSHA1AndAES_128" : "com.sun.crypto.provider.PBEKeyFactory$PBEWithHmacSHA1AndAES_128" }
+  - { "SecretKeyFactory.PBEWithHmacSHA1AndAES_256" : "com.sun.crypto.provider.PBEKeyFactory$PBEWithHmacSHA1AndAES_256" }
+  - { "SecretKeyFactory.PBEWithHmacSHA224AndAES_128" : "com.sun.crypto.provider.PBEKeyFactory$PBEWithHmacSHA224AndAES_128" }
+  - { "SecretKeyFactory.PBEWithHmacSHA224AndAES_256" : "com.sun.crypto.provider.PBEKeyFactory$PBEWithHmacSHA224AndAES_256" }
+  - { "SecretKeyFactory.PBEWithHmacSHA256AndAES_128" : "com.sun.crypto.provider.PBEKeyFactory$PBEWithHmacSHA256AndAES_128" }
+  - { "SecretKeyFactory.PBEWithHmacSHA256AndAES_256" : "com.sun.crypto.provider.PBEKeyFactory$PBEWithHmacSHA256AndAES_256" }
+  - { "SecretKeyFactory.PBEWithHmacSHA384AndAES_128" : "com.sun.crypto.provider.PBEKeyFactory$PBEWithHmacSHA384AndAES_128" }
+  - { "SecretKeyFactory.PBEWithHmacSHA384AndAES_256" : "com.sun.crypto.provider.PBEKeyFactory$PBEWithHmacSHA384AndAES_256" }
+  - { "SecretKeyFactory.PBEWithHmacSHA512AndAES_128" : "com.sun.crypto.provider.PBEKeyFactory$PBEWithHmacSHA512AndAES_128" }
+  - { "SecretKeyFactory.PBEWithHmacSHA512AndAES_256" : "com.sun.crypto.provider.PBEKeyFactory$PBEWithHmacSHA512AndAES_256" }
+  - { "SecretKeyFactory.PBEWithMD5AndDES" : "com.sun.crypto.provider.PBEKeyFactory$PBEWithMD5AndDES" }
+  - { "SecretKeyFactory.PBEWithMD5AndTripleDES" : "com.sun.crypto.provider.PBEKeyFactory$PBEWithMD5AndTripleDES" }
+  - { "SecretKeyFactory.PBEWithSHA1AndDESede" : "com.sun.crypto.provider.PBEKeyFactory$PBEWithSHA1AndDESede" }
+  - { "SecretKeyFactory.PBEWithSHA1AndRC2_128" : "com.sun.crypto.provider.PBEKeyFactory$PBEWithSHA1AndRC2_128" }
+  - { "SecretKeyFactory.PBEWithSHA1AndRC2_40" : "com.sun.crypto.provider.PBEKeyFactory$PBEWithSHA1AndRC2_40" }
+  - { "SecretKeyFactory.PBEWithSHA1AndRC4_128" : "com.sun.crypto.provider.PBEKeyFactory$PBEWithSHA1AndRC4_128" }
+  - { "SecretKeyFactory.PBEWithSHA1AndRC4_40" : "com.sun.crypto.provider.PBEKeyFactory$PBEWithSHA1AndRC4_40" }
+  - { "SecretKeyFactory.PBKDF2WithHmacSHA1" : "com.sun.crypto.provider.PBKDF2Core$HmacSHA1" }
+  - { "SecretKeyFactory.PBKDF2WithHmacSHA224" : "com.sun.crypto.provider.PBKDF2Core$HmacSHA224" }
+  - { "SecretKeyFactory.PBKDF2WithHmacSHA256" : "com.sun.crypto.provider.PBKDF2Core$HmacSHA256" }
+  - { "SecretKeyFactory.PBKDF2WithHmacSHA384" : "com.sun.crypto.provider.PBKDF2Core$HmacSHA384" }
+  - { "SecretKeyFactory.PBKDF2WithHmacSHA512" : "com.sun.crypto.provider.PBKDF2Core$HmacSHA512" }
+SunJGSS:
+  - { "GssApiMechanism.1.2.840.113554.1.2.2" : "sun.security.jgss.krb5.Krb5MechFactory" }
+  - { "GssApiMechanism.1.3.6.1.5.5.2" : "sun.security.jgss.spnego.SpNegoMechFactory" }
+  - { "Provider.id className" : "sun.security.jgss.SunProvider" }
+  - { "Provider.id info" : "Sun (Kerberos v5, SPNEGO)" }
+  - { "Provider.id name" : "SunJGSS" }
+  - { "Provider.id version" : "11" }
+SunSASL:
+  - { "Provider.id className" : "com.sun.security.sasl.Provider" }
+  - { "Provider.id info" : "Sun SASL provider(implements client mechanisms for: DIGEST-MD5, EXTERNAL, PLAIN, CRAM-MD5, NTLM; server mechanisms for: DIGEST-MD5, CRAM-MD5, NTLM)" }
+  - { "Provider.id name" : "SunSASL" }
+  - { "Provider.id version" : "11" }
+  - { "SaslClientFactory.CRAM-MD5" : "com.sun.security.sasl.ClientFactoryImpl" }
+  - { "SaslClientFactory.DIGEST-MD5" : "com.sun.security.sasl.digest.FactoryImpl" }
+  - { "SaslClientFactory.EXTERNAL" : "com.sun.security.sasl.ClientFactoryImpl" }
+  - { "SaslClientFactory.NTLM" : "com.sun.security.sasl.ntlm.FactoryImpl" }
+  - { "SaslClientFactory.PLAIN" : "com.sun.security.sasl.ClientFactoryImpl" }
+  - { "SaslServerFactory.CRAM-MD5" : "com.sun.security.sasl.ServerFactoryImpl" }
+  - { "SaslServerFactory.DIGEST-MD5" : "com.sun.security.sasl.digest.FactoryImpl" }
+  - { "SaslServerFactory.NTLM" : "com.sun.security.sasl.ntlm.FactoryImpl" }
+XMLDSig:
+  - { "Alg.Alias.TransformService.BASE64" : "http://www.w3.org/2000/09/xmldsig#base64" }
+  - { "Alg.Alias.TransformService.ENVELOPED" : "http://www.w3.org/2000/09/xmldsig#enveloped-signature" }
+  - { "Alg.Alias.TransformService.EXCLUSIVE" : "http://www.w3.org/2001/10/xml-exc-c14n#" }
+  - { "Alg.Alias.TransformService.EXCLUSIVE_WITH_COMMENTS" : "http://www.w3.org/2001/10/xml-exc-c14n#WithComments" }
+  - { "Alg.Alias.TransformService.INCLUSIVE" : "http://www.w3.org/TR/2001/REC-xml-c14n-20010315" }
+  - { "Alg.Alias.TransformService.INCLUSIVE_WITH_COMMENTS" : "http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments" }
+  - { "Alg.Alias.TransformService.XPATH" : "http://www.w3.org/TR/1999/REC-xpath-19991116" }
+  - { "Alg.Alias.TransformService.XPATH2" : "http://www.w3.org/2002/06/xmldsig-filter2" }
+  - { "Alg.Alias.TransformService.XSLT" : "http://www.w3.org/TR/1999/REC-xslt-19991116" }
+  - { "KeyInfoFactory.DOM" : "org.jcp.xml.dsig.internal.dom.DOMKeyInfoFactory" }
+  - { "Provider.id className" : "org.jcp.xml.dsig.internal.dom.XMLDSigRI" }
+  - { "Provider.id info" : "XMLDSig (DOM XMLSignatureFactory; DOM KeyInfoFactory; C14N 1.0, C14N 1.1, Exclusive C14N, Base64, Enveloped, XPath, XPath2, XSLT TransformServices)" }
+  - { "Provider.id name" : "XMLDSig" }
+  - { "Provider.id version" : "11" }
+  - { "TransformService.http://www.w3.org/2000/09/xmldsig#base64" : "org.jcp.xml.dsig.internal.dom.DOMBase64Transform" }
+  - { "TransformService.http://www.w3.org/2000/09/xmldsig#base64 MechanismType" : "DOM" }
+  - { "TransformService.http://www.w3.org/2000/09/xmldsig#enveloped-signature" : "org.jcp.xml.dsig.internal.dom.DOMEnvelopedTransform" }
+  - { "TransformService.http://www.w3.org/2000/09/xmldsig#enveloped-signature MechanismType" : "DOM" }
+  - { "TransformService.http://www.w3.org/2001/10/xml-exc-c14n#" : "org.jcp.xml.dsig.internal.dom.DOMExcC14NMethod" }
+  - { "TransformService.http://www.w3.org/2001/10/xml-exc-c14n# MechanismType" : "DOM" }
+  - { "TransformService.http://www.w3.org/2001/10/xml-exc-c14n#WithComments" : "org.jcp.xml.dsig.internal.dom.DOMExcC14NMethod" }
+  - { "TransformService.http://www.w3.org/2001/10/xml-exc-c14n#WithComments MechanismType" : "DOM" }
+  - { "TransformService.http://www.w3.org/2002/06/xmldsig-filter2" : "org.jcp.xml.dsig.internal.dom.DOMXPathFilter2Transform" }
+  - { "TransformService.http://www.w3.org/2002/06/xmldsig-filter2 MechanismType" : "DOM" }
+  - { "TransformService.http://www.w3.org/2006/12/xml-c14n11" : "org.jcp.xml.dsig.internal.dom.DOMCanonicalXMLC14N11Method" }
+  - { "TransformService.http://www.w3.org/2006/12/xml-c14n11 MechanismType" : "DOM" }
+  - { "TransformService.http://www.w3.org/2006/12/xml-c14n11#WithComments" : "org.jcp.xml.dsig.internal.dom.DOMCanonicalXMLC14N11Method" }
+  - { "TransformService.http://www.w3.org/2006/12/xml-c14n11#WithComments MechanismType" : "DOM" }
+  - { "TransformService.http://www.w3.org/TR/1999/REC-xpath-19991116" : "org.jcp.xml.dsig.internal.dom.DOMXPathTransform" }
+  - { "TransformService.http://www.w3.org/TR/1999/REC-xpath-19991116 MechanismType" : "DOM" }
+  - { "TransformService.http://www.w3.org/TR/1999/REC-xslt-19991116" : "org.jcp.xml.dsig.internal.dom.DOMXSLTTransform" }
+  - { "TransformService.http://www.w3.org/TR/1999/REC-xslt-19991116 MechanismType" : "DOM" }
+  - { "TransformService.http://www.w3.org/TR/2001/REC-xml-c14n-20010315" : "org.jcp.xml.dsig.internal.dom.DOMCanonicalXMLC14NMethod" }
+  - { "TransformService.http://www.w3.org/TR/2001/REC-xml-c14n-20010315 MechanismType" : "DOM" }
+  - { "TransformService.http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments" : "org.jcp.xml.dsig.internal.dom.DOMCanonicalXMLC14NMethod" }
+  - { "TransformService.http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments MechanismType" : "DOM" }
+  - { "XMLSignatureFactory.DOM" : "org.jcp.xml.dsig.internal.dom.DOMXMLSignatureFactory" }
+SunPCSC:
+  - { "Provider.id className" : "sun.security.smartcardio.SunPCSC" }
+  - { "Provider.id info" : "Sun PC/SC provider" }
+  - { "Provider.id name" : "SunPCSC" }
+  - { "Provider.id version" : "11" }
+  - { "TerminalFactory.PC/SC" : "sun.security.smartcardio.SunPCSC$Factory" }
+JdkLDAP:
+  - { "CertStore.LDAP" : "sun.security.provider.certpath.ldap.LDAPCertStore" }
+  - { "CertStore.LDAP ImplementedIn" : "Software" }
+  - { "CertStore.LDAP LDAPSchema" : "RFC2587" }
+  - { "Provider.id className" : "sun.security.provider.certpath.ldap.JdkLDAP" }
+  - { "Provider.id info" : "JdkLDAP Provider (implements LDAP CertStore)" }
+  - { "Provider.id name" : "JdkLDAP" }
+  - { "Provider.id version" : "11" }
+JdkSASL:
+  - { "Provider.id className" : "com.sun.security.sasl.gsskerb.JdkSASL" }
+  - { "Provider.id info" : "JDK SASL provider(implements client and server mechanisms for GSSAPI)" }
+  - { "Provider.id name" : "JdkSASL" }
+  - { "Provider.id version" : "11" }
+  - { "SaslClientFactory.GSSAPI" : "com.sun.security.sasl.gsskerb.FactoryImpl" }
+  - { "SaslServerFactory.GSSAPI" : "com.sun.security.sasl.gsskerb.FactoryImpl" }
+SunPKCS11:
+  - { "Provider.id className" : "sun.security.pkcs11.SunPKCS11" }
+  - { "Provider.id info" : "Unconfigured and unusable PKCS11 provider" }
+  - { "Provider.id name" : "SunPKCS11" }
+  - { "Provider.id version" : "11" }
