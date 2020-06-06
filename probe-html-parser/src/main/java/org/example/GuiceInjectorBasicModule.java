@@ -29,5 +29,8 @@ public class GuiceInjectorBasicModule extends AbstractModule {
 
         bind(WalkerService.class)
                 .to(WalkerServiceImpl.class);
+
+        bind(Config.class)
+                .to(ConfigImpl.class);
     }
 }

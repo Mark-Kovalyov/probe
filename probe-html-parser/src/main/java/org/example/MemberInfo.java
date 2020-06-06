@@ -3,11 +3,15 @@ package org.example;
 import org.apache.commons.lang3.tuple.Pair;
 import org.immutables.value.Value;
 
+import javax.annotation.concurrent.Immutable;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 //TODO: Consider for @Value.Immutable approach
+
+@Immutable
 public final class MemberInfo {
 
     private final int id;
@@ -50,5 +54,31 @@ public final class MemberInfo {
 
     public List<Pair<Forum, Integer>> getMessagesDistibution() {
         return Collections.unmodifiableList(messagesDistibution);
+    }
+
+    @Override
+    public String toString() {
+        return "MemberInfo{" +
+                "id=" + id +
+                ", state=" + state +
+                ", nickname='" + nickname + '\'' +
+                ", messages=" + messages +
+                ", registered=" + registered +
+                ", lastUpdate=" + lastUpdate +
+                ", messagesDistibution=" + messagesDistibution +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MemberInfo that = (MemberInfo) o;
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

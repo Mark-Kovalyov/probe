@@ -1,7 +1,10 @@
 package org.example;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Range;
+
 public interface MemberInfoService {
 
-    MemberInfo getMemberInfo(int id);
+    @NotNull MemberInfo getMemberInfo(int id);
 
 }

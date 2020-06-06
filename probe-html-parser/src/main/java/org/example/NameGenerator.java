@@ -1,7 +1,9 @@
 package org.example;
 
+import org.jetbrains.annotations.NotNull;
+
 public interface NameGenerator {
 
-    String next();
+    @NotNull String next();
 
 }

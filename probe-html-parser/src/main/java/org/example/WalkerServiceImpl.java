@@ -1,6 +1,9 @@
 package org.example;
 
 import com.google.inject.Inject;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -9,19 +12,18 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.Random;
-import java.util.logging.Logger;
 
 public class WalkerServiceImpl implements WalkerService {
 
     public static int MAX_MEMBER_ID = 200_000;
 
-    static Logger logger = Logger.getLogger(WalkerServiceImpl.class.getName());
+    static Logger logger = LogManager.getLogger(WalkerServiceImpl.class);
 
     @Inject
-    WriterService writerService;
+    MemberWriterService memberWriterService;
 
     @Override
-    public void walk(String url) {
+    public void walk(@NotNull String url) {
 
         Random random = new Random();
 
@@ -58,7 +60,7 @@ public class WalkerServiceImpl implements WalkerService {
                 }
 
             } catch (IOException e) {
-                logger.severe(e.toString());
+                logger.error("", e);
             }
 
         }

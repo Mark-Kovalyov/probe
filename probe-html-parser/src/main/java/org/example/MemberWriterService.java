@@ -1,6 +1,6 @@
 package org.example;
 
-public interface WriterService {
+public interface MemberWriterService {
 
     void write(MemberInfo memberInfo);
 
