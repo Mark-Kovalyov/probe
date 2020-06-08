@@ -2,7 +2,7 @@ package mayton.html.mocks;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import mayton.html.Forum;
+
 import mayton.html.entities.MemberInfo;
 import mayton.html.MemberInfoService;
 import mayton.html.NameGenerator;
@@ -22,12 +22,12 @@ public class MemberInfoServiceMock implements MemberInfoService {
     @Override
     public MemberInfo getMemberInfo(int id) {
 
-        LinkedHashMap<Forum, Double> map = new LinkedHashMap<>();
+        LinkedHashMap<Integer, Double> map = new LinkedHashMap<>();
 
         for(int i = 0; i < 20; i++ ) {
             map.put(
-                    Forum.values()[(random.nextInt(Forum.values().length))],
-                    (500.0 + 250.0 * random.nextGaussian())
+                    i,
+                    Math.abs(500.0 + 250.0 * random.nextGaussian())
             );
         }
 
@@ -39,4 +39,6 @@ public class MemberInfoServiceMock implements MemberInfoService {
 
         return memberInfo;
     }
+
+
 }

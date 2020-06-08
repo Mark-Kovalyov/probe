@@ -16,13 +16,13 @@ public class App {
 
     static Logger logger = LogManager.getLogger(App.class);
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
 
         Injector injector = Guice.createInjector(new GuiceInjectorBasicModule());
 
         WalkerService walkerService = injector.getInstance(WalkerService.class);
-        walkerService.walk("https://www.sql.ru");
-        //ExecutorService threadPoolExecutor = Executors.newFixedThreadPool(20);
+        walkerService.walk("http://localhost:8080");
+
     }
 
 }

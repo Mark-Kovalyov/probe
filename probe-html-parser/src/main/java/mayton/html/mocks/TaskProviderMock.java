@@ -1,5 +1,6 @@
 package mayton.html.mocks;
 
+import com.google.inject.Singleton;
 import mayton.html.TaskProvider;
 import mayton.html.TaskState;
 import mayton.html.entities.TaskInfo;
@@ -10,6 +11,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+@Singleton
 @ThreadSafe
 public class TaskProviderMock implements TaskProvider {
 

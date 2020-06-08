@@ -1,20 +1,22 @@
 package mayton.html;
 
-
 import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;
-import mayton.html.impl.ConfigImpl;
-import mayton.html.impl.DbMemberWriterServiceImpl;
-import mayton.html.impl.ElvenNameGeneratorImpl;
-import mayton.html.impl.JDBCConnectionPoolComponentImpl;
+import mayton.html.impl.*;
 import mayton.html.mocks.MemberInfoServiceMock;
 import mayton.html.mocks.TaskProviderMock;
 import mayton.html.mocks.WalkerServiceMock;
+
+import static com.google.inject.name.Names.named;
 
 public class GuiceInjectorBasicModule extends AbstractModule {
 
     @Override
     protected void configure() {
+
+        bind(DynamicDictionaryService.class)
+                .to(JDBCDynamicDictionaryServiceImpl.class)
+                .in(Scopes.SINGLETON);
 
         // Connection pool
 
@@ -24,12 +26,12 @@ public class GuiceInjectorBasicModule extends AbstractModule {
 
         // MemberInfo
 
-        /*bind(MemberInfoService.class)
+        bind(MemberInfoService.class)
                 .to(MemberInfoServiceImpl.class)
-                .in(Scopes.SINGLETON);*/
+                .in(Scopes.SINGLETON);
 
         bind(MemberInfoService.class)
-                //.annotatedWith(Names.named("MemberInfoServiceMock"))
+                .annotatedWith(named("MemberInfoServiceMock"))
                 .to(MemberInfoServiceMock.class)
                 .in(Scopes.SINGLETON);
 
@@ -42,26 +44,30 @@ public class GuiceInjectorBasicModule extends AbstractModule {
         // MemberWriterService
 
         bind(MemberWriterService.class)
-                .to(DbMemberWriterServiceImpl.class)
+                .to(JDBCMemberWriterServiceImpl.class)
                 .in(Scopes.SINGLETON);
 
         // Walker
 
-        /*bind(WalkerService.class)
-                .to(WalkerServiceImpl.class)
-                .in(Scopes.SINGLETON);*/
-
+        // TODO: Unable to locate WalkerService root component with @Named in 'main'
         bind(WalkerService.class)
-                //.annotatedWith(Names.named("WalkerServiceMock"))
-                .to(WalkerServiceMock.class)
+                .to(HttpWalkerServiceImpl.class)
                 .in(Scopes.SINGLETON);
 
         bind(Config.class)
                 .to(ConfigImpl.class)
                 .in(Scopes.SINGLETON);
 
+        // Task provider
+
         bind(TaskProvider.class)
+                .annotatedWith(named("TaskProviderMock"))
                 .to(TaskProviderMock.class)
                 .in(Scopes.SINGLETON);
+
+        bind(TaskProvider.class)
+                .to(JDBCTaskProviderImpl.class)
+                .in(Scopes.SINGLETON);
+
     }
 }

@@ -2,6 +2,7 @@ package mayton.html.mocks;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.google.inject.name.Named;
 import mayton.html.*;
 import mayton.html.entities.MemberInfo;
 import mayton.html.entities.TaskInfo;
@@ -20,12 +21,14 @@ public class WalkerServiceMock implements WalkerService {
     private ConnectionPoolComponent connectionPoolComponent;
 
     @Inject
+    @Named("TaskProviderMock")
     private TaskProvider taskProvider;
 
     @Inject
     private MemberWriterService memberWriterService;
 
     @Inject
+    @Named("MemberInfoServiceMock")
     private MemberInfoService memberInfoService;
 
     @Override
@@ -40,7 +43,7 @@ public class WalkerServiceMock implements WalkerService {
             TaskInfo taskInfo = taskInfoOptional.get();
             for(int i = taskInfo.getMemberStart(); i<taskInfo.getMemberEnd(); i++) {
                 MemberInfo info = memberInfoService.getMemberInfo(i);
-                memberWriterService.write(info);
+                memberWriterService.upsert(info);
             }
         }
     }

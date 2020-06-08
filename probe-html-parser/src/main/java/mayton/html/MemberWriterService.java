@@ -5,6 +5,6 @@ import org.jetbrains.annotations.NotNull;
 
 public interface MemberWriterService {
 
-    void write(@NotNull MemberInfo memberInfo);
+    void upsert(@NotNull MemberInfo memberInfo);
 
 }

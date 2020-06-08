@@ -11,9 +11,10 @@
             <AppenderRef ref="Console" level="info"/>
         </Root>
 
-        <Logger name="mayton.html.impl.JDBCConnectionPoolComponentImpl" level="trace" additivity="false">
+        <Logger name="mayton.html.impl" level="trace" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
+
     </Loggers>
 
 </Configuration>

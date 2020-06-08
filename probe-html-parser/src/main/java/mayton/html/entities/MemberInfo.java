@@ -1,7 +1,5 @@
 package mayton.html.entities;
 
-import mayton.html.Forum;
-
 import javax.annotation.concurrent.Immutable;
 import java.time.LocalDate;
 import java.util.*;
@@ -17,9 +15,9 @@ public final class MemberInfo {
     private final int messages;
     private final LocalDate registered;
     private final LocalDate lastUpdate;
-    private final LinkedHashMap<Forum,Double> messagesDistibution;
+    private final LinkedHashMap<Integer,Double> messagesDistibution;
 
-    public MemberInfo(int id, boolean state, String nickname, int messages, LocalDate registered, LocalDate lastUpdate, LinkedHashMap<Forum,Double> messagesDistibution) {
+    public MemberInfo(int id, boolean state, String nickname, int messages, LocalDate registered, LocalDate lastUpdate, LinkedHashMap<Integer,Double> messagesDistibution) {
         this.id = id;
         this.state = state;
         this.nickname = nickname;
@@ -80,7 +78,7 @@ public final class MemberInfo {
         return nickname;
     }
 
-    public LinkedHashMap<Forum, Double> getMessagesDistibution() {
+    public LinkedHashMap<Integer, Double> getMessagesDistibution() {
         return messagesDistibution;
     }
 }

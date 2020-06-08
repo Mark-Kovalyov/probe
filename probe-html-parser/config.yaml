@@ -1,3 +1,29 @@
+hikariConfig :
+  driverClassName : "org.postgresql.Driver"
+  jdbcUrl : "jdbc:postgresql://127.0.0.1:5432/pg"
+  username : user
+  password : *****
+    #
+    #        hikariConfig.addDataSourceProperty("minimumIdle", "5");
+    #        hikariConfig.addDataSourceProperty("maximumPoolSize", "20");
+    #        hikariConfig.addDataSourceProperty("idleTimeout", "30000");
+    #        hikariConfig.addDataSourceProperty("maxLifetime", "2000000");
+    #        hikariConfig.addDataSourceProperty("connectionTimeout", "30000");
+    #        hikariConfig.addDataSourceProperty("cachePrepStmts", "true");
+  #        hikariConfig.addDataSourceProperty("prepStmtCacheSize", "4");
+  #        hikariConfig.addDataSourceProperty("prepStmtCacheSqlLimit", "4");
+
+task:
+  userStartId : 1
+  userEndId : 260000
+  batchSize : 1000
+  user-histogram-size : 50
+  min-timeout : 10.0 # sec
+  deviation-timeout : 2.5 # sec
+
+thread-pool:
+  threads: 8
+
 proxy-list:
   - "119.15.95.198:8080"
   - "181.209.97.42:999"
@@ -29,27 +55,3 @@ proxy-list:
   - "178.215.190.240:51489"
   - "110.74.198.236:8080"
   - "212.83.190.172:5836"
-
-dbcp :
-  INITIAL_CONTEXT_FACTORY : "com.sun.jndi.fscontext.RefFSContextFactory"
-  PROVIDER_URL : "file:///tmp"
-  defaultMaxTotal: 10
-  defaultMaxIdle: 5
-  defaultMaxWaitMillis: 10000
-
-database :
-  driverClassName : "org.postgresql.Driver"
-  url : "jdbc:postgresql://127.0.0.1:5432/dht"
-  username : dht
-  password : dht
-
-thread-pool:
-  threads : 8
-
-task:
-  userStartId : 1
-  userEndId : 260000
-  batchSize : 1000
-  user-histogram-size : 50
-  min-timeout : 10.0 # sec
-  deviation-timeout : 2.5 # sec
