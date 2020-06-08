@@ -1,4 +1,4 @@
-package org.example;
+package mayton.html.experimental;
 
 import com.netflix.hystrix.HystrixCommand;
 import com.netflix.hystrix.HystrixObservableCommand;

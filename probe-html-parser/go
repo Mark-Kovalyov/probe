@@ -1,0 +1,7 @@
+#!/bin/bash -v
+
+mvn clean package
+
+mvn dependency:copy-dependencies -DoutputDirectory=target
+
+java -jar target/probe-html-parser-1.0-SNAPSHOT.jar

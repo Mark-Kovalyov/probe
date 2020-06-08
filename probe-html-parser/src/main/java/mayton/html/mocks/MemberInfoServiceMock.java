@@ -1,39 +1,41 @@
-package org.example;
+package mayton.html.mocks;
 
 import com.google.inject.Inject;
-import com.google.inject.name.Named;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
+import com.google.inject.Singleton;
+import mayton.html.Forum;
+import mayton.html.entities.MemberInfo;
+import mayton.html.MemberInfoService;
+import mayton.html.NameGenerator;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashMap;
 import java.util.Random;
 
+@Singleton
 public class MemberInfoServiceMock implements MemberInfoService {
 
     private Random random = new Random();
 
-    @Inject @Named("")
+    @Inject
     NameGenerator nameGenerator;
 
     @Override
     public MemberInfo getMemberInfo(int id) {
 
-        List<Pair<Forum, Integer>> pairList = new ArrayList();
+        LinkedHashMap<Forum, Double> map = new LinkedHashMap<>();
 
         for(int i = 0; i < 20; i++ ) {
-            pairList.add(ImmutablePair.of(
+            map.put(
                     Forum.values()[(random.nextInt(Forum.values().length))],
-                    (int) (500.0 + 250.0 * random.nextGaussian())
-            ));
+                    (500.0 + 250.0 * random.nextGaussian())
+            );
         }
 
         MemberInfo memberInfo = new MemberInfo(id,
                 true,
                 nameGenerator.next(),
                 (int) (500.0 + 250.0 * random.nextGaussian()),
-                LocalDate.now(), LocalDate.now(), pairList);
+                LocalDate.now(), LocalDate.now(), map);
 
         return memberInfo;
     }

@@ -1,6 +1,9 @@
-package org.example;
+package mayton.html.impl;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
+import mayton.html.MemberWriterService;
+import mayton.html.WalkerService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
@@ -13,6 +16,7 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.Random;
 
+@Singleton
 public class WalkerServiceImpl implements WalkerService {
 
     public static int MAX_MEMBER_ID = 200_000;

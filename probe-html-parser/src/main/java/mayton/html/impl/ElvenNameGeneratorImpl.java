@@ -1,4 +1,8 @@
-package org.example;
+package mayton.html.impl;
+
+import com.google.inject.Singleton;
+import mayton.html.NameGenerator;
+import org.jetbrains.annotations.NotNull;
 
 import javax.script.Invocable;
 import javax.script.ScriptEngine;
@@ -9,10 +13,11 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public class ElvenNameGenerator implements NameGenerator {
+@Singleton
+public class ElvenNameGeneratorImpl implements NameGenerator {
 
     @Override
-    public String next() {
+    public @NotNull String next() {
         ScriptEngineManager manager = new ScriptEngineManager();
         ScriptEngine engine = manager.getEngineByName("JavaScript");
         // read script file

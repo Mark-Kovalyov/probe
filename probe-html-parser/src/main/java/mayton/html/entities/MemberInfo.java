@@ -1,13 +1,10 @@
-package org.example;
+package mayton.html.entities;
 
-import org.apache.commons.lang3.tuple.Pair;
-import org.immutables.value.Value;
+import mayton.html.Forum;
 
 import javax.annotation.concurrent.Immutable;
 import java.time.LocalDate;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 //TODO: Consider for @Value.Immutable approach
 
@@ -20,9 +17,9 @@ public final class MemberInfo {
     private final int messages;
     private final LocalDate registered;
     private final LocalDate lastUpdate;
-    private final List<Pair<Forum,Integer>> messagesDistibution;
+    private final LinkedHashMap<Forum,Double> messagesDistibution;
 
-    public MemberInfo(int id, boolean state, String nickname, int messages, LocalDate registered, LocalDate lastUpdate, List<Pair<Forum, Integer>> messagesDistibution) {
+    public MemberInfo(int id, boolean state, String nickname, int messages, LocalDate registered, LocalDate lastUpdate, LinkedHashMap<Forum,Double> messagesDistibution) {
         this.id = id;
         this.state = state;
         this.nickname = nickname;
@@ -52,9 +49,6 @@ public final class MemberInfo {
         return lastUpdate;
     }
 
-    public List<Pair<Forum, Integer>> getMessagesDistibution() {
-        return Collections.unmodifiableList(messagesDistibution);
-    }
 
     @Override
     public String toString() {
@@ -80,5 +74,13 @@ public final class MemberInfo {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public LinkedHashMap<Forum, Double> getMessagesDistibution() {
+        return messagesDistibution;
     }
 }

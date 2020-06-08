@@ -1,5 +1,8 @@
+drop table member_info;
+
 create table member_info(
-    id number,
-    nickname varchar(255),
+    id int primary key,
+    messsages int not null,
+    nickname varchar(255) not null,
     hist jsonb
 );

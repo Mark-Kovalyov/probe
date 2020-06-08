@@ -1,7 +1,7 @@
-package org.example;
+package mayton.html;
 
+import mayton.html.entities.MemberInfo;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Range;
 
 public interface MemberInfoService {
 

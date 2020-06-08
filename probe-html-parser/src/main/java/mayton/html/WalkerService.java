@@ -1,4 +1,4 @@
-package org.example;
+package mayton.html;
 
 import org.jetbrains.annotations.NotNull;
 

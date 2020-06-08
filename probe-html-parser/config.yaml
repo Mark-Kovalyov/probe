@@ -30,12 +30,26 @@ proxy-list:
   - "110.74.198.236:8080"
   - "212.83.190.172:5836"
 
+dbcp :
+  INITIAL_CONTEXT_FACTORY : "com.sun.jndi.fscontext.RefFSContextFactory"
+  PROVIDER_URL : "file:///tmp"
+  defaultMaxTotal: 10
+  defaultMaxIdle: 5
+  defaultMaxWaitMillis: 10000
+
+database :
+  driverClassName : "org.postgresql.Driver"
+  url : "jdbc:postgresql://127.0.0.1:5432/dht"
+  username : dht
+  password : dht
+
 thread-pool:
-  size : 20
+  threads : 8
 
 task:
   userStartId : 1
   userEndId : 260000
   batchSize : 1000
+  user-histogram-size : 50
   min-timeout : 10.0 # sec
   deviation-timeout : 2.5 # sec
