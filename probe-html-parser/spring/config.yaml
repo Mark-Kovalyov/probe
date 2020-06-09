@@ -1,0 +1,72 @@
+hikariConfig :
+  driverClassName : "org.postgresql.Driver"
+  jdbcUrl : "jdbc:postgresql://127.0.0.1:5432/pg"
+  username : user
+  password : *****
+  minimumIdle : 5
+  maximumPoolSize : 20
+  idleTimeout : 30000
+  maxLifetime : 2000000
+  connectionTimeout : 30000
+  cachePrepStmts : true
+  prepStmtCacheSize : 4
+  prepStmtCacheSqlLimit : 4
+
+task:
+  userStartId : 1
+  userEndId : 260000
+  batchSize : 1000
+  user-histogram-size : 50
+  min-timeout : 10.0 # sec
+  deviation-timeout : 2.5 # sec
+
+threadPool:
+  threads: 8
+
+walker :
+  ignoreBlocked : true
+  ignorePostsThreasold : 1000
+  ignoreSubForum :
+    - "Обсуждение нашего сайта"
+    - "Test"
+    - "Модераторский форум"
+
+proxyWorker :
+  cirquitBreaker :
+    openingThreshold : 2 #s
+    openingInterval  : 2460 #s
+    closingThreshold : 0 #s
+    closingInterval  : 0 #s
+
+
+proxyList:
+  - "119.15.95.198:8080"
+  - "181.209.97.42:999"
+  - "46.166.151.182:5836"
+  - "195.140.226.244:8080"
+  - "51.158.23.184:5836"
+  - "103.75.27.86:3128"
+  - "190.221.217.127:8085"
+  - "213.150.206.29:8080"
+  - "186.15.49.12:8080"
+  - "94.25.104.250:8080"
+  - "169.1.151.233:8080"
+  - "36.69.24.14:3128"
+  - "139.180.140.14:8080"
+  - "119.82.242.122:8080"
+  - "103.93.102.209:8080"
+  - "141.164.54.73:8080"
+  - "110.37.216.118:8080"
+  - "122.50.5.148:10000"
+  - "62.48.212.126:8080"
+  - "114.110.21.54:50464"
+  - "67.73.179.86:999"
+  - "36.91.69.82:8080"
+  - "77.242.24.64:8080"
+  - "14.207.123.139:8080"
+  - "43.250.127.98:9001"
+  - "167.172.238.206:8080"
+  - "217.23.69.146:8080"
+  - "178.215.190.240:51489"
+  - "110.74.198.236:8080"
+  - "212.83.190.172:5836"
