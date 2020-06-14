@@ -9,11 +9,11 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.CheckForNull;
+import javax.annotation.PostConstruct;
 import javax.annotation.concurrent.ThreadSafe;
 import java.sql.*;
-import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.locks.StampedLock;
 
 @ThreadSafe
@@ -22,62 +22,62 @@ public class JDBCDynamicDictionaryServiceImpl implements DynamicDictionaryServic
 
     static Logger logger = LogManager.getLogger(JDBCDynamicDictionaryServiceImpl.class);
 
-    private ConcurrentHashMap<String, Integer> concurrentHashMap = new ConcurrentHashMap();
+    private Map<String, Integer> map = new HashMap<>();
 
     private StampedLock stampedLock = new StampedLock();
 
     @Autowired
-    private ConnectionPoolComponent connectionPoolComponent;
+    public ConnectionPoolComponent connectionPoolComponent;
 
-    public void warmUpCache() {
+    @PostConstruct
+    public void warmUpCache() throws SQLException {
         logger.info("Warm up cache...");
-        Optional<Connection> connectionOptional = connectionPoolComponent.createConnection();
-        if (connectionOptional.isPresent()) {
-            Connection conn = connectionOptional.get();
-            try(Statement statement = conn.createStatement()) {
-                ResultSet resultSet = statement.executeQuery("SELECT key,value FROM dictionary");
-                while (resultSet.next()) {
-                    int key = resultSet.getInt(1);
-                    String value = resultSet.getString(2);
-                    logger.trace(":: dict[{}] = {}", key, value);
-                    concurrentHashMap.put(value, key);
-                }
-                logger.info("Warm up cache finished, {} keys added", concurrentHashMap.size());
-            } catch (SQLException ex) {
-                logger.warn("", ex);
-            } finally {
-                PGUtils.safeClose(conn);
+        Connection conn = connectionPoolComponent.createConnection();
+        try (Statement statement = conn.createStatement()) {
+            ResultSet resultSet = statement.executeQuery("SELECT key,value FROM dictionary");
+            while (resultSet.next()) {
+                int key = resultSet.getInt(1);
+                String value = resultSet.getString(2);
+                logger.trace(":: initialized with dict pair[{}] = {}", key, value);
+                map.put(value, key);
             }
-        } else {
-            logger.error("Fatal! Unable to get access to db!");
-            throw new RuntimeException("Fatal! Unable to get access to db!");
+            logger.info("Warm up cache finished, {} keys added", map.size());
+        } catch (SQLException ex) {
+            logger.warn("", ex);
+        } finally {
+            PGUtils.safeClose(conn);
         }
-    }
-
-    @Autowired
-    public JDBCDynamicDictionaryServiceImpl() {
-        warmUpCache();
     }
 
     @Override
-    public int getOrCreateEntityId(@NotNull String entityName) {
-        if (concurrentHashMap.contains(entityName)) {
-            return concurrentHashMap.get(entityName);
+    public synchronized int getOrCreateEntityId(@NotNull String entityName) throws SQLException {
+        if (map.containsKey(entityName)) {
+            return map.get(entityName);
         } else {
-            Optional<Connection> connectionOptional = connectionPoolComponent.createConnection();
-            if (connectionOptional.isPresent()) {
-                Connection conn = connectionOptional.get();
-                try(PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO dictionary(value) VALUES(?) RETURNING key")) {
-                    conn.setAutoCommit(false);
-                    preparedStatement.setObject(1, entityName);
-                    preparedStatement.execute();
-                    conn.commit();
-                } catch (SQLException ex) {
-                    logger.info("", ex);
-                }
+            Connection conn = connectionPoolComponent.createConnection();
+            try (PreparedStatement preparedStatement = conn.prepareStatement(
+                    "INSERT INTO dictionary(value) VALUES(?) " +
+                    "ON CONFLICT(value) DO NOTHING " +
+                    "RETURNING key", Statement.RETURN_GENERATED_KEYS)) {
+
+                conn.setAutoCommit(false);
+                preparedStatement.setObject(1, entityName);
+                preparedStatement.execute();
+                ResultSet rs = preparedStatement.getGeneratedKeys();
+                rs.next();
+                int key = rs.getInt(1);
+                rs.close();
+                conn.commit();
+                map.put(entityName, key);
+                logger.info(":: new dynamic dict pair [{}] = {}", entityName, key);
+                return key;
+            } catch (SQLException ex) {
+                logger.error("", ex);
+                throw new SQLException(ex);
+            } finally {
                 PGUtils.safeClose(conn);
             }
         }
-        return 0;
+
     }
 }

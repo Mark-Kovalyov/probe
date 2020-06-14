@@ -26,6 +26,7 @@ public class PGUtils {
     }
 
     @SuppressWarnings("java:S1319")
+    @NotNull
     public static String mapToJson(@NotNull LinkedHashMap<Integer, Double> messagesDistibution) {
         JSONObject jsonObject = new JSONObject();
         messagesDistibution.forEach((key, value) -> jsonObject.put(String.valueOf(key), (double) value));

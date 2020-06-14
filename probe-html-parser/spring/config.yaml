@@ -1,8 +1,8 @@
 hikariConfig :
   driverClassName : "org.postgresql.Driver"
-  jdbcUrl : "jdbc:postgresql://127.0.0.1:5432/pg"
-  username : user
-  password : *****
+  jdbcUrl : "jdbc:postgresql://127.0.0.1:5432/postgres"
+  username : postgres
+  password : *******
   minimumIdle : 5
   maximumPoolSize : 20
   idleTimeout : 30000
@@ -24,12 +24,17 @@ threadPool:
   threads: 8
 
 walker :
-  ignoreBlocked : true
-  ignorePostsThreasold : 1000
-  ignoreSubForum :
-    - "Обсуждение нашего сайта"
-    - "Test"
-    - "Модераторский форум"
+  url : ""
+  strategy : "TaskRange"
+  ignoreMembers :
+    byRanges :
+      - { from : 0, to : 1000 }
+    blocked : true
+    postsThreasold : 1000
+    byNickNames :
+      - "X" # Duplicate nick
+  VIPS :
+      - "Y"
 
 proxyWorker :
   cirquitBreaker :

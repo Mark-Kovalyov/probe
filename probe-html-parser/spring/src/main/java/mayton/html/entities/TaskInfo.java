@@ -19,6 +19,7 @@ public final class TaskInfo {
     private final int memberStart;
     private final int memberEnd;
     private final TaskState taskState;
+    // TODO: Add last_update_time
 
     public TaskInfo(int id, int memberStart, int memberEnd, TaskState taskState) {
         this.id = id;

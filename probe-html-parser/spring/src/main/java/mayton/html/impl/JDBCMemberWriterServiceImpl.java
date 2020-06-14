@@ -25,39 +25,43 @@ public class JDBCMemberWriterServiceImpl implements MemberWriterService {
     ConnectionPoolComponent connectionPoolComponent;
 
     @Override
-    public void upsert(@NotNull MemberInfo memberInfo) {
-        Optional<Connection> optionalConnection = connectionPoolComponent.createConnection();
-        if (optionalConnection.isPresent()) {
-            Connection conn = optionalConnection.get();
-            // TODO: Try with jsonb_object(...) string SQL function
-            try(PreparedStatement statement = conn.prepareStatement(
-                        "INSERT INTO member_info(id,messages,nickname,hist) VALUES (?, ?, ?, ?) " +
+    public void upsert(@NotNull MemberInfo memberInfo) throws SQLException {
+        Connection conn = connectionPoolComponent.createConnection();
+
+        try (PreparedStatement statement = conn.prepareStatement(
+                "INSERT INTO member_info2(id,messages,nickname,hist,state,email) VALUES (?, ?, ?, ?, ?, ?) " +
                         "ON CONFLICT (id) " +
-                        "DO UPDATE SET messages = ?, hist = ?"
-                )) {
-                conn.setAutoCommit(false);
-                // INSERT
-                statement.setInt(1, memberInfo.getId());
-                statement.setInt(2, memberInfo.getMessages());
-                statement.setString(3, memberInfo.getNickname());
+                        "DO UPDATE SET messages = ?, hist = ?, state = ?, nickname = ?, email = ?"
+        )) {
+            conn.setAutoCommit(false);
+            int cnt = 1;
+            // ------------------- INSERT ------------------------
+                statement.setInt(cnt++, memberInfo.getId());
+                statement.setInt(cnt++, memberInfo.getMessages());
+                statement.setString(cnt++, memberInfo.getNickname());
                 PGobject jsonObject = new PGobject();
                 jsonObject.setType("json");
                 String histJson = PGUtils.mapToJson(memberInfo.getMessagesDistibution());
                 logger.trace(histJson);
+                // TODO: Try with jsonb_object(...) string SQL function
                 jsonObject.setValue(histJson);
-                statement.setObject(4, jsonObject);
-                // UPDATE
-                statement.setInt(5, memberInfo.getMessages());
-                statement.setObject(6, jsonObject);
+                statement.setObject(cnt++, jsonObject);
+                statement.setString(cnt++, memberInfo.getState());
+                statement.setString(cnt++, memberInfo.getEmail());
+            // ---------------- UPDATE --------------------------
+                statement.setInt(cnt++, memberInfo.getMessages());
+                // TODO: Try with jsonb_object(...) string SQL function
+                statement.setObject(cnt++, jsonObject);
+                statement.setString(cnt++, memberInfo.getState());
+                statement.setString(cnt++, memberInfo.getNickname());
+                statement.setString(cnt, memberInfo.getEmail());
                 statement.executeUpdate();
-                conn.commit();
-            } catch (SQLException ex) {
-                logger.error("[1]", ex);
-            } finally {
-                PGUtils.safeClose(conn);
-            }
-        } else {
-            logger.warn("Unable to get connection from pool");
+            conn.commit();
+        } catch (SQLException ex) {
+            logger.error("[1]", ex);
+        } finally {
+            PGUtils.safeClose(conn);
         }
+
     }
 }

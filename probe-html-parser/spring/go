@@ -1,6 +1,6 @@
 #!/bin/bash -v
 
-gradle bootJar
+gradle clean bootJar
 
 rm -f jfr/*
 rm -f logs/*

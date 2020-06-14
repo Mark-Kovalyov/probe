@@ -13,9 +13,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-@Component
-@Qualifier("mock")
-@ThreadSafe
+
 public class TaskProviderMock implements TaskProvider {
 
     private Lock lock = new ReentrantLock();
