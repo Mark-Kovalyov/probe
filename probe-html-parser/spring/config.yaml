@@ -1,8 +1,8 @@
 hikariConfig :
   driverClassName : "org.postgresql.Driver"
-  jdbcUrl : "jdbc:postgresql://127.0.0.1:5432/postgres"
-  username : postgres
-  password : *******
+  #jdbcUrl : "jdbc:postgresql://127.0.0.1:5432/*****"
+  #username : ********
+  #password : ****
   minimumIdle : 5
   maximumPoolSize : 20
   idleTimeout : 30000
@@ -24,17 +24,52 @@ threadPool:
   threads: 8
 
 walker :
-  url : ""
-  strategy : "TaskRange"
+  fail-fast : false
+  url : "https://sql.ru"
+  strategy : vip
   ignoreMembers :
     byRanges :
       - { from : 0, to : 1000 }
     blocked : true
     postsThreasold : 1000
     byNickNames :
-      - "X" # Duplicate nick
+      - "Anna" # Duplicate nick
   VIPS :
-      - "Y"
+    - 27971
+    - 43489
+    - 111626
+    - 142913
+    - 251867
+    - 57183
+    - 95030 # booby
+    - 110363 # Sidorov
+    - 263304 # Roza
+    - 97422 # Hvost
+    - 21430 # MikSoft
+    - 88727 # Nazgul
+    - 252521 # Muh
+    - 223550 # Kolesnikov
+    - 257822 # Petro!C#
+    - 132113 # Siemargl
+    - 19857 # software
+    - 11587 # Leonid
+    - 22920 # Ziv
+    - 122827 # ZukBotan
+    - 57183 # Izo
+    - 101262 # Ruslan
+    - 247232 # Usof
+    - 261581 # crutch
+    - 49068 # 49068
+    - 145849 # roman
+    - 24806 # Eli
+    - 4045 # HDrumer
+    - 30055 # Rustam
+    - 4313 # Tchingiz
+    - 1 # Jugge
+    - 7389 # Ai
+    - 9662 # Sy
+    - 27590 # Tru
+    - 146456 # xtender
 
 proxyWorker :
   cirquitBreaker :

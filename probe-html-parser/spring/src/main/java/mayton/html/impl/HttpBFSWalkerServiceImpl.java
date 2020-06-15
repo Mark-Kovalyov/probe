@@ -1,7 +1,6 @@
 package mayton.html.impl;
 
 import mayton.html.WalkerService;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
 /**
@@ -14,7 +13,7 @@ import org.springframework.stereotype.Component;
 public class HttpBFSWalkerServiceImpl implements WalkerService {
 
     @Override
-    public void walk(@NotNull String url) {
-
+    public void walk() {
+        // TODO Implement
     }
 }

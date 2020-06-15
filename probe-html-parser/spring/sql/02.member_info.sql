@@ -29,4 +29,12 @@ CREATE INDEX hist_idx ON member_info2 USING gin(hist jsonb_path_ops);
 
 insert into member_info2(id,messages,nickname,hist,state) select id,messages,nickname,hist,'UNKNOWN' from member_info;
 
-select id, state,  nickname , messages, email, job_details, registered ,  last_update from member_info2
+-- Reports
+
+select id, state, nickname, messages, registered, last_update, (select count(*) from json_object_keys(hist::json)) as cnt_hist from member_info2 order by cnt_hist desc;
+
+select id, nickname, messages, registered, last_update, (select count(*) from json_object_keys(hist::json)) as cnt_hist from member_info2 order by messages desc;
+
+select avg((select count(*) from json_object_keys(hist::json))) from member_info2
+
+select count(id), registered from member_info2 group by registered;

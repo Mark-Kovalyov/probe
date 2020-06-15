@@ -1,6 +1,7 @@
 package mayton.html.impl;
 
 import mayton.html.Config;
+import mayton.html.HtmlParserException;
 import org.springframework.stereotype.Component;
 import org.yaml.snakeyaml.Yaml;
 
@@ -18,7 +19,7 @@ public class ConfigImpl implements Config {
         try {
             root = yaml.load(new FileReader("config.yaml"));
         } catch (FileNotFoundException e) {
-            throw new RuntimeException("Unable to load property config.yaml from user.dir = " + System.getProperty("user.dir"));
+            throw new HtmlParserException("Unable to load property config.yaml from user.dir = " + System.getProperty("user.dir"));
         }
     }
 

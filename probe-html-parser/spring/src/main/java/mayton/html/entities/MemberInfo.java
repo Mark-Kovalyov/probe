@@ -35,11 +35,8 @@ public class MemberInfo {
 
     public MemberInfo(int id, String nickname, int messages) {
         this.id = id;
-        this.nickname = nickname;
-        this.messages = messages;
-        this.registered = registered;
-        this.lastUpdate = lastUpdate;
-        this.messagesDistibution = messagesDistibution;
+        setNickname(nickname);
+        setMessages(messages);
     }
 
     public MemberInfo(int id) {
@@ -90,6 +87,7 @@ public class MemberInfo {
     }
 
     public void setMessagesDistibution(LinkedHashMap<Integer, Double> messagesDistibution) {
+        checkNotNull(messagesDistibution);
         this.messagesDistibution = messagesDistibution;
     }
 
@@ -98,6 +96,7 @@ public class MemberInfo {
     }
 
     public void setState(String state) {
+        checkNotNull(state);
         this.state = state;
     }
 
@@ -138,5 +137,13 @@ public class MemberInfo {
 
     public void setLastUpdate(LocalDateTime lastUpdate) {
         this.lastUpdate = lastUpdate;
+    }
+
+    public LocalDateTime getRegistered() {
+        return registered;
+    }
+
+    public LocalDateTime getLastUpdate() {
+        return lastUpdate;
     }
 }

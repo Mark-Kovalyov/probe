@@ -14,7 +14,6 @@ import javax.annotation.concurrent.ThreadSafe;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.locks.StampedLock;
 
 @ThreadSafe
 @Component
@@ -22,9 +21,7 @@ public class JDBCDynamicDictionaryServiceImpl implements DynamicDictionaryServic
 
     static Logger logger = LogManager.getLogger(JDBCDynamicDictionaryServiceImpl.class);
 
-    private Map<String, Integer> map = new HashMap<>();
-
-    private StampedLock stampedLock = new StampedLock();
+    private Map<String, Integer> dictionaryCache = new HashMap<>();
 
     @Autowired
     public ConnectionPoolComponent connectionPoolComponent;
@@ -33,17 +30,18 @@ public class JDBCDynamicDictionaryServiceImpl implements DynamicDictionaryServic
     public void warmUpCache() throws SQLException {
         logger.info("Warm up cache...");
         Connection conn = connectionPoolComponent.createConnection();
-        try (Statement statement = conn.createStatement()) {
-            ResultSet resultSet = statement.executeQuery("SELECT key,value FROM dictionary");
+        try (Statement statement = conn.createStatement();
+             ResultSet resultSet = statement.executeQuery("SELECT key, value FROM dictionary")) {
             while (resultSet.next()) {
                 int key = resultSet.getInt(1);
                 String value = resultSet.getString(2);
                 logger.trace(":: initialized with dict pair[{}] = {}", key, value);
-                map.put(value, key);
+                dictionaryCache.put(value, key);
             }
-            logger.info("Warm up cache finished, {} keys added", map.size());
+            logger.info("Warm up cache finished, {} keys added", dictionaryCache.size());
         } catch (SQLException ex) {
             logger.warn("", ex);
+            throw new SQLException(ex);
         } finally {
             PGUtils.safeClose(conn);
         }
@@ -51,8 +49,8 @@ public class JDBCDynamicDictionaryServiceImpl implements DynamicDictionaryServic
 
     @Override
     public synchronized int getOrCreateEntityId(@NotNull String entityName) throws SQLException {
-        if (map.containsKey(entityName)) {
-            return map.get(entityName);
+        if (dictionaryCache.containsKey(entityName)) {
+            return dictionaryCache.get(entityName);
         } else {
             Connection conn = connectionPoolComponent.createConnection();
             try (PreparedStatement preparedStatement = conn.prepareStatement(
@@ -68,7 +66,7 @@ public class JDBCDynamicDictionaryServiceImpl implements DynamicDictionaryServic
                 int key = rs.getInt(1);
                 rs.close();
                 conn.commit();
-                map.put(entityName, key);
+                dictionaryCache.put(entityName, key);
                 logger.info(":: new dynamic dict pair [{}] = {}", entityName, key);
                 return key;
             } catch (SQLException ex) {

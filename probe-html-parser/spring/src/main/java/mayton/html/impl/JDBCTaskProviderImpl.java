@@ -4,7 +4,6 @@ import mayton.html.ConnectionPoolComponent;
 import mayton.html.TaskProvider;
 import mayton.html.TaskState;
 import mayton.html.entities.TaskInfo;
-import mayton.html.utils.PGUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
@@ -24,14 +23,14 @@ public class JDBCTaskProviderImpl implements TaskProvider {
 
     @Override
     public Optional<TaskInfo> provideNextTask() throws SQLException {
-        Connection connection = connectionPoolComponent.createConnection();
-        try {
-            Optional<TaskInfo> result = Optional.empty();
+
+        try(Connection connection = connectionPoolComponent.createConnection();
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(
                     "SELECT id, member_start, member_end, state, last_update_time " +
                             "FROM tasks " +
-                            "WHERE state in ('READY')");
+                            "WHERE state in ('READY')")) {
+            Optional<TaskInfo> result = Optional.empty();
             if (resultSet.next()) {
                 result = Optional.of(new TaskInfo(
                         resultSet.getInt("id"),
@@ -39,31 +38,22 @@ public class JDBCTaskProviderImpl implements TaskProvider {
                         resultSet.getInt("member_end"),
                         TaskState.valueOf(resultSet.getString("state"))));
             }
-            statement.close();
             return result;
         } catch (SQLException ex) {
-            logger.error("", ex);
-            throw new RuntimeException("Unable provideNexTask!");
-        } finally {
-            PGUtils.safeClose(connection);
+            throw new SQLException(ex);
         }
-
     }
 
     @Override
     public void updateTaskStatus(@NotNull TaskInfo taskInfo, TaskState newTaskState) throws SQLException {
-        Connection connection = connectionPoolComponent.createConnection();
-        try {
+        try (Connection connection = connectionPoolComponent.createConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement("UPDATE tasks SET state = ? WHERE id = ?")) {
             connection.setAutoCommit(true);
-            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE tasks SET state = ? WHERE id = ?");
             preparedStatement.setString(1, newTaskState.name());
             preparedStatement.setInt(2, taskInfo.getId());
             preparedStatement.execute();
-            preparedStatement.close();
         } catch (SQLException ex) {
-            logger.warn("", ex);
-        } finally {
-            PGUtils.safeClose(connection);
+            throw new SQLException(ex);
         }
     }
 

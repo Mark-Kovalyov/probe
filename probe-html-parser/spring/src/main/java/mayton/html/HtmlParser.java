@@ -25,15 +25,16 @@ public class HtmlParser {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         System.setProperty("log4j.configurationFile","log4j2.xml");
-        System.out.printf("LogManager.context = %s\n", LogManager.getContext(true));
+        System.out.printf("LogManager.context = %s%n", LogManager.getContext(true));
         logger.info(":: start with user.dir = {}", getProperty("user.dir"));
         SpringApplication springApplication = new SpringApplication(HtmlParser.class);
         springApplication.addListeners(new ApplicationPidFileWriter("./html-parser.pid"));
         ApplicationContext ctx = springApplication.run(args);
         Config config = ctx.getBean(Config.class);
         LinkedHashMap<String, Object> walker = (LinkedHashMap<String, Object>) config.getRoot().get("walker");
+        // TODO: Implement with Spring SPEL configuration
         WalkerService walkerService = ctx.getBean((String) walker.get("strategy"), WalkerService.class);
-        walkerService.walk((String) walker.get("url"));
+        walkerService.walk();
     }
 
 }

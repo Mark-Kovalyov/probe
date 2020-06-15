@@ -4,6 +4,7 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import mayton.html.Config;
 import mayton.html.ConnectionPoolComponent;
+import mayton.html.HtmlParserException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,15 +27,28 @@ public class JDBCConnectionPoolComponentImpl implements ConnectionPoolComponent 
     @Autowired
     public Config config;
 
+    private String lookupSensitiveProperty(String propertyName) {
+        Map<String, Object> hikariConfigMap = (Map<String, Object>) config.getRoot().get("hikariConfig");
+        if (hikariConfigMap.containsKey(propertyName)) {
+            return (String) hikariConfigMap.get(propertyName);
+        } else if (System.getProperties().containsKey(propertyName)) {
+            return System.getProperty(propertyName);
+        } else if (System.getenv().containsKey(propertyName)) {
+            return System.getenv().get(propertyName);
+        } else {
+            throw new HtmlParserException("Unable to found property " + propertyName);
+        }
+    }
+
     @PostConstruct
     public void init() {
         logger.info(":: init for JDBCConnectionPoolComponentImpl");
         Map<String, Object> hikariConfigMap = (Map<String, Object>) config.getRoot().get("hikariConfig");
 
-        hikariConfig.setDriverClassName((String) hikariConfigMap.get("driverClassName"));
-        hikariConfig.setJdbcUrl((String) hikariConfigMap.get("jdbcUrl"));
-        hikariConfig.setUsername((String) hikariConfigMap.get("username"));
-        hikariConfig.setPassword((String) hikariConfigMap.get("password"));
+        hikariConfig.setDriverClassName(lookupSensitiveProperty("driverClassName"));
+        hikariConfig.setJdbcUrl(lookupSensitiveProperty("jdbcUrl"));
+        hikariConfig.setUsername(lookupSensitiveProperty("username"));
+        hikariConfig.setPassword(lookupSensitiveProperty("password"));
 
         hikariConfig.addDataSourceProperty("minimumIdle", hikariConfigMap.get("minimumIdle"));
         hikariConfig.addDataSourceProperty("maximumPoolSize", hikariConfigMap.get("maximumPoolSize"));

@@ -6,5 +6,9 @@ rm -f jfr/*
 rm -f logs/*
 rm -f tmp/*
 
-java -jar build/libs/html-parser-0.0.1-SNAPSHOT.jar
-
+java \
+ -DjdbcUrl="$PG_DEF_JDBC_URL" \
+ -Dusername="$PG_DEF_JDBC_USER" \
+ -Dpassword="$PG_DEF_JDBC_PWD" \
+ -DhttpUrl=http://sql.ru \
+ -jar build/libs/html-parser-0.0.1-SNAPSHOT.jar

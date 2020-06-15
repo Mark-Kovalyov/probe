@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Optional;
 
 @Component
 public class JDBCMemberWriterServiceImpl implements MemberWriterService {
@@ -27,11 +26,12 @@ public class JDBCMemberWriterServiceImpl implements MemberWriterService {
     @Override
     public void upsert(@NotNull MemberInfo memberInfo) throws SQLException {
         Connection conn = connectionPoolComponent.createConnection();
-
+        //    registered timestamp,
+        //    last_update timestamp
         try (PreparedStatement statement = conn.prepareStatement(
-                "INSERT INTO member_info2(id,messages,nickname,hist,state,email) VALUES (?, ?, ?, ?, ?, ?) " +
+                "INSERT INTO member_info2(id,messages,nickname,hist,state,email,registered,last_update) VALUES (?, ?, ?, ?, ?, ?, ?, ?) " +
                         "ON CONFLICT (id) " +
-                        "DO UPDATE SET messages = ?, hist = ?, state = ?, nickname = ?, email = ?"
+                        "DO UPDATE SET messages = ?, hist = ?, state = ?, nickname = ?, email = ?, registered = ?, last_update = ?"
         )) {
             conn.setAutoCommit(false);
             int cnt = 1;
@@ -48,13 +48,18 @@ public class JDBCMemberWriterServiceImpl implements MemberWriterService {
                 statement.setObject(cnt++, jsonObject);
                 statement.setString(cnt++, memberInfo.getState());
                 statement.setString(cnt++, memberInfo.getEmail());
+                // TODO: How to convert from LocalDateTime to java.sql.Date
+                statement.setDate(cnt++, PGUtils.toJavaSqlDate(memberInfo.getRegistered()));
+                statement.setDate(cnt++, PGUtils.toJavaSqlDate(memberInfo.getLastUpdate()));
             // ---------------- UPDATE --------------------------
                 statement.setInt(cnt++, memberInfo.getMessages());
                 // TODO: Try with jsonb_object(...) string SQL function
                 statement.setObject(cnt++, jsonObject);
                 statement.setString(cnt++, memberInfo.getState());
                 statement.setString(cnt++, memberInfo.getNickname());
-                statement.setString(cnt, memberInfo.getEmail());
+                statement.setString(cnt++, memberInfo.getEmail());
+                statement.setDate(cnt++, PGUtils.toJavaSqlDate(memberInfo.getRegistered()));
+                statement.setDate(cnt, PGUtils.toJavaSqlDate(memberInfo.getLastUpdate()));
                 statement.executeUpdate();
             conn.commit();
         } catch (SQLException ex) {
