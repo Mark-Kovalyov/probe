@@ -107,3 +107,8 @@ aws dynamodb create-global-table \
     --replication-group RegionName=us-east-2 RegionName=us-east-1 \
     --region us-east-2
 ```
+
+Batch run
+```
+aws dynamodb batch-write-item --request-items "file://$file.json" 
+```
