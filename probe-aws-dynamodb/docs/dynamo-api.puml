@@ -1,0 +1,33 @@
+@startuml
+
+interface AmazonDynamoDB
+class CreateTableRequest
+class AmazonDynamoDBClientBuilder
+class CreateTableResult
+
+class AttributeDefinition
+class ProvisionedThroughput
+class KeySchemaElement
+
+class ListTablesRequest
+class ListTablesResult
+
+class GetItemRequest
+
+ListTablesRequest --> AmazonWebServiceRequest
+AmazonWebServiceRequest ..> Serializable
+
+ListTablesResult --> AmazonWebServiceResult
+
+enum KeyType {
+ HASH
+ RANGE
+}
+
+enum ScalarAttributeType {
+ S
+ N
+ B
+}
+
+@enduml
