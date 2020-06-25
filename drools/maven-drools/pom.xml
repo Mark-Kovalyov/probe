@@ -85,6 +85,18 @@
             <version>${drools.runtime.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.drools</groupId>
+            <artifactId>drools-decisiontables</artifactId>
+            <version>${drools.runtime.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.drools</groupId>
+            <artifactId>drools-templates</artifactId>
+            <version>${drools.runtime.version}</version>
+        </dependency>
+
     </dependencies>
     
 </project>
