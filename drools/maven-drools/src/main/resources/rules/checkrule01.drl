@@ -1,0 +1,29 @@
+rule "R1"
+  when
+    ass == null
+  then
+    pr = weak
+end
+
+rule "R2"
+  when
+    matchedInd && matchedComp
+  then
+    pr = strongest
+end
+
+rule "R3"
+  when
+    matchedInd || matchedComp
+  then
+    pr = strong
+end
+
+
+
+rule look when
+    Person( $l : likes )
+    isContainedIn( $l, 'office'; )
+then
+   insertLogical( $l 'is in the office' );
+end
