@@ -21,6 +21,7 @@ public class HttpVipWalkerServiceImpl implements WalkerService {
     static Logger logger = LogManager.getLogger(HttpTaskRangeWalkerServiceImpl.class);
 
     @Autowired
+    @Qualifier("JDBCMemberWriterServiceImpl")
     private MemberWriterService memberWriterService;
 
     @Autowired

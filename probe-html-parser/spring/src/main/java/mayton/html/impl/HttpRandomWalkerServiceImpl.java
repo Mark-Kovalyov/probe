@@ -7,6 +7,7 @@ import mayton.html.WalkerService;
 import mayton.html.entities.MemberInfo;
 import mayton.html.utils.SqlRuUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.sql.SQLException;
@@ -20,6 +21,7 @@ public class HttpRandomWalkerServiceImpl implements WalkerService {
     MemberInfoService memberInfoService;
 
     @Autowired
+    @Qualifier("JDBCMemberWriterServiceImpl")
     MemberWriterService memberWriterService;
 
     private Random random = new Random();

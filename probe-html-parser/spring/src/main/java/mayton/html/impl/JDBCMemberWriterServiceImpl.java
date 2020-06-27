@@ -15,7 +15,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-@Component
+@Component("JDBCMemberWriterServiceImpl")
 public class JDBCMemberWriterServiceImpl implements MemberWriterService {
 
     static Logger logger = LogManager.getLogger(JDBCMemberWriterServiceImpl.class);
@@ -29,7 +29,7 @@ public class JDBCMemberWriterServiceImpl implements MemberWriterService {
         //    registered timestamp,
         //    last_update timestamp
         try (PreparedStatement statement = conn.prepareStatement(
-                "INSERT INTO member_info2(id,messages,nickname,hist,state,email,registered,last_update) VALUES (?, ?, ?, ?, ?, ?, ?, ?) " +
+                "INSERT INTO member_info(id,messages,nickname,hist,state,email,registered,last_update) VALUES (?, ?, ?, ?, ?, ?, ?, ?) " +
                         "ON CONFLICT (id) " +
                         "DO UPDATE SET messages = ?, hist = ?, state = ?, nickname = ?, email = ?, registered = ?, last_update = ?"
         )) {
