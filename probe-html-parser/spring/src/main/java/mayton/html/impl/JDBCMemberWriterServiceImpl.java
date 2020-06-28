@@ -26,8 +26,9 @@ public class JDBCMemberWriterServiceImpl implements MemberWriterService {
     @Override
     public void upsert(@NotNull MemberInfo memberInfo) throws SQLException {
         Connection conn = connectionPoolComponent.createConnection();
-        //    registered timestamp,
-        //    last_update timestamp
+        //   id  |   state    |   nickname    | messages |             hist             | email | job_details |     registered      |     last_update
+        // ------+------------+---------------+----------+------------------------------+-------+-------------+---------------------+---------------------
+        //  2280 | REGISTERED | nikola        |        2 | {"164": 100}                 |       |             | 2002-07-04 00:00:00 | 2002-07-04 00:00:00
         try (PreparedStatement statement = conn.prepareStatement(
                 "INSERT INTO member_info(id,messages,nickname,hist,state,email,registered,last_update) VALUES (?, ?, ?, ?, ?, ?, ?, ?) " +
                         "ON CONFLICT (id) " +

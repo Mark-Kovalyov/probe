@@ -1,23 +1,17 @@
 package mayton.html;
 
-import mayton.html.impl.HttpBFSWalkerServiceImpl;
-import mayton.html.impl.HttpTaskRangeWalkerServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.ApplicationPidFileWriter;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Bean;
 
 import java.io.IOException;
 import java.util.LinkedHashMap;
 
 import static java.lang.System.getProperty;
 
-/**
- * Hello world!
- */
 @SpringBootApplication
 public class HtmlParser {
 
@@ -33,7 +27,7 @@ public class HtmlParser {
         Config config = ctx.getBean(Config.class);
         LinkedHashMap<String, Object> walker = (LinkedHashMap<String, Object>) config.getRoot().get("walker");
         // TODO: Implement with Spring SPEL configuration
-        WalkerService walkerService = ctx.getBean((String) walker.get("strategy"), WalkerService.class);
+        WalkerService walkerService = ctx.getBean((String) walker.get("imlpementation"), WalkerService.class);
         walkerService.walk();
     }
 

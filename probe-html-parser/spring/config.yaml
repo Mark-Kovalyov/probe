@@ -26,7 +26,7 @@ threadPool:
 walker :
   fail-fast : false
   url : "https://sql.ru"
-  strategy : vip
+  imlpementation : vip
   ignoreMembers :
     byRanges :
       - { from : 0, to : 1000 }
@@ -35,41 +35,47 @@ walker :
     byNickNames :
       - "Anna" # Duplicate nick
   VIPS :
+    - 4897
+    - 28572
     - 27971
     - 43489
     - 111626
     - 142913
     - 251867
     - 57183
-    - 95030 # booby
-    - 110363 # Sidorov
-    - 263304 # Roza
-    - 97422 # Hvost
-    - 21430 # MikSoft
-    - 88727 # Nazgul
-    - 252521 # Muh
-    - 223550 # Kolesnikov
-    - 257822 # Petro!C#
-    - 132113 # Siemargl
-    - 19857 # software
-    - 11587 # Leonid
-    - 22920 # Ziv
-    - 122827 # ZukBotan
-    - 57183 # Izo
-    - 101262 # Ruslan
-    - 247232 # Usof
-    - 261581 # crutch
-    - 49068 # 49068
-    - 145849 # roman
-    - 24806 # Eli
-    - 4045 # HDrumer
-    - 30055 # Rustam
-    - 4313 # Tchingiz
-    - 1 # Jugge
-    - 7389 # Ai
-    - 9662 # Sy
-    - 27590 # Tru
-    - 146456 # xtender
+    - 95030
+    - 110363
+    - 263304
+    - 97422
+    - 21430
+    - 88727
+    - 252521
+    - 223550
+    - 257822
+    - 132113
+    - 19857
+    - 11587
+    - 22920
+    - 122827
+    - 57183
+    - 101262
+    - 247232
+    - 261581
+    - 49068
+    - 145849
+    - 24806
+    - 4045
+    - 30055
+    - 4313
+    - 1
+    - 7389
+    - 9662
+    - 27590
+    - 146456
+    - 4045
+    - 43053
+    - 85869
+    - 95721
 
 proxyWorker :
   cirquitBreaker :

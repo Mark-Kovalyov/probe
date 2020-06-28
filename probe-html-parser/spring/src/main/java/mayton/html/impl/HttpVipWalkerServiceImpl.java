@@ -47,7 +47,7 @@ public class HttpVipWalkerServiceImpl implements WalkerService {
                 memberWriterService.upsert(memberInfo.get());
                 logger.info(":: upsert {}", memberInfo);
             }
-            SqlRuUtils.sleep(10 + random.nextInt(5));
+            SqlRuUtils.sleep(5 + random.nextInt(2));
         }
     }
 
