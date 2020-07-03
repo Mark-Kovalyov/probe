@@ -1,25 +1,19 @@
 # XATTR
 
-Commands
-* attr
-* getfattr
-* setfattr
-
-
 ```
-#include <sys/types.h>
-#include <sys/xattr.h>
-#include <sys/types.h>
-#include <sys/acl.h>
+$ getfattr -d -m - setfattr.tst
+$ 
+$ setfattr -n user.mytag -v somevalue  setfattr.tst
+$ 
+$ getfattr -d -m - setfattr.tst
 
-acl_get_link_np
-listxattr
-acl_get_entry
-```
+# file: setfattr.tst
+user.mytag="somevalue"
 
-
-```
-setfattr [-h] -n name [-v value] pathname...
-setfattr [-h] -x name pathname...
-setfattr [-h] --restore=file
+$ setfattr -n user.md5 -v 898273895726387593245 setfattr.tst
+$ 
+$ getfattr -d -m - setfattr.tst
+# file: setfattr.tst
+user.md5="898273895726387593245"
+user.mytag="somevalue"
 ```
