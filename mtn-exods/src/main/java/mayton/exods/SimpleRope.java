@@ -6,7 +6,12 @@ import java.util.Iterator;
 
 public class SimpleRope implements Rope {
 
-    private RopeNode root;
+    private RopeNode root = new RopeNode();
+
+    public SimpleRope(String string) {
+        root.value = string;
+        root.weight = string.length();
+    }
 
     @Override
     public void rebalance() {
@@ -35,7 +40,10 @@ public class SimpleRope implements Rope {
 
     @Override
     public void append(String string) {
-
+        RopeNode rightNode = new RopeNode();
+        rightNode.value = string;
+        rightNode.weight = string.length();
+        root.right = rightNode;
     }
 
     @Override
@@ -45,7 +53,9 @@ public class SimpleRope implements Rope {
 
     @Override
     public String build() {
-        return null;
+        StringBuilder stringBuilder = new StringBuilder(root.weight);
+        stringBuilder.append(root.value);
+        return stringBuilder.toString();
     }
 
     @Override
