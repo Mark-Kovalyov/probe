@@ -1,0 +1,6 @@
+main :
+  index :      "https://${ENV.rtrk}/forum/index.php"
+  art-house :  "https://${ENV.rtrk}/forum/viewforum.php?f=124"
+  mult :       "https://${ENV.rtrk}/forum/viewforum.php?f=4"
+  movies :     "https://${ENV.rtrk}/forum/viewforum.php?f=7"
+  audiobooks : "https://${ENV.rtrk}/forum/index.php?c=33"

@@ -29,10 +29,10 @@ dependencies {
     implementation 'org.json:json:20180130'
 
     // Flyway
-    implementation 'org.flywaydb:flyway-core:6.5.0'
+    //implementation 'org.flywaydb:flyway-core:6.5.0'
 
     // JDBC drivers
-    implementation 'org.postgresql:postgresql:42.2.12'
+    implementation 'org.postgresql:postgresql:[42.2.12,)'
 
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'

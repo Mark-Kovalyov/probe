@@ -1,8 +1,13 @@
+# Just LogBack
+#logging :
+#  config : "classpath:log4j2.xml"
+
+#debug : true
+
 spring:
+  application:
+    name : "Rutor Parser 0.0.1"
   datasource:
     url : "jdbc:postgresql://127.0.0.1:5432/dht"
-    username : scott
-    password : tiger
-
-
-
+    username : user
+    password : "****"

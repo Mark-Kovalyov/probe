@@ -1,0 +1,13 @@
+#!/bin/bash -v
+
+gradle clean bootJar
+
+rm -f logs/*
+
+java \
+ -DjdbcUrl="$PG_DEF_JDBC_URL" \
+ -Dusername="$PG_DEF_JDBC_USER" \
+ -Dpassword="$PG_DEF_JDBC_PWD" \
+ -DhttpUrl="$URL" \
+ -jar build/libs/rutorparse-0.0.1-SNAPSHOT.jar
+
