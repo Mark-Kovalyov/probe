@@ -1,11 +1,7 @@
 package mayton.probe;
 
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
-import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.StringField;
@@ -14,30 +10,20 @@ import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.UUID;
 
 import static java.lang.System.getProperty;
-import static java.nio.charset.StandardCharsets.UTF_8;
 import java.sql.Clob;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import org.apache.commons.io.IOUtils;
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.core.SimpleAnalyzer;
-import org.apache.lucene.analysis.core.StopAnalyzer;
-import org.apache.lucene.analysis.core.WhitespaceAnalyzer;
 import org.apache.lucene.document.TextField;
 
 /**
@@ -80,7 +66,7 @@ public class FixIndexer {
         logger.info("Begin");
 
         String outputDir        = "output/fix-indexer";
-        String connectionString = "jdbc:oracle:thin:fix/fix@127.0.0.1:1521/XE";
+        String connectionString = "jdbc:oracle:thin:scott/tiger@127.0.0.1:1521/XE";
 
         Analyzer analyzer = new SohAnalyzer();
         Directory directory = FSDirectory.open(Paths.get(getProperty("fix.indexer.outputDir", outputDir)));

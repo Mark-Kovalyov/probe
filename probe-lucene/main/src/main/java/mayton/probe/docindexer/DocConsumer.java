@@ -15,7 +15,6 @@ import org.apache.lucene.store.FSDirectory;
 
 import java.io.InputStream;
 import java.nio.file.Paths;
-import java.sql.DriverManager;
 import java.util.function.Consumer;
 
 public class DocConsumer implements Consumer<InputStream> {
