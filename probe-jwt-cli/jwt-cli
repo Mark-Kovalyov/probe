@@ -1,0 +1,3 @@
+#!/bin/bash
+
+java -jar target/probe-jwt-cli-1.0-SNAPSHOT.jar $1
