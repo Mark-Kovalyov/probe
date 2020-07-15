@@ -1,11 +1,7 @@
 package mayton.probe;
 
-import java.io.IOException;
-import java.io.Reader;
 import java.util.HashSet;
 import java.util.Set;
-import org.apache.lucene.analysis.Tokenizer;
-import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.analysis.util.CharTokenizer;
 
 public class SohTokenizer extends CharTokenizer {

@@ -1,7 +1,5 @@
 package mayton.probe.docindexer;
 
-import org.apache.commons.cli.Option;
-import org.apache.commons.cli.Options;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

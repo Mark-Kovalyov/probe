@@ -1,0 +1,12 @@
+geo-entity : 
+  - startIpNum
+  - endIpNum
+  - country
+  - region
+  - city
+  - postalCode
+  - dmaCode
+  - areaCode
+  - latitude
+  - longitude
+  - postalCode
