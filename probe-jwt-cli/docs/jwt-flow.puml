@@ -1,0 +1,12 @@
+@startuml
+Browser -> AuthServer : POST /auth username=scott&password=tiger
+AuthServer --> Browser : 200 OK { access_token : { JWT token }}
+
+Browser -> AuthServer : GET /dashboard Authorization:Bearer [JWT token]
+AuthServer -> AuthServer : validate token
+AuthServer --> Browser : 200 OK <html>
+
+Browser -> APIServer : GET /api/doSomething Authorization: Bearer [JWT token]
+APIServer -> APIServer : validate token
+APIServer --> Browser : 200 OK
+@enduml
