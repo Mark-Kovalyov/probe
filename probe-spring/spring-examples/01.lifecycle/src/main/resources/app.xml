@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+    <bean id="myBean" class="mayton.MyBean" init-method="initMethod" destroy-method="destroyMethod">
+        <property name="name" value="Johny Cage"/>
+        <property name="age" value="35"/>
+    </bean>
+
+    <bean id="myBean2" class="mayton.MyBean" init-method="initMethod" destroy-method="destroyMethod">
+        <constructor-arg index = "0" value = "Petty Ryan"/>
+        <constructor-arg index = "1" value = "42"/>
+    </bean>
+
+
+</beans>

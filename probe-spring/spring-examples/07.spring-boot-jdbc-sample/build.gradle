@@ -1,0 +1,40 @@
+group 'mayton.springbootex'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: "spring-boot"
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven {
+        url "http://repo.spring.io/libs-snapshot"
+    }
+}
+
+buildscript {
+    repositories {
+        maven { url "http://repo.spring.io/libs-snapshot" }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:0.5.0.M6")
+    }
+}
+
+buildDir = "out"
+
+jar {
+    baseName = "spring-boot-jdbc-sample"
+    version = "0.1"
+}
+
+dependencies {
+    def springBootVersion = '1.5.3.RELEASE'
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
+    compile("org.springframework.boot:spring-boot-starter-jdbc:$springBootVersion")
+    compile("com.oracle:ojdbc7:12.1.0.2")
+}
