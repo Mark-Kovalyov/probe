@@ -1,0 +1,11 @@
+{
+   "type" : "record",
+   "name" : "BiTemporalValue",
+   "doc"  : "",
+   "fields" : [
+       { "name" : "beginTs", "type" : "long[]" },
+       { "name" : "endTs",   "type" : "long[]" },
+       { "name" : "keys",    "type" : "long[]" },
+       { "name" : "values",  "type" : "double[]" }
+   ]
+}
