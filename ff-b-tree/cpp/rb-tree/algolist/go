@@ -1,0 +1,18 @@
+#!/bin/bash -v
+
+rm a-rb-tree.exe
+
+clang -O1 \
+      -g \
+      -Wextra \
+      -Wpadded \
+      -fsanitize=address \
+      -fno-omit-frame-pointer \
+      a-rb-tree.c -o a-rb-tree.exe
+
+#See https://clang.llvm.org/docs/AddressSanitizer.html
+
+./a-rb-tree.exe 1000
+
+#readelf -a a-rb-tree.exe > a-rb-tree.dump
+
