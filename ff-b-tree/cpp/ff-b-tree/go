@@ -1,0 +1,43 @@
+#!/bin/bash -v
+
+gcc \
+  -g \
+  -Wall  \
+  -shared \
+  -o librnb-tree.so \
+  rnb-tree.c
+
+echo "[1.1] Status : $?"
+
+#ar rsc librnb-tree.a rnb-tree.so
+
+echo "[1.2] Status : $?"
+
+rm benchmark.exe
+
+gcc \
+  -g \
+  -Wall \
+  benchmark.c \
+  -Llibs \
+  -L. \
+  -ldl \  
+  -o benchmark.exe
+
+#  -l:librnb-tree.so \
+
+echo "[3] Status : $?"
+
+./benchmark.exe
+
+# readelf -a rnb-tree.so | less
+# nm -D      rnb-tree.so | less
+# ldd        rnb-tree.so | less
+
+#  For example, a program 'data.c' using the GNU Linear Programming library 'libglpk.a', which in turn uses the math library 'libm.a', should be compiled as,
+# $ gcc -Wall data.c -lglpk -lm
+
+# $ ar rcs libmylib.a file2.o
+
+# $ gcc file1.c -Llibs -lmylib -o outfile
+# gcc -o driver driver.o -L. -l_mylib
