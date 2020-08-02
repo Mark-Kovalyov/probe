@@ -1,8 +1,6 @@
 #include "rnb-tree.h"
 
-
-
-boolean put(Rnb_node *root, int key, int value) {
+extern boolean put(Rnb_node *root, int key, int value) {
   return TRUE;
 }
 

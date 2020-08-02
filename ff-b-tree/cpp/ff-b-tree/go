@@ -9,9 +9,24 @@ gcc \
 
 echo "[1.1] Status : $?"
 
+#Arcive:
 #ar rsc librnb-tree.a rnb-tree.so
 
+readelf -s librnb-tree.so > librnb-tree-symbols.txt
+
 echo "[1.2] Status : $?"
+
+objdump -t librnb-tree.so > librnb-tree-objdump.txt
+
+echo "[1.3] Status : $?"
+
+ldd -v librnb-tree.so > librnb-tree-ldd.txt
+
+echo "[1.4] Status : $?"
+
+nm -D librnb-tree.so > librnb-tree-nm.txt
+
+echo "[1.5] Status : $?"
 
 rm benchmark.exe
 
@@ -21,7 +36,7 @@ gcc \
   benchmark.c \
   -Llibs \
   -L. \
-  -ldl \  
+  -ldl \
   -o benchmark.exe
 
 #  -l:librnb-tree.so \

@@ -1,0 +1,14 @@
+0000000000201020 B __bss_start
+000000000000061f T contains
+                 w __cxa_finalize
+0000000000000643 T delete
+0000000000000655 T delete_all
+0000000000201020 D _edata
+0000000000201028 B _end
+0000000000000660 T _fini
+0000000000000631 T get
+                 w __gmon_start__
+00000000000004f0 T _init
+                 w _ITM_deregisterTMCloneTable
+                 w _ITM_registerTMCloneTable
+000000000000060a T put
