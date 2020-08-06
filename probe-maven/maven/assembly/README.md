@@ -1,5 +1,7 @@
 # assembly
 
+
+```
 Name: Maven Assembly Plugin
 Description: A Maven 2 plugin to create archives of your project's sources,
   classes, dependencies etc. from flexible assembly descriptors.
@@ -90,9 +92,10 @@ assembly:unpack
   unpack or unpack-dependencies instead.
 
 For more information, run 'mvn help:describe [...] -Ddetail'
-
+```
 ## Detailed Info
 
+```
 Name: Maven Assembly Plugin
 Description: A Maven 2 plugin to create archives of your project's sources,
   classes, dependencies etc. from flexible assembly descriptors.
@@ -937,5 +940,4 @@ assembly:unpack
       Required: true
       Expression: ${project.build.directory}/assembly/work
       Directory to unpack JARs into if needed
-
-
+```

@@ -24,13 +24,24 @@ done
 for plugin_name in cobertura
 do
   mkdir -p "mojo/$plugin_name"
-  echo "$plugin_name[1]"
-  mvn help:describe -Dplugin=org.codehouse.mojo:$plugin_name-maven-plugin > "$plugin_name.txt"
+  echo "# $plugin_name" > "mojo/$plugin_name/README.md"
+  mvn help:describe -Dplugin=org.codehouse.mojo:$plugin_name-maven-plugin >> "mojo/$plugin_name/README.md"
+  echo "## Detailed Info" >> "mojo/$plugin_name/README.md"  
+  mvn help:describe -Dplugin=org.codehouse.mojo:$plugin_name-maven-plugin -Ddetail >> "mojo/$plugin_name/README.md"
 done
 
-# Jacoco
+# Spring
 
-mvn help:describe -Dplugin=org.springframework.boot:spring-boot-maven-plugin > spring-boot-maven-plugin.txt
+for plugin_name in spring-boot-maven-plugin 
+do
+  mkdir -p "spring/$plugin_name"
+  echo "# $plugin_name" > "spring/$plugin_name/README.md"
+  mvn help:describe -Dplugin=org.springframework.boot:spring-boot-maven-plugin >> "spring/$plugin_name/README.md"
+  echo "## Detailed Info" >> "spring/$plugin_name/README.md"
+  mvn help:describe -Dplugin=org.springframework.boot:spring-boot-maven-plugin -Ddetail >> "spring/$plugin_name/README.md"  
+done
+
+
 
 
 
