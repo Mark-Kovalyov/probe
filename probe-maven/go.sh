@@ -1,13 +1,5 @@
 #!/bin/bash -v
 
-#mvn help:describe -DgroupId=org.somewhere -DartifactId=some-plugin -Dversion=0.0.0
-#mvn help:describe -Dplugin=org.apache.maven.plugins:maven-help-plugin
-
-#mvn help:describe -Dplugin=org.codehaus.mojo:cobertura-maven-plugin                > cobertura-maven-plugin.txt
-#mvn help:describe -Dplugin=org.codehaus.mojo:cobertura-maven-plugin       -Ddetail > cobertura-maven-plugin-detailed.txt
-#mvn help:describe -Dplugin=org.apache.maven.plugins:maven-assembly-plugin          > maven-assembly-plugin.txt
-#mvn help:describe -Dplugin=org.apache.maven.plugins:maven-assembly-plugin -Ddetail > maven-assembly-plugin-detailed.txt
-
 # Main plugins
 
 for plugin_name in dependency assembly clean resources compiler surefire jar install deploy site project-info-reports enforcer
