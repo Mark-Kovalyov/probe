@@ -1,0 +1,37 @@
+\input cwebmac
+
+\N{1}{1}LCD-LCM
+
+In mathematics, the greatest common divisor (gcd) of two or
+more integers, which are not all zero, is the largest
+positive integer that divides each of the integers.
+For example, the gcd of 8 and 12 is 4
+
+\Y\B${*{}$\6
+\8\#\&{include} \.{<stdio.h>}\6
+${}}\&{int}{}$ \\{gcd}(\&{int} \|a${},\39{}$\&{int} \|b)\1\1\2\2\6
+${}\{{}$\1\6
+\&{if} ${}(\|b\I\T{0}){}$\1\5
+\&{return} \\{gcd}${}(\|b,\39\|a\MOD\|b);{}$\2\6
+\&{else}\1\5
+\&{return} \|a;\2\6
+\4${}\}{}$\2\par
+\fi
+
+\M{2}
+The greatest common divisor can be used to find the least
+common multiple of two numbers when the greatest common
+divisor is known, using the relation
+
+\Y\B${*}\&{int}{}$ \\{lcm}(\&{int} \|a${},\39{}$\&{int} \|b)\1\1\2\2\6
+${}\{{}$\1\6
+\&{return} ${}(\|a*\|b)\MOD\\{gcd}(\|a,\39\|b);{}$\6
+\4${}\}{}$\2\par
+\fi
+
+\N{1}{3}Index.
+\fi
+
+\inx
+\fin
+\con

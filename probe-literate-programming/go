@@ -1,0 +1,4 @@
+#!/bin/bash
+
+ctangle gcd-lcm.w gcd-lcm.c
+cweave  gcd-lcm.w gcd-lcm.tex
