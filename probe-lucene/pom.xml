@@ -21,7 +21,7 @@
         <java.lang.version>11</java.lang.version>
         <java.target.version>11</java.target.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <lucene.version>8.5.2</lucene.version>
+        <lucene.version>8.6.0</lucene.version>
         <commons.csv.version>1.7</commons.csv.version>
         <active.mq.version>5.7.0</active.mq.version>
         <destClass>mayton.lucene.text.Indexer</destClass>
@@ -72,6 +72,7 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
+                            <createDependencyReducedPom>false</createDependencyReducedPom>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <manifestEntries>
