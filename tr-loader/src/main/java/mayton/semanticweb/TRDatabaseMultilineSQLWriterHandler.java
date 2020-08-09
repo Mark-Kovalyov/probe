@@ -14,6 +14,7 @@ import javax.annotation.Nonnull;
 import java.io.PrintWriter;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import static mayton.semanticweb.Utils.*;
 
@@ -62,10 +63,14 @@ public class TRDatabaseMultilineSQLWriterHandler implements RDFHandler, Trackabl
     private void printInsert() {
         pw.println();
         pw.printf("INSERT INTO %s (ID", Constants.TABLE_NAME);
-        for(IRI key : predicates.keySet()) {
+        for(Map.Entry<IRI, Pair<String,String>> entry : predicates.entrySet()) {
+            pw.print(",");
+            pw.print(entry.getKey());
+        }
+        /*for(IRI key : predicates.keySet()) {
             pw.print(",");
             pw.print(predicates.get(key).getKey());
-        }
+        }*/
         pw.print(") VALUES");
         pw.println();
         insertCnt = 0;
@@ -96,18 +101,24 @@ public class TRDatabaseMultilineSQLWriterHandler implements RDFHandler, Trackabl
         }
         pw.print("(");
         if (st == null) {
-            pw.print(filterNamespaces(subject.stringValue()));
+            logger.trace("[1] statement == null");
+            String pk = "'" + filterNamespaces(subject.stringValue()) + "'";
+            pw.print(pk);
         } else {
-            pw.print(filterNamespaces(st.getSubject().stringValue()));
+            logger.trace("[2] statement == {}", st.toString());
+            String pk = "'" + filterNamespaces(st.getSubject().stringValue()) + "'";
+            pw.print(pk);
         }
         for(IRI key : predicates.keySet()) {
             pw.print(",");
             if (currentDmlOperatorFields.containsKey(key)) {
                 String value = currentDmlOperatorFields.get(key);
-                pw.print(wrapPostgresLiteral(
+                String resValue = wrapPostgresLiteral( // Hello =>
                             trimSlash(
                                     filterDateTime(
-                                            filterNamespaces(value)))));
+                                            filterNamespaces(value))));
+                logger.trace("[3] {} => {}",value, resValue);
+                pw.print(resValue);
             } else {
                 pw.print("null");
             }
@@ -139,7 +150,7 @@ public class TRDatabaseMultilineSQLWriterHandler implements RDFHandler, Trackabl
 
     @Override
     public void handleComment(String comment) throws RDFHandlerException {
-        logger.info(":: hanlde comment = {}", comment);
+        logger.info(":: handle comment = {}", comment);
     }
 
 

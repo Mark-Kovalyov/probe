@@ -15,7 +15,7 @@ import javax.annotation.Nonnull;
 import java.io.*;
 import java.util.Map;
 import java.util.Properties;
-import java.util.UUID;
+import java.util.zip.GZIPInputStream;
 
 
 public class TRLoader {
@@ -24,16 +24,15 @@ public class TRLoader {
 
     public static long countStatements(InputStream inputStream, RDFFormat rdfFormat, String baseUri) throws IOException {
         logger.info(":: Estimation");
-        /*RDFParser rdfParser = Rio.createParser(rdfFormat);
+        RDFParser rdfParser = Rio.createParser(rdfFormat);
         CountingHandler countingHandler = new CountingHandler();
         rdfParser.setRDFHandler(countingHandler);
         rdfParser.parse(inputStream, baseUri);
-        return countingHandler.getStatements();*/
         logger.info(":: Finish estimation");
-        return 42_520_959;
+        return countingHandler.getStatements();
     }
 
-    public static Map<IRI, Pair<String, String>> ddlAndPredicates(InputStream inputStream, long statements, RDFFormat rdfFormat, String namespace) throws Exception {
+    public static Map<IRI, Pair<String, String>> ddlAndPredicates(InputStream inputStream, long statements, RDFFormat rdfFormat, String namespace, String tableName) throws Exception {
 
         logger.info(":: process DDL for table");
 
@@ -43,7 +42,7 @@ public class TRLoader {
 
         logger.info("{}", sofarTracker.toString());
 
-        AnalyzerHandler analyzerHandler = new AnalyzerHandler();
+        AnalyzerHandler analyzerHandler = new AnalyzerHandler(tableName);
         analyzerHandler.bind(sofarTracker);
 
         rdfParser.setRDFHandler(analyzerHandler);
@@ -54,8 +53,11 @@ public class TRLoader {
 
         logger.info(":: finish processing DDL");
 
-        return analyzerHandler.getPredicates();
+        Map<IRI, Pair<String, String>> res = analyzerHandler.getPredicates();
 
+        analyzerHandler.close();
+
+        return res;
     }
 
     public static long load(@Nonnull InputStream inputStream, long statements, RDFFormat rdfFormat, Map<IRI, Pair<String, String>> predicates, String namespace, PrintWriter pw) throws Exception {
@@ -78,18 +80,43 @@ public class TRLoader {
         return 0L;
     }
 
+    static InputStream autoDetectCompressedStream(@Nonnull String path) throws IOException {
+        if (path.endsWith(".gz")) {
+            logger.debug("GZIPInputStream detected");
+            return new GZIPInputStream(new FileInputStream(path));
+        } else {
+            logger.debug("Raw InputStream detected");
+            return new FileInputStream(path);
+        }
+    }
 
-    public static void processFile(String path, String namespace, RDFFormat rdfFormat, PrintWriter printWriter) throws Exception {
+    static RDFFormat autoDetectRDFFormat(String path) {
+        String trimmed = path.endsWith(".gz") ? path.substring(0, path.length() - ".gz".length()) : path;
+        if (trimmed.endsWith(".ttl")) {
+            logger.debug("RDFFormat.TURTLE detected");
+            return RDFFormat.TURTLE;
+        } else if (trimmed.endsWith(".ntriples")) {
+            logger.debug("RDFFormat.NTRIPLES");
+            return RDFFormat.NTRIPLES;
+        } else {
+            throw new IllegalArgumentException("Unable to detect RDF format by " + path);
+        }
+    }
+
+    public static void processFile(@Nonnull String path, String namespace, RDFFormat rdfFormat, PrintWriter printWriter, String tableName) throws Exception {
         MDC.put("mode", "Count");
+
         // Count statements
-        long statements = countStatements(new FileInputStream(path), rdfFormat, namespace);
+        long statements = countStatements(autoDetectCompressedStream(path), rdfFormat, namespace);
+        logger.info("Detected {} RDF statements in source file");
+
         MDC.put("mode", "DDL and stats");
         // Process generate table DDL & gather stats
-        Map<IRI, Pair<String, String>> predicates = ddlAndPredicates(new FileInputStream(path), statements, rdfFormat, namespace);
+        Map<IRI, Pair<String, String>> predicates = ddlAndPredicates(autoDetectCompressedStream(path), statements, rdfFormat, namespace, tableName);
 
         MDC.put("mode", "Generate SQL");
         // Load
-        long dataRows = load(new FileInputStream(path), statements, rdfFormat, predicates, namespace, printWriter);
+        long dataRows = load(autoDetectCompressedStream(path), statements, rdfFormat, predicates, namespace, printWriter);
         logger.info(":: generated dataRows = {}", dataRows);
         MDC.remove("mode");
     }
@@ -102,17 +129,23 @@ public class TRLoader {
     public static void main(String[] args) throws Exception {
 
         Properties properties = new Properties();
-        properties.load(new FileInputStream("sensitive.properties"));
+        properties.load(new FileInputStream("tr-loader.properties"));
+
         String source = properties.getProperty("source");
         String namespace = properties.getProperty("namespace");
         String dest = properties.getProperty("dest");
+        String tableName = properties.getProperty("tableName");
+
         logger.info("source = {}", source);
         logger.info("dest   = {}", dest);
         logger.info("namespace = {}", namespace);
+
         new File(dest.substring(0, dest.lastIndexOf('/'))).mkdirs();
+
         PrintWriter printWriter = new PrintWriter(dest);
-        processFile(source, namespace, RDFFormat.TURTLE, printWriter);
+        processFile(source, namespace, autoDetectRDFFormat(source), printWriter, tableName);
         printWriter.flush();
+
         // DETAIL:  Cannot enlarge string buffer containing 0 bytes by 1 694 763 225 more bytes.
         logger.info(":: psql -d {} -a -f '{}'", properties.get("dbname"), dest);
         // > select count(*) from org;
