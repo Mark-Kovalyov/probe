@@ -12,6 +12,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java.lang.version>1.8</java.lang.version>
     <java.target.version>1.8</java.target.version>
+    <aws.sdk.version>1.11.832</aws.sdk.version>
   </properties>
 
   <dependencies>
@@ -32,7 +33,7 @@
     <dependency>
       <groupId>com.amazonaws</groupId>
       <artifactId>aws-java-sdk-s3</artifactId>
-      <version>1.11.705</version>
+      <version>${aws.sdk.version}</version>
     </dependency>
 
     <dependency>
@@ -46,6 +47,27 @@
       <artifactId>commons-cli</artifactId>
       <version>1.4</version>
     </dependency>
+
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>1.2.3</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.30</version>
+    </dependency>
+
+    <!-- For AWS logging JCL -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>jcl-over-slf4j</artifactId>
+      <version>1.7.30</version>
+    </dependency>
+
+
 
   </dependencies>
 
@@ -73,12 +95,14 @@
               <goal>shade</goal>
             </goals>
             <configuration>
+              <minimizeJar>false</minimizeJar>
+              <createDependencyReducedPom>false</createDependencyReducedPom>
               <transformers>
                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                   <manifestEntries>
-                    <Main-Class>org.example.CountWithGrouping</Main-Class>
-                    <CreatedBy>mtn</CreatedBy>
-                    <Built-By>mtn</Built-By>
+                    <Main-Class>mayton.aws.CountWithGrouping</Main-Class>
+                    <CreatedBy>mayton</CreatedBy>
+                    <Built-By>mayton</Built-By>
                   </manifestEntries>
                 </transformer>
               </transformers>
