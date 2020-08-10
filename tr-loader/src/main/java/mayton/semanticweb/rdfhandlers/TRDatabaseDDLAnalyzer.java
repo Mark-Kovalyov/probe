@@ -1,6 +1,8 @@
-package mayton.semanticweb;
+package mayton.semanticweb.rdfhandlers;
 
 import mayton.lib.SofarTracker;
+import mayton.semanticweb.Trackable;
+import mayton.semanticweb.Utils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Resource;
@@ -17,24 +19,23 @@ import java.io.PrintWriter;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.StringJoiner;
 
-import static mayton.semanticweb.Constants.TABLE_NAME;
-
-public class AnalyzerHandler implements RDFHandler, Trackable, AutoCloseable {
+public class TRDatabaseDDLAnalyzer extends TRTable implements RDFHandler, Trackable, AutoCloseable {
 
     public SofarTracker sofarTracker;
 
     private long cnt;
 
-    static Logger logger = LoggerFactory.getLogger(AnalyzerHandler.class);
-
-    //          key       filteredName    xsd:dataType
-    private Map<IRI, Pair<String,         String>> predicates = new LinkedHashMap<>(24);
+    static Logger logger = LoggerFactory.getLogger(TRDatabaseDDLAnalyzer.class);
 
     private PrintWriter printWriter;
 
-    public AnalyzerHandler(String tableName) throws IOException {
+    public TRDatabaseDDLAnalyzer(String tableName) throws IOException {
+        super(tableName);
+        predicates = new LinkedHashMap<>(24);
         printWriter = new PrintWriter(new FileWriter("sql/ddl/" + tableName + ".sql"));
+        this.tableName = tableName;
         cnt = 0;
     }
 
@@ -46,21 +47,25 @@ public class AnalyzerHandler implements RDFHandler, Trackable, AutoCloseable {
     @Override
     public void endRDF() throws RDFHandlerException {
         sofarTracker.update(sofarTracker.getSize());
-        logger.info("create table {}(", TABLE_NAME);
-        printWriter.println("create table (" + TABLE_NAME);
+        logger.info("create table {}(", tableName);
+        printWriter.println("drop table " + tableName + ";");
+        printWriter.print("create table " + tableName + "(");
         logger.info("     id varchar(255) primary key,");
-        printWriter.println("     id varchar(255) primary key,");
+        printWriter.print(" id varchar(255) primary key,");
+        StringJoiner stringJoiner = new StringJoiner(",");
         predicates.entrySet().stream().forEach(entry -> {
-            String fieldName = entry.getValue().getKey();
-            /*String res = String.format("%s / %s $ %s",
+            logger.trace("IRI = {}, ( key = {}, value = {} )",
                     entry.getKey().toString(),
                     entry.getValue().getKey(),
-                    entry.getValue().getValue());*/
+                    entry.getValue().getValue());
+
+            String fieldName = entry.getValue().getKey();
 
             logger.info("    {} text, ", fieldName);
-            printWriter.printf("    %s text,\n", fieldName);
+            stringJoiner.add(fieldName + " text");
         });
         logger.info(");");
+        printWriter.print(stringJoiner.toString());
         printWriter.println(");");
     }
 

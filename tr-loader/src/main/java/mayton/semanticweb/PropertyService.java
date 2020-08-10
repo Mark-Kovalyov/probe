@@ -1,5 +1,6 @@
 package mayton.semanticweb;
 
+import org.apache.commons.cli.CommandLine;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.FileInputStream;
@@ -9,9 +10,20 @@ import java.util.Properties;
 
 public class PropertyService {
 
+    private static PropertyService inst;
+
+    private static CommandLine commandLine;
+
+    public static PropertyService createInstance() {
+        if (inst == null) {
+            inst = new PropertyService();
+        }
+        return inst;
+    }
+
     static Properties properties = new Properties();
 
-    static {
+    private PropertyService() {
         try {
             properties.load(new FileInputStream("tr-loader.properties"));
         } catch (IOException e) {
@@ -19,17 +31,23 @@ public class PropertyService {
         }
     }
 
+    public void setCommandLine(CommandLine commandLine) {
+        this.commandLine = commandLine;
+    }
+
     // TODO:
     // 1) Command Line
     // 2) .properties
     // 3) OS env
-    public Optional<String> lookupProperty(String propertyName) {
-        if (properties.containsKey(propertyName)) {
-            return Optional.of(properties.getProperty(propertyName));
+    public String lookupProperty(String propertyName) {
+        if (commandLine.hasOption(propertyName)) {
+            return commandLine.getOptionValue(propertyName);
+        } else if (properties.containsKey(propertyName)) {
+            return properties.getProperty(propertyName);
         } else if (StringUtils.isNotBlank(System.getenv(propertyName))) {
-            return Optional.of(System.getenv(propertyName));
+            return System.getenv(propertyName);
         } else {
-            return Optional.empty();
+            throw new RuntimeException("Unable to locate property " + propertyName);
         }
     }
 

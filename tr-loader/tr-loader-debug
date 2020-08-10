@@ -1,0 +1,9 @@
+#!/bin/bash -v
+
+mvn clean package
+
+java \
+ -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005 \
+ -jar target/tr-loader-1.0-SNAPSHOT.jar $*
+
+

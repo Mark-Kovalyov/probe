@@ -27,7 +27,7 @@ public class Utils {
     }
 
     @Nonnull
-    public static String wrapPostgresLiteral(@Nonnull String arg) {
+        public static String wrapPostgresLiteral(@Nonnull String arg) {
         StringBuilder sb = new StringBuilder(arg.length() + 2);
         sb.append("'");
         for(int i = 0 ; i < arg.length(); i++) {
@@ -46,7 +46,11 @@ public class Utils {
                     sb.append("\\x").append(format("%02X", c));
                 }
             } else if (c < 128) {
-                sb.append((char)c);
+                if (c=='\'') {
+                    sb.append("\\x27");
+                } else {
+                    sb.append((char)c);
+                }
             } else if (c < 255) {
                 sb.append("\\x").append(format("%02X", c));
             } else {

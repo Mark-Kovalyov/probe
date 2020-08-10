@@ -7,17 +7,18 @@
     </appender>
 
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-        <file>logs/tr-loader.log</file>
+        <file>logs/tr-loader-2.log</file>
         <append>true</append>
         <encoder>
             <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] %logger %X{mode} : %msg%n</pattern>
+            <immediateFlush>true</immediateFlush>
         </encoder>
     </appender>
 
-    <logger name="mayton" level="TRACE" />
+    <logger name="mayton" level="DEBUG" />
     <logger name="org.eclipse.rdf4j" level="INFO" />
 
-    <root level="TRACE">
+    <root level="DEBUG">
         <appender-ref ref="STDOUT" />
         <appender-ref ref="FILE" />
     </root>

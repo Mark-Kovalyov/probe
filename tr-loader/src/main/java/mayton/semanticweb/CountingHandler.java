@@ -4,6 +4,7 @@ import mayton.lib.SofarTracker;
 import org.eclipse.rdf4j.model.Statement;
 import org.eclipse.rdf4j.rio.RDFHandler;
 import org.eclipse.rdf4j.rio.RDFHandlerException;
+import org.slf4j.MDC;
 
 public class CountingHandler implements RDFHandler, Trackable {
 
@@ -11,7 +12,7 @@ public class CountingHandler implements RDFHandler, Trackable {
 
     @Override
     public void startRDF() throws RDFHandlerException {
-
+        MDC.put("mode", "Counting");
     }
 
     @Override

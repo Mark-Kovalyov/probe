@@ -1,6 +1,8 @@
-package mayton.semanticweb;
+package mayton.semanticweb.rdfhandlers;
 
 import mayton.lib.SofarTracker;
+import mayton.semanticweb.Constants;
+import mayton.semanticweb.Trackable;
 import org.apache.commons.lang3.tuple.Pair;
 import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Resource;
@@ -14,7 +16,6 @@ import javax.annotation.Nonnull;
 import java.io.PrintWriter;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
 
 import static mayton.semanticweb.Utils.*;
 
@@ -22,12 +23,10 @@ import static mayton.semanticweb.Utils.*;
 // VALUES  ('1', 'name1'),
 //         ('2', 'name2'),
 //         ('3', 'name3')
-
-public class TRDatabaseMultilineSQLWriterHandler implements RDFHandler, Trackable {
+@Deprecated
+public class TRDatabaseMultilineSQLWriterHandler extends TRTable implements RDFHandler, Trackable {
 
     static Logger logger = LoggerFactory.getLogger(TRDatabaseMultilineSQLWriterHandler.class);
-
-    private Map<IRI, Pair<String, String>> predicates;
 
     private PrintWriter pw;
 
@@ -42,17 +41,14 @@ public class TRDatabaseMultilineSQLWriterHandler implements RDFHandler, Trackabl
     private long cnt = 0;
     private long insertCnt = 0;
 
-    public TRDatabaseMultilineSQLWriterHandler(@Nonnull Map<IRI, Pair<String, String>> predicates, PrintWriter pw) {
-        this.pw = pw;
-        this.predicates = predicates;
-        this.cnt = 0;
-    }
+    private String tableName;
 
-    public TRDatabaseMultilineSQLWriterHandler(@Nonnull Map<IRI, Pair<String, String>> predicates, PrintWriter pw, int batchSize) {
+    public TRDatabaseMultilineSQLWriterHandler(@Nonnull Map<IRI, Pair<String, String>> predicates, PrintWriter pw, String tableName, int batchSize) {
+        super(tableName);
         this.pw = pw;
         this.predicates = predicates;
         this.cnt = 0;
-        this.batchSize = batchSize;
+        this.tableName = tableName;
     }
 
     @Override
@@ -62,7 +58,7 @@ public class TRDatabaseMultilineSQLWriterHandler implements RDFHandler, Trackabl
 
     private void printInsert() {
         pw.println();
-        pw.printf("INSERT INTO %s (ID", Constants.TABLE_NAME);
+        pw.printf("INSERT INTO %s (ID", tableName);
         for(Map.Entry<IRI, Pair<String,String>> entry : predicates.entrySet()) {
             pw.print(",");
             pw.print(entry.getKey());
@@ -78,7 +74,7 @@ public class TRDatabaseMultilineSQLWriterHandler implements RDFHandler, Trackabl
 
     @Override
     public void startRDF() throws RDFHandlerException {
-        pw.printf("TRUNCATE TABLE %s;\n", Constants.TABLE_NAME);
+        pw.printf("TRUNCATE TABLE %s;\n", tableName);
         printInsert();
     }
 

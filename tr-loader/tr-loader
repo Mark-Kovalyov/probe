@@ -2,4 +2,5 @@
 
 mvn clean package
 
-java -jar target/tr-loader-1.0-SNAPSHOT.jar
+java -jar target/tr-loader-1.0-SNAPSHOT.jar $*
+
