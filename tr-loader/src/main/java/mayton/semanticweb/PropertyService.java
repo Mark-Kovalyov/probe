@@ -5,21 +5,19 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Optional;
 import java.util.Properties;
 
 public class PropertyService {
 
-    private static PropertyService inst;
+    private static class Singleton {
+        public static final PropertyService PROPERTY_SERVICE = new PropertyService();
+    }
+
+    public static PropertyService getInstance() {
+        return Singleton.PROPERTY_SERVICE;
+    }
 
     private static CommandLine commandLine;
-
-    public static PropertyService createInstance() {
-        if (inst == null) {
-            inst = new PropertyService();
-        }
-        return inst;
-    }
 
     static Properties properties = new Properties();
 

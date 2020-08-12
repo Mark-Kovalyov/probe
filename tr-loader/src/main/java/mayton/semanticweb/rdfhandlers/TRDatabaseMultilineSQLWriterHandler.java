@@ -1,9 +1,8 @@
 package mayton.semanticweb.rdfhandlers;
 
 import mayton.lib.SofarTracker;
-import mayton.semanticweb.Constants;
+import mayton.semanticweb.FieldDescriptor;
 import mayton.semanticweb.Trackable;
-import org.apache.commons.lang3.tuple.Pair;
 import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Resource;
 import org.eclipse.rdf4j.model.Statement;
@@ -12,7 +11,6 @@ import org.eclipse.rdf4j.rio.RDFHandlerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.Nonnull;
 import java.io.PrintWriter;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -24,7 +22,7 @@ import static mayton.semanticweb.Utils.*;
 //         ('2', 'name2'),
 //         ('3', 'name3')
 @Deprecated
-public class TRDatabaseMultilineSQLWriterHandler extends TRTable implements RDFHandler, Trackable {
+public class TRDatabaseMultilineSQLWriterHandler extends TRTableProcess implements RDFHandler, Trackable {
 
     static Logger logger = LoggerFactory.getLogger(TRDatabaseMultilineSQLWriterHandler.class);
 
@@ -43,10 +41,10 @@ public class TRDatabaseMultilineSQLWriterHandler extends TRTable implements RDFH
 
     private String tableName;
 
-    public TRDatabaseMultilineSQLWriterHandler(@Nonnull Map<IRI, Pair<String, String>> predicates, PrintWriter pw, String tableName, int batchSize) {
+    public TRDatabaseMultilineSQLWriterHandler(Map<IRI, FieldDescriptor> fieldDescriptorMap, PrintWriter pw, String tableName, int batchSize) {
         super(tableName);
         this.pw = pw;
-        this.predicates = predicates;
+        this.fieldDescriptorMap = fieldDescriptorMap;
         this.cnt = 0;
         this.tableName = tableName;
     }
@@ -59,10 +57,10 @@ public class TRDatabaseMultilineSQLWriterHandler extends TRTable implements RDFH
     private void printInsert() {
         pw.println();
         pw.printf("INSERT INTO %s (ID", tableName);
-        for(Map.Entry<IRI, Pair<String,String>> entry : predicates.entrySet()) {
+        /*for(Map.Entry<IRI, Pair<String,String>> entry : predicates.entrySet()) {
             pw.print(",");
             pw.print(entry.getKey());
-        }
+        }*/
         /*for(IRI key : predicates.keySet()) {
             pw.print(",");
             pw.print(predicates.get(key).getKey());
@@ -105,7 +103,7 @@ public class TRDatabaseMultilineSQLWriterHandler extends TRTable implements RDFH
             String pk = "'" + filterNamespaces(st.getSubject().stringValue()) + "'";
             pw.print(pk);
         }
-        for(IRI key : predicates.keySet()) {
+        /*for(IRI key : predicates.keySet()) {
             pw.print(",");
             if (currentDmlOperatorFields.containsKey(key)) {
                 String value = currentDmlOperatorFields.get(key);
@@ -118,7 +116,7 @@ public class TRDatabaseMultilineSQLWriterHandler extends TRTable implements RDFH
             } else {
                 pw.print("null");
             }
-        }
+        }*/
         pw.print(")");
         insertCnt++;
         if (insertCnt > batchSize) {

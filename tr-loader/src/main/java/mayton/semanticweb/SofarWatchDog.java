@@ -17,7 +17,7 @@ public class SofarWatchDog implements Runnable {
     @Override
     public void run() {
         try {
-            while (true) {
+            while (!Thread.interrupted()) {
                 // TODO: Replace with Atomic
                 synchronized (sofarTracker) {
                     logger.debug(sofarTracker.toString());

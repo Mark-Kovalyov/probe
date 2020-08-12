@@ -1,10 +1,9 @@
 package mayton.semanticweb.rdfhandlers;
 
 import mayton.lib.SofarTracker;
+import mayton.semanticweb.FieldDescriptor;
 import mayton.semanticweb.Trackable;
 import mayton.semanticweb.Utils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.tuple.Pair;
 import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Resource;
 import org.eclipse.rdf4j.model.Statement;
@@ -20,8 +19,8 @@ import java.util.stream.Collectors;
 
 import static mayton.semanticweb.Utils.*;
 
-// TODO:
-public class TRDatabaseCSVWriterHandler extends TRTable implements RDFHandler, Trackable {
+@Deprecated
+public class TRDatabaseCSVWriterHandler extends TRTableProcess implements RDFHandler, Trackable {
 
     static Logger logger = LoggerFactory.getLogger(TRDatabaseCSVWriterHandler.class);
 
@@ -35,9 +34,9 @@ public class TRDatabaseCSVWriterHandler extends TRTable implements RDFHandler, T
 
     private long cnt = 0;
 
-    public TRDatabaseCSVWriterHandler(Map<IRI, Pair<String, String>> predicates, PrintWriter pw,String tableName) {
+    public TRDatabaseCSVWriterHandler(Map<IRI, FieldDescriptor> fieldDescriptorMap, PrintWriter pw, String tableName) {
         super(tableName);
-        this.predicates = predicates;
+        this.fieldDescriptorMap = fieldDescriptorMap;
         this.pw = pw;
         this.cnt = 0;
     }
@@ -56,7 +55,6 @@ public class TRDatabaseCSVWriterHandler extends TRTable implements RDFHandler, T
     public void endRDF() throws RDFHandlerException {
         sofarTracker.update(sofarTracker.getSize());
         processInsert(null);
-        pw.println("commit;");
         pw.close();
     }
 

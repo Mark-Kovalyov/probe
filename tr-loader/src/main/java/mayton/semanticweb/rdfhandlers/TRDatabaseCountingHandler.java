@@ -1,12 +1,13 @@
-package mayton.semanticweb;
+package mayton.semanticweb.rdfhandlers;
 
 import mayton.lib.SofarTracker;
+import mayton.semanticweb.Trackable;
 import org.eclipse.rdf4j.model.Statement;
 import org.eclipse.rdf4j.rio.RDFHandler;
 import org.eclipse.rdf4j.rio.RDFHandlerException;
 import org.slf4j.MDC;
 
-public class CountingHandler implements RDFHandler, Trackable {
+public class TRDatabaseCountingHandler implements RDFHandler, Trackable {
 
     private long statements = 0;
 
@@ -17,7 +18,7 @@ public class CountingHandler implements RDFHandler, Trackable {
 
     @Override
     public void endRDF() throws RDFHandlerException {
-
+        MDC.remove("mode");
     }
 
     @Override

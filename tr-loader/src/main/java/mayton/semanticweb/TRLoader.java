@@ -1,88 +1,87 @@
 package mayton.semanticweb;
 
 import mayton.lib.SofarTracker;
-import mayton.semanticweb.rdfhandlers.TRDatabaseCSVWriterHandler;
+import mayton.semanticweb.rdfhandlers.TRDatabaseCountingHandler;
 import mayton.semanticweb.rdfhandlers.TRDatabaseDDLAnalyzer;
-import mayton.semanticweb.rdfhandlers.TRDatabaseMultilineSQLWriterHandler;
 import mayton.semanticweb.rdfhandlers.TRDatabaseSQLWriterHandler;
 import org.apache.commons.cli.*;
-import org.apache.commons.lang3.tuple.Pair;
 import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.rio.RDFFormat;
-import org.eclipse.rdf4j.rio.RDFHandler;
 import org.eclipse.rdf4j.rio.RDFParser;
 import org.eclipse.rdf4j.rio.Rio;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.MDC;
 
 import javax.annotation.Nonnull;
+import javax.swing.text.DateFormatter;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Map;
-import java.util.Properties;
 import java.util.zip.GZIPInputStream;
 
 
-public class TRLoader {
+public class TRLoader<dateFormatter> {
 
     static Logger logger = LoggerFactory.getLogger(TRLoader.class);
 
     public static long countStatements(InputStream inputStream, RDFFormat rdfFormat, String baseUri) throws IOException {
         logger.info(":: Estimation");
         RDFParser rdfParser = Rio.createParser(rdfFormat);
-        CountingHandler countingHandler = new CountingHandler();
+        TRDatabaseCountingHandler countingHandler = new TRDatabaseCountingHandler();
         rdfParser.setRDFHandler(countingHandler);
         rdfParser.parse(inputStream, baseUri);
         logger.info(":: Finish estimation");
         return countingHandler.getStatements();
     }
 
-    public static Map<IRI, Pair<String, String>> ddlAndPredicates(InputStream inputStream, long statements, RDFFormat rdfFormat, String namespace, String tableName) throws Exception {
+    public static Map<IRI, FieldDescriptor>  ddlAndPredicates(InputStream inputStream, long statements, RDFFormat rdfFormat, String namespace, String tableName) throws Exception {
 
         logger.info(":: process DDL for table");
 
         RDFParser rdfParser = Rio.createParser(rdfFormat);
 
         SofarTracker sofarTracker = SofarTracker.createUnitLikeTracker("statements", statements);
-
         logger.info("{}", sofarTracker.toString());
 
-        TRDatabaseDDLAnalyzer TRDatabaseDDLAnalyzer = new TRDatabaseDDLAnalyzer(tableName);
-        TRDatabaseDDLAnalyzer.bind(sofarTracker);
+        TRDatabaseDDLAnalyzer trDatabaseDDLAnalyzer = new TRDatabaseDDLAnalyzer(tableName);
+        trDatabaseDDLAnalyzer.bind(sofarTracker);
 
-        rdfParser.setRDFHandler(TRDatabaseDDLAnalyzer);
-
-        new Thread(new SofarWatchDog(sofarTracker)).start();
+        rdfParser.setRDFHandler(trDatabaseDDLAnalyzer);
+        ///new Thread(new SofarWatchDog(sofarTracker)).start();
 
         rdfParser.parse(inputStream, namespace);
 
         logger.info(":: finish processing DDL");
 
-        Map<IRI, Pair<String, String>> res = TRDatabaseDDLAnalyzer.getPredicates();
+        Map<IRI, FieldDescriptor> res = trDatabaseDDLAnalyzer.getFieldDescriptorMap();
 
-        TRDatabaseDDLAnalyzer.close();
+        trDatabaseDDLAnalyzer.close();
 
         return res;
     }
 
-    public static long load(@Nonnull InputStream inputStream, long statements, RDFFormat rdfFormat, Map<IRI, Pair<String, String>> predicates, String namespace, PrintWriter pw, String tableName, int batchSize) throws Exception {
+    public static long sqlWrite(@Nonnull InputStream inputStream, long statements, RDFFormat rdfFormat, Map<IRI, FieldDescriptor> fieldDescriptorMap, String namespace, PrintWriter pw, String tableName, int batchSize) throws Exception {
 
         logger.info(":: start loading");
 
-        TRDatabaseSQLWriterHandler handler = new TRDatabaseSQLWriterHandler(predicates, pw, tableName);
-        //RDFHandler handler = new TRDatabaseMultilineSQLWriterHandler(predicates, pw, tableName, batchSize);
-        //RDFHandler handler = new TRDatabaseCSVWriterHandler(predicates, pw, tableName);
+        TRDatabaseSQLWriterHandler trDatabaseSQLWriterHandler = new TRDatabaseSQLWriterHandler(fieldDescriptorMap, pw, tableName);
 
         SofarTracker sofarTracker = SofarTracker.createUnitLikeTracker("statements", statements);
-        ((Trackable)handler).bind(sofarTracker);
+        trDatabaseSQLWriterHandler.bind(sofarTracker);
+
         RDFParser rdfParser = Rio.createParser(rdfFormat);
-        rdfParser.setRDFHandler(handler);
-        new Thread(new SofarWatchDog(sofarTracker)).start();
+        rdfParser.setRDFHandler(trDatabaseSQLWriterHandler);
+
+        //new Thread(new SofarWatchDog(sofarTracker)).start();
 
         rdfParser.parse(inputStream, namespace);
 
         logger.info(":: finish loading");
+
+
 
         // TODO add row counter
         return 0L;
@@ -114,19 +113,30 @@ public class TRLoader {
     public static void processFile(@Nonnull String path, String namespace, RDFFormat rdfFormat, PrintWriter printWriter, String tableName, int batchSize) throws Exception {
 
 
-        // Count statements
+        // Count statements (will prepare Sofar Tracker estimations)
         long statements = countStatements(autoDetectCompressedStream(path), rdfFormat, namespace);
         logger.info("Detected {} RDF statements in source file");
 
-        MDC.put("mode", "DDL and stats");
         // Process generate table DDL & gather stats
-        Map<IRI, Pair<String, String>> predicates = ddlAndPredicates(autoDetectCompressedStream(path), statements, rdfFormat, namespace, tableName);
+        Map<IRI, FieldDescriptor> fieldDescriptorMap = ddlAndPredicates(
+                autoDetectCompressedStream(path),
+                statements,
+                rdfFormat,
+                namespace,
+                tableName);
 
-        MDC.put("mode", "Generate SQL");
         // Load
-        long dataRows = load(autoDetectCompressedStream(path), statements, rdfFormat, predicates, namespace, printWriter, tableName, batchSize);
+        long dataRows = sqlWrite(
+                autoDetectCompressedStream(path),
+                statements,
+                rdfFormat,
+                fieldDescriptorMap,
+                namespace,
+                printWriter,
+                tableName,
+                batchSize);
+
         logger.info(":: generated dataRows = {}", dataRows);
-        MDC.remove("mode");
     }
 
     static Options createOptions() {
@@ -136,7 +146,8 @@ public class TRLoader {
                 .addOption("d", "dest", true, "dest ex: ~/dest.sql")
                 .addOption("n", "namespace", true, "ns ex: 'ns'")
                 .addOption("t", "tablename", true, "ex: mytable")
-                .addOption("b", "dbname", true, "ex: postgres");
+                .addOption("b", "dbname", true, "ex: postgres")
+                .addOption("p", "partitionby", true, "ex: 16");
     }
 
     static void printHelp() {
@@ -144,15 +155,19 @@ public class TRLoader {
         formatter.printHelp("Usage: java -jar tr-loader.jar [options]", createOptions());
     }
 
+    static SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
     public static void main(String[] args) throws Exception {
         logger.info("START!");
+        long ts = System.currentTimeMillis();
+        logger.info("begin time = {}", new Date(ts));
         CommandLineParser parser = new DefaultParser();
         CommandLine commandLine = parser.parse(createOptions(), args);
         if (commandLine.hasOption("h")) {
             printHelp();
             return;
         }
-        PropertyService ps = PropertyService.createInstance();
+        PropertyService ps = PropertyService.getInstance();
         ps.setCommandLine(commandLine);
 
         Arrays.asList(args).stream()
@@ -162,22 +177,16 @@ public class TRLoader {
         String namespace = ps.lookupProperty("namespace");
         String dest      = ps.lookupProperty("dest");
         String tableName = ps.lookupProperty("tablename");
+        //String partitionBy = ps.lookupProperty("partitionby");
 
         int batchSize = 50;
 
         new File(dest.substring(0, dest.lastIndexOf('/'))).mkdirs();
 
-        PrintWriter printWriter = new PrintWriter(dest, "UTF-8");
+        PrintWriter printWriter = new PrintWriter(new FileOutputStream(dest), true, StandardCharsets.UTF_8);
         processFile(source, namespace, autoDetectRDFFormat(source), printWriter, tableName, batchSize);
         printWriter.flush();
 
-        // DETAIL:  Cannot enlarge string buffer containing 0 bytes by 1 694 763 225 more bytes.
-        logger.info(":: psql -d {} -a -f '{}'", ps.lookupProperty("dbname"), dest);
-        // > select count(*) from org;
-        //  count
-        //---------
-        // 5 131 497
-        //(1 row)
         printWriter.close();
         logger.info("FINISH!");
     }

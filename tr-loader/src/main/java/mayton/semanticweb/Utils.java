@@ -15,7 +15,7 @@ public class Utils {
 
     private Utils() {}
 
-    private static Set<String> sqlReservedWords = Sets.newHashSet("type", "table", "view");
+    private static Set<String> sqlReservedWords = Sets.newHashSet("type", "table", "view", "from", "to", "rank");
 
     @Nonnull
     public static String formatFieldName(@Nonnull String arg) {
@@ -27,20 +27,17 @@ public class Utils {
     }
 
     @Nonnull
-        public static String wrapPostgresLiteral(@Nonnull String arg) {
+    public static String wrapPostgresLiteral(@Nonnull String arg) {
         StringBuilder sb = new StringBuilder(arg.length() + 2);
         sb.append("'");
         for(int i = 0 ; i < arg.length(); i++) {
             int c = arg.charAt(i);
             if (c < 32) {
                 if (c == '\n') {
-                    //sb.append("\\n");
                     sb.append("\\x").append(format("%02X", c));
                 } else if (c == '\r') {
-                    //sb.append("\\r");
                     sb.append("\\x").append(format("%02X", c));
                 } else if (c == '\t') {
-                    //sb.append("\\t");
                     sb.append("\\x").append(format("%02X", c));
                 } else {
                     sb.append("\\x").append(format("%02X", c));
