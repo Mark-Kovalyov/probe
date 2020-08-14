@@ -54,8 +54,8 @@
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <manifestEntries>
                                         <Main-Class>mayton.json.JsonCheck</Main-Class>
-                                        <CreatedBy>refinitiv</CreatedBy>
-                                        <Built-By>refinitiv</Built-By>
+                                        <CreatedBy>mayton</CreatedBy>
+                                        <Built-By>mayton</Built-By>
                                     </manifestEntries>
                                 </transformer>
                             </transformers>
