@@ -18,7 +18,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static mayton.semanticweb.Utils.*;
+import static mayton.semanticweb.Utils.filter;
+
 
 public class TRDatabaseSQLWriterHandler extends TRTableProcess implements RDFHandler, Trackable, AutoCloseable {
 
@@ -29,10 +30,6 @@ public class TRDatabaseSQLWriterHandler extends TRTableProcess implements RDFHan
     private Resource subject = null;
 
     private Map<IRI, String> currentDmlOperatorFields = new LinkedHashMap<>(24);
-
-    private SofarTracker sofarTracker;
-
-    private long cnt = 0;
 
     public TRDatabaseSQLWriterHandler(Map<IRI, FieldDescriptor> fieldDescriptorMap, PrintWriter pw, String tableName) {
         super(tableName);
@@ -49,7 +46,7 @@ public class TRDatabaseSQLWriterHandler extends TRTableProcess implements RDFHan
 
     @Override
     public void startRDF() throws RDFHandlerException {
-
+        pw.println("begin transaction;");
     }
 
     @Override
@@ -70,19 +67,22 @@ public class TRDatabaseSQLWriterHandler extends TRTableProcess implements RDFHan
         pw.print(") VALUES ('");
 
         if (st == null) {
-            pw.print(filterNamespaces(subject.stringValue()));
+            pw.print(filter(subject.stringValue()));
         } else {
-            pw.print(filterNamespaces(st.getSubject().stringValue()));
+            pw.print(filter(st.getSubject().stringValue()));
         }
         pw.print("',");
 
+
+
         pw.print(currentDmlOperatorFields.values()
                 .stream()
-                .map(Utils::trimQuotes)                     // "12345" => 12345
+                .map(x -> filter(x))
+                /*.map(Utils::trimQuotes)                     // "12345" => 12345
                 .map(Utils::filterNamespaces)               // http://permid.org/123/ => 123/
-                .map(Utils::filterDateTime)                 // "2004-11-18T00:00:00Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> => "2004-11-18T00:00:00Z"
+                .map(Utils::filterXmlSchemaTypes)           // "2004-11-18T00:00:00Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> => "2004-11-18T00:00:00Z"
                 .map(Utils::trimSlash)                      // 12345/ => 12345
-                .map(Utils::wrapPostgresLiteral)            // слон => U&'\0441\043B\043E\043D'
+                .map(Utils::wrapPostgresLiteral)            // слон => U&'\0441\043B\043E\043D'*/
                 .collect(Collectors.joining(",")));
 
         currentDmlOperatorFields.clear();
@@ -93,10 +93,14 @@ public class TRDatabaseSQLWriterHandler extends TRTableProcess implements RDFHan
 
     @Override
     public void handleStatement(Statement st) throws RDFHandlerException {
-        logger.trace("::: {}, {}, {}", st.getSubject(), st.getPredicate(), st.getObject());
+        if (logger.isTraceEnabled()) {
+            logger.trace("{}, {}, {}", st.getSubject(), st.getPredicate(), st.getObject());
+        }
         cnt++;
-        synchronized (sofarTracker) {
-            sofarTracker.update(cnt);
+        if (cnt % 10 == 0) {
+            synchronized (sofarTracker) {
+                sofarTracker.update(cnt);
+            }
         }
         if (subject == null) {
             subject = st.getSubject();
@@ -115,6 +119,8 @@ public class TRDatabaseSQLWriterHandler extends TRTableProcess implements RDFHan
     public void endRDF() throws RDFHandlerException {
         sofarTracker.update(sofarTracker.getSize());
         MDC.remove("mode");
+        pw.println("commit;");
+        pw.printf("# overall = %d", cnt);
     }
 
     @Override

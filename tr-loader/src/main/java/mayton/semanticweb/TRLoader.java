@@ -5,6 +5,7 @@ import mayton.semanticweb.rdfhandlers.TRDatabaseCountingHandler;
 import mayton.semanticweb.rdfhandlers.TRDatabaseDDLAnalyzer;
 import mayton.semanticweb.rdfhandlers.TRDatabaseSQLWriterHandler;
 import org.apache.commons.cli.*;
+import org.eclipse.rdf4j.common.io.IOUtil;
 import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.rio.RDFFormat;
 import org.eclipse.rdf4j.rio.RDFParser;
@@ -19,25 +20,26 @@ import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.zip.GZIPInputStream;
 
 
-public class TRLoader<dateFormatter> {
+public class TRLoader {
 
     static Logger logger = LoggerFactory.getLogger(TRLoader.class);
 
-    public static long countStatements(InputStream inputStream, RDFFormat rdfFormat, String baseUri) throws IOException {
+    public static long countStatements(InputStream inputStream, RDFFormat rdfFormat, String baseUri, String tableName) throws IOException {
         logger.info(":: Estimation");
         RDFParser rdfParser = Rio.createParser(rdfFormat);
-        TRDatabaseCountingHandler countingHandler = new TRDatabaseCountingHandler();
+        TRDatabaseCountingHandler countingHandler = new TRDatabaseCountingHandler(tableName);
         rdfParser.setRDFHandler(countingHandler);
         rdfParser.parse(inputStream, baseUri);
         logger.info(":: Finish estimation");
         return countingHandler.getStatements();
     }
 
-    public static Map<IRI, FieldDescriptor>  ddlAndPredicates(InputStream inputStream, long statements, RDFFormat rdfFormat, String namespace, String tableName) throws Exception {
+    public static Map<IRI, FieldDescriptor>  ddlAndPredicates(InputStream inputStream, long statements, RDFFormat rdfFormat, String namespace, String tableName, PrintWriter pw) throws Exception {
 
         logger.info(":: process DDL for table");
 
@@ -46,11 +48,12 @@ public class TRLoader<dateFormatter> {
         SofarTracker sofarTracker = SofarTracker.createUnitLikeTracker("statements", statements);
         logger.info("{}", sofarTracker.toString());
 
-        TRDatabaseDDLAnalyzer trDatabaseDDLAnalyzer = new TRDatabaseDDLAnalyzer(tableName);
+        TRDatabaseDDLAnalyzer trDatabaseDDLAnalyzer = new TRDatabaseDDLAnalyzer(tableName,pw);
         trDatabaseDDLAnalyzer.bind(sofarTracker);
 
         rdfParser.setRDFHandler(trDatabaseDDLAnalyzer);
-        ///new Thread(new SofarWatchDog(sofarTracker)).start();
+
+        new Thread(new SofarWatchDog(sofarTracker)).start();
 
         rdfParser.parse(inputStream, namespace);
 
@@ -75,7 +78,7 @@ public class TRLoader<dateFormatter> {
         RDFParser rdfParser = Rio.createParser(rdfFormat);
         rdfParser.setRDFHandler(trDatabaseSQLWriterHandler);
 
-        //new Thread(new SofarWatchDog(sofarTracker)).start();
+        new Thread(new SofarWatchDog(sofarTracker)).start();
 
         rdfParser.parse(inputStream, namespace);
 
@@ -97,24 +100,35 @@ public class TRLoader<dateFormatter> {
         }
     }
 
+    static List<RDFFormat> rdfFormats = Arrays.asList(
+            RDFFormat.TRIG,
+            RDFFormat.RDFXML,
+            RDFFormat.TURTLE,
+            RDFFormat.JSONLD,
+            RDFFormat.NTRIPLES,
+            RDFFormat.NQUADS
+    );
+
     static RDFFormat autoDetectRDFFormat(String path) {
         String trimmed = path.endsWith(".gz") ? path.substring(0, path.length() - ".gz".length()) : path;
-        if (trimmed.endsWith(".ttl")) {
-            logger.debug("RDFFormat.TURTLE detected");
-            return RDFFormat.TURTLE;
-        } else if (trimmed.endsWith(".ntriples")) {
-            logger.debug("RDFFormat.NTRIPLES");
-            return RDFFormat.NTRIPLES;
-        } else {
-            throw new IllegalArgumentException("Unable to detect RDF format by " + path);
+        for(RDFFormat currentRdfFormat : rdfFormats) {
+            for(String extension : currentRdfFormat.getFileExtensions()) {
+                if (trimmed.endsWith(extension)) {
+                    return currentRdfFormat;
+                }
+            }
         }
+        throw new IllegalArgumentException("Unable to detect RDF format by " + path);
     }
 
-    public static void processFile(@Nonnull String path, String namespace, RDFFormat rdfFormat, PrintWriter printWriter, String tableName, int batchSize) throws Exception {
+    public static void processFile(@Nonnull String path, String namespace, RDFFormat rdfFormat,
+                                   PrintWriter sqlWriter,
+                                   PrintWriter sqlDdlWriter,
+                                   String tableName, int batchSize) throws Exception {
 
 
         // Count statements (will prepare Sofar Tracker estimations)
-        long statements = countStatements(autoDetectCompressedStream(path), rdfFormat, namespace);
+        long statements = countStatements(autoDetectCompressedStream(path), rdfFormat, namespace, tableName);
         logger.info("Detected {} RDF statements in source file");
 
         // Process generate table DDL & gather stats
@@ -123,7 +137,9 @@ public class TRLoader<dateFormatter> {
                 statements,
                 rdfFormat,
                 namespace,
-                tableName);
+                tableName,
+                sqlDdlWriter
+        );
 
         // Load
         long dataRows = sqlWrite(
@@ -132,7 +148,7 @@ public class TRLoader<dateFormatter> {
                 rdfFormat,
                 fieldDescriptorMap,
                 namespace,
-                printWriter,
+                sqlWriter,
                 tableName,
                 batchSize);
 
@@ -144,6 +160,7 @@ public class TRLoader<dateFormatter> {
                 .addOption("h", "print help")
                 .addOption("s", "source", true, "source ex: ~/source.ttl.gz")
                 .addOption("d", "dest", true, "dest ex: ~/dest.sql")
+                .addOption("l", "ddldest", true, "dest ex: ~/dest-ddl.sql")
                 .addOption("n", "namespace", true, "ns ex: 'ns'")
                 .addOption("t", "tablename", true, "ex: mytable")
                 .addOption("b", "dbname", true, "ex: postgres")
@@ -160,6 +177,8 @@ public class TRLoader<dateFormatter> {
     public static void main(String[] args) throws Exception {
         logger.info("START!");
         long ts = System.currentTimeMillis();
+        long pid = ProcessHandle.current().pid();
+        IOUtil.writeString(String.valueOf(pid), new File("tr-loader.pid"));
         logger.info("begin time = {}", new Date(ts));
         CommandLineParser parser = new DefaultParser();
         CommandLine commandLine = parser.parse(createOptions(), args);
@@ -176,18 +195,29 @@ public class TRLoader<dateFormatter> {
         String source    = ps.lookupProperty("source");
         String namespace = ps.lookupProperty("namespace");
         String dest      = ps.lookupProperty("dest");
+        String ddlDest   = ps.lookupProperty("ddldest");
         String tableName = ps.lookupProperty("tablename");
-        //String partitionBy = ps.lookupProperty("partitionby");
+        String tablespace = ps.lookupProperty("tablespace");
 
         int batchSize = 50;
 
         new File(dest.substring(0, dest.lastIndexOf('/'))).mkdirs();
 
-        PrintWriter printWriter = new PrintWriter(new FileOutputStream(dest), true, StandardCharsets.UTF_8);
-        processFile(source, namespace, autoDetectRDFFormat(source), printWriter, tableName, batchSize);
-        printWriter.flush();
+        PrintWriter sqlWriter = new PrintWriter(new FileOutputStream(dest), true, StandardCharsets.UTF_8);
+        PrintWriter sqlDdlWriter = new PrintWriter(new FileOutputStream(ddlDest), true, StandardCharsets.UTF_8);
 
-        printWriter.close();
+
+        processFile(source,
+                namespace,
+                autoDetectRDFFormat(source),
+                sqlWriter,
+                sqlDdlWriter,
+                tableName,
+                batchSize
+        );
+
+        sqlWriter.flush();
+        sqlWriter.close();
         logger.info("FINISH!");
     }
 

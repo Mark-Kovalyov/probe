@@ -8,4 +8,5 @@ public class Constants {
     public static final String HTTP_PERMID_ORG_ONTOLOGY_FINANCIAL    = "http://permid.org/ontology/financial/";
     public static final String HTTPS_PERMID_ORG                      = "https://permid.org/";
 
+
 }

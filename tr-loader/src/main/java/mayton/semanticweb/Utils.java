@@ -3,6 +3,8 @@ package mayton.semanticweb;
 import com.google.common.base.CaseFormat;
 import com.google.common.collect.Sets;
 import org.apache.commons.lang3.StringUtils;
+import org.eclipse.rdf4j.model.IRI;
+import org.eclipse.rdf4j.model.vocabulary.XSD;
 
 import javax.annotation.Nonnull;
 import java.util.Set;
@@ -13,7 +15,8 @@ import static org.apache.commons.lang3.StringUtils.replace;
 
 public class Utils {
 
-    private Utils() {}
+    private Utils() {
+    }
 
     private static Set<String> sqlReservedWords = Sets.newHashSet("type", "table", "view", "from", "to", "rank");
 
@@ -30,7 +33,7 @@ public class Utils {
     public static String wrapPostgresLiteral(@Nonnull String arg) {
         StringBuilder sb = new StringBuilder(arg.length() + 2);
         sb.append("'");
-        for(int i = 0 ; i < arg.length(); i++) {
+        for (int i = 0; i < arg.length(); i++) {
             int c = arg.charAt(i);
             if (c < 32) {
                 if (c == '\n') {
@@ -43,10 +46,10 @@ public class Utils {
                     sb.append("\\x").append(format("%02X", c));
                 }
             } else if (c < 128) {
-                if (c=='\'') {
+                if (c == '\'') {
                     sb.append("\\x27");
                 } else {
-                    sb.append((char)c);
+                    sb.append((char) c);
                 }
             } else if (c < 255) {
                 sb.append("\\x").append(format("%02X", c));
@@ -60,17 +63,27 @@ public class Utils {
 
     @Nonnull
     public static String trimQuotes(@Nonnull String arg) {
-        return StringUtils.strip(arg,"\"");
+        return StringUtils.strip(arg, "\"");
     }
 
     @Nonnull
-    public static String filterDateTime(@Nonnull String arg) {
-        int res = arg.indexOf("^^<http://www.w3.org/2001/XMLSchema#dateTime>");
+    public static String filterXmlSchemaTypes(@Nonnull String arg) {
+        int res = arg.indexOf("^^<http://www.w3.org/2001/XMLSchema#");
         if (res > 0) {
             return arg.substring(0, res);
         } else {
             return arg;
         }
+    }
+
+    public static String filter(String arg) {
+        return wrapPostgresLiteral(trimSlash(filterXmlSchemaTypes(filterNamespaces(trimQuotes(arg)))));
+    }
+
+    @Nonnull
+    public static IRI detectXmlSchemaTypes(@Nonnull String arg) {
+        // todo fix
+        return XSD.STRING;
     }
 
     @Nonnull

@@ -6,6 +6,12 @@ public class FieldDescriptor {
     public String dataType;
     public int maxLength; // chars
 
+    public FieldDescriptor(String fieldName, int maxLength) {
+        this.fieldName = fieldName;
+        this.dataType = "varchar";
+        this.maxLength = maxLength;
+    }
+
     public FieldDescriptor(String fieldName) {
         this.fieldName = fieldName;
         this.dataType = "varchar";

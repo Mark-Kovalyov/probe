@@ -5,11 +5,17 @@ import mayton.semanticweb.Trackable;
 import org.eclipse.rdf4j.model.Statement;
 import org.eclipse.rdf4j.rio.RDFHandler;
 import org.eclipse.rdf4j.rio.RDFHandlerException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
-public class TRDatabaseCountingHandler implements RDFHandler, Trackable {
+public class TRDatabaseCountingHandler extends TRTableProcess implements RDFHandler, Trackable {
 
-    private long statements = 0;
+    public TRDatabaseCountingHandler(String tableName) {
+        super(tableName);
+    }
+
+    static Logger logger = LoggerFactory.getLogger(TRDatabaseCountingHandler.class);
 
     @Override
     public void startRDF() throws RDFHandlerException {
@@ -28,7 +34,10 @@ public class TRDatabaseCountingHandler implements RDFHandler, Trackable {
 
     @Override
     public void handleStatement(Statement st) throws RDFHandlerException {
-        statements++;
+        cnt++;
+        if (logger.isTraceEnabled()) {
+            logger.trace("{}, {}, {}", st.getSubject(), st.getPredicate(), st.getObject());
+        }
     }
 
     @Override
@@ -37,7 +46,7 @@ public class TRDatabaseCountingHandler implements RDFHandler, Trackable {
     }
 
     public long getStatements() {
-        return statements;
+        return cnt;
     }
 
     @Override

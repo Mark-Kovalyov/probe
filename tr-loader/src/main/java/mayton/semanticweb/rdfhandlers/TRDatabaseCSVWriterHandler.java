@@ -30,8 +30,6 @@ public class TRDatabaseCSVWriterHandler extends TRTableProcess implements RDFHan
 
     private Map<IRI, String> currentDmlOperatorFields = new LinkedHashMap<>(24);
 
-    private SofarTracker sofarTracker;
-
     private long cnt = 0;
 
     public TRDatabaseCSVWriterHandler(Map<IRI, FieldDescriptor> fieldDescriptorMap, PrintWriter pw, String tableName) {
@@ -74,7 +72,7 @@ public class TRDatabaseCSVWriterHandler extends TRTableProcess implements RDFHan
                 .stream()
                 .map(Utils::trimQuotes)                     // "12345" => 12345
                 .map(Utils::filterNamespaces)               // http://permid.org/123/ => 123/
-                .map(Utils::filterDateTime)                 // "2004-11-18T00:00:00Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> => "2004-11-18T00:00:00Z"
+                .map(Utils::filterXmlSchemaTypes)                 // "2004-11-18T00:00:00Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> => "2004-11-18T00:00:00Z"
                 .map(Utils::wrapPostgresLiteral)
                 .map(Utils::trimSlash)                      // 12345/ => 12345
                 .collect(Collectors.joining(";"));

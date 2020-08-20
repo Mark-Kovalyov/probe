@@ -1,0 +1,6 @@
+#!/bin/bash -v
+
+if [ -f "tr-loader.pid" ]; then
+  PID=$(cat tr-loader.pid)
+  jcmd $PID JFR.start
+fi

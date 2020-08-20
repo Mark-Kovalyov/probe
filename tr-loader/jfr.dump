@@ -1,0 +1,11 @@
+#!/bin/bash -v
+
+if [ -f "tr-loader.pid" ]; then
+  cdate=$(date +"%Y-%m-%d")
+  PID=$(cat tr-loader.pid.pid)
+  jcmd $PID JFR.dump name=flight-$cdate.jfr
+fi
+
+
+
+
