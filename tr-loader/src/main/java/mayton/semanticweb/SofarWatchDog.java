@@ -20,7 +20,7 @@ public class SofarWatchDog implements Runnable {
             while (!Thread.interrupted()) {
                 // TODO: Replace with Atomic
                 synchronized (sofarTracker) {
-                    logger.debug(sofarTracker.toString());
+                    logger.info(sofarTracker.toString());
                     if (sofarTracker.getPosition() == sofarTracker.getSize()) {
                         logger.info("Sofar tracker watcher is finished!");
                         break;

@@ -2,7 +2,6 @@ package mayton.semanticweb.rdfhandlers;
 
 import mayton.lib.SofarTracker;
 import mayton.semanticweb.FieldDescriptor;
-import org.apache.commons.lang3.tuple.Pair;
 import org.eclipse.rdf4j.model.IRI;
 
 import java.util.Map;

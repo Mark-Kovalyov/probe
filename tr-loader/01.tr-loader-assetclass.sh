@@ -13,14 +13,14 @@ mvn clean package
  --ddldest "$SQL_HOME/$CNT.create-$TAB.sql" \
  --tablename "$TAB"
 
-psql -d dht -a -f "$SQL_HOME/$CNT.create-$TAB.sql"
+psql -d $DEMO_DB -a -f "$SQL_HOME/$CNT.create-$TAB.sql"
 
-psql -d dht -a -f "$SQL_HOME/$CNT.insert-$TAB.sql" > "/bigdata/tmp/$CNT.out" "2>/bigdata/tmp/$CNT.err"
+psql -d $DEMO_DB -a -f "$SQL_HOME/$CNT.insert-$TAB.sql"
 
-psql -d dht -c "DELETE FROM $TAB WHERE id IN (SELECT id FROM (SELECT row_number() OVER (PARTITION BY id), id FROM $TAB) x WHERE x.row_number > 1)"
+psql -d $DEMO_DB -c "DELETE FROM $TAB WHERE id IN (SELECT id FROM (SELECT row_number() OVER (PARTITION BY id), id FROM $TAB) x WHERE x.row_number > 1)"
 
-psql -d dht -c "CREATE UNIQUE INDEX {$TAB}_pk ON $TAB(id) tablespace dhtspace"
+psql -d $DEMO_DB -c "CREATE UNIQUE INDEX assetclass_pk ON $TAB(id) tablespace dhtspace"
 
-psql -d dht -c "analyze verbose $TAB"
+psql -d $DEMO_DB -c "analyze verbose $TAB"
 
 

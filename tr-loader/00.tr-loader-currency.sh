@@ -13,10 +13,10 @@ mvn clean package
  --ddldest "$SQL_HOME/$CNT.create-$TAB.sql" \
  --tablename "$TAB"
 
-psql -d dht -a -f "$SQL_HOME/00.create-$TAB.sql"
+psql -d $DEMO_DB -a -f "$SQL_HOME/00.create-$TAB.sql"
 
-psql -d dht -a -f "$SQL_HOME/00.insert-$TAB.sql" 
+psql -d $DEMO_DB -a -f "$SQL_HOME/00.insert-$TAB.sql"
 
-psql -d dht -c "analyze verbose $TAB"
+psql -d $DEMO_DB -c "analyze verbose $TAB"
 
 

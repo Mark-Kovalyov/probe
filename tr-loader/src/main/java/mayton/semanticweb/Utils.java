@@ -21,7 +21,7 @@ public class Utils {
     private static Set<String> sqlReservedWords = Sets.newHashSet("type", "table", "view", "from", "to", "rank");
 
     @Nonnull
-    public static String formatFieldName(@Nonnull String arg) {
+    public static String filterSQLWordsAndDashStyle(@Nonnull String arg) {
         if (sqlReservedWords.contains(arg.toLowerCase())) {
             return "\"" + arg.toUpperCase() + "\"";
         } else {
@@ -76,8 +76,12 @@ public class Utils {
         }
     }
 
-    public static String filter(String arg) {
+    public static String filterFieldValue(String arg) {
         return wrapPostgresLiteral(trimSlash(filterXmlSchemaTypes(filterNamespaces(trimQuotes(arg)))));
+    }
+
+    public static String filterFieldName(String arg) {
+        return filterNamespaces(arg);
     }
 
     @Nonnull
@@ -91,18 +95,62 @@ public class Utils {
         return value.endsWith("/") ? value.substring(0, value.length() - 1) : value;
     }
 
+    static final String RDFS = "rdfs:";
+
+    public static String filterPrefix(@Nonnull String arg) {
+        if (arg.startsWith(RDFS)) {
+            return arg.substring(RDFS.length());
+        } else {
+            return arg;
+        }
+    }
+
     @Nonnull
     public static String filterNamespaces(@Nonnull String arg) {
-        if (arg.startsWith(HTTP_PERMID_ORG_ONTOLOGY_ORGANIZATION)) {
-            return arg.substring(HTTP_PERMID_ORG_ONTOLOGY_ORGANIZATION.length());
-        } else if (arg.startsWith(HTTP_WWW_W_3_ORG_2006_VCARD_NS)) {
-            return arg.substring(HTTP_WWW_W_3_ORG_2006_VCARD_NS.length());
-        } else if (arg.startsWith(HTTP_PERMID_ORG_ONTOLOGY_FINANCIAL)) {
-            return arg.substring(HTTP_PERMID_ORG_ONTOLOGY_FINANCIAL.length());
-        } else if (arg.startsWith(HTTPS_PERMID_ORG)) {
-            return arg.substring(HTTPS_PERMID_ORG.length());
-        } else if (arg.startsWith(HTTP_SWS_GEONAMES_ORG)){
-            return arg.substring(HTTP_SWS_GEONAMES_ORG.length());
+        if (arg.startsWith("htt")) {
+            if (arg.startsWith("http://www.w3.org/")) {
+                if (arg.startsWith(W3ORG_2006)) {
+                    return arg.substring(W3ORG_2006.length());
+                } else if (arg.startsWith(W3ORG_1999)) {
+                    return arg.substring(W3ORG_1999.length());
+                } else if (arg.startsWith(W3ORG_2004)) {
+                    return arg.substring(W3ORG_2004.length());
+                } else if (arg.startsWith(W3ORG_2000)) {
+                    return arg.substring(W3ORG_2000.length());
+                } else {
+                    return arg;
+                }
+            } else if (arg.startsWith("http://permid.org/ontology/")){
+                if (arg.startsWith(ORGANIZATION)) {
+                    return arg.substring(ORGANIZATION.length());
+                } else if (arg.startsWith(FINANCIAL)) {
+                    return arg.substring(FINANCIAL.length());
+                } else if (arg.startsWith(PERMID)) {
+                    return arg.substring(PERMID.length());
+                } else if (arg.startsWith(COMMON)) {
+                    return arg.substring(COMMON.length());
+                } else if (arg.startsWith(CURRENCY)) {
+                    return arg.substring(CURRENCY.length());
+                } else if (arg.startsWith(VCARD)) {
+                    return arg.substring(VCARD.length());
+                } else if (arg.startsWith(PERSON)) {
+                    return arg.substring(PERSON.length());
+                } else if (arg.startsWith(MDAAS)) {
+                    return arg.substring(MDAAS.length());
+                } else {
+                    return arg;
+                }
+            } else {
+                if (arg.startsWith(HTTP_SWS_GEONAMES_ORG)) {
+                    return arg.substring(HTTP_SWS_GEONAMES_ORG.length());
+                } else if (arg.startsWith(PERMID)) {
+                    return arg.substring(PERMID.length());
+                } else if (arg.startsWith(OMG)) {
+                    return arg.substring(OMG.length());
+                } else {
+                    return arg;
+                }
+            }
         } else {
             return arg;
         }

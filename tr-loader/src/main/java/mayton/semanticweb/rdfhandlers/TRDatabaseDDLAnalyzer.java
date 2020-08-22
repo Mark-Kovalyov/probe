@@ -5,33 +5,25 @@ import mayton.semanticweb.FieldDescriptor;
 import mayton.semanticweb.PropertyService;
 import mayton.semanticweb.Trackable;
 import mayton.semanticweb.Utils;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVPrinter;
-import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Resource;
 import org.eclipse.rdf4j.model.Statement;
 import org.eclipse.rdf4j.model.Value;
 import org.eclipse.rdf4j.rio.RDFHandler;
-import org.eclipse.rdf4j.rio.RDFHandlerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashMap;
 import java.util.StringJoiner;
 
-import static mayton.semanticweb.Utils.filter;
+import static mayton.semanticweb.Utils.filterFieldValue;
 
+@SuppressWarnings("java:S2629")
+@Deprecated // TODO: Refactor all logic as TRDatabaseSQLWriterHandler
 public class TRDatabaseDDLAnalyzer extends TRTableProcess implements RDFHandler, Trackable, AutoCloseable {
-
-    private long cnt;
 
     private FieldDescriptor primaryKeyDescriptor = new FieldDescriptor("id", 255);
 
@@ -39,7 +31,7 @@ public class TRDatabaseDDLAnalyzer extends TRTableProcess implements RDFHandler,
 
     private PrintWriter printWriter;
 
-    public TRDatabaseDDLAnalyzer(String tableName, PrintWriter sqlDdlWriter) throws IOException {
+    public TRDatabaseDDLAnalyzer(String tableName, PrintWriter sqlDdlWriter) {
         super(tableName);
         MDC.put("mode", "DDL analyzer");
         fieldDescriptorMap = new LinkedHashMap<>(24);
@@ -49,14 +41,14 @@ public class TRDatabaseDDLAnalyzer extends TRTableProcess implements RDFHandler,
     }
 
     @Override
-    public void startRDF() throws RDFHandlerException {
+    public void startRDF() {
         logger.info(":: start RDF");
     }
 
 
 
     @Override
-    public void endRDF() throws RDFHandlerException {
+    public void endRDF() {
         sofarTracker.update(sofarTracker.getSize());
         logger.info("create table {}(", tableName);
         printWriter.println("drop table " + tableName + ";");
@@ -77,43 +69,41 @@ public class TRDatabaseDDLAnalyzer extends TRTableProcess implements RDFHandler,
     }
 
     @Override
-    public void handleNamespace(String prefix, String uri) throws RDFHandlerException {
+    public void handleNamespace(String prefix, String uri) {
         logger.info(":: handle namespace prefix = {} , uri {}", prefix, uri);
     }
 
     @Override
-    public void handleStatement(Statement st) throws RDFHandlerException {
+    public void handleStatement(Statement st) {
         // TODO: Add primary key maxLength processing
         if (logger.isTraceEnabled()) {
             logger.trace("::: {}, {}, {}", st.getSubject(), st.getPredicate(), st.getObject());
         }
 
-        //CSVRecord csvRecord = new CSVRecord();
-        //csvPrinter.printRecord();
         Resource context = st.getContext();
         if (context != null) {
-            logger.trace(":: context = {}", context.toString());
+            logger.trace(":: context = {}", context);
         }
         Resource subject = st.getSubject();
-        logger.trace(":: subject = {}", subject.toString());
+        logger.trace(":: subject = {}", subject);
 
         IRI predicate    = st.getPredicate();
-        logger.trace(":: predicate = {}", predicate.toString());
+        logger.trace(":: predicate = {}", predicate);
 
         Value object     = st.getObject();
 
         logger.trace(object.stringValue());
 
-        String fieldName = Utils.formatFieldName(predicate.getLocalName());
+        String fieldName = Utils.filterSQLWordsAndDashStyle(predicate.getLocalName());
 
         if (fieldDescriptorMap.containsKey(predicate)) {
-            fieldDescriptorMap.get(predicate).updateMaxLength(filter(object.stringValue()).length());
+            fieldDescriptorMap.get(predicate).updateMaxLength(filterFieldValue(object.stringValue()).length());
         } else {
             fieldDescriptorMap.put(predicate, new FieldDescriptor(fieldName));
         }
 
         cnt++;
-        if (cnt % 10 == 0) {
+        if (cnt % 100 == 0) {
             synchronized (sofarTracker) {
                 sofarTracker.update(cnt);
             }
@@ -121,8 +111,8 @@ public class TRDatabaseDDLAnalyzer extends TRTableProcess implements RDFHandler,
     }
 
     @Override
-    public void handleComment(String comment) throws RDFHandlerException {
-
+    public void handleComment(String comment) {
+        // No action
     }
 
     @Override

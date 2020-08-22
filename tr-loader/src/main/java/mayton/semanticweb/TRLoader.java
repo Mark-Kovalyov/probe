@@ -5,7 +5,6 @@ import mayton.semanticweb.rdfhandlers.TRDatabaseCountingHandler;
 import mayton.semanticweb.rdfhandlers.TRDatabaseDDLAnalyzer;
 import mayton.semanticweb.rdfhandlers.TRDatabaseSQLWriterHandler;
 import org.apache.commons.cli.*;
-import org.eclipse.rdf4j.common.io.IOUtil;
 import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.rio.RDFFormat;
 import org.eclipse.rdf4j.rio.RDFParser;
@@ -14,9 +13,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
-import javax.swing.text.DateFormatter;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.zip.GZIPInputStream;
 
-
+// TODO: Migrate to Spring-Boot or Guice!
 public class TRLoader {
 
     static Logger logger = LoggerFactory.getLogger(TRLoader.class);
@@ -40,52 +40,31 @@ public class TRLoader {
     }
 
     public static Map<IRI, FieldDescriptor>  ddlAndPredicates(InputStream inputStream, long statements, RDFFormat rdfFormat, String namespace, String tableName, PrintWriter pw) throws Exception {
-
         logger.info(":: process DDL for table");
-
         RDFParser rdfParser = Rio.createParser(rdfFormat);
-
         SofarTracker sofarTracker = SofarTracker.createUnitLikeTracker("statements", statements);
-        logger.info("{}", sofarTracker.toString());
-
+        logger.info("{}", sofarTracker);
         TRDatabaseDDLAnalyzer trDatabaseDDLAnalyzer = new TRDatabaseDDLAnalyzer(tableName,pw);
         trDatabaseDDLAnalyzer.bind(sofarTracker);
-
         rdfParser.setRDFHandler(trDatabaseDDLAnalyzer);
-
         new Thread(new SofarWatchDog(sofarTracker)).start();
-
         rdfParser.parse(inputStream, namespace);
-
         logger.info(":: finish processing DDL");
-
         Map<IRI, FieldDescriptor> res = trDatabaseDDLAnalyzer.getFieldDescriptorMap();
-
         trDatabaseDDLAnalyzer.close();
-
         return res;
     }
 
-    public static long sqlWrite(@Nonnull InputStream inputStream, long statements, RDFFormat rdfFormat, Map<IRI, FieldDescriptor> fieldDescriptorMap, String namespace, PrintWriter pw, String tableName, int batchSize) throws Exception {
-
+    public static long sqlWrite(@Nonnull InputStream inputStream, long statements, RDFFormat rdfFormat, Map<IRI, FieldDescriptor> fieldDescriptorMap, String namespace, PrintWriter pw, String tableName) throws IOException {
         logger.info(":: start loading");
-
         TRDatabaseSQLWriterHandler trDatabaseSQLWriterHandler = new TRDatabaseSQLWriterHandler(fieldDescriptorMap, pw, tableName);
-
         SofarTracker sofarTracker = SofarTracker.createUnitLikeTracker("statements", statements);
         trDatabaseSQLWriterHandler.bind(sofarTracker);
-
         RDFParser rdfParser = Rio.createParser(rdfFormat);
         rdfParser.setRDFHandler(trDatabaseSQLWriterHandler);
-
         new Thread(new SofarWatchDog(sofarTracker)).start();
-
         rdfParser.parse(inputStream, namespace);
-
         logger.info(":: finish loading");
-
-
-
         // TODO add row counter
         return 0L;
     }
@@ -124,12 +103,12 @@ public class TRLoader {
     public static void processFile(@Nonnull String path, String namespace, RDFFormat rdfFormat,
                                    PrintWriter sqlWriter,
                                    PrintWriter sqlDdlWriter,
-                                   String tableName, int batchSize) throws Exception {
+                                   String tableName) throws Exception {
 
 
         // Count statements (will prepare Sofar Tracker estimations)
         long statements = countStatements(autoDetectCompressedStream(path), rdfFormat, namespace, tableName);
-        logger.info("Detected {} RDF statements in source file");
+        logger.info("Detected {} RDF statements in source file", statements);
 
         // Process generate table DDL & gather stats
         Map<IRI, FieldDescriptor> fieldDescriptorMap = ddlAndPredicates(
@@ -149,8 +128,7 @@ public class TRLoader {
                 fieldDescriptorMap,
                 namespace,
                 sqlWriter,
-                tableName,
-                batchSize);
+                tableName);
 
         logger.info(":: generated dataRows = {}", dataRows);
     }
@@ -172,13 +150,15 @@ public class TRLoader {
         formatter.printHelp("Usage: java -jar tr-loader.jar [options]", createOptions());
     }
 
-    static SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     public static void main(String[] args) throws Exception {
         logger.info("START!");
         long ts = System.currentTimeMillis();
         long pid = ProcessHandle.current().pid();
-        IOUtil.writeString(String.valueOf(pid), new File("tr-loader.pid"));
+        PrintWriter pidWriter = new PrintWriter("tr-loader.pid");
+        pidWriter.println(pid);
+        pidWriter.close();
         logger.info("begin time = {}", new Date(ts));
         CommandLineParser parser = new DefaultParser();
         CommandLine commandLine = parser.parse(createOptions(), args);
@@ -192,32 +172,27 @@ public class TRLoader {
         Arrays.asList(args).stream()
                 .forEach(arg -> logger.info("Command line argument : {}", arg));
 
+        // TODO: Unify with PropertyService
         String source    = ps.lookupProperty("source");
         String namespace = ps.lookupProperty("namespace");
         String dest      = ps.lookupProperty("dest");
         String ddlDest   = ps.lookupProperty("ddldest");
         String tableName = ps.lookupProperty("tablename");
-        String tablespace = ps.lookupProperty("tablespace");
-
-        int batchSize = 50;
 
         new File(dest.substring(0, dest.lastIndexOf('/'))).mkdirs();
 
-        PrintWriter sqlWriter = new PrintWriter(new FileOutputStream(dest), true, StandardCharsets.UTF_8);
-        PrintWriter sqlDdlWriter = new PrintWriter(new FileOutputStream(ddlDest), true, StandardCharsets.UTF_8);
+        try(PrintWriter sqlWriter = new PrintWriter(new FileOutputStream(dest), true, StandardCharsets.UTF_8);
+            PrintWriter sqlDdlWriter = new PrintWriter(new FileOutputStream(ddlDest), true, StandardCharsets.UTF_8)) {
+            processFile(source,
+                    namespace,
+                    autoDetectRDFFormat(source),
+                    sqlWriter,
+                    sqlDdlWriter,
+                    tableName
+            );
+        }
 
-
-        processFile(source,
-                namespace,
-                autoDetectRDFFormat(source),
-                sqlWriter,
-                sqlDdlWriter,
-                tableName,
-                batchSize
-        );
-
-        sqlWriter.flush();
-        sqlWriter.close();
+        Files.delete(Paths.get("tr-loader.pid"));
         logger.info("FINISH!");
     }
 

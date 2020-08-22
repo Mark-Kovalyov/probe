@@ -44,3 +44,5 @@ sensitive.properties
 # Postgresql sequred files
 .pgpass
 
+# Java Flight Recorder files
+.jfr

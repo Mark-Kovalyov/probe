@@ -2,8 +2,8 @@
 
 if [ -f "tr-loader.pid" ]; then
   cdate=$(date +"%Y-%m-%d")
-  PID=$(cat tr-loader.pid.pid)
-  jcmd $PID JFR.dump name=flight-$cdate.jfr
+  PID=$(cat tr-loader.pid)
+  jcmd $PID JFR.dump name=flight-tr-loader-$cdate.jfr
 fi
 
 
