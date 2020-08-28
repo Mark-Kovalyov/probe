@@ -1,0 +1,103 @@
+package mayton.compression.graphs;
+
+import com.fasterxml.jackson.core.JsonEncoding;
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerator;
+import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.*;
+import java.util.Map;
+import java.util.Properties;
+
+public class JsonSerializer implements GraphSerializer {
+
+    static Logger logger = LoggerFactory.getLogger(JsonSerializer.class);
+
+    @Override
+    public void serialize(@NotNull Graph graph, @NotNull OutputStream outputStream, @NotNull Properties properties) throws IOException {
+
+        JsonFactory jfactory = new JsonFactory();
+        JsonGenerator jGenerator = jfactory.createGenerator(outputStream, JsonEncoding.UTF8);
+        jGenerator.writeStartObject();
+        jGenerator.writeObjectField("vertices", graph.getVertexMap().size());
+        jGenerator.writeObjectField("edges", graph.getEdgeWeigthMap().size());
+        jGenerator.writeArrayFieldStart("data");
+
+            for(Map.Entry<String,Vertex> e : graph.getVertexMap().entrySet()) {
+                jGenerator.writeStartObject();
+                jGenerator.writeStringField("name", e.getKey());
+                jGenerator.writeNumberField("outgoing-edges-count", e.getValue().getOutgoingEdges().size());
+                    jGenerator.writeArrayFieldStart("outgoing-edges");
+                    for(Edge edgeEntry : e.getValue().getOutgoingEdges()) {
+                        jGenerator.writeString(edgeEntry.getV2().getId() + ":" + edgeEntry.getWeight());
+                    }
+                    jGenerator.writeEndArray();
+                jGenerator.writeEndObject();
+            }
+
+        jGenerator.writeEndArray();
+
+            /*jGenerator.writeObjectField("vertices", 0);
+            jGenerator.writeObjectField("edges", 0);
+            jGenerator.writeArrayFieldStart("data");
+
+                jGenerator.writeStartObject();
+                    jGenerator.writeStringField("name", "предупредили");
+                    jGenerator.writeNumberField("outgoing-edges-count", 1);
+                    jGenerator.writeArrayFieldStart("outgoing-edges");
+                        jGenerator.writeString("их:2");
+                        jGenerator.writeString("взял:3");
+                    jGenerator.writeEndArray();
+                jGenerator.writeEndObject();
+
+                jGenerator.writeStartObject();
+                jGenerator.writeEndObject();
+
+
+            jGenerator.writeEndArray();*/
+        jGenerator.writeEndObject();
+
+        /*jGenerator.writeStartObject("graph");
+
+        graph.getVertexMap().entrySet().stream().forEach(entry -> {
+
+            try {
+                jGenerator.writeStartObject("entry");
+                jGenerator.writeStartArray();
+            } catch (IOException ex) {
+                logger.error("",ex);
+            }
+
+            entry.getValue().getOutgoingEdges()
+                    .stream()
+                    .map(edge -> Pair.of(
+                            edge.getV2().getId(),
+                            edge.getWeight()))
+                    .sorted((pair1, pair2) -> Integer.compare(pair2.getRight(), pair1.getRight()))
+                    .forEach(pair -> {
+                        try {
+                            jGenerator.writeStartObject("x");
+                            jGenerator.writeStringField(pair.getLeft(),String.valueOf(pair.getRight()));
+                            jGenerator.writeEndObject();
+                        } catch (IOException ex) {
+                            logger.error("",ex);
+                        }
+                    });
+
+            try {
+                jGenerator.writeEndArray();
+                jGenerator.writeEndObject();
+            } catch (IOException ex) {
+                logger.error("",ex);
+            }
+
+        });
+
+        jGenerator.writeEndObject();*/
+
+        jGenerator.close();
+
+    }
+}

@@ -1,0 +1,22 @@
+#!/bin/bash -v
+
+mvn clean package
+
+export LIMIT=300
+
+java -jar target/probe-compression-1.0-SNAPSHOT.jar "$LIMIT"
+
+rm -f "$format.log"
+
+exit
+
+for format in neato twopi circo dot ;
+do  
+  echo "Rendering into $format" >> "$format.log"
+  dot war-and-society-1-2-3-4.dot -v -s[96] -Tpng "-K$format" "-owar-and-society-1-2-3-4-limit-$LIMIT-$format.png" 2>&1 | tee -a "$format.log"
+  dot war-and-society-1-2-3-4.dot -v -s[96] -Tsvg "-K$format" "-owar-and-society-1-2-3-4-limit-$LIMIT-$format.svg" 2>&1 | tee -a "$format.log"
+  gzip -k -9 "war-and-society-1-2-3-4-limit-$LIMIT-$format.svg"
+  echo "Done with errorcode=$?" >> "$format.log"
+done;
+
+head 
