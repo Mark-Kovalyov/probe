@@ -4,8 +4,6 @@ import mayton.lib.SofarTracker;
 import mayton.semanticweb.FieldDescriptor;
 import mayton.semanticweb.Trackable;
 import mayton.semanticweb.Utils;
-import mayton.semanticweb.jfr.FlushDmlNameEvent;
-import mayton.semanticweb.jfr.FlushDmlValueEvent;
 import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Resource;
 import org.eclipse.rdf4j.model.Statement;
@@ -73,8 +71,8 @@ public class TRDatabaseSQLWriterHandler extends TRTableProcess implements RDFHan
             pw.print(tableName);
             pw.print("(");
 
-            FlushDmlNameEvent flushDmlNameEvent = new FlushDmlNameEvent();
-            flushDmlNameEvent.begin();
+            /*FlushDmlNameEvent flushDmlNameEvent = new FlushDmlNameEvent();
+            flushDmlNameEvent.begin();*/
 
             pw.print(node.keySet()
                     .stream()
@@ -82,19 +80,19 @@ public class TRDatabaseSQLWriterHandler extends TRTableProcess implements RDFHan
                     .map(Utils::filterSQLWordsAndDashStyle)
                     .collect(Collectors.joining(",")));
 
-            flushDmlNameEvent.commit();
+            //flushDmlNameEvent.commit();
 
             pw.print(") VALUES (");
 
-            FlushDmlValueEvent flushDmlValueEvent = new FlushDmlValueEvent();
-            flushDmlValueEvent.begin();
+            /*FlushDmlValueEvent flushDmlValueEvent = new FlushDmlValueEvent();
+            flushDmlValueEvent.begin();*/
 
             pw.print(node.values()
                     .stream()
                     .map(Utils::filterFieldValue)
                     .collect(Collectors.joining(",")));
 
-            flushDmlValueEvent.commit();
+            //flushDmlValueEvent.commit();
 
             pw.print(");");
             pw.println();
@@ -114,7 +112,6 @@ public class TRDatabaseSQLWriterHandler extends TRTableProcess implements RDFHan
         }
 
         if (prevSubject == null) {
-            // new Node
             newNode(subject, predicate, object);
         } else {
             if (prevSubject.equals(subject)) {
@@ -127,7 +124,7 @@ public class TRDatabaseSQLWriterHandler extends TRTableProcess implements RDFHan
         prevSubject = subject;
 
         cnt++;
-        if (cnt % 100 == 0) {
+        if (cnt % 50 == 0) {
             synchronized (sofarTracker) {
                 sofarTracker.update(cnt);
             }

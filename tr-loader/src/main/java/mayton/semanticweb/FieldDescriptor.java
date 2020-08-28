@@ -1,10 +1,18 @@
 package mayton.semanticweb;
 
-public class FieldDescriptor {
+import java.io.Serializable;
+
+public class FieldDescriptor implements Serializable {
+
+    private static final long serialVersionUID = -555L;
 
     public String fieldName;
     public String dataType;
     public int maxLength; // chars
+
+    public FieldDescriptor() {
+        // Serialization contract
+    }
 
     public FieldDescriptor(String fieldName, int maxLength) {
         this.fieldName = fieldName;

@@ -11,6 +11,7 @@ import java.util.Set;
 
 import static java.lang.String.format;
 import static mayton.semanticweb.Constants.*;
+import static org.apache.commons.lang3.StringUtils.indexOf;
 import static org.apache.commons.lang3.StringUtils.replace;
 
 public class Utils {
@@ -68,7 +69,7 @@ public class Utils {
 
     @Nonnull
     public static String filterXmlSchemaTypes(@Nonnull String arg) {
-        int res = arg.indexOf("^^<http://www.w3.org/2001/XMLSchema#");
+        int res = arg.indexOf("\"^^<http://www.w3.org/2001/XMLSchema#");
         if (res > 0) {
             return arg.substring(0, res);
         } else {
@@ -76,8 +77,13 @@ public class Utils {
         }
     }
 
-    public static String filterFieldValue(String arg) {
-        return wrapPostgresLiteral(trimSlash(filterXmlSchemaTypes(filterNamespaces(trimQuotes(arg)))));
+    @Nonnull
+    public static String filterFieldValue(@Nonnull String arg) {
+        return wrapPostgresLiteral(
+                trimSlash(
+                        filterXmlSchemaTypes(
+                                filterNamespaces(
+                                        trimAllQuotesLeftAndRight(arg)))));
     }
 
     public static String filterFieldName(String arg) {
@@ -88,6 +94,35 @@ public class Utils {
     public static IRI detectXmlSchemaTypes(@Nonnull String arg) {
         // todo fix
         return XSD.STRING;
+    }
+
+    public static int lengthFrontSequenceOf(String value, char c) {
+        int i = 0;
+        while(value.charAt(i) == c) {
+            i++;
+        }
+        return i;
+    }
+
+    public static int lengthBackSequenceOf(String value, char c) {
+        int cnt = 0;
+        if (value.length()==0) {
+            return 0;
+        }
+        int i = value.length() - 1;
+        while(value.charAt(i) == c) {
+            cnt++;
+            i--;
+        }
+        return cnt;
+    }
+
+    @Nonnull
+    public static String trimAllQuotesLeftAndRight(@Nonnull String value) {
+        return value.substring(
+                lengthFrontSequenceOf(value,'\"'),
+                value.length() - lengthBackSequenceOf(value, '\"')
+        );
     }
 
     @Nonnull

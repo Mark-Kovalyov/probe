@@ -15,7 +15,7 @@ mvn clean package
 
 psql -d $DEMO_DB -a -f "$SQL_HOME/$CNT.create-$TAB.sql"
 
-psql -d $DEMO_DB -a -f "$SQL_HOME/$CNT.insert-$TAB.sql"
+psql -d $DEMO_DB -b -f "$SQL_HOME/$CNT.insert-$TAB.sql"
 
 psql -d $DEMO_DB -c "DELETE FROM $TAB WHERE id IN (SELECT id FROM (SELECT row_number() OVER (PARTITION BY id), id FROM $TAB) x WHERE x.row_number > 1)"
 

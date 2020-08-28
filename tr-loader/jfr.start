@@ -2,5 +2,5 @@
 
 if [ -f "tr-loader.pid" ]; then
   PID=$(cat tr-loader.pid)
-  jcmd $PID JFR.start duration=60s filename=tr-loader.jfr
+  jcmd $PID JFR.start duration=900s filename=tr-loader.jfr
 fi

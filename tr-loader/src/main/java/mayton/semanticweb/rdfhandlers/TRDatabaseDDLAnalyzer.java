@@ -45,8 +45,6 @@ public class TRDatabaseDDLAnalyzer extends TRTableProcess implements RDFHandler,
         logger.info(":: start RDF");
     }
 
-
-
     @Override
     public void endRDF() {
         sofarTracker.update(sofarTracker.getSize());
@@ -103,7 +101,7 @@ public class TRDatabaseDDLAnalyzer extends TRTableProcess implements RDFHandler,
         }
 
         cnt++;
-        if (cnt % 100 == 0) {
+        if (cnt % 50 == 0) {
             synchronized (sofarTracker) {
                 sofarTracker.update(cnt);
             }
