@@ -2,8 +2,6 @@ package mayton.compression.syllable;
 
 import mayton.compression.graphs.Graph;
 import mayton.compression.graphs.GraphProcessor;
-import mayton.compression.languagespec.SyllableSplitter;
-import mayton.compression.languagespec.ru.RuSyllableSplitter;
 import mayton.compression.languagespec.ru.RuUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
@@ -17,16 +15,18 @@ import java.util.Arrays;
 
 public class TokenProcessor implements GraphProcessor {
 
-    static Logger logger = LoggerFactory.getLogger(SyllableProcessor.class);
+    static Logger logger = LoggerFactory.getLogger(TokenProcessor.class);
 
-    private String prevSyllable = null;
+    private String prevToken = null;
 
-    private void processGraphNode(@NotNull String syllable, @NotNull Graph graph) {
-        if (prevSyllable != null) {
-            logger.debug(":: link {} -> {}", prevSyllable, syllable);
-            graph.linkEdge(prevSyllable, syllable);
+    private static final String IGNORED_SYMBOLS = " ,.!?()[]:;\"";
+
+    private void processGraphNode(@NotNull String token, @NotNull Graph graph) {
+        if (prevToken != null) {
+            logger.debug(":: link {} -> {}", prevToken, token);
+            graph.linkEdge(prevToken, token);
         }
-        prevSyllable = syllable;
+        prevToken = token;
     }
 
     @Override
@@ -35,17 +35,22 @@ public class TokenProcessor implements GraphProcessor {
         String line;
         int lines = 0;
         while ((line = bufferedReader.readLine()) != null) {
-            if (line.length() == 0 || StringUtils.isBlank(line)) {
-                lines++;
-            } else {
-                String[] tokens = StringUtils.split(line, " ,.!?");
-                Arrays.asList(tokens).forEach(token -> {
-                    if (RuUtils.isCyrillic(token)) {
+            if (!(line.length() == 0 || StringUtils.isBlank(line))) {
+                logger.trace(":: [0] line {}", line);
+                String[] tokens = StringUtils.split(line, IGNORED_SYMBOLS);
+                Arrays.asList(tokens)
+                        .stream()
+                        .peek((item) -> logger.trace(":: [1] token: '{}'", item))
+                        .forEach(token -> {
+                    if (RuUtils.isCyrillicOrHyphensInTheMiddle(token)) {
+                        logger.trace(":: [2] pricess token : '{}'", token);
                         processGraphNode(token.toLowerCase(), graph);
+                    } else {
+                        logger.warn(":: [2] ignored token : '{}'", token);
                     }
                 });
-                lines++;
             }
+            lines++;
         }
         logger.info("Lines  : {}", lines);
         return graph;

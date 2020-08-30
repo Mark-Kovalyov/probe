@@ -2,7 +2,10 @@ package mayton.compression.graphs;
 
 import com.google.common.math.Quantiles;
 import com.google.common.math.Stats;
+import mayton.compression.Lhm;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.util.*;
@@ -13,12 +16,15 @@ import java.util.stream.Collectors;
  */
 public class Graph implements Serializable {
 
+    static Logger logger = LoggerFactory.getLogger(Graph.class);
+
     private Map<Edge, Edge> edgeWeigthMap = new HashMap<>();
     private Map<String, Vertex> vertexMap = new HashMap<>();
-    private LinkedHashMap<String, String> statistics;
+    private LinkedHashMap<String, Object> statistics;
 
-    private String fd(double v) {
-        return String.format("%14.4f", v);
+    private double fd(double v) {
+        //return String.format("%.4f", v);
+        return v;
     }
 
     public Graph() {
@@ -72,34 +78,65 @@ public class Graph implements Serializable {
     public void reCalculateStatistics() {
         statistics = new LinkedHashMap<>();
         statistics.put("Vertices", String.valueOf(vertexMap.size()));
-        statistics.put("Edges", String.valueOf(edgeWeigthMap.size()));
+        statistics.put("Edges",    String.valueOf(edgeWeigthMap.size()));
 
-        List<Integer> weights = edgeWeigthMap.keySet().stream()
-                .map(Edge::getWeight)
-                .collect(Collectors.toList());
+            List<Integer> weights = edgeWeigthMap.keySet().stream()
+                    .map(Edge::getWeight)
+                    .collect(Collectors.toList());
 
-        Stats stats = Stats.of(weights);
-        statistics.put("Max edge weight",               fd(stats.max()));
-        statistics.put("AVG edge weight",               fd(stats.mean()));
-        statistics.put("Median edge weight",            fd(Quantiles.median().compute(weights)));
-        statistics.put("3-th quartille edge weight",    fd(Quantiles.percentiles().index(75).compute(weights)));
-        statistics.put("97-th percentille edge weight", fd(Quantiles.percentiles().index(97).compute(weights)));
+            if (weights.size() > 0) {
 
-        List<Integer> joins = vertexMap.entrySet().stream()
-                .map(entry -> entry.getValue())
-                .map(vertex -> vertex.getOutgoingEdges().size() + vertex.getIncomingEdges().size())
-                .collect(Collectors.toList());
+                Stats stats = Stats.of(weights);
+                Lhm weightStatsMap = new Lhm();
+                weightStatsMap.put("Max edge weight", fd(stats.max()));
+                weightStatsMap.put("AVG edge weight", fd(stats.mean()));
+                weightStatsMap.put("Median edge weight", fd(Quantiles.median().compute(weights)));
+                weightStatsMap.put("75-th percentille edge weight", fd(Quantiles.percentiles().index(75).compute(weights)));
+                weightStatsMap.put("80-th percentille edge weight", fd(Quantiles.percentiles().index(80).compute(weights)));
+                weightStatsMap.put("85-th percentille edge weight", fd(Quantiles.percentiles().index(85).compute(weights)));
+                weightStatsMap.put("90-th percentille edge weight", fd(Quantiles.percentiles().index(90).compute(weights)));
+                weightStatsMap.put("95-th percentille edge weight", fd(Quantiles.percentiles().index(95).compute(weights)));
+                weightStatsMap.put("97-th percentille edge weight", fd(Quantiles.percentiles().index(97).compute(weights)));
 
-        Stats joinsStats = Stats.of(joins);
+                statistics.put("weightStats", weightStatsMap);
 
-        statistics.put("Max joins",               fd(joinsStats.max()));
-        statistics.put("AVG joins",               fd(joinsStats.mean()));
-        statistics.put("Median joins",            fd(Quantiles.median().compute(joins)));
-        statistics.put("3-th quartille joins",    fd(Quantiles.percentiles().index(75).compute(joins)));
-        statistics.put("97-th percentille joins", fd(Quantiles.percentiles().index(97).compute(joins)));
+            } else {
+                logger.warn("Unable to calculate weight statistics!");
+            }
+
+
+
+            List<Integer> joins = vertexMap.entrySet().stream()
+                    .map(entry -> entry.getValue())
+                    .map(vertex -> vertex.getOutgoingEdges().size() + vertex.getIncomingEdges().size())
+                    .collect(Collectors.toList());
+
+            Stats joinsStats = Stats.of(joins);
+
+            Lhm joinsStatsMap = new Lhm();
+            joinsStatsMap.put("Max joins",               fd(joinsStats.max()));
+            joinsStatsMap.put("AVG joins",               fd(joinsStats.mean()));
+            joinsStatsMap.put("Median joins",            fd(Quantiles.median().compute(joins)));
+            joinsStatsMap.put("3-th quartille joins",    fd(Quantiles.percentiles().index(75).compute(joins)));
+            joinsStatsMap.put("97-th percentille joins", fd(Quantiles.percentiles().index(97).compute(joins)));
+
+        statistics.put("joinsStats", joinsStatsMap);
+
+        Lhm nameStats = new Lhm();
+
+            List<Integer> nameLength = vertexMap.keySet().stream().map(String::length).collect(Collectors.toList());
+
+            Stats nameLengthStats = Stats.of(nameLength);
+            nameStats.put("Max length",               fd(nameLengthStats.max()));
+            nameStats.put("AVG length",               fd(nameLengthStats.mean()));
+            nameStats.put("Median length",            fd(Quantiles.median().compute(nameLength)));
+            nameStats.put("3-th quartille length",    fd(Quantiles.percentiles().index(75).compute(nameLength)));
+            nameStats.put("97-th percentille length", fd(Quantiles.percentiles().index(97).compute(nameLength)));
+
+        statistics.put("nameStats", nameStats);
     }
 
-    public Map<String, String> getStatistics() {
+    public Map<String, Object> getStatistics() {
         if (statistics == null) {
             reCalculateStatistics();
         }
@@ -162,12 +199,10 @@ public class Graph implements Serializable {
         }
     }
 
-    @Deprecated
     public Map<Edge, Edge> getEdgeWeigthMap() {
         return edgeWeigthMap;
     }
 
-    @Deprecated
     public Map<String, Vertex> getVertexMap() {
         return vertexMap;
     }

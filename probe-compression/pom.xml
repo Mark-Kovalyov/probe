@@ -74,6 +74,12 @@
     </dependency>
 
     <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-text</artifactId>
+      <version>1.4</version>
+    </dependency>
+
+    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.12</version>
@@ -111,7 +117,7 @@
               <transformers>
                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                   <manifestEntries>
-                    <Main-Class>mayton.compression.MarkoffChainAnalyzer</Main-Class>
+                    <Main-Class>mayton.compression.Main</Main-Class>
                     <CreatedBy>mayton</CreatedBy>
                     <Built-By>mayton</Built-By>
                   </manifestEntries>

@@ -1,25 +1,25 @@
-<configuration>
+<configuration debug="true">
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>[%-5level] %X{mode} : %msg%n</pattern>
+            <pattern>[%-5level] %msg%n</pattern>
         </encoder>
     </appender>
 
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-        <file>logs/tr-loader.log</file>
-        <append>true</append>
+        <file>logs/probe-compression.log</file>
+        <append>false</append>
         <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] %X{mode} : %msg%n</pattern>
-            <immediateFlush>false</immediateFlush>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] %msg%n</pattern>
+            <immediateFlush>true</immediateFlush>
         </encoder>
     </appender>
 
     <logger name="mayton" level="INFO" />
 
-    <root level="DEBUG">
-        <appender-ref ref="STDOUT" level="INFO"/>
-        <appender-ref ref="FILE" level="INFO"/>
+    <root level="TRACE">
+        <appender-ref ref="STDOUT" level="TRACE"/>
+        <appender-ref ref="FILE" level="TRACE"/>
     </root>
 
 </configuration>

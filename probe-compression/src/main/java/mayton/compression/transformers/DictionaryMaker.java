@@ -1,7 +1,7 @@
 package mayton.compression.transformers;
 
 import mayton.compression.GenericTextTransformer;
-import mayton.compression.MarkoffChainAnalyzer;
+import mayton.compression.Main;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -15,7 +15,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class DictionaryMaker implements GenericTextTransformer {
 
-    static Logger logger = LoggerFactory.getLogger(MarkoffChainAnalyzer.class);
+    static Logger logger = LoggerFactory.getLogger(Main.class);
 
     private OrderBy orderBy;
 
@@ -25,7 +25,8 @@ public class DictionaryMaker implements GenericTextTransformer {
 
     enum OrderBy {
         TOKEN,
-        FREQ
+        FREQ,
+        LENGTH_FREQ
     }
 
     static final String IGNORED_SYMBOLS = " /.,!?\"()[]*'-\t^";
@@ -70,6 +71,9 @@ public class DictionaryMaker implements GenericTextTransformer {
                     pw.println(entry.getValue());
                 });
                 break;
+            case LENGTH_FREQ:
+
+                break;
         }
         logger.info("lines         : {}", lines);
         logger.info("unique tokens : {}", map.size());
@@ -79,12 +83,12 @@ public class DictionaryMaker implements GenericTextTransformer {
 
         try (Reader reader = new FileReader("text/war-and-society-1-2-3-4.utf-8.txt", UTF_8)) {
             new DictionaryMaker(OrderBy.TOKEN).transform(
-                    reader, new FileWriter("war-and-society-1-2-3-4.dictionary-by-token.csv"));
+                    reader, new FileWriter("csv/war-and-society-1-2-3-4.dictionary-by-token.csv"));
         }
 
         try (Reader reader = new FileReader("text/war-and-society-1-2-3-4.utf-8.txt", UTF_8)) {
             new DictionaryMaker(OrderBy.FREQ).transform(
-                    reader, new FileWriter("war-and-society-1-2-3-4.dictionary-by-freq.csv"));
+                    reader, new FileWriter("csv/war-and-society-1-2-3-4.dictionary-by-freq.csv"));
         }
     }
 
