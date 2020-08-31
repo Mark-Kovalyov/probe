@@ -1,7 +1,7 @@
 package mayton.compression;
 
 import mayton.compression.graphs.*;
-import mayton.compression.syllable.TokenProcessor;
+import mayton.compression.tokens.TokenProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,7 +27,9 @@ public class Main {
         new YamlSerializer().serialize(graph, new FileOutputStream("graphs/war-and-society-1-2-3-4.yaml"));
 
         Properties properties = new Properties();
-        properties.put("limit", Integer.valueOf(args[0]));
+        properties.put("limit",     Integer.valueOf(args[0]));
+        properties.put("selection", args[1]);
+
         new GraphVizSerializer().serialize(graph, new FileOutputStream("graphviz/war-and-society-1-2-3-4.dot"), properties);
         logger.info(graph.toString());
 

@@ -3,17 +3,20 @@
 mvn clean package
 
 export LIMIT=$1
+export SELECTION=$2
 
-java -jar target/probe-compression-1.0-SNAPSHOT.jar "$LIMIT"
+java -jar target/probe-compression-1.0-SNAPSHOT.jar "$LIMIT" "$SELECTION"
+
+exit
 
 rm -f "$format.log"
 
 #for format in neato twopi circo dot ;
 for format in dot ;
 do  
-  #echo "Rendering into PNG $format" | tee -a "$format.log"
-  #dot graphviz/war-and-society-1-2-3-4.dot -v -s[96] -Tpng "-K$format" "-oimages/war-and-society-1-2-3-4-limit-$LIMIT-$format.png" 2>&1 | tee -a "$format.log"
-  #echo "Done with errorcode=$?" | tee -a "$format.log"
+  echo "Rendering into PNG $format" | tee -a "$format.log"
+  dot graphviz/war-and-society-1-2-3-4.dot -v -s[96] -Tpng "-K$format" "-oimages/war-and-society-1-2-3-4-limit-$LIMIT-$format.png" 2>&1 | tee -a "$format.log"
+  echo "Done with errorcode=$?" | tee -a "$format.log"
 
   echo "Rendering into SVG $format" | tee -a "$format.log"
   dot graphviz/war-and-society-1-2-3-4.dot -v -s[96] -Tsvg "-K$format" "-oimages/war-and-society-1-2-3-4-limit-$LIMIT-$format.svg" 2>&1 | tee -a "$format.log"

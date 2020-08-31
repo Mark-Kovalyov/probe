@@ -2,6 +2,7 @@ package mayton.compression.transformers;
 
 import mayton.compression.GenericTextTransformer;
 import mayton.compression.Main;
+import mayton.compression.languagespec.ru.RuUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -29,7 +30,7 @@ public class DictionaryMaker implements GenericTextTransformer {
         LENGTH_FREQ
     }
 
-    static final String IGNORED_SYMBOLS = " /.,!?\"()[]*'-\t^";
+    public static final String IGNORED_SYMBOLS = " ,.!?()[]:;\"";
 
     private TreeMap<String, Integer> map = new TreeMap<>();
 
@@ -50,6 +51,7 @@ public class DictionaryMaker implements GenericTextTransformer {
             String[] tokens = StringUtils.split(line, IGNORED_SYMBOLS);
             Arrays.stream(tokens)
                     .map(token -> token.toLowerCase())
+                    .filter(token -> RuUtils.isCyrillic(token))
                     .forEach(token -> handleToken(token));
             lines++;
         }
