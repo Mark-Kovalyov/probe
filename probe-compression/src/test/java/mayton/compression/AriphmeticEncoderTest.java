@@ -1,12 +1,12 @@
 package mayton.compression;
 
-import mayton.compression.encoders.AriphmeticEncoder;
+import mayton.compression.encoders.AriphmeticOutputStream;
 import org.apache.commons.lang3.tuple.Triple;
 
 import java.math.BigInteger;
 
-import static mayton.compression.encoders.AriphmeticEncoder.arithmeticCoding;
-import static mayton.compression.encoders.AriphmeticEncoder.arithmeticDecoding;
+import static mayton.compression.encoders.AriphmeticOutputStream.arithmeticCoding;
+import static mayton.compression.encoders.AriphmeticOutputStream.arithmeticDecoding;
 
 public class AriphmeticEncoderTest {
 
@@ -31,7 +31,7 @@ public class AriphmeticEncoderTest {
         StringBuilder part = new StringBuilder();
         for(int i = 0; i < orignilal.length();i++) {
             part.append(orignilal.charAt(i));
-            Triple<BigInteger, Integer, AriphmeticEncoder.Freq> encoded = arithmeticCoding(part.toString(), 10);
+            Triple<BigInteger, Integer, AriphmeticOutputStream.Freq> encoded = arithmeticCoding(part.toString(), 10);
             String dec = arithmeticDecoding(encoded.getLeft(), radix, encoded.getMiddle(), encoded.getRight());
             System.out.printf("%s : dec = %s (datatype : %s)\n", encoded.getLeft(), dec, decodeRange(encoded.getLeft()));
         }

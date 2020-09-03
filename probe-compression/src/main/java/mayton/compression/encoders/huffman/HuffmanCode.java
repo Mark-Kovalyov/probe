@@ -2,9 +2,28 @@ package mayton.compression.encoders.huffman;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Map;
 import java.util.PriorityQueue;
 
 public class HuffmanCode {
+
+    public static HuffmanTree buildTree(Map<String, Integer> stringFreqs) {
+        PriorityQueue<HuffmanTree> trees = new PriorityQueue<>();
+        for(Map.Entry<String,Integer> entry : stringFreqs.entrySet()) {
+            if (entry.getValue() > 0) {
+                trees.offer(new HuffmanStringLeaf(entry.getValue(), entry.getKey()));
+            }
+        }
+        while (trees.size() > 1) {
+            // two trees with least frequency
+            HuffmanTree a = trees.poll();
+            HuffmanTree b = trees.poll();
+
+            // put into new node and re-insert into queue
+            trees.offer(new HuffmanNode(a, b));
+        }
+        return trees.poll();
+    }
 
     // input is an array of frequencies, indexed by character code
     public static HuffmanTree buildTree(int[] charFreqs) {
@@ -55,14 +74,15 @@ public class HuffmanCode {
     }
 
     public static void main(String[] args) {
-        String test = "this is an example for huffman encoding";
+        String test = "this is an example for huffman encoding привед медвед ддддддд";
 
         // we will assume that all our characters will have
         // code less than 256, for simplicity
-        int[] charFreqs = new int[256];
+        int[] charFreqs = new int[65536];
         // read each character and record the frequencies
-        for (char c : test.toCharArray())
-            charFreqs[c]++;
+        for (char c : test.toCharArray()) {
+            charFreqs[(int) c]++;
+        }
 
         // build tree
         HuffmanTree tree = buildTree(charFreqs);

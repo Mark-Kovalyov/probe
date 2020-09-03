@@ -12,6 +12,7 @@ import java.io.*;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -29,7 +30,7 @@ public class LevensteinPairsAnalyzer implements GenericTextTransformer {
     }
 
     @Override
-    public void transform(@NotNull Reader in, @NotNull Writer out) throws IOException {
+    public void transform(@NotNull Reader in, @NotNull Writer out, @NotNull Properties properties) throws IOException {
         PrintWriter pw = new PrintWriter(out);
         pw.println("# Warning! Next sybols will be ignored : " + IGNORED_SYMBOLS);
         pw.println("# Warning! All letters will be in lower-case");

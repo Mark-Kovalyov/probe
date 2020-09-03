@@ -38,65 +38,7 @@ public class JsonSerializer implements GraphSerializer {
             }
 
         jGenerator.writeEndArray();
-
-            /*jGenerator.writeObjectField("vertices", 0);
-            jGenerator.writeObjectField("edges", 0);
-            jGenerator.writeArrayFieldStart("data");
-
-                jGenerator.writeStartObject();
-                    jGenerator.writeStringField("name", "предупредили");
-                    jGenerator.writeNumberField("outgoing-edges-count", 1);
-                    jGenerator.writeArrayFieldStart("outgoing-edges");
-                        jGenerator.writeString("их:2");
-                        jGenerator.writeString("взял:3");
-                    jGenerator.writeEndArray();
-                jGenerator.writeEndObject();
-
-                jGenerator.writeStartObject();
-                jGenerator.writeEndObject();
-
-
-            jGenerator.writeEndArray();*/
         jGenerator.writeEndObject();
-
-        /*jGenerator.writeStartObject("graph");
-
-        graph.getVertexMap().entrySet().stream().forEach(entry -> {
-
-            try {
-                jGenerator.writeStartObject("entry");
-                jGenerator.writeStartArray();
-            } catch (IOException ex) {
-                logger.error("",ex);
-            }
-
-            entry.getValue().getOutgoingEdges()
-                    .stream()
-                    .map(edge -> Pair.of(
-                            edge.getV2().getId(),
-                            edge.getWeight()))
-                    .sorted((pair1, pair2) -> Integer.compare(pair2.getRight(), pair1.getRight()))
-                    .forEach(pair -> {
-                        try {
-                            jGenerator.writeStartObject("x");
-                            jGenerator.writeStringField(pair.getLeft(),String.valueOf(pair.getRight()));
-                            jGenerator.writeEndObject();
-                        } catch (IOException ex) {
-                            logger.error("",ex);
-                        }
-                    });
-
-            try {
-                jGenerator.writeEndArray();
-                jGenerator.writeEndObject();
-            } catch (IOException ex) {
-                logger.error("",ex);
-            }
-
-        });
-
-        jGenerator.writeEndObject();*/
-
         jGenerator.close();
 
     }

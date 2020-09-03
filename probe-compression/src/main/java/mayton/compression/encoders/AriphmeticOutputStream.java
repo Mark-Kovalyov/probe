@@ -3,7 +3,6 @@ package mayton.compression.encoders;
 import org.apache.commons.lang3.tuple.Triple;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
 import java.io.OutputStream;
 import java.math.BigInteger;
 import java.util.HashMap;
@@ -12,15 +11,10 @@ import java.util.Map;
 /**
  * This is copied and upgraded from https://rosettacode.org/wiki/Arithmetic_coding/As_a_generalized_change_of_radix
  */
-public class AriphmeticEncoder extends CompactDigitEncoder {
+public class AriphmeticOutputStream extends CompactDigitOutputStream {
 
-    public AriphmeticEncoder(OutputStream outputStream) {
+    public AriphmeticOutputStream(OutputStream outputStream) {
         super(outputStream);
-    }
-
-    @Override
-    public void writeBigInteger(BigInteger v) throws IOException {
-
     }
 
     public static class Freq extends HashMap<Character, Long> {

@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.util.Arrays;
+import java.util.Properties;
 import java.util.TreeMap;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -40,7 +41,7 @@ public class DictionaryMaker implements GenericTextTransformer {
     }
 
     @Override
-    public void transform(@NotNull Reader in, @NotNull Writer out) throws IOException {
+    public void transform(@NotNull Reader in, @NotNull Writer out, @NotNull Properties properties) throws IOException {
         PrintWriter pw = new PrintWriter(out);
         pw.println("# Warning! Next sybols will be ignored : " + IGNORED_SYMBOLS);
         pw.println("# Warning! All letters will be in lower-case");

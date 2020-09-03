@@ -2,9 +2,9 @@ package mayton.compression.trie;
 
 public class Trie {
 
-    private TrieNode root;
+    public TrieNode root;
 
-    Trie() {
+    public Trie() {
         root = new TrieNode();
     }
 
@@ -12,9 +12,9 @@ public class Trie {
         TrieNode current = root;
 
         for (char l : word.toCharArray()) {
-            current = current.getChildren().computeIfAbsent(l, c -> new TrieNode());
+            current = current.children.computeIfAbsent(l, c -> new TrieNode());
         }
-        current.setEndOfWord(true);
+        current.endOfWord = true;
     }
 
     boolean delete(String word) {
@@ -26,13 +26,13 @@ public class Trie {
 
         for (int i = 0; i < word.length(); i++) {
             char ch = word.charAt(i);
-            TrieNode node = current.getChildren().get(ch);
+            TrieNode node = current.children.get(ch);
             if (node == null) {
                 return false;
             }
             current = node;
         }
-        return current.isEndOfWord();
+        return current.endOfWord;
     }
 
     boolean isEmpty() {
@@ -41,23 +41,27 @@ public class Trie {
 
     private boolean delete(TrieNode current, String word, int index) {
         if (index == word.length()) {
-            if (!current.isEndOfWord()) {
+            if (!current.endOfWord) {
                 return false;
             }
-            current.setEndOfWord(false);
-            return current.getChildren().isEmpty();
+            current.endOfWord = false;
+            return current.children.isEmpty();
         }
         char ch = word.charAt(index);
-        TrieNode node = current.getChildren().get(ch);
+        TrieNode node = current.children.get(ch);
         if (node == null) {
             return false;
         }
-        boolean shouldDeleteCurrentNode = delete(node, word, index + 1) && !node.isEndOfWord();
+        boolean shouldDeleteCurrentNode = delete(node, word, index + 1) && !node.endOfWord;
 
         if (shouldDeleteCurrentNode) {
-            current.getChildren().remove(ch);
-            return current.getChildren().isEmpty();
+            current.children.remove(ch);
+            return current.children.isEmpty();
         }
         return false;
+    }
+
+    public TrieNode getRoot() {
+        return root;
     }
 }

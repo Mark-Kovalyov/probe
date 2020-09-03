@@ -12,6 +12,10 @@ public class RuUtils {
     static String RU_LETTERS = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ" +
                                "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
 
+    public static boolean endSentenceSymbol(char c) {
+        return c == '.' || c == '?' || c == '!';
+    }
+
     static {
         for(int i = 0 ; i < RU_LETTERS.length() ; i++) {
             set.add(RU_LETTERS.charAt(i));
@@ -19,7 +23,6 @@ public class RuUtils {
     }
 
     public static boolean isCyrillic(int c) {
-        //return Character.UnicodeBlock.of(c).equals(Character.UnicodeBlock.CYRILLIC);
         return set.contains((char) c);
     }
 
@@ -28,6 +31,14 @@ public class RuUtils {
             if (!isCyrillic(s.charAt(i))) return false;
         }
         return true;
+    }
+
+    public static boolean isCyrillicOrHyphensInTheMiddleOrSentenceEnd(String s) {
+        int le = s.length();
+        if (endSentenceSymbol(s.charAt(le - 1)) && isCyrillicOrHyphensInTheMiddle(s.substring(0, le - 1))) {
+            return true;
+        }
+        return isCyrillicOrHyphensInTheMiddle(s);
     }
 
     public static boolean isCyrillicOrHyphensInTheMiddle(String s) {
@@ -41,8 +52,7 @@ public class RuUtils {
                 cyrillicCount++;
             }
         }
-        if (cyrillicCount == 0) return false;
-        return true;
+        return cyrillicCount != 0;
     }
 
 
