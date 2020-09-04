@@ -7,7 +7,15 @@ export SELECTION=$2
 
 java -jar target/probe-compression-1.0-SNAPSHOT.jar "$LIMIT" "$SELECTION"
 
-exit
+gzip -f -k -9  "graphs/war-and-society-1-2-3-4-graph.yaml"
+gzip -f -k -9  "graphs/war-and-society-1-2-3-4-graph.json"
+
+gzip -f -k -9  "trie/war-and-society-1-2-3-4.dict.trie"
+bzip2 -z -k -f "trie/war-and-society-1-2-3-4.dict.trie"
+
+gzip -f -k -9  "graphs/war-and-society-1-2-3-4-graph-normalized.csv"
+bzip2 -z -k -f "graphs/war-and-society-1-2-3-4-graph-normalized.csv"
+
 
 rm -f "$format.log"
 

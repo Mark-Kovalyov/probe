@@ -56,7 +56,7 @@ public class FibonacciOutputStream extends CompactDigitOutputStream {
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() throws IOException {
         outputStream.flush();
         outputStream.close();
     }

@@ -4,6 +4,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.checkerframework.common.value.qual.IntRange;
 import org.jetbrains.annotations.NotNull;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
 public class FibonacciUtils {
 
     private FibonacciUtils() {
@@ -11,9 +13,7 @@ public class FibonacciUtils {
 
     @IntRange(from = 0)
     public static long decodeF(@NotNull String s) {
-        if (s.length() == 0) {
-            throw new IllegalArgumentException("Unable to decode empty string!");
-        }
+        checkArgument(s.length() > 0, "Unable to decode empty string!");
         // TODO: Check for maximum possible value for s
         long a = 1;
         long b = 1;
@@ -39,10 +39,8 @@ public class FibonacciUtils {
     }
 
     @NotNull
-    public static String encodeF(@IntRange(from = 1) long n) {
-        if (n <= 0) {
-            throw new IllegalArgumentException("Unable to encode '0' or negative");
-        }
+    public static String encodeF(long n) {
+        checkArgument(n > 0, "Unable to encode '0' or negative");
         long a = 1;
         long b = 1;
         long t;

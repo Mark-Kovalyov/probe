@@ -18,7 +18,7 @@ public abstract class CompactDigitOutputStream implements AutoCloseable, Flushab
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() throws IOException {
         outputStream.close();
     }
 
