@@ -7,16 +7,29 @@ export SELECTION=$2
 
 java -jar target/probe-compression-1.0-SNAPSHOT.jar "$LIMIT" "$SELECTION"
 
-gzip -f -k -9  "graphs/war-and-society-1-2-3-4-graph.yaml"
-gzip -f -k -9  "graphs/war-and-society-1-2-3-4-graph.json"
+gzip -f -k     "graphs/war-and-society-1-2-3-4-graph.bin"
+bzip2 -z -k -f "graphs/war-and-society-1-2-3-4-graph.bin"
 
-gzip -f -k -9  "trie/war-and-society-1-2-3-4.dict.trie"
+gzip -f -k     "trie/war-and-society-1-2-3-4.dict.trie"
 bzip2 -z -k -f "trie/war-and-society-1-2-3-4.dict.trie"
 
-gzip -f -k -9  "graphs/war-and-society-1-2-3-4-graph-normalized.csv"
+gzip -f -k     "graphs/war-and-society-1-2-3-4-graph-normalized.csv"
 bzip2 -z -k -f "graphs/war-and-society-1-2-3-4-graph-normalized.csv"
 
+gzip -f -k     "graphs/war-and-society-1-2-3-4-graph-normalized.csv"
+bzip2 -z -k -f "graphs/war-and-society-1-2-3-4-graph-normalized.csv"
 
+gzip -f -k     "graphs/war-and-society-1-2-3-4-graph-vlq.bin"
+bzip2 -z -k -f "graphs/war-and-society-1-2-3-4-graph-vlq.bin"
+
+gzip -f -k     "graphs/war-and-society-1-2-3-4-adjacency-list.csv"
+bzip2 -z -k -f "graphs/war-and-society-1-2-3-4-adjacency-list.csv"
+
+gzip -f -k     "graphs/war-and-society-1-2-3-4-adjacency-list.bin"
+bzip2 -z -k -f "graphs/war-and-society-1-2-3-4-adjacency-list.bin"
+
+
+exit
 rm -f "$format.log"
 
 #for format in neato twopi circo dot ;

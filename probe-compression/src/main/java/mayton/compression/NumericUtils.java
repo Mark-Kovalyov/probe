@@ -2,6 +2,7 @@ package mayton.compression;
 
 import org.apache.commons.lang3.Range;
 
+import java.io.ByteArrayOutputStream;
 import java.math.BigInteger;
 
 /**
@@ -45,5 +46,36 @@ public class NumericUtils {
         }
     }
 
+    public static short safeCastToShort(int i) {
+        if (i <= Short.MAX_VALUE && i >= Short.MIN_VALUE) {
+            return (short) i;
+        } else {
+            throw new IllegalArgumentException("Unable to cast " + i + " to short");
+        }
+    }
+
+    public static byte safeCastToByte(short i) {
+        if (i <= Byte.MAX_VALUE && i >= Byte.MIN_VALUE) {
+            return (byte) i;
+        } else {
+            throw new IllegalArgumentException("Unable to cast " + i + " to byte");
+        }
+    }
+
+    public static byte safeCastToByte(int i) {
+        if (i <= Byte.MAX_VALUE && i >= Byte.MIN_VALUE) {
+            return (byte) i;
+        } else {
+            throw new IllegalArgumentException("Unable to cast " + i + " to byte");
+        }
+    }
+
+    public static int safeCastToInt(long i) {
+        if (i <= Integer.MAX_VALUE && i >= Integer.MIN_VALUE) {
+            return (int) i;
+        } else {
+            throw new IllegalArgumentException("Unable to cast " + i + " to int");
+        }
+    }
 
 }

@@ -3,7 +3,6 @@ package mayton.compression;
 import mayton.compression.graphs.*;
 import mayton.compression.tokens.TokenSentenceProcessor;
 import mayton.compression.trie.DictionaryCompactTrie;
-import mayton.compression.trie.DictionaryExpanedTrie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +14,8 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 public class Main {
 
     static Logger logger = LoggerFactory.getLogger(Main.class);
+
+
 
     public static void main(String[] args) throws IOException {
         logger.info("START!");
@@ -34,9 +35,16 @@ public class Main {
             new DictionaryExpanedTrie().transform(reader, new OutputStreamWriter(new FileOutputStream("trie/war-and-society-1-2-3-4.expandedtrie")));
         }*/
 
-        new CSVSerializer().serialize(graph,  new FileOutputStream("graphs/war-and-society-1-2-3-4-graph-normalized.csv"));
-        new YamlSerializer().serialize(graph, new FileOutputStream("graphs/war-and-society-1-2-3-4-graph.yaml"));
-        new JsonSerializer().serialize(graph, new FileOutputStream("graphs/war-and-society-1-2-3-4-graph.json"));
+        //Files.createDirectory(Paths.get("graphs"));
+        //new CSVSerializer().serialize(graph,  new FileOutputStream("graphs/war-and-society-1-2-3-4-graph-normalized.csv"));
+        //new YamlSerializer().serialize(graph, new FileOutputStream("graphs/war-and-society-1-2-3-4-graph.yaml"));
+        //new JsonSerializer().serialize(graph, new FileOutputStream("graphs/war-and-society-1-2-3-4-graph.json"));
+
+        new BinaryGraphMatrixSerializer().serialize(graph, new FileOutputStream("graphs/war-and-society-1-2-3-4-graph.bin"));
+        new BinaryGraphVLQSerializer().serialize(graph, new FileOutputStream("graphs/war-and-society-1-2-3-4-graph-vlq.bin"));
+
+        new GraphAdjacencyListTrieSerializerCSV().serialize(graph, new FileOutputStream("graphs/war-and-society-1-2-3-4-adjacency-list.csv"));
+        new GraphAdjacencyListTrieSerializerBin().serialize(graph, new FileOutputStream("graphs/war-and-society-1-2-3-4-adjacency-list.bin"));
 
 
         Properties properties = new Properties();
