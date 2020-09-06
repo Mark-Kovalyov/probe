@@ -1,9 +1,12 @@
 package mayton.compression;
 
 import org.apache.commons.lang3.Range;
+import org.checkerframework.common.value.qual.IntRange;
 
 import java.io.ByteArrayOutputStream;
 import java.math.BigInteger;
+
+import static com.google.common.base.Preconditions.checkArgument;
 
 /**
  * 00 (byte)
@@ -44,6 +47,20 @@ public class NumericUtils {
             this.desc = desc;
             this.range = Range.between(BigInteger.ZERO, BigInteger.TWO.pow(bits));
         }
+    }
+
+    @IntRange(from = 0)
+    public static int detectWidthInBits(int i) {
+        checkArgument(i >= 0, "Unable to detect bit width for negative value = " + i);
+        if (i == 0) return 0;
+        int cnt = 0;
+        for(int k = 1; k <= 32 ; k ++) {
+            if ((i & 0x01) != 0) {
+                cnt = k;
+            }
+            i >>= 1;
+        }
+        return cnt;
     }
 
     public static short safeCastToShort(int i) {
