@@ -71,7 +71,7 @@ public class NumericUtils {
         }
     }
 
-    public static byte safeCastToByte(short i) {
+    public static byte toByteExact(short i) {
         if (i <= Byte.MAX_VALUE && i >= Byte.MIN_VALUE) {
             return (byte) i;
         } else {
@@ -79,7 +79,7 @@ public class NumericUtils {
         }
     }
 
-    public static byte safeCastToByte(int i) {
+    public static byte toByteExact(int i) {
         if (i <= Byte.MAX_VALUE && i >= Byte.MIN_VALUE) {
             return (byte) i;
         } else {
@@ -87,12 +87,8 @@ public class NumericUtils {
         }
     }
 
-    public static int safeCastToInt(long i) {
-        if (i <= Integer.MAX_VALUE && i >= Integer.MIN_VALUE) {
-            return (int) i;
-        } else {
-            throw new IllegalArgumentException("Unable to cast " + i + " to int");
-        }
+    public static int toIntExact(long i) {
+        return Math.toIntExact(i);
     }
 
 }
