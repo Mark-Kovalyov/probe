@@ -18,6 +18,11 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         logger.info("START!");
+
+        Properties properties = new Properties();
+        properties.put("limit",     Integer.valueOf(args[0]));
+        properties.put("selection", args[1]);
+
         Graph graph;
 
         Profiler profiler = new Profiler("Graph profiler");
@@ -58,9 +63,7 @@ public class Main {
         profiler.start("Serialize edges for 'sql.ru'");
         new SimpleEdgeSerializerCSV().serialize(graph, new FileOutputStream("graphs/war-and-society-1-2-3-4-simple-edges.csv"));
 
-        Properties properties = new Properties();
-        properties.put("limit",     Integer.valueOf(args[0]));
-        properties.put("selection", args[1]);
+
 
         profiler.start("Serialize edges for 'Graphviz'");
         new GraphVizSerializer().serialize(graph, new FileOutputStream("graphviz/war-and-society-1-2-3-4.dot"), properties);
