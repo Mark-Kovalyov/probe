@@ -5,16 +5,15 @@ import com.google.common.math.Stats;
 import mayton.compression.Lhm;
 import org.checkerframework.common.value.qual.IntRange;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
+import static java.lang.String.format;
 import static java.lang.String.valueOf;
 import static java.util.Collections.unmodifiableMap;
 
@@ -41,6 +40,11 @@ public class Graph implements Serializable {
     public Graph(@IntRange(from = 0) int estimatedVertices, @IntRange(from = 0) int estimatedEdges) {
         vertexMap = new HashMap<>(estimatedVertices);
         edgeWeigthMap = new HashMap<>(estimatedEdges);
+    }
+
+    @Nullable
+    public Vertex findVertexById(@NotNull String id) {
+        return vertexMap.get(id);
     }
 
     @NotNull
@@ -96,6 +100,7 @@ public class Graph implements Serializable {
             joinsStatsMap.put("Max joins",               fd(joinsStats.max()));
             joinsStatsMap.put("AVG joins",               fd(joinsStats.mean()));
             joinsStatsMap.put("Median joins",            fd(Quantiles.median().compute(joins)));
+
             Quantiles.percentiles().indexes(75, 80, 85, 90, 95, 97)
                 .compute(joins).entrySet()
                 .stream()
@@ -109,16 +114,19 @@ public class Graph implements Serializable {
             List<Integer> nameLength = vertexMap.keySet().stream().map(String::length).collect(Collectors.toList());
 
             Stats nameLengthStats = Stats.of(nameLength);
-            nameStats.put("Max length",               fd(nameLengthStats.max()));
-            nameStats.put("AVG length",               fd(nameLengthStats.mean()));
-            nameStats.put("Median length",            fd(Quantiles.median().compute(nameLength)));
+
+            Lhm nameStatsMap = new Lhm();
+            nameStatsMap.put("Max length",               fd(nameLengthStats.max()));
+            nameStatsMap.put("AVG length",               fd(nameLengthStats.mean()));
+            nameStatsMap.put("Median length",            fd(Quantiles.median().compute(nameLength)));
+
             Quantiles.percentiles().indexes(75, 80, 85, 90, 95, 97)
-                .compute(joins).entrySet()
+                .compute(nameLength).entrySet()
                 .stream()
                 .forEach(item ->
-                        joinsStatsMap.put("" + item.getKey() + "-th percentille name length", item.getValue()));
+                        nameStatsMap.put("" + item.getKey() + "-th percentille name length", item.getValue()));
 
-        statistics.put("nameStats", nameStats);
+        statistics.put("nameStats", nameStatsMap);
     }
 
     public Map<String, Object> getStatistics() {
@@ -133,9 +141,23 @@ public class Graph implements Serializable {
     }
 
     @NotNull
-    public List<Edge> extractOutgoingEdges(@NotNull String parentVertexId) {
+    public Optional<List<Edge>> extractOutgoingEdges(@NotNull String parentVertexId) {
         Vertex parentVertex = vertexMap.get(parentVertexId);
-        return parentVertex.getOutgoingEdges();
+        if (parentVertex == null) {
+            return Optional.empty();
+        } else {
+            return Optional.of(parentVertex.getOutgoingEdges());
+        }
+    }
+
+    @NotNull
+    public Optional<List<Edge>> extractIncomingEdges(@NotNull String destinationVertexId) {
+        Vertex parentVertex = vertexMap.get(destinationVertexId);
+        if (parentVertex == null) {
+            return Optional.empty();
+        } else {
+            return Optional.of(parentVertex.getIncomingEdges());
+        }
     }
 
     public boolean containsDirectedEdgeByIds(@NotNull String id1, @NotNull String id2) {
@@ -182,6 +204,7 @@ public class Graph implements Serializable {
         } else {
             // New egdes must be added into parent vertex list
             v1real.addOutgoingEdgeWithWeight(v2real, 1);
+            v2real.addIncomingEdge(v1real);
             edgeWeigthMap.put(newEdge, newEdge);
             return newEdge;
         }
@@ -204,6 +227,6 @@ public class Graph implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("Statistics : vertices : %d, edges : %d", vertexMap.size(), edgeWeigthMap.size());
+        return format("G(|V|=%d,|E|=%d)", vertexMap.size(), edgeWeigthMap.size());
     }
 }

@@ -79,21 +79,21 @@ public class GraphTest {
         graph.addVertex("id1");
         graph.addVertex("id2");
         graph.addVertex("id3");
-        assertEquals(0, graph.extractOutgoingEdges("id1").size());
-        assertEquals(0, graph.extractOutgoingEdges("id2").size());
-        assertEquals(0, graph.extractOutgoingEdges("id3").size());
+        assertEquals(0, graph.extractOutgoingEdges("id1").get().size());
+        assertEquals(0, graph.extractOutgoingEdges("id2").get().size());
+        assertEquals(0, graph.extractOutgoingEdges("id3").get().size());
         graph.linkEdge("id1", "id2");
-        assertEquals(1, graph.extractOutgoingEdges("id1").size());
-        assertEquals(0, graph.extractOutgoingEdges("id2").size());
-        assertEquals(0, graph.extractOutgoingEdges("id3").size());
+        assertEquals(1, graph.extractOutgoingEdges("id1").get().size());
+        assertEquals(0, graph.extractOutgoingEdges("id2").get().size());
+        assertEquals(0, graph.extractOutgoingEdges("id3").get().size());
         graph.linkEdge("id1", "id3");
-        assertEquals(2, graph.extractOutgoingEdges("id1").size());
-        assertEquals(0, graph.extractOutgoingEdges("id2").size());
-        assertEquals(0, graph.extractOutgoingEdges("id3").size());
+        assertEquals(2, graph.extractOutgoingEdges("id1").get().size());
+        assertEquals(0, graph.extractOutgoingEdges("id2").get().size());
+        assertEquals(0, graph.extractOutgoingEdges("id3").get().size());
         graph.linkEdge("id1", "id3"); // Double link should not produce any outgoing edges
-        assertEquals(2, graph.extractOutgoingEdges("id1").size());
-        assertEquals(0, graph.extractOutgoingEdges("id2").size());
-        assertEquals(0, graph.extractOutgoingEdges("id3").size());
+        assertEquals(2, graph.extractOutgoingEdges("id1").get().size());
+        assertEquals(0, graph.extractOutgoingEdges("id2").get().size());
+        assertEquals(0, graph.extractOutgoingEdges("id3").get().size());
     }
 
 }

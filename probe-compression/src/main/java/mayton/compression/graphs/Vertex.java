@@ -32,19 +32,38 @@ public class Vertex implements Serializable {
         // For serialization
     }
 
+    // Incoming edges
+
+    void addIncomingEdge(@NotNull Edge edge) {
+        checkArgument(edge.getV2() != this, "Unable to link edge " + edge.toString() + " because of illegal V2 value");
+        incomingEdges.add(edge);
+    }
+
+    void addIncomingEdgeWithWeight(@NotNull Vertex sourceVertex, @IntRange(from = 0) int weight) {
+        Edge incoming = new Edge(sourceVertex, this);
+        incoming.setWeight(weight);
+        incomingEdges.add(incoming);
+    }
+
+    void addIncomingEdge(@NotNull Vertex sourceVertex) {
+        addIncomingEdgeWithWeight(sourceVertex, 0);
+    }
+
+    // Outgoing edges
+
     void addOutgoingEdge(@NotNull Edge edge) {
         checkArgument(edge.getV1() != this, "Unable to link edge " + edge.toString() + " because of illegal V1 value");
         outgoingEdges.add(edge);
     }
 
     void addOutgoingEdge(@NotNull Vertex destinationVertex) {
-        outgoingEdges.add(new Edge(this, destinationVertex));
+        addOutgoingEdgeWithWeight(destinationVertex, 0);
     }
 
     void addOutgoingEdgeWithWeight(@NotNull Vertex destinationVertex, @IntRange(from = 0) int weight) {
-        Edge edge = new Edge(this, destinationVertex);
-        edge.setWeight(weight);
-        outgoingEdges.add(edge);
+        Edge outgoing = new Edge(this, destinationVertex);
+        outgoing.setWeight(weight);
+        outgoingEdges.add(outgoing);
     }
 
     @Override

@@ -23,16 +23,16 @@ public class Main {
         properties.put("limit",     Integer.valueOf(args[0]));
         properties.put("selection", args[1]);
 
-        Graph graph;
+        Graph graph = new Graph(50_000, 260_000);
 
         Profiler profiler = new Profiler("Graph profiler");
 
         GraphProcessor graphProcessor = new TokenSentenceProcessor();
 
-        profiler.start("Process text");
+        profiler.start("Process tokens from text");
 
         try (Reader reader = new FileReader("text/war-and-society-1-2-3-4.utf-8.txt", UTF_8)) {
-            graph = graphProcessor.process(reader);
+            graph = graphProcessor.upgrade(reader, graph);
         }
 
         profiler.start("Transform into dictionary trie");
@@ -46,12 +46,16 @@ public class Main {
         }*/
 
         //Files.createDirectory(Paths.get("graphs"));
-        //new CSVSerializer().serialize(graph,  new FileOutputStream("graphs/war-and-society-1-2-3-4-graph-normalized.csv"));
+
+        new CSVSerializer().serialize(graph,  new FileOutputStream("graphs/war-and-society-1-2-3-4-graph-normalized.csv"));
 
         profiler.start("Serialize into Yaml");
 
         new YamlSerializer().serialize(graph, new FileOutputStream("graphs/war-and-society-1-2-3-4-graph.yaml"));
-        //new JsonSerializer().serialize(graph, new FileOutputStream("graphs/war-and-society-1-2-3-4-graph.json"));
+
+        profiler.start("Serialize into JSON");
+
+        new JsonSerializer().serialize(graph, new FileOutputStream("graphs/war-and-society-1-2-3-4-graph.json"));
 
 
         //new BinaryGraphMatrixSerializer().serialize(graph, new FileOutputStream("graphs/war-and-society-1-2-3-4-graph.bin"));
@@ -62,8 +66,6 @@ public class Main {
 
         profiler.start("Serialize edges for 'sql.ru'");
         new SimpleEdgeSerializerCSV().serialize(graph, new FileOutputStream("graphs/war-and-society-1-2-3-4-simple-edges.csv"));
-
-
 
         profiler.start("Serialize edges for 'Graphviz'");
         new GraphVizSerializer().serialize(graph, new FileOutputStream("graphviz/war-and-society-1-2-3-4.dot"), properties);
