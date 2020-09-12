@@ -3,13 +3,20 @@ package mayton.compression.graphs;
 import com.google.common.math.Quantiles;
 import com.google.common.math.Stats;
 import mayton.compression.Lhm;
+import org.checkerframework.common.value.qual.IntRange;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.stream.Collectors;
+
+import static java.lang.String.valueOf;
+import static java.util.Collections.unmodifiableMap;
 
 /**
  * Directed, Weight graph
@@ -20,17 +27,23 @@ public class Graph implements Serializable {
 
     private Map<Edge, Edge> edgeWeigthMap = new HashMap<>();
     private Map<String, Vertex> vertexMap = new HashMap<>();
-    private LinkedHashMap<String, Object> statistics;
+    private transient LinkedHashMap<String, Object> statistics;
 
     private double fd(double v) {
-        //return String.format("%.4f", v);
         return v;
     }
 
     public Graph() {
-        // Just for serialization
+        vertexMap = new HashMap<>();
+        edgeWeigthMap = new HashMap<>();
     }
 
+    public Graph(@IntRange(from = 0) int estimatedVertices, @IntRange(from = 0) int estimatedEdges) {
+        vertexMap = new HashMap<>(estimatedVertices);
+        edgeWeigthMap = new HashMap<>(estimatedEdges);
+    }
+
+    @NotNull
     public Vertex addVertex(@NotNull String id) {
         if (vertexMap.containsKey(id)) {
             return vertexMap.get(id);
@@ -41,70 +54,36 @@ public class Graph implements Serializable {
         }
     }
 
-    /**
-     * Integer invariants
-     *
-     *     Order, the number of vertices
-     *     Size, the number of edges
-     *     Number of connected components
-     *     Circuit rank, a linear combination of the numbers of edges, vertices, and components
-     *     diameter, the longest of the shortest path lengths between pairs of vertices
-     *     girth, the length of the shortest cycle
-     *     Vertex connectivity, the smallest number of vertices whose removal disconnects the graph
-     *     Edge connectivity, the smallest number of edges whose removal disconnects the graph
-     *     Chromatic number, the smallest number of colors for the vertices in a proper coloring
-     *     Chromatic index, the smallest number of colors for the edges in a proper edge coloring
-     *     Choosability (or list chromatic number), the least number k such that G is k-choosable
-     *     Independence number, the largest size of an independent set of vertices
-     *     Clique number, the largest order of a complete subgraph
-     *     Arboricity
-     *     Graph genus
-     *     Pagenumber
-     *     Hosoya index
-     *     Wiener index
-     *     Colin de Verdière graph invariant
-     *     Boxicity
-     *
-     * Real number invariants
-     *
-     *     Clustering coefficient
-     *     Betweenness centrality
-     *     Fractional chromatic number
-     *     Algebraic connectivity
-     *     Isoperimetric number
-     *     Estrada index
-     *     Strength
-     */
     public void reCalculateStatistics() {
         statistics = new LinkedHashMap<>();
-        statistics.put("Vertices", String.valueOf(vertexMap.size()));
-        statistics.put("Edges",    String.valueOf(edgeWeigthMap.size()));
 
-            List<Integer> weights = edgeWeigthMap.keySet().stream()
+        statistics.put("Vertices", valueOf(vertexMap.size()));
+        statistics.put("Edges",    valueOf(edgeWeigthMap.size()));
+
+            List<Integer> weights = edgeWeigthMap.keySet()
+                    .stream()
                     .map(Edge::getWeight)
                     .collect(Collectors.toList());
 
-            if (weights.size() > 0) {
+            if (!weights.isEmpty()) {
 
                 Stats stats = Stats.of(weights);
                 Lhm weightStatsMap = new Lhm();
                 weightStatsMap.put("Max edge weight", fd(stats.max()));
                 weightStatsMap.put("AVG edge weight", fd(stats.mean()));
                 weightStatsMap.put("Median edge weight", fd(Quantiles.median().compute(weights)));
-                weightStatsMap.put("75-th percentille edge weight", fd(Quantiles.percentiles().index(75).compute(weights)));
-                weightStatsMap.put("80-th percentille edge weight", fd(Quantiles.percentiles().index(80).compute(weights)));
-                weightStatsMap.put("85-th percentille edge weight", fd(Quantiles.percentiles().index(85).compute(weights)));
-                weightStatsMap.put("90-th percentille edge weight", fd(Quantiles.percentiles().index(90).compute(weights)));
-                weightStatsMap.put("95-th percentille edge weight", fd(Quantiles.percentiles().index(95).compute(weights)));
-                weightStatsMap.put("97-th percentille edge weight", fd(Quantiles.percentiles().index(97).compute(weights)));
+
+                Quantiles.percentiles().indexes(75, 80, 85, 90, 95, 97)
+                        .compute(weights).entrySet()
+                        .stream()
+                        .forEach(item ->
+                                weightStatsMap.put("" + item.getKey() + "-th percentille edge weight", item.getValue()));
 
                 statistics.put("weightStats", weightStatsMap);
 
             } else {
                 logger.warn("Unable to calculate weight statistics!");
             }
-
-
 
             List<Integer> joins = vertexMap.entrySet().stream()
                     .map(entry -> entry.getValue())
@@ -117,8 +96,11 @@ public class Graph implements Serializable {
             joinsStatsMap.put("Max joins",               fd(joinsStats.max()));
             joinsStatsMap.put("AVG joins",               fd(joinsStats.mean()));
             joinsStatsMap.put("Median joins",            fd(Quantiles.median().compute(joins)));
-            joinsStatsMap.put("3-th quartille joins",    fd(Quantiles.percentiles().index(75).compute(joins)));
-            joinsStatsMap.put("97-th percentille joins", fd(Quantiles.percentiles().index(97).compute(joins)));
+            Quantiles.percentiles().indexes(75, 80, 85, 90, 95, 97)
+                .compute(joins).entrySet()
+                .stream()
+                .forEach(item ->
+                        joinsStatsMap.put("" + item.getKey() + "-th percentille joins", item.getValue()));
 
         statistics.put("joinsStats", joinsStatsMap);
 
@@ -130,8 +112,11 @@ public class Graph implements Serializable {
             nameStats.put("Max length",               fd(nameLengthStats.max()));
             nameStats.put("AVG length",               fd(nameLengthStats.mean()));
             nameStats.put("Median length",            fd(Quantiles.median().compute(nameLength)));
-            nameStats.put("3-th quartille length",    fd(Quantiles.percentiles().index(75).compute(nameLength)));
-            nameStats.put("97-th percentille length", fd(Quantiles.percentiles().index(97).compute(nameLength)));
+            Quantiles.percentiles().indexes(75, 80, 85, 90, 95, 97)
+                .compute(joins).entrySet()
+                .stream()
+                .forEach(item ->
+                        joinsStatsMap.put("" + item.getKey() + "-th percentille name length", item.getValue()));
 
         statistics.put("nameStats", nameStats);
     }
@@ -147,6 +132,7 @@ public class Graph implements Serializable {
         return vertexMap.containsKey(id);
     }
 
+    @NotNull
     public List<Edge> extractOutgoingEdges(@NotNull String parentVertexId) {
         Vertex parentVertex = vertexMap.get(parentVertexId);
         return parentVertex.getOutgoingEdges();
@@ -160,11 +146,13 @@ public class Graph implements Serializable {
         return edgeWeigthMap.containsKey(new Edge(v1, v2));
     }
 
+    @NotNull
     public Edge extractEdgeByIds(@NotNull String id1,@NotNull String id2) {
         Edge keyEdge = new Edge(new Vertex(id1), new Vertex(id2));
         return edgeWeigthMap.get(keyEdge);
     }
 
+    @NotNull
     public Edge linkEdge(@NotNull String id1,@NotNull String id2) {
         return linkEdge(new Vertex(id1), new Vertex(id2));
     }
@@ -193,18 +181,25 @@ public class Graph implements Serializable {
             return realEdge;
         } else {
             // New egdes must be added into parent vertex list
-            v1real.getOutgoingEdges().add(newEdge);
+            v1real.addOutgoingEdgeWithWeight(v2real, 1);
             edgeWeigthMap.put(newEdge, newEdge);
             return newEdge;
         }
     }
 
+    // graph:
+    //  statistics:
+    //    Vertices: '48955'
+    //    Edges: '258215'
+
+    @NotNull
     public Map<Edge, Edge> getEdgeWeigthMap() {
-        return edgeWeigthMap;
+        return unmodifiableMap(edgeWeigthMap);
     }
 
+    @NotNull
     public Map<String, Vertex> getVertexMap() {
-        return vertexMap;
+        return unmodifiableMap(vertexMap);
     }
 
     @Override

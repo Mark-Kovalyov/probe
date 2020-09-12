@@ -112,7 +112,6 @@ public class GraphVizSerializer implements GraphSerializer {
                     vertex.getId(),
                     vertex.getOutgoingEdges().size() > 50 ? "red" : "blue"));
 
-        int edgesCount = 0;
         // Render edges:
         graph.getEdgeWeigthMap().keySet().stream()
                 .sorted((e1,e2) -> Integer.compare(e2.getWeight(), e1.getWeight()))

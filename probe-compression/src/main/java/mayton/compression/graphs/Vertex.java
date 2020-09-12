@@ -1,10 +1,17 @@
 package mayton.compression.graphs;
 
+import org.checkerframework.common.value.qual.IntRange;
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+
+import static com.google.common.base.Preconditions.checkArgument;
+import static java.lang.String.format;
+import static java.util.Collections.unmodifiableList;
 
 public class Vertex implements Serializable {
 
@@ -17,12 +24,27 @@ public class Vertex implements Serializable {
     private List<Edge> outgoingEdges = new ArrayList<>();
     private List<Edge> incomingEdges = new ArrayList<>();
 
-    public Vertex(String id) {
+    public Vertex(@NotNull String id) {
         this.id = id;
     }
 
     public Vertex() {
         // For serialization
+    }
+
+    void addOutgoingEdge(@NotNull Edge edge) {
+        checkArgument(edge.getV1() != this, "Unable to link edge " + edge.toString() + " because of illegal V1 value");
+        outgoingEdges.add(edge);
+    }
+
+    void addOutgoingEdge(@NotNull Vertex destinationVertex) {
+        outgoingEdges.add(new Edge(this, destinationVertex));
+    }
+
+    void addOutgoingEdgeWithWeight(@NotNull Vertex destinationVertex, @IntRange(from = 0) int weight) {
+        Edge edge = new Edge(this, destinationVertex);
+        edge.setWeight(weight);
+        outgoingEdges.add(edge);
     }
 
     @Override
@@ -42,27 +64,29 @@ public class Vertex implements Serializable {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(@NotNull String id) {
         this.id = id;
     }
 
+    @NotNull
     public List<Edge> getOutgoingEdges() {
-        return outgoingEdges;
-    }
-
-    public void setOutgoingEdges(List<Edge> outgoingEdges) {
-        this.outgoingEdges = outgoingEdges;
+        return unmodifiableList(outgoingEdges);
     }
 
     @Override
     public String toString() {
-        return String.format("Vertex id = %s, with outgoing vertices : %s", id,
+        return format("Vertex id = %s, with incoming vertices : %s, and outgoing vertices : %s",
+                id,
+                incomingEdges.stream()
+                    .map(edge -> edge.getV2().id)
+                    .collect(Collectors.joining(",")),
                 outgoingEdges.stream()
-                .map(edge -> edge.getV2().id)
-                .collect(Collectors.joining(",")));
+                    .map(edge -> edge.getV2().id)
+                    .collect(Collectors.joining(",")));
     }
 
+    @NotNull
     public List<Edge> getIncomingEdges() {
-        return incomingEdges;
+        return unmodifiableList(incomingEdges);
     }
 }

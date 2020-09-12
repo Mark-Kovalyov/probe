@@ -17,29 +17,27 @@ public class JsonSerializer implements GraphSerializer {
 
     @Override
     public void serialize(@NotNull Graph graph, @NotNull OutputStream outputStream, @NotNull Properties properties) throws IOException {
-
         JsonFactory jfactory = new JsonFactory();
-        JsonGenerator jGenerator = jfactory.createGenerator(outputStream, JsonEncoding.UTF8);
-        jGenerator.writeStartObject();
-        jGenerator.writeObjectField("vertices", graph.getVertexMap().size());
-        jGenerator.writeObjectField("edges", graph.getEdgeWeigthMap().size());
-        jGenerator.writeArrayFieldStart("data");
+        try(JsonGenerator jGenerator = jfactory.createGenerator(outputStream, JsonEncoding.UTF8)) {
+            jGenerator.writeStartObject();
+            jGenerator.writeObjectField("vertices", graph.getVertexMap().size());
+            jGenerator.writeObjectField("edges", graph.getEdgeWeigthMap().size());
+            jGenerator.writeArrayFieldStart("data");
 
-            for(Map.Entry<String,Vertex> e : graph.getVertexMap().entrySet()) {
+            for (Map.Entry<String, Vertex> e : graph.getVertexMap().entrySet()) {
                 jGenerator.writeStartObject();
                 jGenerator.writeStringField("name", e.getKey());
                 jGenerator.writeNumberField("outgoing-edges-count", e.getValue().getOutgoingEdges().size());
-                    jGenerator.writeArrayFieldStart("outgoing-edges");
-                    for(Edge edgeEntry : e.getValue().getOutgoingEdges()) {
-                        jGenerator.writeString(edgeEntry.getV2().getId() + ":" + edgeEntry.getWeight());
-                    }
-                    jGenerator.writeEndArray();
+                jGenerator.writeArrayFieldStart("outgoing-edges");
+                for (Edge edgeEntry : e.getValue().getOutgoingEdges()) {
+                    jGenerator.writeString(edgeEntry.getV2().getId() + ":" + edgeEntry.getWeight());
+                }
+                jGenerator.writeEndArray();
                 jGenerator.writeEndObject();
             }
 
-        jGenerator.writeEndArray();
-        jGenerator.writeEndObject();
-        jGenerator.close();
-
+            jGenerator.writeEndArray();
+            jGenerator.writeEndObject();
+        }
     }
 }

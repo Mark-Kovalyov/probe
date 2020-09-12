@@ -30,7 +30,8 @@ public class GraphTest {
 
     @Test
     public void testHashMapContractByObjectKeys() {
-        Graph graph = new Graph();
+
+        Graph graph = new Graph(50_000, 260_000);
 
         for (int i = 0; i < 100; i++) {
             graph.linkEdge(new Vertex("a" + i), new Vertex("a" + (i + 1)));

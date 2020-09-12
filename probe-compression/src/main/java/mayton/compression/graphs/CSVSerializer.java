@@ -1,6 +1,5 @@
 package mayton.compression.graphs;
 
-import mayton.compression.trie.DictionaryExpanedTrie;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.jetbrains.annotations.NotNull;

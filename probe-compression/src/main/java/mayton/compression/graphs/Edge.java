@@ -1,14 +1,15 @@
 package mayton.compression.graphs;
 
+import org.checkerframework.common.value.qual.IntRange;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.Serializable;
+import java.io.*;
 import java.util.Objects;
 
 /**
  * Directed, Weight Edge
  */
-public class Edge implements Serializable {
+public class Edge implements Serializable, Externalizable {
 
     static final long serialVersionUID = 2L;
 
@@ -34,7 +35,7 @@ public class Edge implements Serializable {
         return weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(@IntRange(from = 0) int weight) {
         this.weight = weight;
     }
 
@@ -42,7 +43,7 @@ public class Edge implements Serializable {
         return v1;
     }
 
-    public void setV1(Vertex v1) {
+    public void setV1(@NotNull Vertex v1) {
         this.v1 = v1;
     }
 
@@ -50,7 +51,7 @@ public class Edge implements Serializable {
         return v2;
     }
 
-    public void setV2(Vertex v2) {
+    public void setV2(@NotNull Vertex v2) {
         this.v2 = v2;
     }
 
@@ -78,5 +79,18 @@ public class Edge implements Serializable {
     @Override
     public String toString() {
         return String.format("Edge: (%s -> %s) , weight = %s", v1.getId(), v2.getId(), weight);
+    }
+
+    @Override
+    public void writeExternal(ObjectOutput objectOutput) throws IOException {
+        objectOutput.writeChars(v1.getId());
+        objectOutput.writeChars(v2.getId());
+        objectOutput.writeInt(weight);
+        // TODO: Test
+    }
+
+    @Override
+    public void readExternal(ObjectInput objectInput) throws IOException, ClassNotFoundException {
+        // TODO: Implement
     }
 }

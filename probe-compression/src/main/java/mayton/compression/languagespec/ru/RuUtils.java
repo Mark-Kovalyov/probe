@@ -1,5 +1,7 @@
 package mayton.compression.languagespec.ru;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -26,14 +28,14 @@ public class RuUtils {
         return set.contains((char) c);
     }
 
-    public static boolean isCyrillic(String s) {
+    public static boolean isCyrillic(@NotNull String s) {
         for (int i = 0; i < s.length(); i++) {
             if (!isCyrillic(s.charAt(i))) return false;
         }
         return true;
     }
 
-    public static boolean isCyrillicOrHyphensInTheMiddleOrSentenceEnd(String s) {
+    public static boolean isCyrillicOrHyphensInTheMiddleOrSentenceEnd(@NotNull String s) {
         int le = s.length();
         if (endSentenceSymbol(s.charAt(le - 1)) && isCyrillicOrHyphensInTheMiddle(s.substring(0, le - 1))) {
             return true;
@@ -41,7 +43,7 @@ public class RuUtils {
         return isCyrillicOrHyphensInTheMiddle(s);
     }
 
-    public static boolean isCyrillicOrHyphensInTheMiddle(String s) {
+    public static boolean isCyrillicOrHyphensInTheMiddle(@NotNull String s) {
         int cyrillicCount = 0;
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);

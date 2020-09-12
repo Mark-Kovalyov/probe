@@ -40,7 +40,7 @@ public class YamlSerializer implements GraphSerializer {
         Writer writer = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8);
 
         yaml.dump(
-                Collections.singletonMap("graph", new LinkedHashMap(){{
+                Collections.singletonMap("graph", new LinkedHashMap<String, Object>() {{
                     put("statistics", graph.getStatistics());
                     put("data", lhm);
                 }}),

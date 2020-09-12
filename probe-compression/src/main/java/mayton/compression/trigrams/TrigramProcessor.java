@@ -78,7 +78,7 @@ public class TrigramProcessor {
                             upgradeTrigrams(trigramToStr(c1,c2,c3).toLowerCase());
                         }
                     } else {
-                        //logger.info("Skipping trigram {}", trigramToStr(c1,c2,c3));
+                        logger.trace("Skipping trigram {}", trigramToStr(c1,c2,c3));
                         ignored.add(EncodingTools.escape(trigramToStr(c1,c2,c3)));
                     }
                 }

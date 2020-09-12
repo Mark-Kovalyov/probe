@@ -35,7 +35,7 @@ public class LevensteinPairsAnalyzer implements GenericTextTransformer {
         pw.println("# Warning! Next sybols will be ignored : " + IGNORED_SYMBOLS);
         pw.println("# Warning! All letters will be in lower-case");
         BufferedReader bufferedReader = new BufferedReader(in);
-        LevenshteinDistance levenstein = LevenshteinDistance.getDefaultInstance();
+        //LevenshteinDistance levenstein = LevenshteinDistance.getDefaultInstance();
         String line;
         int lines = 0;
         while((line = bufferedReader.readLine()) != null) {

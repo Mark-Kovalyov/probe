@@ -32,7 +32,8 @@ public class NumericUtils {
         DWORD(32, "int",         "DWORD, IPv4, 32bit"),
         QWORD(64, "long/double", "QWORD, 64bit, MMX register"),
         XMM(128,  "",            "XMM/SSE register, IPv6, MD5, 128 bit, "),
-        AVX(256,  "",            "AVX register, 256 bit");
+        AVX(256,  "",            "AVX register, 256 bit"),
+        UNKNOWN(Integer.MAX_VALUE, "", "");
 
         public final int bits;
         public final int requireBytes;
@@ -46,6 +47,14 @@ public class NumericUtils {
             this.cjavaDataType = cjavaDataType;
             this.desc = desc;
             this.range = Range.between(BigInteger.ZERO, BigInteger.TWO.pow(bits));
+        }
+
+        public CPURegisters bestFitFor(int i) {
+            int cbits = detectWidthInBits(i);
+            for(CPURegisters c : CPURegisters.values()) {
+                if (c.bits >= cbits) return c;
+            }
+            return UNKNOWN;
         }
     }
 

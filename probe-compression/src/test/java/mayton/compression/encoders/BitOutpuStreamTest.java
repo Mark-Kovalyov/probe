@@ -1,5 +1,6 @@
 package mayton.compression.encoders;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -10,6 +11,7 @@ import static org.junit.Assert.assertEquals;
 public class BitOutpuStreamTest {
 
     @Test
+    @Ignore
     public void test() throws IOException {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         BitOutpuStream bitOutpuStream = new BitOutpuStream(bos);
