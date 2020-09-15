@@ -1,7 +1,0 @@
-#!/bin/bash -v
-
-for i in 100 
-do
-  ./go "$i" ORDERED
-done;
-
