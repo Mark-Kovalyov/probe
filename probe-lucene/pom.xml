@@ -21,7 +21,7 @@
         <java.lang.version>11</java.lang.version>
         <java.target.version>11</java.target.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <lucene.version>8.6.0</lucene.version>
+        <lucene.version>8.6.1</lucene.version>
         <commons.csv.version>1.7</commons.csv.version>
         <active.mq.version>5.7.0</active.mq.version>
         <destClass>mayton.lucene.text.Indexer</destClass>
@@ -76,8 +76,7 @@
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <manifestEntries>
-                                        <!-- TODO: Replace with ${destClass} -->
-                                        <Main-Class>mayton.lucene.bitemporal.BitempIndexer</Main-Class>
+                                        <Main-Class>mayton.lucene.text.Indexer</Main-Class>
                                         <CreatedBy>mtn</CreatedBy>
                                         <Built-By>mtn</Built-By>
                                     </manifestEntries>
@@ -86,22 +85,6 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>1.6.0</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>java</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <mainClass>org.example.CountWithGrouping</mainClass>
-                </configuration>
             </plugin>
 
         </plugins>

@@ -71,6 +71,7 @@ public class DocVizitor extends SimpleFileVisitor<Path> {
             if (index >= 0 && textExtensions.contains(lowerPath.substring(index + 1))) {
                 File fileObject = new File(path);
                 logger.info(":: {}", path);
+
                 document.add(new TextField("body", IOUtils.toString(new FileInputStream(fileObject), StandardCharsets.UTF_8), Field.Store.NO));
                 document.add(new StringField("length", String.valueOf(fileObject.length()), Field.Store.YES));
                 document.add(new StringField("path", file.toString(), Field.Store.YES));

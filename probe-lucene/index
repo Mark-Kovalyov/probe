@@ -1,3 +1,7 @@
 #!/bin/bash
 
-java -jar target/probe-lucene-*.jar -s /documents -i /documents/.index
+java -jar main/target/main-1.0-SNAPSHOT.jar \
+ -s /storage/documents \
+ -i /bigdata/documents/.index-en.EnglishAnalyzer \
+ -a en.EnglishAnalyzer
+
