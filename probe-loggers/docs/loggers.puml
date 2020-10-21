@@ -1,0 +1,22 @@
+@startuml
+
+package Application {
+Application -> SLF4j : use
+Application -> JCL : use
+Application -> Log4j2 : use
+}
+
+package Loggers {
+SLF4j - [slf4j-api]
+[jcl-over-slf4j] - [slf4j-api]
+JCL - [commons-logging]
+JCL - [jcl-over-slf4j]
+Log4j2 - [log4j-api]
+}
+
+package Implementation {
+[jcl-over-slf4j] - [logback] : implementation
+[slf4j-api] - [logback] : implementation
+}
+
+@enduml

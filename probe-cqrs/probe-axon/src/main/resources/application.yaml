@@ -1,0 +1,15 @@
+# default connection pool
+
+spring:
+  datasource:
+    hikari:
+      connectionTimeout : 20000
+      maximumPoolSize : 5
+    url : "jdbc:postgresql://localhost:5432/dht"
+    username : "{env.USER}"
+    password : "{env.PWD}"
+    driverClassName : "org.postgresql.Driver"
+  jpa:
+    database-platform : "org.hibernate.dialect.PostgreSQL10Dialect"
+    hibernate.ddl-auto : update
+    show-sql : true
