@@ -55,6 +55,69 @@ aws
    [--generate-cli-skeleton <value>]
 ```
 
+## Definition (Hello world)
+
+```
+{
+  "Comment": "Hello world",
+  "StartAt": "Beginning",
+  "States": {
+    ....
+  }
+}
+
+```
+
+## Wait for a Callback with the Task Token
+
+See https://docs.aws.amazon.com/step-functions/latest/dg/connect-to-resource.html#connect-wait-token
+
+```
+"Send message to SQS": {
+  "Type": "Task",
+  "Resource": "arn:aws:states:::sqs:sendMessage.waitForTaskToken",
+  "Parameters": {
+    "QueueUrl": "https://sqs.us-east-2.amazonaws.com/123456789012/myQueue",
+    "MessageBody": {
+        "Message": "Hello from Step Functions!",
+        "TaskToken.$": "$$.Task.Token"
+     }
+  },
+  "Next": "NEXT_STATE"
+}
+```
+
+## Exception handling
+
+```
+"Catch": [ {
+  "ErrorEquals": [ "Lambda.Unknown", "States.Timeout", "java.lang.RuntimeException","Lambda.ServiceException", "Lambda.AWSLambdaException", "Lambda.SdkClientException","Lambda.TooManyRequestsException"],
+  "ResultPath": "$.errorInformation",
+  "Next": "HandleExceptionBlock"
+} ]
+```
+
+## Store into DynamoDb with retry
+
+```
+"StoreHistory" : {
+  "Type":"Task",
+  "Resource": "arn:aws:states:::dynamodb:putItem",
+  "Parameters": {
+    "TableName":"History",
+    "Item": {
+       "TransactionId" : { "S.$": "$.TransactionId"}
+    }
+  },
+  "Retry" : [
+    {
+     "ErrorEquals":[States.ALL],
+     "IntervalSeconds": 1,
+       "MaxAttempts" : 3
+     }
+  ],
+  "Next": "........."
+```
 
 
 ## Sequence
