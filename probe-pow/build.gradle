@@ -18,7 +18,6 @@ dependencies {
     compile 'org.jetbrains:annotations:18.0.0'
     compile 'org.apache.hadoop:hadoop-common:3.2.1'
     compile 'commons-codec:commons-codec:1.13'
-    testCompile 'junit:junit:4.12'
 }
 
 application {

@@ -1,20 +1,19 @@
 package mayton.probe.quads;
 
-import org.apache.jena.graph.NodeFactory;
 import org.apache.jena.graph.Triple;
 import org.apache.jena.riot.lang.CollectorStreamQuads;
 import org.apache.jena.riot.lang.CollectorStreamTriples;
 import org.apache.jena.riot.system.StreamRDF;
 import org.apache.jena.sparql.core.Quad;
 import org.apache.jena.sparql.util.NodeFactoryExtra;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.apache.jena.graph.NodeFactory.createBlankNode;
 import static org.apache.jena.graph.NodeFactory.createURI;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestQuads {
 
@@ -42,7 +41,7 @@ public class TestQuads {
         CollectorStreamTriples out = new CollectorStreamTriples();
         List<Triple> expected = writeTriples(out, 10);
 
-        Assert.assertEquals(expected, out.getCollected());
+        assertEquals(expected, out.getCollected());
     }
 
     private List<Quad> writeQuads(StreamRDF out, int size) {
@@ -71,7 +70,7 @@ public class TestQuads {
 
         List<Quad> expected = writeQuads(out, 10);
 
-        Assert.assertEquals(expected, out.getCollected());
+        assertEquals(expected, out.getCollected());
     }
 
 

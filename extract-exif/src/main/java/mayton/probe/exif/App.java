@@ -1,10 +1,6 @@
 package mayton.probe.exif;
 
-import com.drew.imaging.ImageMetadataReader;
-import com.drew.imaging.ImageProcessingException;
-import com.drew.metadata.Directory;
-import com.drew.metadata.Metadata;
-import com.drew.metadata.Tag;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.HelpFormatter;
 import org.slf4j.Logger;
@@ -47,7 +43,7 @@ public class App {
     public static void process(String path) {
         try {
             File jpegFile = new File(path);
-            Metadata metadata = ImageMetadataReader.readMetadata(jpegFile);
+            /*Metadata metadata = ImageMetadataReader.readMetadata(jpegFile);
             for (Directory directory : metadata.getDirectories()) {
                 for (Tag tag : directory.getTags()) {
 
@@ -77,7 +73,7 @@ public class App {
 
 
                 }
-            }
+            }*/
         }
         catch (Exception ex) {
             logger.error("file = '{}'", path, ex);

@@ -22,13 +22,6 @@
 
   <dependencies>
 
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.12</version>
-      <scope>test</scope>
-    </dependency>
-
     <!-- JGraphT is a free Java graph library that provides
          mathematical graph-theory objects and algorithms -->
     <!-- https://mvnrepository.com/artifact/org.jgrapht/jgrapht-core -->

@@ -16,6 +16,15 @@ application {
     mainClassName = "mayton.probe.sdb.SdbH2Load"
 }
 
+test {
+    useJUnitPlatform {
+        includeTags 'fast', 'smoke & feature-a'
+        // excludeTags 'slow', 'ci'
+        includeEngines 'junit-jupiter'
+        // excludeEngines 'junit-vintage'
+    }
+}
+
 dependencies{
 
     // Apache Jena Core
@@ -36,7 +45,7 @@ dependencies{
     // store providing persisent disk based storage of triples/quads.
     compile group: 'org.apache.jena', name: 'jena-tdb', version: '3.12.0'
 
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.7.0'
 
     runtime group: 'com.h2database', name: 'h2', version: '1.4.197'
 
@@ -49,7 +58,6 @@ dependencies{
 
     // https://mvnrepository.com/artifact/org.postgresql/postgresql
     runtime group: 'org.postgresql', name: 'postgresql', version: '42.2.6'
-
 
     runtime 'log4j:log4j:1.2.17'
 

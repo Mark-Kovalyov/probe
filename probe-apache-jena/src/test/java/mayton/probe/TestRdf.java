@@ -7,8 +7,8 @@ import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.riot.RDFLanguages;
 import org.apache.jena.riot.RDFParser;
 import org.apache.jena.riot.system.ErrorHandlerFactory;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -16,19 +16,17 @@ import java.io.InputStream;
 public class TestRdf {
 
     // Example 1 : Common usage¶
-    @Ignore
     @Test
+    @Disabled
     public void test() {
-        Model model = ModelFactory.createDefaultModel() ;
-        model.read("data.ttl") ;
-
-
-
+        Model model = ModelFactory.createDefaultModel();
+        model.read("data.ttl");
     }
 
     // Example 2 : Using the RDFDataMgr
-    @Ignore
+
     @Test
+    @Disabled
     public void test2() {
         // Create a model and read into it from file
 // "data.ttl" assumed to be Turtle.
@@ -42,8 +40,9 @@ public class TestRdf {
         RDFDataMgr.read(model, "data2.ttl") ;
     }
 
-    @Ignore
+
     @Test
+    @Disabled
     public void test3 () throws Exception {
         // The parsers will do the necessary character set conversion.
         try (InputStream in = new FileInputStream("data.some.unusual.extension")) {
