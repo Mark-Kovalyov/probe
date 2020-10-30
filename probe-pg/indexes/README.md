@@ -1,21 +1,23 @@
-# Hash 
+# Indexes
+
+## Hash
 
 
-# Gist
+## Gist
 
 
-# GIN
+## GIN
 
 
-# SP-Gist
+## SP-Gist
 
 
-# Brin
+## Brin
 
 CREATE INDEX idx_brin ON t_test USING brin(id);
 
 
-# -------------------------- Bloom
+## Bloom
 
 $ apt-get install postgresql-contrib
 Reading package lists... Done
@@ -24,7 +26,7 @@ Reading state information... Done
 postgresql-contrib is already the newest version (10+190).
 0 upgraded, 0 newly installed, 0 to remove and 3 not upgraded.
 
-# Undes super user 'postgres'
+Under super user 'postgres'
 
 postgres=# create extension bloom;
 CREATE EXTENSION
@@ -32,7 +34,7 @@ postgres=#
 postgres=# create extension bloom;
 ERROR:  extension "bloom" already exists
 
-# Under user
+Under user
 
 CREATE TABLE t_bloom (x1 int, x2 int, x3 int, x4 int, x5 int, x6 int, x7 int);
 

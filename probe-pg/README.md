@@ -161,3 +161,9 @@ select * from bookings.*
 ```
 GRANT USAGE ON SCHEMA bookings TO new_user;
 ```
+
+## Extract DDL
+
+```
+pg_dump -d dht -s -t person -f person.sql
+```
