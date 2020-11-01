@@ -1,0 +1,12 @@
+#!/bin/bash -v
+
+rm -f hello.o
+rm -f hello.exe
+
+nasm -f elf64 hello.s
+
+echo "nasm res = $?"
+
+ld -o hello.exe hello.o
+
+echo "linker res = $?"
