@@ -42,7 +42,7 @@ COMMIT;
 ## Locking
 
 ```
-LOCK TABLE tab1 ACCEESS EXCLUSIVE MODE;
+LOCK TABLE tab1 IN EXCLUSIVE MODE;
 ```
 
 Railroad diagram
