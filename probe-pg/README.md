@@ -1,9 +1,33 @@
 # Postgresql
 
+## Base paths, variables
+
+Ubuntu
+```
+/var/lib/postgresql/{version}/{pgservername}
+```
+Message log
+```
+/var/log/postgresql
+```
+
 ## Detect instance
 
 ```
-service postgresql status
+root@ $ service postgresql status
+```
+
+## Start/Restart/Shutdown
+
+```
+postgres@ $ ./pg_ctl stop
+pg_ctl: no database directory specified and environment variable PGDATA unset
+Try "pg_ctl --help" for more information.
+
+postgres@ $ export PGDATA=/var/lib/postgresql/12/main
+./pg_ctl stop
+waiting for server to shut down.... done
+server stopped
 ```
 
 ## Connect as superuser
@@ -12,6 +36,15 @@ Under postgres
 ```
 sudo -u postgres bash
 psql
+```
+
+## Show version
+```
+# select version();
+
+PostgreSQL 12.5 (Ubuntu 12.5-0ubuntu0.20.04.1) 
+on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 
+9.3.0-17ubuntu1~20.04) 9.3.0, 64-bit
 ```
 
 ## Show data directory
@@ -113,9 +146,19 @@ postgres=# \db+
 ```
 
 ### File attributes (drwx------)
+
+Under postgresql
 ```
+postgres@: $ ls -lF /bigdata/pg/
 total 0
-drwx------ 1 postgres postgres 30 Nov 27 00:53 geospace/
+drwx------ 1 postgres postgres 30 Aug 16 21:40 dht/
+
+postgres@: $ chmod -R g+rx /bigdata/pg
+drwxr-x--- 1 postgres postgres 30 Aug 16 21:40 dht/
+```
+Under root
+```
+root@: $ usermod -a -G postgres,ssl-cert mayton
 ```
 
 ## Change password
@@ -125,7 +168,22 @@ ALTER USER john WITH PASSWORD 'pwd123';
 
 ## Create tablespace
 ```
-CREATE TABLESPACE geospace OWNER john LOCATION '/pg/geospace';
+CREATE TABLESPACE axon_space OWNER mayton LOCATION '/bigdata/pg/axon';
+```
+
+## Create user
+```
+CREATE USER axon WITH PASSWORD 'pwd123';
+```
+
+## Create database with tablespace
+```
+CREATE DATABASE axondb OWNER axon TABLESPACE axon_space; 
+```
+
+## Allow user to create db
+```
+ALTER USER mayton CREATEDB;
 ```
 
 ## Connect via PSQL

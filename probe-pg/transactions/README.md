@@ -45,37 +45,30 @@ COMMIT;
 LOCK TABLE tab1 IN EXCLUSIVE MODE;
 ```
 
-Railroad diagram
+## System columns
+
+* oid
+* tableoid
+* xmin
+* cmin
+* xmax
+* cmax
+* ctid
+
 ```
-lock_table ::= "LOCK" "TABLE" ? tablename "IN" lock_mode
-
-lock_mode ::= ( ( "ROW" | "ACCESS" ) ? ( "SHARE" | "EXCLUSIVE" ) "MODE" | "SHARE ROW EXCLUSIVE MODE" )
-```
-
-
-```
-# SET TRANSACTION transaction_mode [, ...]
-# SET TRANSACTION SNAPSHOT snapshot_id
-# SET SESSION CHARACTERISTICS AS TRANSACTION transaction_mode [, ...]
-
-# where transaction_mode is one of:
-
-#    ISOLATION LEVEL { SERIALIZABLE | REPEATABLE READ | READ COMMITTED | READ UNCOMMITTED }
-#    READ WRITE | READ ONLY
-#    [ NOT ] DEFERRABLE
-
-
-BEGIN TRANSACTION ISOLATION LEVEL REPEATABLE READ;
-SELECT pg_export_snapshot();
-
-BEGIN TRANSACTION ISOLATION LEVEL REPEATABLE READ;
-SET TRANSACTION SNAPSHOT '00000003-0000001B-1';
-
-
-
-BEGIN;
- UPDATE accounts SET balance = balance + 100.00 WHERE acctnum = 12345;
- UPDATE accounts SET balance = balance - 100.00 WHERE acctnum = 7534;
-COMMIT;
+dht=> select tableoid, xmin, cmin, xmax, cmax, ctid from person limit 10;
+ tableoid |  xmin   |   cmin   |  xmax   |   cmax   |    ctid     
+----------+---------+----------+---------+----------+-------------
+    33252 | 4749767 |        0 | 4749951 |        0 | (307632,1)
+    33252 | 4749767 | 13101907 |       0 | 13101907 | (307632,2)
+    33252 | 4749767 |        0 | 4749951 |        0 | (307632,3)
+    33252 | 4749767 | 13101909 |       0 | 13101909 | (307632,4)
+    33252 | 4749767 |        0 | 4749951 |        0 | (307632,5)
+    33252 | 4749767 | 13101911 |       0 | 13101911 | (307632,6)
+    33252 | 4749767 |        0 | 4749951 |        0 | (307632,7)
+    33252 | 4749767 | 13101913 |       0 | 13101913 | (307632,8)
+    33252 | 4749767 |        0 | 4749951 |        0 | (307632,9)
+    33252 | 4749767 | 13101915 |       0 | 13101915 | (307632,10)
+(10 rows)
 ```
 
