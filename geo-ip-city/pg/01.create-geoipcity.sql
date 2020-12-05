@@ -13,6 +13,9 @@ create table geoipcity(
     areaCode   varchar(255)
 ) without oids;
 
+
+
+
 -- Load
 \COPY geoipcity FROM /db/geoip/03.GeoIPCity.csv CSV HEADER ENCODING 'win-1251'; 
 
@@ -115,8 +118,92 @@ select
 from 
  geoipcity;
 
-psql -c '\ COPY geoipcuty FROM /db/geoip/03.GeoIPCity.csv CSV HEADER QUOTE '"'   ';
+# psql -c '\ COPY geoipcuty FROM /db/geoip/03.GeoIPCity.csv CSV HEADER QUOTE '"'   ';
 
 analyze;
 
 
+alter table geoipcity add column startIp bigint;
+alter table geoipcity add column endIp   bigint;
+alter table geoipcity add constraint correct_ip_range check (startIp <= endIp);
+
+update geoipcity2 set startIp = ip2num(startIpNum), endIp = ip2num(endIpNum);
+
+create index ip_range on geoipcity(startIp,endIp) tablespace dhtspace;
+
+create or replace function detectgeoobject(num bigint) returns text as $$
+declare
+  geoobject text;
+begin
+  select
+    country ||' '||region||'/'||city||' ('||lattitude||','||longitude||')'
+  into
+    geoobject
+  from
+    geoipcity
+  where
+    startip <= num and num < endip;
+end;
+$$ language plpgsql immutable;
+
+DROP TYPE geoobject_type;
+
+CREATE TYPE geoobject_type AS (startipnum text, endipnum text, country text, region text, city text, lattitude real, longitude real);
+
+create or replace function detectgeoobject(num bigint) returns geoobject_type as $$
+declare
+  geoobject geoobject_type;
+  cnt integer;
+begin
+  select
+    startipnum , endipnum , country , region , city , lattitude , longitude
+  into
+    geoobject
+  from
+    geoipcity
+  where
+    startip <= num and num < endip;
+  if not found then
+    return null;
+  else
+    return geoobject;
+  end if;
+end;
+$$ language plpgsql immutable;
+
+
+dht=> prepare q1(bigint) as select * from geoipcity where $1 > startIp and $1 < endIp;
+
+dht=> explain execute q1(100000);
+                                 QUERY PLAN                                  
+-----------------------------------------------------------------------------
+ Index Scan using ip_range on geoipcity  (cost=0.43..7.36 rows=1 width=88)
+   Index Cond: ((startip < '100000'::bigint) AND (endip > '100000'::bigint))
+(2 rows)
+
+dht=> drop index ip_range;
+DROP INDEX
+
+dht=> create index start_ip_idx on geoipcity(startip);
+CREATE INDEX
+
+dht=> explain execute q2(2000);
+                                  QUERY PLAN                                   
+-------------------------------------------------------------------------------
+ Index Scan using start_ip_idx on geoipcity  (cost=0.43..6.60 rows=1 width=88)
+   Index Cond: (startip < '2000'::bigint)
+   Filter: ('2000'::bigint < endip)
+(3 rows)
+
+dht=> create index end_ip_idx on geoipcity(endip);
+CREATE INDEX
+
+dht=> prepare q3(bigint) as select * from geoipcity where $1 > startIp and $1 < endIp;
+PREPARE
+dht=> explain execute q3(2000);
+                                  QUERY PLAN                                   
+-------------------------------------------------------------------------------
+ Index Scan using start_ip_idx on geoipcity  (cost=0.43..6.61 rows=1 width=88)
+   Index Cond: (startip < '2000'::bigint)
+   Filter: ('2000'::bigint < endip)
+(3 rows)
