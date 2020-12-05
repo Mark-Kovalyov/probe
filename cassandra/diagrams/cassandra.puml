@@ -1,0 +1,27 @@
+@startuml
+
+interface IEndpointSnitch {
+  do()
+}
+abstract class AbstractEndpointSnitch
+class SimpleSnitch
+
+IEndpointSnitch <|-- AbstractEndpointSnitch
+AbstractEndpointSnitch <|-- SimpleSnitch
+
+class SizeTieredCompactionStrategy
+class LZ4Compressor
+
+interface IPartitioner
+
+class Murmur3Partitioner
+class RandomPartitioner
+class OrderPreservingPartitioner
+class ByteOrderPartitioner
+
+IPartitioner <|-- Murmur3Partitioner
+IPartitioner <|-- RandomPartitioner
+IPartitioner <|-- OrderPreservingPartitioner
+IPartitioner <|-- ByteOrderPartitioner
+
+@enduml
