@@ -26,7 +26,7 @@ threadPool:
 walker :
   fail-fast : false
   url : "https://sql.ru"
-  imlpementation : vip
+  imlpementation : range
   ignoreMembers :
     byRanges :
       - { from : 0, to : 1000 }

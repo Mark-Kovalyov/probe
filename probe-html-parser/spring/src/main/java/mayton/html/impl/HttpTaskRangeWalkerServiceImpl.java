@@ -1,5 +1,6 @@
 package mayton.html.impl;
 
+import com.google.common.util.concurrent.RateLimiter;
 import mayton.html.*;
 import mayton.html.entities.MemberInfo;
 import mayton.html.entities.TaskInfo;
@@ -9,8 +10,10 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.ThreadContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -44,17 +47,26 @@ public class HttpTaskRangeWalkerServiceImpl implements WalkerService {
     @Autowired
     MemberInfoService memberInfoService;
 
-    private Random random = new Random();
+    private RateLimiter rateLimiter = null;
+
+    @Value("${walker.rateLimiterParameter}")
+    private double rateLimiterParameter;
+
+    @PostConstruct
+    public void postConstruct() {
+        rateLimiter = RateLimiter.create(rateLimiterParameter);
+    }
 
     public void processSeries(Iterable<Integer> mids) throws SQLException {
         Iterator<Integer> i = mids.iterator();
         while (i.hasNext()) {
+            rateLimiter.acquire();
             Optional<MemberInfo> memberInfo = memberInfoService.getMemberInfo(i.next());
             if (memberInfo.isPresent()) {
                 memberWriterService.upsert(memberInfo.get());
                 logger.info(":: upsert {}", memberInfo);
             }
-            SqlRuUtils.sleep(10 + random.nextInt(5));
+            // SqlRuUtils.sleep(10 + random.nextInt(5));
         }
     }
 

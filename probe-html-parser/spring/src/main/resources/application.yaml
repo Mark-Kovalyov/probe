@@ -1,0 +1,3 @@
+walker :
+  rateLimiterParameter : 0.5
+

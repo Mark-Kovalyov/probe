@@ -7,8 +7,8 @@ rm -f logs/*
 rm -f tmp/*
 
 java \
- -DjdbcUrl="$PG_DEF_JDBC_URL" \
- -Dusername="$PG_DEF_JDBC_USER" \
- -Dpassword="$PG_DEF_JDBC_PWD" \
+ -DjdbcUrl="jdbc:postgresql://127.0.0.1:5432/$DEMO_DB" \
+ -Dusername="$DEMO_USER" \
+ -Dpassword="$DEMO_PWD" \
  -DhttpUrl=http://sql.ru \
- -jar build/libs/html-parser-0.0.1-SNAPSHOT.jar
+ -jar build/libs/html-parser-*.jar

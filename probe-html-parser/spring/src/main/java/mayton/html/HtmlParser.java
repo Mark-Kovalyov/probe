@@ -26,8 +26,9 @@ public class HtmlParser {
         ApplicationContext ctx = springApplication.run(args);
         Config config = ctx.getBean(Config.class);
         LinkedHashMap<String, Object> walker = (LinkedHashMap<String, Object>) config.getRoot().get("walker");
+        String implementation = (String) walker.get("imlpementation");
         // TODO: Implement with Spring SPEL configuration
-        WalkerService walkerService = ctx.getBean((String) walker.get("imlpementation"), WalkerService.class);
+        WalkerService walkerService = ctx.getBean(implementation, WalkerService.class);
         walkerService.walk();
     }
 
