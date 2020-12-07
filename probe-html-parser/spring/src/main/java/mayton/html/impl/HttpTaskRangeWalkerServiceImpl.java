@@ -4,13 +4,12 @@ import com.google.common.util.concurrent.RateLimiter;
 import mayton.html.*;
 import mayton.html.entities.MemberInfo;
 import mayton.html.entities.TaskInfo;
-import mayton.html.utils.SqlRuUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.ThreadContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -25,7 +24,8 @@ import static mayton.html.TaskState.*;
  * Route's mebers by id ranges
  */
 @SuppressWarnings("java:S1192")
-@Component("range")
+@Component("rangewalker")
+@ConfigurationProperties(prefix = "walker.rangewalker")
 public class HttpTaskRangeWalkerServiceImpl implements WalkerService {
 
     static Logger logger = LogManager.getLogger(HttpTaskRangeWalkerServiceImpl.class);
@@ -38,9 +38,6 @@ public class HttpTaskRangeWalkerServiceImpl implements WalkerService {
     private DynamicDictionaryService dynamicDictionaryService;
 
     @Autowired
-    private Config config;
-
-    @Autowired
     @Qualifier("JDBCTaskProviderImpl")
     public TaskProvider taskProvider;
 
@@ -49,13 +46,7 @@ public class HttpTaskRangeWalkerServiceImpl implements WalkerService {
 
     private RateLimiter rateLimiter = null;
 
-    @Value("${walker.rateLimiterParameter}")
     private double rateLimiterParameter;
-
-    @PostConstruct
-    public void postConstruct() {
-        rateLimiter = RateLimiter.create(rateLimiterParameter);
-    }
 
     public void processSeries(Iterable<Integer> mids) throws SQLException {
         Iterator<Integer> i = mids.iterator();
@@ -66,7 +57,6 @@ public class HttpTaskRangeWalkerServiceImpl implements WalkerService {
                 memberWriterService.upsert(memberInfo.get());
                 logger.info(":: upsert {}", memberInfo);
             }
-            // SqlRuUtils.sleep(10 + random.nextInt(5));
         }
     }
 
@@ -74,6 +64,7 @@ public class HttpTaskRangeWalkerServiceImpl implements WalkerService {
     public void walk() {
         logger.info(":: begin walk");
         try {
+            rateLimiter = RateLimiter.create(rateLimiterParameter);
             walkRegularMembers();
         } catch (SQLException ex) {
             logger.error(":: fatal error ", ex);
@@ -105,4 +96,11 @@ public class HttpTaskRangeWalkerServiceImpl implements WalkerService {
         logger.info(":: end of walk regular members");
     }
 
+    public double getRateLimiterParameter() {
+        return rateLimiterParameter;
+    }
+
+    public void setRateLimiterParameter(double rateLimiterParameter) {
+        this.rateLimiterParameter = rateLimiterParameter;
+    }
 }

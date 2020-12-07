@@ -1,6 +1,5 @@
 package mayton.html.impl;
 
-import mayton.html.Config;
 import mayton.html.DynamicDictionaryService;
 import mayton.html.entities.MemberInfo;
 import mayton.html.MemberInfoService;
@@ -17,6 +16,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -35,13 +35,11 @@ public class MemberInfoServiceImpl implements MemberInfoService {
     @Autowired
     private DynamicDictionaryService dynamicDictionaryService;
 
-    @Autowired
-    private Config config;
-
     private Range<Integer> ignoreMemberRange;
 
     private Set<String> ignoreNickNamesSet;
 
+    @Value("${httpUrl}")
     private String httpUrl;
 
     @PostConstruct
@@ -50,11 +48,11 @@ public class MemberInfoServiceImpl implements MemberInfoService {
         int begin = 0;
         int end = 1000;
         ignoreMemberRange = Range.between(begin, end);
-        LinkedHashMap<String, Object> walker = (LinkedHashMap<String, Object>) config.getRoot().get("walker");
-        LinkedHashMap<String, Object> ignoreMembers = (LinkedHashMap<String, Object>) walker.get("ignoreMembers");
-        List<String> byNickNames = (ArrayList<String>) ignoreMembers.get("byNickNames");
-        ignoreNickNamesSet = new HashSet<>(byNickNames);
-        httpUrl = (String) walker.get("url");
+        //LinkedHashMap<String, Object> walker = (LinkedHashMap<String, Object>) config.getRoot().get("walker");
+        //LinkedHashMap<String, Object> ignoreMembers = (LinkedHashMap<String, Object>) walker.get("ignoreMembers");
+        //List<String> byNickNames = (ArrayList<String>) ignoreMembers.get("byNickNames");
+        //ignoreNickNamesSet = new HashSet<>(byNickNames);
+        //httpUrl = (String) walker.get("url");
     }
 
     public void upgradeHistogram(@NotNull Document doc, @NotNull MemberInfo memberInfo) throws SQLException {

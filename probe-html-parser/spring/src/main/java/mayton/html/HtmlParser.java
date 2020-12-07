@@ -6,9 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.ApplicationPidFileWriter;
 import org.springframework.context.ApplicationContext;
-
 import java.io.IOException;
-import java.util.LinkedHashMap;
 
 import static java.lang.System.getProperty;
 
@@ -24,9 +22,8 @@ public class HtmlParser {
         SpringApplication springApplication = new SpringApplication(HtmlParser.class);
         springApplication.addListeners(new ApplicationPidFileWriter("./html-parser.pid"));
         ApplicationContext ctx = springApplication.run(args);
-        Config config = ctx.getBean(Config.class);
-        LinkedHashMap<String, Object> walker = (LinkedHashMap<String, Object>) config.getRoot().get("walker");
-        String implementation = (String) walker.get("imlpementation");
+
+        String implementation = "vipwalker";
         // TODO: Implement with Spring SPEL configuration
         WalkerService walkerService = ctx.getBean(implementation, WalkerService.class);
         walkerService.walk();

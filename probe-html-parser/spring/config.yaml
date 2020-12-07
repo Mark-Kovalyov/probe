@@ -1,17 +1,3 @@
-hikariConfig :
-  driverClassName : "org.postgresql.Driver"
-  #jdbcUrl : "jdbc:postgresql://127.0.0.1:5432/*****"
-  #username : ********
-  #password : ****
-  minimumIdle : 5
-  maximumPoolSize : 20
-  idleTimeout : 30000
-  maxLifetime : 2000000
-  connectionTimeout : 30000
-  cachePrepStmts : true
-  prepStmtCacheSize : 4
-  prepStmtCacheSqlLimit : 4
-
 task:
   userStartId : 1
   userEndId : 260000
@@ -26,7 +12,7 @@ threadPool:
 walker :
   fail-fast : false
   url : "https://sql.ru"
-  imlpementation : range
+  imlpementation : randomwalker
   ignoreMembers :
     byRanges :
       - { from : 0, to : 1000 }
@@ -34,48 +20,7 @@ walker :
     postsThreasold : 1000
     byNickNames :
       - "Anna" # Duplicate nick
-  VIPS :
-    - 4897
-    - 28572
-    - 27971
-    - 43489
-    - 111626
-    - 142913
-    - 251867
-    - 57183
-    - 95030
-    - 110363
-    - 263304
-    - 97422
-    - 21430
-    - 88727
-    - 252521
-    - 223550
-    - 257822
-    - 132113
-    - 19857
-    - 11587
-    - 22920
-    - 122827
-    - 57183
-    - 101262
-    - 247232
-    - 261581
-    - 49068
-    - 145849
-    - 24806
-    - 4045
-    - 30055
-    - 4313
-    - 1
-    - 7389
-    - 9662
-    - 27590
-    - 146456
-    - 4045
-    - 43053
-    - 85869
-    - 95721
+
 
 proxyWorker :
   cirquitBreaker :

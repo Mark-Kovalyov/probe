@@ -9,13 +9,16 @@ import org.apache.logging.log4j.ThreadContext;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 import java.sql.SQLException;
 import java.util.*;
 
 @SuppressWarnings("java:S1192")
-@Component("vip")
+@Component("vipwalker")
+@ConfigurationProperties(prefix = "walker.vipwalker")
 public class HttpVipWalkerServiceImpl implements WalkerService {
 
     static Logger logger = LogManager.getLogger(HttpTaskRangeWalkerServiceImpl.class);
@@ -28,14 +31,13 @@ public class HttpVipWalkerServiceImpl implements WalkerService {
     private DynamicDictionaryService dynamicDictionaryService;
 
     @Autowired
-    private Config config;
-
-    @Autowired
     @Qualifier("JDBCTaskProviderImpl")
     public TaskProvider taskProvider;
 
     @Autowired
     MemberInfoService memberInfoService;
+
+    private List<Integer> vips = new ArrayList<>();
 
     private Random random = new Random();
 
@@ -51,11 +53,13 @@ public class HttpVipWalkerServiceImpl implements WalkerService {
         }
     }
 
+
+
     @Override
     public void walk() {
         logger.info(":: begin walk");
         try {
-            walkVIPs((ArrayList<Integer>)((LinkedHashMap)(config.getRoot().get("walker"))).get("VIPS"));
+            walkVIPs(vips);
         } catch (SQLException ex) {
             logger.error(":: fatal error ", ex);
         }
@@ -69,4 +73,11 @@ public class HttpVipWalkerServiceImpl implements WalkerService {
         logger.info(":: end of walk VIP-s");
     }
 
+    public List<Integer> getVips() {
+        return vips;
+    }
+
+    public void setVips(List<Integer> vips) {
+        this.vips = vips;
+    }
 }

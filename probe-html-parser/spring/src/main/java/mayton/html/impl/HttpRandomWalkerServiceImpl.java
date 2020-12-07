@@ -8,7 +8,7 @@ import mayton.html.WalkerService;
 import mayton.html.entities.MemberInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -17,7 +17,8 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-@Component("random")
+@Component("randomwalker")
+@ConfigurationProperties(prefix = "randomwalker.rangewalker")
 public class HttpRandomWalkerServiceImpl implements WalkerService {
 
     @Autowired
@@ -31,17 +32,12 @@ public class HttpRandomWalkerServiceImpl implements WalkerService {
 
     private AtomicBoolean isWorking = new AtomicBoolean(true);
 
-    @Value("${walker.rateLimiterParameter}")
     private double rateLimiterParameter;
-
-    @PostConstruct
-    public void postConstruct() {
-        rateLimiter = RateLimiter.create(rateLimiterParameter);
-    }
 
     @Override
     public void walk() {
         try {
+            rateLimiter = RateLimiter.create(rateLimiterParameter);
             Random random = new Random();
             while (isWorking.get()) {
                 rateLimiter.acquire();
@@ -56,4 +52,11 @@ public class HttpRandomWalkerServiceImpl implements WalkerService {
         }
     }
 
+    public RateLimiter getRateLimiter() {
+        return rateLimiter;
+    }
+
+    public void setRateLimiter(RateLimiter rateLimiter) {
+        this.rateLimiter = rateLimiter;
+    }
 }
