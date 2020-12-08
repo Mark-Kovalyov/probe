@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Properties;
 
 public class PropertyService {
@@ -23,7 +24,8 @@ public class PropertyService {
 
     private PropertyService() {
         try {
-            properties.load(new FileInputStream("tr-loader.properties"));
+            URL resource = getClass().getClassLoader().getResource("tr-loader.properties");
+            properties.load(resource.openStream());
         } catch (IOException e) {
             e.printStackTrace();
         }
