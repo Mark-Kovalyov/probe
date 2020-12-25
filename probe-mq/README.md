@@ -18,6 +18,12 @@
 
 ## Tools
 
+### AMQP tools
+
+* amqp-publish
+* amqp-consume
+* amqp-get
+
 ## Links
 
 Other Open-source Java JMS implementations
