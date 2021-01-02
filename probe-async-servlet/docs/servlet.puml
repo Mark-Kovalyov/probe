@@ -1,0 +1,64 @@
+@startuml
+
+interface javax.servlet.AsyncContext {
+
+}
+
+class javax.servlet.AsyncContext {
+ + dispatch()
+ + dispatch(path)
+ + dispatch(context, path)
+ +
+}
+
+interface javax.servlet.ServletContextListener {
+ + contextInitialized(ServletContextEvent sce)
+ + contextDestroyed(ServletContextEvent sce)
+ + start(Runnable run)
+ + complete()
+}
+
+class org.eclipse.jetty.servlet.ServletContextHandler {
+
+}
+
+class org.eclipse.jetty.webapp.WebAppContext extends org.eclipse.jetty.servlet.ServletContextHandler implements org.eclipse.jetty.webapp.WebAppClassLoader.Context {}
+
+class javax.servlet.http.HttpServlet extends javax.servlet.GenericServlet {
+}
+
+abstract class javax.servlet.GenericServlet implements javax.servlet.Servlet, javax.servlet.ServletConfig, java.io.Serializable
+
+interface javax.servlet.AsyncListener extends java.util.EventListener {
+ + onStartAsync(AsyncEvent event)
+ + onComplete(AsyncEvent event)
+ + onTimeout(AsyncEvent event)
+ + onError(AsyncEvent event)
+}
+
+interface java.util.EventListener {}
+
+class javax.servlet.GenericServlet {
+ - servletName : String
+ - servletConfig : ServletConfig
+ - servletContext : ServletContext
+ + getInitParameter(String name) : String
+ + getInitParameterNames() : String[]
+ + init(ServletConfig config)
+ + init()
+ + service(ServletRequest req, ServletResponse res)
+ + destroy()
+}
+
+interface javax.servlet.Servlet {
+ - servletConfig : ServletConfig
+ - servletInfo : String
+ + init(ServletConfig config)
+ + service(ServletRequest req, ServletResponse res)
+ + destroy()
+}
+
+annotation javax.servlet.annotation.WebListener
+annotation javax.servlet.annotation.WebServlet
+
+@enduml
