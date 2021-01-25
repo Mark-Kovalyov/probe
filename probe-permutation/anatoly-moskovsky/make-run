@@ -1,0 +1,8 @@
+#!/bin/bash
+
+rm -f perm-k-n.exe
+
+gcc \
+ perm-k-n.cpp \
+ -o perm-k-n.exe \
+ -lstdc++ && ./perm-k-n.exe
