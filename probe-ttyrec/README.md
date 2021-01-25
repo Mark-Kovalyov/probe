@@ -7,18 +7,17 @@
 * WebM
 * Ogg Theora
 
-
-## H.264
+## H.264 (AVC, MPEG-4 Part 10)
 
 Download src from https://sourceforge.net/projects/ffx264/
 
-## WebM
+## WebM (.webm, video/webm) VP8,VP9
 
 ```
 ffmpeg -i input.flv -vcodec libvpx -acodec libvorbis output.webm
 ```
 
-## Ogg Theora
+## Ogg Theora (.ogv, .ogg, video/ogg)
 
 ```
 sudo apt install ffmpeg2theora
