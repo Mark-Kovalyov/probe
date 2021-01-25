@@ -1,0 +1,16 @@
+@startuml
+state Raft {
+
+  [*] --> FOLLOWER
+
+  FOLLOWER --> CANDIDATE : Times Out / Starts Election
+
+  CANDIDATE --> CANDIDATE : Times Out / New Election
+
+  CANDIDATE --> LEADER : Receives Votes from majority of servers
+
+  LEADER --> FOLLOWER : Discover server with highter term
+
+  CANDIDATE --> FOLLOWER : Discovers current leader or new term
+}
+@enduml
