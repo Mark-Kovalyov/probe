@@ -1,6 +1,9 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <time.h>
+#include <stdlib.h>
+#include <time.h>
+#include <stdbool.h>
 
 // Следующее сочетание k элементов диапазона 1...n в массив a[]
 // Возвращает true если оно есть
@@ -28,20 +31,35 @@ bool nexn_combinations(int* a, int k, int n) {
 
 
 //**********************************************
-#define K 6
-#define N 45
 
-int main(int argc, char**argv) {
-    printf("C++ version : %ld\n", __cplusplus);
-    printf("C(%d, %d)\n", K, N);
+int main(int argc, char**argv)
+{
+    int *x = new int[1];
+    
+    if (argc < 3) {
+      fprintf(stderr, "\n  Usage: perm-k-n K N [s]\n\n");
+      return 1;
+    }
+    clock_t start = clock();
+    int K = atoi(argv[1]);
+    int N = atoi(argv[2]);
+    bool silent = argc > 3 ? true : false;
+    fprintf(stderr, "C(%d, %d)\n", K,N);
     int a[K];
     for (int i = 0; i < K; i++) a[i] = i + 1;
-    int cnt = 0;
-    do {
+    long int cnt = 0;
+    if (silent) {
+     fprintf(stderr, "silent_mode = on\n");
+     do {
 	cnt++;
-	//for(int& i : a) printf("%d ", i);
+     } while (nexn_combinations(a, K, N));
+    } else {
+     do {
+	cnt++;
+	for(int& i : a) printf("%d ", i);
 	printf("\n");
-    } while (nexn_combinations(a, K, N));
-    printf("Total: %d Time %ld ms", cnt, clock());
+     } while (nexn_combinations(a, K, N));
+    }
+    fprintf(stderr, "Total: %ld Time %.2f s\n", cnt, (float)(clock() - start) / CLOCKS_PER_SEC);
     return 0;
 }
