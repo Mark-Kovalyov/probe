@@ -23,15 +23,15 @@ public:
 
     void generate() noexcept
     {
-        std::cout << "k=" << k << ", n=" << n << ", print=" << print << "\n";
+        //std::cout << "k=" << k << ", n=" << n << ", print=" << print << "\n";
         generate(0, 0, 0);
-        std::cout << "total: " << count << "\n";
+        //std::cout << "total: " << count << "\n";
     }
 
 private:
     // алгоритм
     void generate(size_t pos, size_t val, int level) noexcept {
-        std::cout << ":: level = " << level << ", pos = " << pos << "\n";
+        //std::cout << ":: level = " << level << ", pos = " << pos << "\n";
         const size_t limit = n - k + pos + 1;
         while (val < limit) {
             curr[pos] = val;
@@ -49,7 +49,7 @@ private:
     void print_current() noexcept
     {
         if (print) {
-            std::cout << "       ";
+            //std::cout << "       ";
             for (size_t i = 0; i < k; i++) {
                 std::cout << items[curr[i]] << " ";
             }
@@ -78,11 +78,16 @@ std::vector<int> iota(size_t n)
 
 int main(int argc, char* argv[])
 {
+    
     clock_t start = clock();
     std::cout.sync_with_stdio(false);
     size_t k = 2;
     int    n = 3;
     bool print = true;
+    if (argc <=2) {
+        std::cout << "Usage : perm-k-n.exe K N\n\n";
+        exit(0);
+    }
     if (argc > 2) {
         k = atol(argv[1]);
         n = atol(argv[2]);
@@ -92,6 +97,6 @@ int main(int argc, char* argv[])
     }
     RecursiveCombinator comb{k, iota(n), print};
     comb.generate();
-    fprintf(stderr, "Time %.2f s\n", (float)(clock() - start) / CLOCKS_PER_SEC);
+    //fprintf(stderr, "Time %.2f s\n", (float)(clock() - start) / CLOCKS_PER_SEC);
     return 0;
 }

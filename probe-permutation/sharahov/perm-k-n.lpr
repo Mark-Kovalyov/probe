@@ -1,53 +1,53 @@
-type
-  TCombination = array of integer;
+program perm_k_n;
 
-//только для отладки
-procedure ShowCombination(const c: TCombination);
+uses
+  SysUtils;
+
+procedure ShowCombinationDesc(p: pIntegerArray; len: integer);
 var
   s: AnsiString;
   i: integer;
 begin;
-  for i:=0 to Length(c)-1 do s:=s+AnsiChar(Ord('A')+c[i]);
-  //Form1.Memo1.Lines.Add(s);
+  for i:=0 to len-1 do s:=s+AnsiChar(Ord('0')+p[i]);
   WriteLn(s);
   end;
 
-procedure ProcessCombination(const c: TCombination);
-begin;
-  ShowCombination(c); //отладка - закомментировать при работе
-
-  //тут делаем что-то с массивом
-  end;
-
-//перебор сочетаний из n элементов [0..n-1] по k в алфавитном порядке
-procedure GenerateCombinations(n, k: integer);
+function GenerateCombinationDesc(p: pIntegerArray; n, k: integer): integer;
 var
-  c: TCombination;
-  i, istart, v, vlast: integer;
+  i: integer;
+  Result: integer;
 begin;
-  if (k<=0) or (k>n) then exit;
-
-  SetLength(c, k);
-  for i:=0 to k-1 do c[i]:=i;
-  ProcessCombination(c);
-
-  //если существует более одного сочетания, то крутим цикл
-  if k<n then begin;
-    vlast:=c[0]-1+n;
-    istart:=k-1;
-    while true do begin;
-      if c[k-1]<>vlast then istart:=k-1
-      else begin;
-        dec(istart); if istart<0 then break;
-        end;
-      i:=istart;
-      v:=c[istart];
-      repeat;
-        inc(v); c[i]:=v; inc(i);
-        until i>=k;
-      ProcessCombination(c);
+  Result:=0;
+  i:=k;
+  dec(i);
+  while true do begin;
+    while i>0 do begin;
+      dec(n);
+      p[i]:=n;
+      dec(i);
       end;
-    end;
+    repeat;
+      dec(n);
+      p[0]:=n;
+      inc(Result);                  //подсчет сочетаний
+      //ShowCombinationDesc(p, k);  //обработка очередного сочетания
+      until n<=0;
+    repeat;
+      inc(i); if i>=k then exit;
+      n:=p[i];
+      until i<n;
   end;
+end;
 
-GenerateCombinations(5, 3);
+var
+  c: array of integer;
+  p: pointer;           
+  n, k, cnt: integer;
+begin;
+  n:=100; k:=6;
+  SetLength(c, k);
+  p:=@c[0];
+  cnt:=GenerateCombinationDesc(p, n, k);
+  WriteLn(cnt);
+  ReadLn;
+end.
