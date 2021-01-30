@@ -16,6 +16,8 @@ function GenerateCombinationDesc(p: pIntegerArray; n, k: integer): integer;
 var
   i: integer;
   Result: Integer;
+label
+Done;
 begin;
   Result:=0;
   i:=k;
@@ -30,13 +32,15 @@ begin;
       dec(n);
       p^[0]:=n;
       inc(Result);                  //подсчет сочетаний
-      ShowCombinationDesc(p, k);  //обработка очередного сочетания
+      //ShowCombinationDesc(p, k);  //обработка очередного сочетания
     until n<=0;
     repeat;
-      inc(i); if i>=k then exit;
+      inc(i); if i>=k then goto Done;
       n:=p^[i];
     until i<n;
   end;
+  Done:
+  GenerateCombinationDesc:=Result;
 end;
 
 var
@@ -44,7 +48,7 @@ var
   p: pointer;
   n, k, cnt: integer;
 begin;
-  n:=6; k:=5;
+  n:=600; k:=2;
   SetLength(c, k);
   p:=@c[0];
   cnt:=GenerateCombinationDesc(p, n, k);
