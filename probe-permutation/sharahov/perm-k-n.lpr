@@ -3,19 +3,19 @@ program perm_k_n;
 uses
   SysUtils;
 
-procedure ShowCombinationDesc(p: pIntegerArray; len: integer);
+procedure ShowCombinationDesc(p: pIntegerArray; len: Int32);
 var
   s: AnsiString;
-  i: integer;
+  i: Int32;
 begin;
   for i:=0 to len-1 do s := s + AnsiChar(Ord('0') + byte(p^[i]));
   WriteLn(s);
 end;
 
-function GenerateCombinationDesc(p: pIntegerArray; n, k: integer): integer;
+function GenerateCombinationDesc(p: pIntegerArray; n, k: Int32): Int32;
 var
-  i: integer;
-  Result: Integer;
+  i: Int32;
+  Result: Int32;
 label
 Done;
 begin;
@@ -44,11 +44,11 @@ begin;
 end;
 
 var
-  c: array of integer;
+  c: array of Int32;
   p: pointer;
-  n, k, cnt: integer;
+  n, k, cnt: Int32;
 begin;
-  n:=600; k:=2;
+  n:=10000; k:=2;
   SetLength(c, k);
   p:=@c[0];
   cnt:=GenerateCombinationDesc(p, n, k);
