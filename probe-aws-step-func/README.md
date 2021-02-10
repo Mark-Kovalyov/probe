@@ -68,6 +68,47 @@ aws
 
 ```
 
+## Chain lambdas
+```
+{
+  "Comment": "Chain",
+  "StartAt": "step1",
+  "States": {
+     "step1" : {
+       "Type": "Task",
+       "Resource": "arn:aws:lambda:us-west-1:111111:function:Lambda1",
+       "next" : "step2"
+     }
+     "step2" : {
+       "Type": "Task",
+       "Resource": "arn:aws:lambda:us-west-1:111111:function:Lambda2",
+       "next" : "step3"
+     }
+     "step3" : {
+       "Type": "Task",
+       "Resource": "arn:aws:lambda:us-west-1:111111:function:LambdaFinish",
+       "end" : true
+     }
+  }
+}
+
+```
+
+## Fork + Join
+```
+{
+  "Comment": "Chain",
+  "StartAt": "prepare",
+  "States": {
+     "prepare" : {
+       "Type": "Task",
+       "Resource": "arn:aws:lambda:us-west-1:111111:function:PrepareLambda",
+       "next" : "step2"
+     }
+  }
+}
+```
+
 ## Wait for a Callback with the Task Token
 
 See https://docs.aws.amazon.com/step-functions/latest/dg/connect-to-resource.html#connect-wait-token
