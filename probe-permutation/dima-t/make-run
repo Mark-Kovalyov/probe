@@ -1,0 +1,9 @@
+#!/bin/bash
+
+rm -f perm-k-n.exe
+
+gcc \
+ -O3 -DNDEBUG \
+ perm-k-n.cpp \
+ -o perm-k-n.exe \
+ -lstdc++ && ./perm-k-n.exe 5 36 s

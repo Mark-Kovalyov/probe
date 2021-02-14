@@ -1,0 +1,26 @@
+<configuration>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>[%-5level] %X{mode} : %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>logs/jraft.log</file>
+        <append>true</append>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] :: %X{node} :: %msg%n</pattern>
+            <immediateFlush>false</immediateFlush>
+        </encoder>
+    </appender>
+
+    <logger name="mayton" level="DEBUG" />
+    <logger name="org.eclipse.rdf4j" level="INFO" />
+
+    <root level="DEBUG">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE" />
+    </root>
+
+</configuration>

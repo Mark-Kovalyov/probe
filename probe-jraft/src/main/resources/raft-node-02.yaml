@@ -1,0 +1,8 @@
+raft-node:
+  id : "Sirius"
+  host : "2001:0db8:11a3:09d7:1f34:8a2e:07a0:765d"
+  ports : 9002
+  known-nodes:
+    # - { id : "Sirius", host : "2001:0db8:11a3:09d7:1f34:8a2e:07a0:765d" }
+    - { id : "Vega",    host : "2dfc:0:0:0:0217:cbff:fe8c:0" }
+    - { id : "Astra",   host : "fe80::db0f:8b62:ef2e:473d" }
