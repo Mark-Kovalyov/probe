@@ -1,0 +1,69 @@
+-- Lists
+
+Prelude> let nums = [2,3,5,7,11,13]
+Prelude> nums ++ nums
+[2,3,5,7,11,13,2,3,5,7,11,13]
+Prelude> head nums
+2
+Prelude> tail nums
+[3,5,7,11,13]
+Prelude> init nums
+[2,3,5,7,11]
+Prelude> last nums
+13
+Prelude> 
+
+Prelude> null nums
+False
+
+Prelude> null []
+True
+
+Prelude> reverse nums
+[13,11,7,5,3,2]
+
+Prelude> take 3 nums
+[2,3,5]
+
+
+-- Aggregate ops
+
+Prelude> sum nums
+41
+Prelude> product nums
+30030
+
+
+-- Lookup
+
+Prelude> 5 `elem` nums
+True
+
+-- Intervals
+
+Prelude> [1..20]
+[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+
+Prelude> ['a'..'z']
+"abcdefghijklmnopqrstuvwxyz"
+
+-- With step
+
+Prelude> [1,3..20]
+[1,3,5,7,9,11,13,15,17,19]
+
+-- Infinite lists
+
+Prelude> take 10 (repeat 5)
+[5,5,5,5,5,5,5,5,5,5]
+
+Prelude> take 10 (cycle [1,2,3])
+[1,2,3,1,2,3,1,2,3,1]
+
+-- Generators
+
+
+
+
+-- Strings as lists
+
