@@ -1,3 +1,18 @@
+# Scheme
+
+## Scheme predicates
+
+|x      |null? |pair? | equal? | car | cdr |
+|-------|------|------|--------|-----|-----|
+|()     | true | false|
+|(a)    | false| true |
+|(a b)  | false| true |
+|(a b c)| false| true |
+
+## Equality
+
+
+
 # Scheme string functions
 
 ## Check atom for string
