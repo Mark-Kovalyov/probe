@@ -1,0 +1,7 @@
+#!/bin/bash -v
+
+protoc --java_out=src/main/java proto2/geo-ip-entity.proto
+
+echo "Status = $?"
+
+

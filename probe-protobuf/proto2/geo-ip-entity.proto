@@ -3,9 +3,10 @@ syntax = "proto2";
 package mayton.geo;
 
 option java_package = "mayton.geo";
-option java_outer_classname = "GeoIpCityEntity";
 
-message Person {
+option optimize_for = CODE_SIZE;
+
+message GeoIpCity {
        required int32 startIpNum = 1;
        required int32 endIpNum = 2;
        optional string country = 3;
