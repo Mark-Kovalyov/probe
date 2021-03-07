@@ -1,0 +1,26 @@
+<configuration>
+
+    <shutdownHook/>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender" >
+        <encoder>
+            <pattern>[%-5level] : %class{0} : id = %X{id} : %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>logs/apache-thrift.log</file>
+        <append>false</append>
+        <encoder>
+            <pattern>%d{yyy-MM-dd HH:mm:ss.SSS} : [%-5level] : %class{0} : id = %X{id} : %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="mayton" level="INFO" />
+
+    <root level="DEBUG">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE" />
+    </root>
+
+</configuration>

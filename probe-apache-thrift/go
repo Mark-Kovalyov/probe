@@ -1,0 +1,7 @@
+#!/bin/bash -v
+
+# -o   src/main/java \
+thrift -v \
+       --gen java:fullcamel=y,option_type=y \
+       -out src/main/java \
+       thrift/geo-ip-city.thrift
