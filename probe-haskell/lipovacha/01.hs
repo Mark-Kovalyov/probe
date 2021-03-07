@@ -39,6 +39,12 @@ Prelude> product nums
 Prelude> 5 `elem` nums
 True
 
+-- By index
+
+Prelude> let nums = [2,3,5,7,11,13]
+Prelude> nums !! 5
+13
+
 -- Intervals
 
 Prelude> [1..20]
@@ -60,10 +66,19 @@ Prelude> take 10 (repeat 5)
 Prelude> take 10 (cycle [1,2,3])
 [1,2,3,1,2,3,1,2,3,1]
 
--- Generators
+Prelude> head [1..]
+1
 
+-- Strings as lists (cons)
 
+Prelude> 1:[2,3]
+[1,2,3]
 
+Prelude> 'H':"ello world"
+"Hello world"
 
--- Strings as lists
+-- With formula (Golden triangles)
+
+Prelude> [(a,b,c) | a <- [1..20], b <- [1..20], c <- [1..20], a * a + b * b == c * c ]
+[(3,4,5),(4,3,5),(5,12,13),(6,8,10),(8,6,10),(8,15,17),(9,12,15),(12,5,13),(12,9,15),(12,16,20),(15,8,17),(16,12,20)]
 
