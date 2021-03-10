@@ -3,6 +3,8 @@
 rm "tested-ok.lst"
 rm "tested-bad.lst"
 
+cd java
+
 for folder in */ ; do
   if [ -d "$folder" ]; then
     cd "$folder"
@@ -27,3 +29,5 @@ for folder in */ ; do
     cd ..
   fi
 done;
+
+cd ..
