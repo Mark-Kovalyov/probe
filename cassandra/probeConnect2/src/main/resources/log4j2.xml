@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Appenders>
+
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%highlight{[%-5p] %-3tid : %c{1} %m%n}{FATAL=Bright red blink, ERROR=Bright red, WARN=Bright yellow, INFO=Bright green, DEBUG=Bright cyan, TRACE=Bright cyan}"/>
+        </Console>
+
+    </Appenders>
+
+    <Loggers>
+
+        <Root>
+            <AppenderRef ref="Console" level="trace"/>
+        </Root>
+
+    </Loggers>
+
+</Configuration>
