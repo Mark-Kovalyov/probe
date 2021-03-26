@@ -1,0 +1,11 @@
+#!/bin/bash -ev
+
+mkdir -p bin
+mvn clean package -DskipTests
+mvn install dependency:copy-dependencies
+cp -f target/probe-chain-1.0-SNAPSHOT.jar ./bin
+rsync -avh target/lib/* ./bin --delete
+
+cd bin
+
+java -jar probe-chain-1.0-SNAPSHOT.jar | tee pwds.txt
