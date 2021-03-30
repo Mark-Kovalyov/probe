@@ -1,0 +1,14 @@
+#!/bin/bash -ev
+
+mkdir -p benchmark-bin
+
+mvn clean package -DskipTests -Dtargetbinary=benchmark
+mvn install dependency:copy-dependencies -Dtargetbinary=benchmark
+cp -f target/benchmark.jar ./benchmark-bin
+rsync -avh target/dependency/* ./benchmark-bin --delete
+
+cd ./benchmark-bin
+
+# text, csv, scsv, json, latex
+
+java -jar benchmark.jar -rf text

@@ -18,7 +18,40 @@
     <maven.compiler.target>11</maven.compiler.target>
   </properties>
 
-  <dependencies>
+    <profiles>
+        <profile>
+            <id>dhtobserver</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+                <property>
+                    <name>targetbinary</name>
+                    <value>dhtobserver</value>
+                </property>
+            </activation>
+            <properties>
+                <main.class.name>mayton.crypto.PwdProcessor</main.class.name>
+                <jar.name>probe-chain</jar.name>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>benchmark</id>
+            <activation>
+                <property>
+                    <name>targetbinary</name>
+                    <value>benchmark</value>
+                </property>
+            </activation>
+            <properties>
+                <main.class.name>mayton.crypto.BenchmarkRunner</main.class.name>
+                <jar.name>benchmark</jar.name>
+            </properties>
+        </profile>
+
+    </profiles>
+
+
+    <dependencies>
       <dependency>
           <groupId>com.google.guava</groupId>
           <artifactId>guava</artifactId>
@@ -45,6 +78,39 @@
           <version>5.7.0</version>
           <scope>test</scope>
       </dependency>
+
+    <dependency>
+        <groupId>commons-validator</groupId>
+        <artifactId>commons-validator</artifactId>
+        <version>1.6</version>
+    </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.30</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+
+      <!-- JMH -->
+
+      <!-- https://mvnrepository.com/artifact/org.openjdk.jmh/jmh-core -->
+      <dependency>
+          <groupId>org.openjdk.jmh</groupId>
+          <artifactId>jmh-core</artifactId>
+          <version>1.29</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.openjdk.jmh</groupId>
+          <artifactId>jmh-generator-annprocess</artifactId>
+          <version>1.29</version>
+      </dependency>
   </dependencies>
 
     <build>
@@ -65,9 +131,10 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>mayton.crypto.Main</mainClass>
+                            <Main-Class>${main.class.name}</Main-Class>
                         </manifest>
                     </archive>
+                    <finalName>${jar.name}</finalName>
                 </configuration>
             </plugin>
 
