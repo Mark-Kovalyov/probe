@@ -11,6 +11,7 @@ import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.UUID;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.function.BiFunction;
@@ -107,7 +108,6 @@ public class PwdProcessor implements Runnable {
         Validate.isTrue(alphabet.length() > 1, "Alphabet must not be empty");
         Validate.isTrue(hexEncodedHash.length() == sha256.getDigestLength() * 2, "hexEncodedHash length " + hexEncodedHash.length() + " must be equals to " + 2 * sha256.getDigestLength());
         logger.info("sha256.getDigestLength() = {} bytes ({} bits, {} binhex chars)", sha256.getDigestLength(), 8 * sha256.getDigestLength(), 2 * sha256.getDigestLength());
-
         BigInteger numericOfHash = new BigInteger(hexEncodedHash, 16); // radix = [2..36]
         int reasonDigits = 1 + (int) (Math.pow(alphabet.length(), max));
         BigInteger divider = BigInteger.valueOf(alphabet.length());
