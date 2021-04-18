@@ -1,0 +1,15 @@
+#!/bin/bash -ev
+
+rm -fr bin
+
+mkdir bin
+
+mvn clean package -P profile1
+mvn install dependency:copy-dependencies -P profile1
+
+cp -f target/ApplicationName.jar ./bin
+rsync -avh target/dependency/* ./bin --delete
+
+cd ./bin
+
+java -jar ApplicationName.jar
