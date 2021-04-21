@@ -1,0 +1,15 @@
+#!/bin/bash -ev
+
+rm -fr bin
+
+mkdir bin
+
+mvn clean package -P rock
+mvn install dependency:copy-dependencies -P rock
+
+cp -f target/key-value.jar ./bin
+rsync -avh target/dependency/* ./bin --delete
+
+cd ./bin
+
+java -jar key-value.jar
