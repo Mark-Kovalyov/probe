@@ -21,12 +21,15 @@
 <!--
     compile "org.iq80.leveldb:leveldb:0.12"
     compile "org.iq80.leveldb:leveldb-api:0.12"
-    compile group: 'org.rocksdb', name: 'rocksdbjni', version: '6.0.1'
 -->
 
 
   <dependencies>
-
+    <dependency>
+      <groupId>org.rocksdb</groupId>
+      <artifactId>rocksdbjni</artifactId>
+      <version>6.0.1</version>
+    </dependency>
   </dependencies>
 
   <build>
