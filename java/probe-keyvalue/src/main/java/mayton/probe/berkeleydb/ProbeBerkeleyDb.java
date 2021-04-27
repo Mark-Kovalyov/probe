@@ -1,4 +1,4 @@
-package mayton.probe;
+package mayton.probe.berkeleydb;
 
 import com.sleepycat.je.DatabaseException;
 import com.sleepycat.je.Environment;
@@ -8,14 +8,9 @@ import com.sleepycat.persist.PrimaryIndex;
 import java.io.File;
 import java.time.LocalDateTime;
 
-/**
- * Hello world!
- *
- */
-public class App 
-{
-    public static void main( String[] args ) throws DatabaseException {
+public class ProbeBerkeleyDb {
 
+    public static void main(String[] args) throws DatabaseException {
         Environment env = null;
 
         EnvironmentConfig econf = new EnvironmentConfig();
@@ -25,10 +20,9 @@ public class App
         env = new Environment(new File("./db"),econf);
 
         PrimaryIndex<LocalDateTime,String > primaryIndex;
-
-
-
+        
         env.close();
 
     }
+
 }

@@ -9,26 +9,41 @@
   <version>1.0-SNAPSHOT</version>
 
   <name>keyvalue</name>
-  <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
+    <google.engine.version>0.12</google.engine.version>
+    <facebook.engine.version>6.0.1</facebook.engine.version>
+    <tony.starks.engine.version>3.2.76</tony.starks.engine.version> <!-- Oh, unfortunate Tony... no updates since 2008 -->
   </properties>
 
-<!--
-    compile "org.iq80.leveldb:leveldb:0.12"
-    compile "org.iq80.leveldb:leveldb-api:0.12"
--->
-
-
   <dependencies>
+
+    <dependency>
+      <groupId>berkeleydb</groupId>
+      <artifactId>je</artifactId>
+      <version>${tony.starks.engine.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.iq80.leveldb</groupId>
+      <artifactId>leveldb-api</artifactId>
+      <version>${google.engine.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.iq80.leveldb</groupId>
+      <artifactId>leveldb</artifactId>
+      <version>${google.engine.version}</version>
+    </dependency>
+
     <dependency>
       <groupId>org.rocksdb</groupId>
       <artifactId>rocksdbjni</artifactId>
-      <version>6.0.1</version>
+      <version>${facebook.engine.version}</version>
     </dependency>
   </dependencies>
 

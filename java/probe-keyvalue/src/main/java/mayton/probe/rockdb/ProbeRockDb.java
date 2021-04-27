@@ -7,6 +7,7 @@ public class ProbeRockDb {
     public static void main(String[] args) throws RocksDBException {
 
         Options options = new Options()
+                .setCompressionType(CompressionType.NO_COMPRESSION)
                 .setCreateIfMissing(true);
 
         String dbPath = "db/rocksdb/data";
