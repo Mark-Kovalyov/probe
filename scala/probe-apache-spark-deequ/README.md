@@ -265,6 +265,11 @@ reduce, fold, aggregate
 
 ## Examples
 
+Parse text file
+```
+val df = spark.read().format("csv").option("delimiter", " ").option("header", "false").load(dir_path)
+ds.filter("user='shit'").show();
+```
 
 
 ```
