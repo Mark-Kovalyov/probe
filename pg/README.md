@@ -225,3 +225,19 @@ GRANT USAGE ON SCHEMA bookings TO new_user;
 ```
 pg_dump -d dht -s -t person -f person.sql
 ```
+
+## Show tables from specific schemas
+
+```
+\dt *.*
+```
+
+or 
+```
+\dt public.*
+```
+or
+```
+SHOW search_path;
+SET search_path TO "$user", myschema, public;
+```
