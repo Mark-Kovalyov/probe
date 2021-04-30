@@ -29,6 +29,12 @@
     </dependency>
 
     <dependency>
+      <groupId>com.github.albfernandez</groupId>
+      <artifactId>javadbf</artifactId>
+      <version>1.11.2</version>
+    </dependency>
+    
+    <dependency>
       <groupId>org.iq80.leveldb</groupId>
       <artifactId>leveldb-api</artifactId>
       <version>${google.engine.version}</version>
