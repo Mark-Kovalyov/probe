@@ -6,7 +6,7 @@
 
   <groupId>mayton</groupId>
   <artifactId>simple-application</artifactId>
-  <version>1.1</version>
+  <version>1.17</version>
   <packaging>maven-archetype</packaging>
 
   <name>Archetype - simple-application</name>
