@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Optional;
 
 public class ProbeRockDb {
 
@@ -38,8 +39,9 @@ public class ProbeRockDb {
 
         RocksDB db = RocksDB.open(options, dbPath);
 
+        String storageHome = Optional.of(System.getenv("STORAGE_HOME")).orElse("/storage");
 
-        for(File f : new File("/storage/fias/fias_dbf").listFiles()) {
+        for(File f : new File(storageHome + "/fias/fias_dbf").listFiles()) {
             if (!f.isDirectory()) {
                 String fileName = f.getName();
                 if (fileName.endsWith(".DBF")) {
