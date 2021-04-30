@@ -82,6 +82,45 @@ object Main extends App {
     true
   }
 
+  def processPg(outFileName: String, records: Iterable[CSVRecord]) : Boolean = {
+    val pgw : PrintWriter = new PrintWriter(new FileWriter(outFileName))
+
+    pgw.println(
+      """create table emp(
+        |  empno integer primary key,
+        |  ename varchar(30),
+        |  job varchar(30),
+        |  mgr integer,
+        |  hiredate date,
+        |  sal decimal,
+        |  comm decimal,
+        |  depno integer);
+        |  """.stripMargin)
+
+    records.foreach(item => {
+      val empno = item.get("EMPNO")
+      val ename = item.get("ENAME")
+      val job   = item.get("JOB")
+      val mgr   = item.get("MGR")
+      val hiredate = item.get("HIREDATE")
+      val sal      = item.get("SAL")
+      val comm     = item.get("COMM")
+      val deptno   = item.get("DEPTNO")
+
+      pgw.printf("insert into emp(empno,ename,job,mgr,hiredate,sal,comm,depno) values(%s,'%s','%s', %s, TIMESTAMP '%s', %s, %s, %s);\n",
+        empno,
+        ename,
+        job,
+        if (mgr == "") "null" else mgr,
+        hiredate,
+        sal,
+        if (comm == "") "null" else comm,
+        deptno)
+    })
+    pgw.close()
+    true
+  }
+
   def processHaskell(outFileName : String, records : Iterable[CSVRecord]) : Boolean = {
     val haskell : PrintWriter = new PrintWriter(new FileWriter(outFileName))
     haskell.println("module scott (")
@@ -162,5 +201,11 @@ object Main extends App {
   processErlang("erlang/gb-trees.erl", (customCsvParser("csv/scott/emp.csv").getRecords()).asScala)
   processHaskell("haskell/haskell.hs", (customCsvParser("csv/scott/emp.csv").getRecords()).asScala)
   processGolang("golang/golang.go", (customCsvParser("csv/scott/emp.csv").getRecords()).asScala)
+
+
+
+
+  processPg("pg/emp.sql", (customCsvParser("csv/scott/emp.csv").getRecords()).asScala)
+
 
 }
