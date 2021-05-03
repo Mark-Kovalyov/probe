@@ -18,6 +18,8 @@ public class SimulateWorkload {
 
     public static final int ROWS = 100;
 
+    public static final int LIMIT_TIME = 120; // sec
+
     public static Logger logger = LoggerFactory.getLogger(SimulateWorkload.class);
 
     // create table elven.balances(
@@ -71,14 +73,23 @@ public class SimulateWorkload {
 
         ExecutorService executorService = Executors.newCachedThreadPool();
 
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 5; i++) {
+            executorService.execute(
+                    new LongLiveTransactions(
+                            DriverManager.getConnection(jdbcUrl, jdbcUser, jdbcPwd),
+                            Range.between(0, ROWS - 1),
+                            LIMIT_TIME,
+                            "LongLiveThread-" + i));
+        }
+
+        /*for (int i = 0; i < 20; i++) {
             executorService.execute(
                     new ShortLiveTransactions(
                             DriverManager.getConnection(jdbcUrl, jdbcUser, jdbcPwd),
                             Range.between(0, ROWS - 1),
-                            30 + random.nextInt(15),
+                            LIMIT_TIME,
                             "ShortLiveThread-" + i));
-        }
+        }*/
 
         logger.info("Waiting for executor service is finished");
         executorService.shutdown();

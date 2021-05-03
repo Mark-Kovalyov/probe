@@ -10,16 +10,18 @@ public class Utils {
 
     }
 
-    public static void randomSleepSec(int min, int max) {
-        sleepSec(min + random.nextInt(max - min));
+    public static long randomSleepSec(int min, int max) {
+        return sleepSec(min + random.nextInt(max - min));
     }
 
-    public static void sleepSec(int sec) {
+    public static long sleepSec(int sec) {
         try {
             Thread.sleep(sec * 1000L);
+            return 1000L * sec;
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
+        return 0L;
     }
 
 }
