@@ -1,33 +1,34 @@
-module scott (
- emp_tab
+module Scott (
+ empt
 ) where
 
-import Data.Dates
+import Data.Time.Calendar
+import Data.Maybe
 
 data Emp = Emp{
-  Empno      :: Num,
-  Ename      :: [Char],
-  Job        :: Num,
-  Maybe Mgr  :: Num,
-  Hiredate   :: DateTime,
-  Sal        :: Num,
-  Maybe Comm :: Num,
-  Deptno     :: Num
+  empno      :: Integer,
+  ename      :: [Char],
+  job        :: [Char],
+  mgr        :: Maybe[Integer],
+  hiredate   :: Day,
+  sal        :: Integer,
+  comm       :: Maybe[Integer],
+  deptno     :: Integer
 } deriving (Show)
 
 empt = [
- Person 7369 "SMITH" "CLERK" Just 7902 DateTime "17-DEC-1980" 800 Nothing 20
- Person 7499 "ALLEN" "SALESMAN" Just 7698 DateTime "20-FEB-1981" 1600 Just 300 30
- Person 7521 "WARD" "SALESMAN" Just 7698 DateTime "22-FEB-1981" 1250 Just 500 30
- Person 7566 "JONES" "MANAGER" Just 7839 DateTime "02-APR-1981" 2975 Nothing 20
- Person 7654 "MARTIN" "SALESMAN" Just 7698 DateTime "28-SEP-1981" 1250 Just 1400 30
- Person 7698 "BLAKE" "MANAGER" Just 7839 DateTime "01-MAY-1981" 2850 Nothing 30
- Person 7782 "CLARK" "MANAGER" Just 7839 DateTime "09-JUN-1981" 2450 Nothing 10
- Person 7788 "SCOTT" "ANALYST" Just 7566 DateTime "19-APR-1987" 3000 Nothing 20
- Person 7839 "KING" "PRESIDENT" Nothing DateTime "17-NOV-1981" 5000 Nothing 10
- Person 7844 "TURNER" "SALESMAN" Just 7698 DateTime "08-SEP-1981" 1500 Just 0 30
- Person 7876 "ADAMS" "CLERK" Just 7788 DateTime "23-MAY-1987" 1100 Nothing 20
- Person 7900 "JAMES" "CLERK" Just 7698 DateTime "03-DEC-1981" 950 Nothing 30
- Person 7902 "FORD" "ANALYST" Just 7566 DateTime "03-DEC-1981" 3000 Nothing 20
- Person 7934 "MILLER" "CLERK" Just 7782 DateTime "23-JAN-1982" 1300 Nothing 10
+ Emp { empno = 7369, ename = "SMITH", job = "CLERK", mgr = (Just 7902), hiredate = fromGregorian 1980 12 17, sal = 800, comm = Nothing, deptno = 20 },
+ Emp { empno = 7499, ename = "ALLEN", job = "SALESMAN", mgr = (Just 7698), hiredate = fromGregorian 1981 2 20, sal = 1600, comm = (Just 300), deptno = 30 },
+ Emp { empno = 7521, ename = "WARD", job = "SALESMAN", mgr = (Just 7698), hiredate = fromGregorian 1981 2 22, sal = 1250, comm = (Just 500), deptno = 30 },
+ Emp { empno = 7566, ename = "JONES", job = "MANAGER", mgr = (Just 7839), hiredate = fromGregorian 1981 4 02, sal = 2975, comm = Nothing, deptno = 20 },
+ Emp { empno = 7654, ename = "MARTIN", job = "SALESMAN", mgr = (Just 7698), hiredate = fromGregorian 1981 9 28, sal = 1250, comm = (Just 1400), deptno = 30 },
+ Emp { empno = 7698, ename = "BLAKE", job = "MANAGER", mgr = (Just 7839), hiredate = fromGregorian 1981 5 01, sal = 2850, comm = Nothing, deptno = 30 },
+ Emp { empno = 7782, ename = "CLARK", job = "MANAGER", mgr = (Just 7839), hiredate = fromGregorian 1981 6 09, sal = 2450, comm = Nothing, deptno = 10 },
+ Emp { empno = 7788, ename = "SCOTT", job = "ANALYST", mgr = (Just 7566), hiredate = fromGregorian 1987 4 19, sal = 3000, comm = Nothing, deptno = 20 },
+ Emp { empno = 7839, ename = "KING", job = "PRESIDENT", mgr = Nothing, hiredate = fromGregorian 1981 11 17, sal = 5000, comm = Nothing, deptno = 10 },
+ Emp { empno = 7844, ename = "TURNER", job = "SALESMAN", mgr = (Just 7698), hiredate = fromGregorian 1981 9 08, sal = 1500, comm = (Just 0), deptno = 30 },
+ Emp { empno = 7876, ename = "ADAMS", job = "CLERK", mgr = (Just 7788), hiredate = fromGregorian 1987 5 23, sal = 1100, comm = Nothing, deptno = 20 },
+ Emp { empno = 7900, ename = "JAMES", job = "CLERK", mgr = (Just 7698), hiredate = fromGregorian 1981 12 03, sal = 950, comm = Nothing, deptno = 30 },
+ Emp { empno = 7902, ename = "FORD", job = "ANALYST", mgr = (Just 7566), hiredate = fromGregorian 1981 12 03, sal = 3000, comm = Nothing, deptno = 20 },
+ Emp { empno = 7934, ename = "MILLER", job = "CLERK", mgr = (Just 7782), hiredate = fromGregorian 1982 1 23, sal = 1300, comm = Nothing, deptno = 10 }
 ]

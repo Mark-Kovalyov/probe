@@ -1,5 +1,3 @@
-drop table emp;
-
 create table emp(
   empno integer primary key,
   ename varchar(30),
@@ -9,9 +7,7 @@ create table emp(
   sal decimal,
   comm decimal,
   depno integer);
-
-SET datestyle TO "ISO, DMY";
-
+  
 insert into emp(empno,ename,job,mgr,hiredate,sal,comm,depno) values(7369,'SMITH','CLERK', 7902, TIMESTAMP '17-DEC-1980', 800, null, 20);
 insert into emp(empno,ename,job,mgr,hiredate,sal,comm,depno) values(7499,'ALLEN','SALESMAN', 7698, TIMESTAMP '20-FEB-1981', 1600, 300, 30);
 insert into emp(empno,ename,job,mgr,hiredate,sal,comm,depno) values(7521,'WARD','SALESMAN', 7698, TIMESTAMP '22-FEB-1981', 1250, 500, 30);

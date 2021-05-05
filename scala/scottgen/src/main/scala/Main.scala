@@ -2,16 +2,19 @@ import java.io.{FileWriter, PrintWriter, Reader}
 import java.nio.file.Files
 import java.nio.file.Paths
 import org.apache.commons.csv._
-import org.apache.commons.csv.CSVFormat.DEFAULT
 
-import scala.collection.mutable
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.regex.Pattern
 import scala.jdk.CollectionConverters.CollectionHasAsScala
-//import scala.jdk.CollectionConverters
-
-import scala.jdk.javaapi.CollectionConverters
 
 
 object Main extends App {
+
+  val months = Map("JAN" -> 1, "FEB" -> 2, "MAR" -> 3,
+    "APR" -> 4, "MAY" -> 5, "JUN" -> 6, "JUL" -> 7, "AUG" -> 8,
+    "SEP" -> 9, "OCT" -> 10, "NOV" -> 11, "DEC" -> 12
+  )
 
   def customCsvParser(path : String) = {
     new CSVParser(Files.newBufferedReader(Paths.get(path)),
@@ -97,6 +100,8 @@ object Main extends App {
         |  depno integer);
         |  """.stripMargin)
 
+    pgw.println("SET datestyle TO \"ISO, DMY\";")
+
     records.foreach(item => {
       val empno = item.get("EMPNO")
       val ename = item.get("ENAME")
@@ -123,42 +128,52 @@ object Main extends App {
 
   def processHaskell(outFileName : String, records : Iterable[CSVRecord]) : Boolean = {
     val haskell : PrintWriter = new PrintWriter(new FileWriter(outFileName))
-    haskell.println("module scott (")
-    haskell.println(" emp_tab")
+    haskell.println("module Scott (")
+    haskell.println(" empt")
     haskell.println(") where\n")
-    haskell.println("import Data.Dates\n")
+    haskell.println("import Data.Time.Calendar")
+    haskell.println("import Data.Maybe\n")
     haskell.println("data Emp = Emp{\n" +
-      "  Empno      :: Num,\n" +
-      "  Ename      :: [Char],\n" +
-      "  Job        :: Num,\n" +
-      "  Maybe Mgr  :: Num,\n" +
-      "  Hiredate   :: DateTime,\n" +
-      "  Sal        :: Num,\n" +
-      "  Maybe Comm :: Num,\n" +
-      "  Deptno     :: Num\n" +
+      "  empno      :: Integer,\n" +
+      "  ename      :: [Char],\n" +
+      "  job        :: [Char],\n" +
+      "  mgr        :: Maybe[Integer],\n" +
+      "  hiredate   :: Day,\n" +
+      "  sal        :: Integer,\n" +
+      "  comm       :: Maybe[Integer],\n" +
+      "  deptno     :: Integer\n" +
     "} deriving (Show)\n")
 
     haskell.println("empt = [")
-    records.foreach(item => {
+
+    val pattern = Pattern.compile("(?<day>\\d{2})-(?<mon>[a-zA-Z]{3})-(?<year>\\d{4})")
+
+    val res = records.map(item => {
       val empno    = item.get("EMPNO")
       val ename    = item.get("ENAME")
       val job      = item.get("JOB")
       val mgr      = item.get("MGR")
       val hiredate = item.get("HIREDATE")
+      val mather   = pattern.matcher(hiredate)
       val sal      = item.get("SAL")
       val comm     = item.get("COMM")
       val deptno   = item.get("DEPTNO")
 
-      haskell.printf(" Person %s \"%s\" \"%s\" %s %s %s %s %s\n",
+      if (!mather.matches()) System.err.println("Unable to match " + hiredate)
+
+      String.format(" Emp { empno = %s, ename = \"%s\", job = \"%s\", mgr = %s, hiredate = %s, sal = %s, comm = %s, deptno = %s }",
         empno,
         ename,
         job,
-        if (mgr == "") "Nothing" else "Just " + mgr,
-        "DateTime \"" + hiredate + "\"",
+        if (mgr == "") "Nothing" else "(Just " + mgr + ")",
+        "fromGregorian " + mather.group("year") + " " + months(mather.group("mon")) + " " + mather.group("day"),
         sal,
-        if (comm == "") "Nothing" else "Just " + comm,
+        if (comm == "") "Nothing" else "(Just " + comm + ")",
         deptno)
-    })
+    }).mkString(",\n")
+
+    haskell.println(res)
+
     haskell.print("]")
     haskell.close()
     true
@@ -179,7 +194,7 @@ object Main extends App {
       val comm     = item.get("COMM")
       val deptno   = item.get("DEPTNO")
 
-      printf("D%d = dict:store(id%s, \"%s\", D%d).\n", d + 1, empno, ename, d)
+      //printf("D%d = dict:store(id%s, \"%s\", D%d).\n", d + 1, empno, ename, d)
       erlang.printf("T%d = gb_trees:insert(%s, { \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\" }, T%d).\n",
         d + 1,
         empno,
@@ -201,11 +216,6 @@ object Main extends App {
   processErlang("erlang/gb-trees.erl", (customCsvParser("csv/scott/emp.csv").getRecords()).asScala)
   processHaskell("haskell/haskell.hs", (customCsvParser("csv/scott/emp.csv").getRecords()).asScala)
   processGolang("golang/golang.go", (customCsvParser("csv/scott/emp.csv").getRecords()).asScala)
-
-
-
-
   processPg("pg/emp.sql", (customCsvParser("csv/scott/emp.csv").getRecords()).asScala)
-
 
 }
