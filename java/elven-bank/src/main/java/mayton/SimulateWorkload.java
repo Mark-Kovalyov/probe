@@ -8,6 +8,7 @@ import org.slf4j.MDC;
 
 import java.math.BigDecimal;
 import java.sql.*;
+import java.util.Properties;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -54,19 +55,35 @@ public class SimulateWorkload {
         Runnable[] runnable = new Runnable[10];
     }
 
-    // select pid,application_name,state,query,query_start from pg_stat_activity;
     // SET search_path TO elven,public;
+    // select pid,application_name,state,query,query_start from pg_stat_activity;
+
     public static void main(String[] args) throws ParseException, SQLException, InterruptedException {
+        System.out.println("user.dir = " + System.getProperty("user.dir"));
         MDC.put("threadName","main");
         Random random = new Random();
         logger.info("Start");
 
-        String jdbcUrl  = System.getenv("PG_DEF_JDBC_URL");
+        String jdbcUrl  = System.getenv("PG_DEF_JDBC_URL");// + "?loggerLevel=TRACE&loggerFile=logs/pgjdbc.log&=ApplicationName=elven-bank";
         String jdbcUser = System.getenv("PG_DEF_JDBC_USER");
         String jdbcPwd  = System.getenv("PG_DEF_JDBC_PWD");
-        Connection connection = DriverManager.getConnection(jdbcUrl, jdbcUser, jdbcPwd);
+
+        Properties props = new Properties();
+        props.setProperty("user",jdbcUser);
+        props.setProperty("password",jdbcPwd);
+        props.setProperty("loglevel", "FINEST");
+        props.setProperty("loggerLevel", "TRACE");
+        props.setProperty("loggerFile", "logs/pgjdbc.log");
+        props.setProperty("tcpKeepAlive", "true");
+        props.setProperty("ApplicationName", "elven-bank");
+
+        //props.setProperty("ssl","true");
+
+
+        Connection connection = DriverManager.getConnection(jdbcUrl, props);
         connection.setSchema("elven");
         connection.setAutoCommit(false);
+
         clean(connection);
         initTable(connection);
         BigDecimal capBefore = capitalization(connection);
@@ -76,20 +93,20 @@ public class SimulateWorkload {
         for (int i = 0; i < 5; i++) {
             executorService.execute(
                     new LongLiveTransactions(
-                            DriverManager.getConnection(jdbcUrl, jdbcUser, jdbcPwd),
+                            DriverManager.getConnection(jdbcUrl, props),
                             Range.between(0, ROWS - 1),
                             LIMIT_TIME,
                             "LongLiveThread-" + i));
         }
 
-        /*for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 20; i++) {
             executorService.execute(
                     new ShortLiveTransactions(
-                            DriverManager.getConnection(jdbcUrl, jdbcUser, jdbcPwd),
+                            DriverManager.getConnection(jdbcUrl, props),
                             Range.between(0, ROWS - 1),
                             LIMIT_TIME,
                             "ShortLiveThread-" + i));
-        }*/
+        }
 
         logger.info("Waiting for executor service is finished");
         executorService.shutdown();

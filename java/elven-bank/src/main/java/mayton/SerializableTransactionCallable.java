@@ -37,7 +37,9 @@ public class SerializableTransactionCallable implements Callable<Boolean> {
             st.setInt(3, id3);
             ResultSet rs = st.executeQuery();
             while(rs.next()) {
-
+                if (rs.getInt(1) == id1) {
+                    
+                }
             }
             return true;
         } catch (SQLException ex) {

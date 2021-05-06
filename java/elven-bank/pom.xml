@@ -174,10 +174,9 @@
                 <configuration>
                     <mainClass>mayton.SimulateWorkload</mainClass>
                     <executable>maven</executable>
-                    <!--workingDirectory>/tmp</workingDirectory>
-                    <arguments>
-                        <argument>-X</argument>
-                        <argument>myproject:dist</argument>
+                    <!--workingDirectory>/tmp</workingDirectory>-->
+                    <!--arguments>
+                        <argument>-Djava.util.logging.config.file=src/main/resources/logging.properties</argument>
                     </arguments-->
                 </configuration>
             </plugin>
