@@ -1,5 +1,7 @@
 package mayton;
 
+import com.querydsl.core.QueryFactory;
+import com.querydsl.core.types.dsl.Wildcard;
 import org.apache.commons.cli.*;
 import org.apache.commons.lang3.Range;
 import org.slf4j.Logger;
@@ -124,6 +126,13 @@ public class SimulateWorkload {
         ResultSet res = st.executeQuery("select sum(balance) from balances");
         res.next();
         return res.getBigDecimal(1);
+
+    }
+
+    private static BigDecimal capitalizationQdsl(Connection connection) throws SQLException {
+
+        //Wildcard.count
+        return BigDecimal.ZERO;
     }
 
 }
