@@ -1,4 +1,4 @@
-package mayton.exods;
+package mayton.exods.rope;
 
 import org.apache.commons.lang3.tuple.Pair;
 

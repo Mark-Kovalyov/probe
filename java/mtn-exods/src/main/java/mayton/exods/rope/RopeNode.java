@@ -1,4 +1,4 @@
-package mayton.exods;
+package mayton.exods.rope;
 
 public class RopeNode {
 

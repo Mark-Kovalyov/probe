@@ -1,21 +1,23 @@
 package mayton.exods;
 
+import mayton.exods.rope.Rope;
+import mayton.exods.rope.SimpleRope;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class SimpleRopeTest {
+class SimpleRopeTest {
 
     @Test
-    public void testConstructor() {
+    void testConstructor() {
         Rope rope = new SimpleRope("Hello");
         assertEquals("Hello", rope.build());
     }
 
     @Test
     @Disabled
-    public void testAppend() {
+    void testAppend() {
         Rope rope = new SimpleRope("Hello");
         rope.append(" ");
         rope.append("world");

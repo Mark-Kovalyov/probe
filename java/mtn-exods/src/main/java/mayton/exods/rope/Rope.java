@@ -1,7 +1,6 @@
-package mayton.exods;
+package mayton.exods.rope;
 
 import org.apache.commons.lang3.tuple.Pair;
-import java.util.stream.Stream;
 
 // https://en.wikipedia.org/wiki/Rope_(data_structure)
 
