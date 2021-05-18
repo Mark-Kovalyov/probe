@@ -29,4 +29,9 @@ class HeapUtilsTest {
         assertTrue(HeapUtils.checkHeap(Arrays.stream(legalHeap).boxed().toArray(Integer[]::new)));
     }
 
+    @Test
+    public void testHeapify() {
+
+    }
+
 }
