@@ -2,6 +2,8 @@ package mayton.exods.rope;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import javax.annotation.Nonnull;
+
 // https://en.wikipedia.org/wiki/Rope_(data_structure)
 
 public interface Rope extends Iterable<String>, Comparable<Rope> {
@@ -19,5 +21,5 @@ public interface Rope extends Iterable<String>, Comparable<Rope> {
     // O(log n)
     void delete(int i, int j);
     // O(n)
-    String build();
+    @Nonnull String build();
 }

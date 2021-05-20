@@ -1,5 +1,7 @@
 package mayton.exods.heaps;
 
+import java.util.List;
+
 public class HeapUtils {
 
     static void sift(int l, int r, Comparable[] heapCandidate) {
@@ -9,38 +11,41 @@ public class HeapUtils {
     }
 
     // Deikstra's algorithm
-    public static Comparable[] heapify(Comparable[] orig) {
+    public static boolean heapify(Comparable[] orig) {
+        return true;
+    }
 
-        return orig;
+    public static boolean heapify(List<Comparable> orig) {
+        return true;
     }
 
     // Correct heap: {94, 67, 55, 44, 42, 18, 12, 6 };
     //
-    //        94
-    //      /   \
-    //     67   55
-    //    / \   / \
-    //   44 42 18 12
-    //  /
-    // 6
+    //        94               0
+    //      /   \            /   \
+    //     67   55          1     2
+    //    / \   / \        / \   / \
+    //   44 42 18 12      3   4 5   6
+    //  /                /
+    // 6                7
     public static boolean checkHeap(Comparable[] orig) {
         return lookupIllegalElementPosition(orig) == -1;
     }
 
-
     public static int lookupIllegalElementPosition(Comparable[] orig) {
         // check formula
         int n = 0;
-        int off = 1;
+        int step = 1;
         while(n < orig.length) {
-            if (n * 2 < orig.length && orig[n].compareTo(orig[n * 2]) < 0) {
-                return n * 2;
+            int offset = n * 2;
+            if (offset < orig.length && orig[n].compareTo(orig[offset]) < 0) {
+                return offset;
             }
-            if (n * 2 + 1 < orig.length && orig[n].compareTo(orig[n * 2 + 1]) < 0){
-                return n * 2 + 1;
+            if (offset + 1 < orig.length && orig[n].compareTo(orig[offset + 1]) < 0){
+                return offset + 1;
             }
-            n += off;
-            off *= 2;
+            n += step;
+            step *= 2;
         }
         return -1;
     }
