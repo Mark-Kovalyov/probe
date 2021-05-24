@@ -1,37 +1,29 @@
 package mayton.exods.heaps;
 
-import org.jetbrains.annotations.Range;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import java.util.Iterator;
-import java.util.Spliterator;
-import java.util.Spliterators;
-import java.util.stream.StreamSupport;
 
-public interface Heap {
+public interface Heap<T extends Comparable> {
 
-
-    boolean insert(@Nonnull Comparable item);
+    boolean insert(@Nonnull T item);
 
     int size();
 
-    @Nonnull Comparable peekTopItem();
+    @Nonnull T peekTopItem();
 
-    @Nullable Comparable pollTopItem();
+    @Nullable T pollTopItem();
 
-    @Nonnull Iterator<Comparable> rankedItems();
+    void replaceTopItem(@Nonnull T item);
 
-    default @Nonnull Iterator<Comparable> rankedNitems(@Range(from = 0, to = Integer.MAX_VALUE) int n) {
-        return StreamSupport.stream(Spliterators.spliteratorUnknownSize(rankedItems(), Spliterator.ORDERED), false).limit(n).iterator();
+    @Nonnull Iterator<T> items();
+
+    default void merge(@Nonnull Heap<T> argHeap) {
+        merge(argHeap.items());
     }
 
-    default void merge(@Nonnull Heap argHeap) {
-        argHeap.rankedItems().forEachRemaining(item -> insert(item));
-    }
-
-    default void merge(@Nonnull Iterator<Comparable> comparables) {
+    default void merge(@Nonnull Iterator<T> comparables) {
         comparables.forEachRemaining(item -> insert(item));
     }
 

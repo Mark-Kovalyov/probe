@@ -1,4 +1,4 @@
-package mayton.exods;
+package mayton.exods.heaps;
 
 import mayton.exods.heaps.HeapUtils;
 import org.junit.jupiter.api.Tag;

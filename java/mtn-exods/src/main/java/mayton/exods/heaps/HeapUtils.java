@@ -4,19 +4,13 @@ import java.util.List;
 
 public class HeapUtils {
 
+
+    ////////////////////////////////////////////////
+
     static void sift(int l, int r, Comparable[] heapCandidate) {
         int i = l;
         int j = 2 * l;
 
-    }
-
-    // Deikstra's algorithm
-    public static boolean heapify(Comparable[] orig) {
-        return true;
-    }
-
-    public static boolean heapify(List<Comparable> orig) {
-        return true;
     }
 
     // Correct heap: {94, 67, 55, 44, 42, 18, 12, 6 };
@@ -49,5 +43,7 @@ public class HeapUtils {
         }
         return -1;
     }
+
+
 
 }

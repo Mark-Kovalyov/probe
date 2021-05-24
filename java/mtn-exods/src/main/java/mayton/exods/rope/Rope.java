@@ -15,9 +15,9 @@ public interface Rope extends Iterable<String>, Comparable<Rope> {
     // O(log n) without rebalancing / O(n) worst case
     void concat(Rope that);
     // O(log n) without rebalancing / O(n) worst case
-    void insert(String string, int i);
+    void insert(@Nonnull String string, int i);
     // O(log n) without rebalancing / O(n) worst case
-    void append(String string);
+    void append(@Nonnull String string);
     // O(log n)
     void delete(int i, int j);
     // O(n)
