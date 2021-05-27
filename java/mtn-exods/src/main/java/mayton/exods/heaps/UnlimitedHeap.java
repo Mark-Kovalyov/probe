@@ -26,11 +26,11 @@ public class UnlimitedHeap<T extends Comparable<T>> implements Heap<T> {
     }
 
     int getLeftChildIndex(int index) {
-        return (index + 1) * 2 - 1;
+        return 2 * index + 1;
     }
 
     int getRightChildIndex(int index) {
-        return (index + 1) * 2;
+        return 2 * index + 2;
     }
 
     boolean hasParent(int index) {
@@ -43,10 +43,6 @@ public class UnlimitedHeap<T extends Comparable<T>> implements Heap<T> {
 
     boolean hasRightChild(int index) {
         return getRightChildIndex(index) < size;
-    }
-
-    Comparable leftChild(int index) {
-        return objects.get(getLeftChildIndex(index));
     }
 
     // Physical objects
@@ -65,13 +61,6 @@ public class UnlimitedHeap<T extends Comparable<T>> implements Heap<T> {
         this.comparator = null;
     }
 
-    @Override
-    public boolean insert(@NotNull T item) {
-        objects.add(item);
-        size++;
-        internalHeapify(); // TODO: Remove!!!!!!!!!!!!!!!!!!!!!
-        return true;
-    }
 
     @Override
     public int size() {
@@ -85,29 +74,25 @@ public class UnlimitedHeap<T extends Comparable<T>> implements Heap<T> {
         return objects.get(0);
     }
 
-    public void compressLast() {
-        int currentIndex = size - 1;
-    }
-
     @Nullable
     @Override
     public T pollTopItem() {
         if (size == 0) return null;
         T top = objects.get(0);
         size--;
-        compressLast();
         return top;
     }
 
     @Override
     public void replaceTopItem(@NotNull T item) {
-
+        // TODO: Improove perfomance
+        pollTopItem();
+        insert(item);
     }
 
     @NotNull
     @Override
     public Iterator<T> items() {
-        // TODO: wrap
         return objects.iterator();
     }
 
@@ -124,43 +109,68 @@ public class UnlimitedHeap<T extends Comparable<T>> implements Heap<T> {
         // TODO: This is not perfect way to merge 2 heaps.
         comparables.forEachRemaining(x -> objects.add(x));
         size = objects.size();
-        internalHeapify();
+        heapifyAll();
     }
 
-    void internalHeapifyChain(int i) {
-        boolean swapped = false;
-        do {
-
-        } while(swapped);
+    @Override
+    public boolean insert(@NotNull T item) {
+        objects.add(item);
+        size++;
+        int i = size - 1;
+        int parent = (i - 1) / 2;
+        while (i > 0 && objects.get(parent).compareTo(objects.get(i)) < 0) {
+            T temp = objects.get(i);
+            objects.set(i, objects.get(parent));
+            objects.set(parent, temp);
+            i = parent;
+            parent = (i - 1) / 2;
+        }
+        return true;
     }
 
-    void internalHeapify() {
-        if (size <= 1) return;
-        boolean swapped = false;
-        int phase = 0;
-        do {
-            logger.info("Phase {}", phase);
-            phase++;
-            int current = size - 1;
-            while (current >= 0) {
-                logger.info(" current = {}", current);
-                T currentObject = objects.get(current);
-                if (hasParent(current)) {
-                    int parentIdx = getParentIndex(current);
-                    T parentObject = objects.get(parentIdx);
-                    if (currentObject.compareTo(parentObject) > 0) {
-                        T temp = parentObject;
-                        objects.set(parentIdx, currentObject);
-                        objects.set(current, temp);
-                        swapped = true;
-                        logger.info("  swap({},{})", current, parentIdx);
-                    }
-                } else {
-                    break;
-                }
-                current--;
+    //                    9
+    //                 /    \
+    //                8      5
+    //              /  \    / \
+    //             6    7  1   4
+    //            / \   /
+    //           0   3 2
+
+    //
+    void heapifyAll() {
+        for (int i = size / 2; i >= 0; i--) {
+            heapify(i);
+        }
+    }
+
+    void heapify(int i) {
+        int leftChild;
+        int rightChild;
+        int largestChild;
+
+        while(true) {
+            leftChild  = getLeftChildIndex(i);
+            rightChild = getRightChildIndex(i);
+            largestChild = i;
+
+            if (leftChild < size && objects.get(leftChild).compareTo(objects.get(largestChild)) > 0) {
+                largestChild = leftChild;
             }
-        } while(swapped);
+
+            if (rightChild < size && objects.get(rightChild).compareTo(objects.get(largestChild)) > 0) {
+                largestChild = rightChild;
+            }
+
+            if (largestChild == i) {
+                break;
+            }
+
+            // Swap i and largestChild
+            T temp = objects.get(i);
+            objects.set(i, objects.get(largestChild));
+            objects.set(largestChild, temp);
+            i = largestChild;
+        }
     }
 
 }

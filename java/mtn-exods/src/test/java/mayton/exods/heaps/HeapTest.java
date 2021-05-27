@@ -4,10 +4,14 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
+import static java.lang.Integer.valueOf;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -15,6 +19,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class HeapTest {
 
     Random random = new Random();
+
+    static <T> Stream<T> toStream(Iterator<T> iterator) {
+        return StreamSupport.stream(Spliterators.spliteratorUnknownSize(iterator, Spliterator.ORDERED), false);
+    }
 
     @BeforeEach
     public void beforeEach() {
@@ -81,7 +89,6 @@ class HeapTest {
     }
 
     @Order(4)
-    @Disabled
     @Test
     void random_100_inserts_and_get_max() {
         Heap heap = new UnlimitedHeap();
@@ -91,11 +98,9 @@ class HeapTest {
             arr[i] = value;
             heap.insert(value);
         });
-        //sort(arr, Comparator.reverseOrder());
         Integer maxArr = Arrays.stream(arr).max(Integer::compareTo).get();
         assertEquals(maxArr, heap.peekTopItem());
     }
-
 
     @Order(3)
     @Test
@@ -104,14 +109,77 @@ class HeapTest {
         List<Integer> list = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
             int randomInt = random.nextInt(1000);
-            heap.insert(Integer.valueOf(randomInt));
+            heap.insert(valueOf(randomInt));
             list.add(randomInt);
         }
         // top 10 elements
-        Set<Integer> top10 = list.stream().sorted().collect(Collectors.toSet());
+        Set<Integer> top10 = list.stream().collect(Collectors.toSet());
         for (int i = 0; i < 10; i++) {
             assertTrue(top10.contains(heap.pollTopItem()));
         }
+    }
+
+    @Order(4)
+    @Test
+    void test_heapify() {
+        Heap<Integer> heap = new UnlimitedHeap();
+        for (int i = 0; i < 10; i++) {
+            heap.insert(valueOf(i));
+        }
+        List<Integer> arr = new ArrayList<>();
+        heap.items().forEachRemaining(x -> arr.add(x));
+        assertEquals(arr, List.of(9, 8, 5, 6, 7, 1, 4, 0, 3, 2));
+        //                    9
+        //                 /    \
+        //                8      5
+        //              /  \    / \
+        //             6    7  1   4
+        //            / \   /
+        //           0   3 2
+    }
+
+    class FixComparator implements Comparator<FixMessage> {
+
+        @Override
+        public int compare(FixMessage m1, FixMessage m2) {
+            return m1.getAmount().compareTo(m2.getAmount());
+        }
+    }
+
+    @Test @Order(4)
+    void test_heapify_rev() {
+        Heap<FixMessage> heap = new UnlimitedHeap((new FixComparator()).reversed());
+        for (int i = 15; i < 25; i++) {
+            heap.insert(new FixMessage(BigDecimal.valueOf(i).divide(BigDecimal.TEN)));
+        }
+        List<FixMessage> arr = new ArrayList<>();
+        heap.items().forEachRemaining(x -> arr.add(x));
+        assertEquals(arr.get(0), new FixMessage(new BigDecimal("2.4")));
+        assertEquals(arr.get(1), new FixMessage(new BigDecimal("2.3")));
+    }
+
+    @Test @Order(5)
+    @Disabled
+    void test_replace_top() {
+        //                    9
+        //                 /    \
+        //                8      5
+        //              /  \    / \
+        //             6    7  1   4
+        //            / \   /
+        //           0   3 2
+        Heap<Integer> heap = new UnlimitedHeap<>();
+        for(int i = 0; i < 10; i++) heap.insert(i);
+        heap.replaceTopItem(10);
+        //                    8
+        //                 /    \
+        //                7      5
+        //              /  \    / \
+        //             6    2  1   4
+        //            / \
+        //           0   3
+        assertEquals(List.of(1), toStream(heap.items()).collect(Collectors.toList()));
+        //
     }
 
 

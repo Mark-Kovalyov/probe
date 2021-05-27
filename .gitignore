@@ -48,3 +48,6 @@ sensitive.properties
 
 # Java Flight Recorder files
 .jfr
+
+# JQuick
+.jqwik-database
