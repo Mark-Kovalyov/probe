@@ -3,16 +3,20 @@ package mayton.pipes;
 import com.fasterxml.jackson.core.JsonEncoding;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import mayton.geo.GeoIpEntity;
 import mayton.network.NetworkUtils;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.output.CountingOutputStream;
 import org.apache.commons.io.output.NullOutputStream;
 import org.apache.commons.io.output.TeeOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.profiler.Profiler;
+import org.slf4j.profiler.TimeInstrument;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -47,9 +51,16 @@ public class Main2 {
 
     // TeeOutputStream teeOutputStream = new TeeOutputStream(new NullOutputStream(), new NullOutputStream());
 
+    // CountingOutputStream countingOutputStream = new CountingOutputStream(new NullOutputStream());
+
     public static void main(String[] args) throws InterruptedException, IOException {
 
-        // gzipInputStream::gzipDecoder::rawCsvOutput -> rawCsvInput(64k)::csvParserThread::protobufOutputStream -> protobufInputStream(64k)
+        // gzipInputStream::gzipDecoder::rawCsvOutput ->
+        //     rawCsvInput(64k)::csvParserThread::protobufOutputStream ->
+        //          protobufInputStream(64k)::jsonGeoWriter::
+
+        Profiler profiler = new Profiler("Sample");
+        profiler.start("Pipeline");
 
         InputStream gzipInputStream = new GZIPInputStream(new FileInputStream("/storage/db/GEO/maxmind/2010-10.MaxMind GeoIP City CSV Format/GeoIP-139_20101001/GeoIPCity.csv.gz"));
 
@@ -109,27 +120,33 @@ public class Main2 {
             JsonFactory jfactory = new JsonFactory();
             int cnt = 0;
             try (OutputStream stream = new FileOutputStream("json.json")) {
-                
-                JsonGenerator jGenerator = jfactory.createGenerator(stream, JsonEncoding.UTF8);
+                JsonGenerator jGenerator = jfactory.createGenerator(stream, JsonEncoding.UTF8)
+                        .setPrettyPrinter(new DefaultPrettyPrinter());
+
                 jGenerator.writeStartArray();
                 boolean eof = false;
                 do {
                     try {
                         GeoIpEntity.GeoIpCity entity = GeoIpEntity.GeoIpCity.parseDelimitedFrom(protobufInputStream);
-                        jGenerator.writeStartArray();
                         jGenerator.writeStartObject();
                         jGenerator.writeNumberField("beginIp", entity.getStartIpNum());
                         jGenerator.writeNumberField("endIp", entity.getEndIpNum());
+                        jGenerator.writeStringField("country", entity.getCountry());
+                        jGenerator.writeStringField("region", entity.getRegion());
+                        jGenerator.writeStringField("city", entity.getCity());
+                        jGenerator.writeNumberField("lattitude", entity.getLatitude());
+                        jGenerator.writeNumberField("longitude", entity.getLongitude());
                         jGenerator.writeEndObject();
                         cnt++;
                     } catch (IOException ex) {
+                        jGenerator.writeEndArray();
                         eof = true;
                     }
                 } while(!eof);
-                jGenerator.writeEndArray();
                 logger.info("[3] read {} objects", cnt);
             } catch (EOFException eofException) {
                 // Ignore it
+                // jGenerator.writeEndArray();
                 logger.info("[3] read {} objects (exit by EOF)", cnt);
             } catch (IOException e) {
                 logger.error("", e);
@@ -142,6 +159,12 @@ public class Main2 {
         csvParserThread.join();
         jsonGeoWriter.join();
 
+        long end = System.currentTimeMillis();
+
+        TimeInstrument tm = profiler.stop();
+
+        //printing the contents of the time instrument
+        tm.print();
 
     }
 
