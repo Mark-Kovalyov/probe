@@ -2,9 +2,7 @@ package mayton.geo;
 
 import com.google.protobuf.CodedOutputStream;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 
 public class Main {
 
@@ -21,7 +19,7 @@ public class Main {
                 .setPostalCode("01234")
                 .build();
 
-        london.writeTo(new FileOutputStream("dat/london.dat"));
+        /*london.writeTo(new FileOutputStream("dat/london.dat"));
 
         london.writeDelimitedTo(new FileOutputStream("dat/london-delimited.dat"));
 
@@ -29,9 +27,21 @@ public class Main {
         london.writeTo(codedOutputStream);
         codedOutputStream.flush();
 
-        GeoIpEntity.GeoIpCity londonRecovered = GeoIpEntity.GeoIpCity.parseFrom(new FileInputStream("dat/london.dat"));
+        GeoIpEntity.GeoIpCity londonRecovered = GeoIpEntity.GeoIpCity.parseFrom(new FileInputStream("dat/london.dat"));*/
 
-        System.out.println(londonRecovered.toString());
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        london.writeDelimitedTo(byteArrayOutputStream);
+        london.writeDelimitedTo(byteArrayOutputStream);
+        byteArrayOutputStream.flush();
+
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
+
+        GeoIpEntity.GeoIpCity londonRecovered1 = GeoIpEntity.GeoIpCity.parseDelimitedFrom(byteArrayInputStream);
+        GeoIpEntity.GeoIpCity londonRecovered2 = GeoIpEntity.GeoIpCity.parseDelimitedFrom(byteArrayInputStream);
+
+        System.out.println(londonRecovered1.toString());
+
+        System.out.println(londonRecovered2.toString());
 
     }
 }
