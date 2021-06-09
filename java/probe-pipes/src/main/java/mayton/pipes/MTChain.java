@@ -7,9 +7,12 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.function.BiConsumer;
 
 public class MTChain {
 
@@ -21,8 +24,8 @@ public class MTChain {
         this.original = original;
     }
 
-    public void addNode(MTNode mtNode) {
-        mtNodes.add(mtNode);
+    public void addNode(BiConsumer<PipedInputStream, PipedOutputStream> consumer) {
+
     }
 
     public MutablePair<MTChain, MTChain> split() {
@@ -34,8 +37,10 @@ public class MTChain {
         mtNodes.forEach(node -> node.start());
     }
 
-    public void joinNodes() {
-
+    public void joinNodes() throws InterruptedException {
+        for(MTNode mtNode: mtNodes) {
+            mtNode.join();
+        }
     }
 
 }

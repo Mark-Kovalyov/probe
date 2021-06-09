@@ -14,22 +14,32 @@
     <maven.compiler.target>11</maven.compiler.target>
   </properties>
 
-  <profiles>
-    <profile>
-      <id>profile1</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-        <property>
-          <name>name1</name>
-          <value>value1</value>
-        </property>
-      </activation>
-      <properties>
-        <main.class.name>mayton.pipes.Main2</main.class.name>
-        <jar.name>ApplicationName</jar.name>
-      </properties>
-    </profile>
-  </profiles>
+    <profiles>
+        <profile>
+            <id>classic</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <main.class.name>mayton.pipes.Classic</main.class.name>
+                <jar.name>classic</jar.name>
+            </properties>
+        </profile>
+        <profile>
+            <id>synchro</id>
+            <properties>
+                <main.class.name>mayton.pipes.Synchro</main.class.name>
+                <jar.name>synchro</jar.name>
+            </properties>
+        </profile>
+        <profile>
+            <id>frameworked</id>
+            <properties>
+                <main.class.name>mayton.pipes.Main</main.class.name>
+                <jar.name>frameworked</jar.name>
+            </properties>
+        </profile>
+    </profiles>
 
   <dependencies>
 

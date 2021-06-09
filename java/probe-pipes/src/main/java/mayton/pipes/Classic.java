@@ -10,9 +10,6 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.io.output.CountingOutputStream;
-import org.apache.commons.io.output.NullOutputStream;
-import org.apache.commons.io.output.TeeOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.profiler.Profiler;
@@ -23,7 +20,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.zip.GZIPInputStream;
 
-public class Main2 {
+public class Classic {
 
     public static class GeoIpDummyEntity implements Serializable {
         public String beginIp;
@@ -35,7 +32,7 @@ public class Main2 {
         }
     }
 
-    static Logger logger = LoggerFactory.getLogger(Main2.class);
+    static Logger logger = LoggerFactory.getLogger(Classic.class);
 
     static final int BUFFER_SIZE = 64 * 1024;
 
