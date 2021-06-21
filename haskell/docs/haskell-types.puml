@@ -1,0 +1,21 @@
+@startuml
+'https://hackage.haskell.org/package/base-4.15.0.0/docs/src/Prelude.html
+
+interface Prelude.Eq
+interface Prelude.Ord extends Prelude.Eq
+interface Prelude.Enum extends Prelude.Eq
+interface GHC.Show
+interface GHC.Read
+interface GHC.Bounded
+
+interface GHC.Num extends GHC.Show
+
+interface Control.Monad
+interface Control.MonadPlus extends Control.Monad
+
+interface Real
+interface Fractional
+interface Functional
+interface Data.Functor
+
+@enduml
