@@ -8,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.PipedInputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -20,17 +22,20 @@ public class Main {
                 .addRequiredOption("i", "inputFolder", true, "InputFolder");
     }
 
+    public static void printHelp() {
+        HelpFormatter formatter = new HelpFormatter();
+        formatter.printHelp("java -jar jparser-1.0.jar", createOptions(), true);
+    }
+
     public static void main(String[] args) throws ParseException, IOException {
         CommandLineParser parser = new DefaultParser();
         Options options = createOptions();
         if (args.length == 0) {
-            HelpFormatter formatter = new HelpFormatter();
-            formatter.printHelp("java -jar ApplicationName-1.0.jar", createOptions(), true);
+            printHelp();
         } else {
             CommandLine line = parser.parse(options, args);
             if (line.hasOption("h")) {
-                HelpFormatter formatter = new HelpFormatter();
-                formatter.printHelp("java -jar ApplicationName-1.0.jar", createOptions(), true);
+                printHelp();
                 return;
             }
             process(line);
@@ -41,6 +46,7 @@ public class Main {
         logger.info("Start");
         JavaClassFileVisitor jcfv = new JavaClassFileVisitor();
         Files.walkFileTree(Path.of(line.getOptionValue("inputFolder")), jcfv);
+        //Files.walkFileTree(Path.of("/storage/git.java"), jcfv);
         logger.info("Finish");
     }
 }

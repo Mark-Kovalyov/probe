@@ -15,7 +15,5 @@ cp -f target/jparser.jar ./bin
 
 cd ./bin
 
-java \
- -XX:+UnlockExperimentalVMOptions \
- -XX:+UseShenandoahGC \
- -jar jparser.jar
+java -jar jparser.jar --inputFolder /storage/git.java/hadoop
+

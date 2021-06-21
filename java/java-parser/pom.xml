@@ -26,7 +26,7 @@
             </activation>
             <properties>
                 <main.class.name>mayton.Main</main.class.name>
-                <jar.name>ApplicationName</jar.name>
+                <jar.name>jparser</jar.name>
             </properties>
         </profile>
     </profiles>
