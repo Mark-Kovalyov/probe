@@ -35,8 +35,8 @@
         <profile>
             <id>frameworked</id>
             <properties>
-                <main.class.name>mayton.pipes.Main</main.class.name>
-                <jar.name>frameworked</jar.name>
+                <main.class.name>mayton.pipes.MTPipeLineStarter</main.class.name>
+                <jar.name>pipelinestarter</jar.name>
             </properties>
         </profile>
     </profiles>

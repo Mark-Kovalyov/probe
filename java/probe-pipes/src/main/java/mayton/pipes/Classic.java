@@ -20,6 +20,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.zip.GZIPInputStream;
 
+import static mayton.pipes.Constants.BUFFER_SIZE;
+
 public class Classic {
 
     public static class GeoIpDummyEntity implements Serializable {
@@ -34,7 +36,7 @@ public class Classic {
 
     static Logger logger = LoggerFactory.getLogger(Classic.class);
 
-    static final int BUFFER_SIZE = 64 * 1024;
+
 
     // zless "/storage/db/GEO/maxmind/2010-10.MaxMind GeoIP City CSV Format/GeoIP-139_20101001/GeoIPCity.csv.gz"
 
@@ -78,6 +80,9 @@ public class Classic {
         gzipDecoder.start();
 
         PipedInputStream  protobufInputStream = new PipedInputStream(BUFFER_SIZE);
+
+        ////////////////////////////////////////////////////////////////////////////////////////////
+
         PipedOutputStream protobufOutputStream = new PipedOutputStream();
         protobufOutputStream.connect(protobufInputStream);
 
