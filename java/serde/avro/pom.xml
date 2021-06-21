@@ -15,6 +15,7 @@
         <java.source.version>11</java.source.version>
         <java.target.version>11</java.target.version>
         <apache.avro.version>1.9.2</apache.avro.version>
+        <log4j2.version>2.14.1</log4j2.version>
     </properties>
 
     <dependencies>
@@ -41,7 +42,7 @@
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>[2.13.2,)</version>
+            <version>${log4j2.version}</version>
         </dependency>
 
     </dependencies>
