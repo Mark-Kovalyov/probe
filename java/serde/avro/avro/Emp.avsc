@@ -1,6 +1,7 @@
 {
+   "namespace":"mayton.probeavro.emp",
    "type" : "record",
-   "name" : "emp",
+   "name" : "Emp",
    "doc"  : "Employee table",
    "fields" : [
        { "name" : "ID",    "type" : "int" },

@@ -1,5 +1,6 @@
 package mayton.probeavro;
 
+import mayton.probeavro.geoip.GeoIpCityAvroEntity;
 import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -35,6 +36,7 @@ public class GeoIpBinaryEncoder {
             // Avro
             BinaryMessageEncoder<GeoIpCityAvroEntity> binaryMessageEncoder = GeoIpCityAvroEntity.getEncoder();
 
+            /*
             while (irec.hasNext()) {
 
                 CSVRecord rec = irec.next();
@@ -57,7 +59,7 @@ public class GeoIpBinaryEncoder {
                 binaryMessageEncoder.encode(entity, outputStreamAvro);
 
             }
-            parser.close();
+            parser.close();*/
         }
 
     }

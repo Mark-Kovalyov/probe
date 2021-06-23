@@ -14,7 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.source.version>11</java.source.version>
         <java.target.version>11</java.target.version>
-        <apache.avro.version>1.9.2</apache.avro.version>
+        <apache.avro.version>1.10.2</apache.avro.version>
         <log4j2.version>2.14.1</log4j2.version>
     </properties>
 
@@ -57,6 +57,61 @@
                     <source>${java.source.version}</source>
                     <target>${java.target.version}</target>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>auto-clean</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!--
+              Maven plugin for Avro IDL and Specific API Compilers
+
+                This plugin has 5 goals:
+
+                avro:help
+                  Display help information on avro-maven-plugin.
+                  Call mvn avro:help -Ddetail=true -Dgoal=<goal-name> to display parameter
+                  details.
+
+                avro:idl-protocol
+                  Generate Java classes and interfaces from AvroIDL files (.avdl)
+
+                avro:induce
+                  Generate Avro files (.avsc and .avpr) from Java classes or interfaces
+
+                avro:protocol
+                  Generate Java classes and interfaces from Avro protocol files (.avpr)
+
+                avro:schema
+                  Generate Java classes from Avro schema files (.avsc)
+
+            -->
+            <plugin>
+                <groupId>org.apache.avro</groupId>
+                <artifactId>avro-maven-plugin</artifactId>
+                <version>1.10.2</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>schema</goal>
+                        </goals>
+                        <configuration>
+                            <sourceDirectory>${project.basedir}/avro/</sourceDirectory>
+                            <outputDirectory>${project.basedir}/src/main/generated/</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
 
             <plugin>

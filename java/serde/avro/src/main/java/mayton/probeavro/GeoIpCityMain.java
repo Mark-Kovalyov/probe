@@ -21,7 +21,7 @@ public class GeoIpCityMain {
 
     public static void main(String[] args) throws IOException {
 
-        GeoIpCityAvroEntity entity = GeoIpCityAvroEntity.newBuilder()
+        /*GeoIpCityAvroEntity entity = GeoIpCityAvroEntity.newBuilder()
                 .setDmaCode("COD")
                 .setAreaCode("ARE")
                 .setLatitude(15.1)
@@ -46,11 +46,11 @@ public class GeoIpCityMain {
         dataFileWriter.append(entity);
         dataFileWriter.close();
 
-        ///////////////////////////////////////////////////////
+
         Encoder jsonEncoder = EncoderFactory.get().jsonEncoder(GeoIpCityAvroEntity.getClassSchema(), new FileOutputStream("target/geo-ip-json-03.avro"));
         Json.ObjectWriter writer = new Json.ObjectWriter();
         writer.setSchema(GeoIpCityAvroEntity.getClassSchema());
-        writer.write(entity, jsonEncoder);
+        writer.write(entity, jsonEncoder);*/
 
 
 

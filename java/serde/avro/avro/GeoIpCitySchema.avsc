@@ -1,5 +1,5 @@
 {
-   "namespace" : "mayton.probeavro",
+   "namespace" : "mayton.probeavro.geoip",
    "type"      : "record",
    "name"      : "GeoIpCityAvroEntity",
    "fields" : [

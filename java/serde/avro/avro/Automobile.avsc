@@ -1,5 +1,5 @@
 {
-    "namespace":"com.example.avroSample.model",
+    "namespace":"mayton.probeavro.auto",
     "type":"record",
     "name":"Automobile",
     "fields":[
