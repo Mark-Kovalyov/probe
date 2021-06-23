@@ -5,7 +5,7 @@
 * https://postgrespro.ru/docs/postgresql/12/ddl-partitioning
 * https://www.postgresql.org/docs/12/ddl-partitioning.html
 
-## Range
+## Range Partitioning
 
 ```
 CREATE TABLE measurement (
@@ -25,7 +25,7 @@ CREATE TABLE measurement_y2007m12 PARTITION OF measurement
 CREATE INDEX ON measurement (logdate);
 ```
 
-## List
+## List Partitioning
 
 ```
 create table sales (
@@ -41,8 +41,9 @@ CREATE TABLE part_a PARTITION OF sales FOR VALUES IN ('east','north');
 CREATE TABLE part_b PARTITION OF sales FOR VALUES IN ('west','south');
 ```
 
-## Hash
+## Hash Partitioning
 
+(since Postgresql 11.x)
 ```
 CREATE TABLE hp ( foo text ) PARTITION BY HASH (foo);
 CREATE TABLE hp_0 PARTITION OF hp FOR VALUES WITH (MODULUS 3, REMAINDER 0) TABLESPACE space_01;
@@ -53,5 +54,5 @@ CREATE TABLE hp_2 PARTITION OF hp FOR VALUES WITH (MODULUS 3, REMAINDER 2) TABLE
 ## Show tablespace with location
 
 ```
-select spcname,pg_tablespace_location(oid) from   pg_tablespace;
+select spcname,pg_tablespace_location(oid) from pg_tablespace;
 ```

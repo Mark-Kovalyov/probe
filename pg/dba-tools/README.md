@@ -61,3 +61,23 @@ BEGIN
     END LOOP;
 END $$;
 ```
+
+## Top 5 data-table by disk size
+```
+ SELECT nspname || '.' || relname AS "relation",
+     pg_size_pretty(pg_relation_size(C.oid)) AS "size"
+   FROM pg_class C
+   LEFT JOIN pg_namespace N ON (N.oid = C.relnamespace)
+   WHERE nspname NOT IN ('pg_catalog', 'information_schema')
+   ORDER BY pg_relation_size(C.oid) DESC
+   LIMIT 5;
+         relation          |  size   
+---------------------------+---------
+ public.geoipcity          | 1217 MB
+ public.pk_geoipcity_ipnum | 576 MB
+ public.geoipcity_us       | 345 MB
+ public.start_ip_idx       | 123 MB
+ public.end_ip_idx         | 123 MB
+(5 rows)
+
+```
