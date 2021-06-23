@@ -1,7 +1,7 @@
-package mayton.probeavro;
-
+package mayton.probeavro.geoip;
 
 import org.apache.avro.Schema;
+import org.apache.avro.data.Json;
 import org.apache.avro.generic.GenericData;
 import org.apache.avro.generic.GenericDatumWriter;
 import org.apache.avro.generic.GenericRecord;
@@ -27,14 +27,15 @@ public class GeoIpJsonEncoder {
 
     public static void main(String[] args) throws Exception {
 
+        String userHome = System.getProperty("user.home");
+
         Properties properties = new Properties();
-        properties.load(new FileInputStream("sensitive.properties"));
+        properties.load(new FileInputStream(userHome + "/sensitive.properties"));
 
         Schema.Parser schemaParser = new Schema.Parser();
         Schema schema = schemaParser.parse(new FileInputStream(properties.getProperty("schema")));
         GenericRecord datum = new GenericData.Record(schema);
         DatumWriter<GenericRecord> writer = new GenericDatumWriter<>(schema);
-
 
         try(OutputStream outputStreamJson = new FileOutputStream(properties.getProperty("target.json"))) {
 
@@ -48,9 +49,9 @@ public class GeoIpJsonEncoder {
             Iterator<CSVRecord> irec = parser.iterator();
 
 
-            //Json.ObjectWriter objectWriter = new Json.ObjectWriter();
+            Json.ObjectWriter objectWriter = new Json.ObjectWriter();
 
-            //jsonEncoder.writeArrayStart();
+            jsonEncoder.writeArrayStart();
 
 
 
@@ -63,14 +64,14 @@ public class GeoIpJsonEncoder {
                 int endIpNum = 0;//(int) NetworkUtils.parseIpV4(rec.get(1));
 
 
-                //jsonEncoder.writeString("startIpNum");
+                jsonEncoder.writeString("startIpNum");
                 jsonEncoder.writeInt(startIpNum);
-                //jsonEncoder.writeString("endIpNum");
+                jsonEncoder.writeString("endIpNum");
                 jsonEncoder.writeInt(endIpNum);
 
             }
 
-            //jsonEncoder.writeArrayStart();
+            jsonEncoder.writeArrayStart();
             parser.close();
         }
 

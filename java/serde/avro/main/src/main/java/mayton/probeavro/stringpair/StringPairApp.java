@@ -1,5 +1,6 @@
-package mayton.probeavro;
+package mayton.probeavro.stringpair;
 
+import mayton.probeavro.geoip.GeoIpCity;
 import org.apache.avro.Schema;
 import org.apache.avro.data.Json;
 import org.apache.avro.generic.GenericData;
@@ -26,11 +27,11 @@ import java.io.*;
  *
  *       Decoder:
  */
-public class App {
+public class StringPairApp {
 
-    static Logger logger = LoggerFactory.getLogger(App.class);
+    static Logger logger = LoggerFactory.getLogger(StringPairApp.class);
 
-    public App() throws IOException {
+    public StringPairApp() throws IOException {
 
         BasicConfigurator.configure();
 
@@ -38,7 +39,7 @@ public class App {
 
         Schema.Parser parser = new Schema.Parser();
 
-        Schema schema = parser.parse(new FileInputStream("schema/StringPair.avsc"));
+        Schema schema = parser.parse(new FileInputStream("avro/StringPair.avsc"));
         /////
         logger.info("::populate record");
 
@@ -48,7 +49,7 @@ public class App {
 
         logger.info("::write");
 
-        OutputStream outStream = new FileOutputStream("target/datum-out1.avro");
+        OutputStream outStream = new FileOutputStream("output/datum-out1.avro");
         DatumWriter<GenericRecord> writer = new GenericDatumWriter<>(schema);
         Encoder encoder = EncoderFactory.get().binaryEncoder(outStream, null);
         writer.write(datum, encoder);
@@ -83,6 +84,6 @@ public class App {
     }
 
     public static void main(String[] args) throws IOException {
-        new App();
+        new StringPairApp();
     }
 }

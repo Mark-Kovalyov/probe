@@ -1,13 +1,16 @@
-package mayton.probeavro;
+package mayton.probeavro.geoip;
 
-import mayton.probeavro.geoip.GeoIpCityAvroEntity;
+import mayton.network.NetworkUtils;
 import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.profiler.Profiler;
+import org.slf4j.profiler.TimeInstrument;
 
+import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
@@ -21,12 +24,15 @@ public class GeoIpBinaryEncoder {
 
     public static void main(String[] args) throws Exception {
 
-        Properties properties = new Properties();
-        properties.load(new FileInputStream("sensitive.properties"));
+        Profiler profiler = new Profiler("GeoIpBinaryEncoder");
 
-        try(OutputStream outputStreamAvro = new FileOutputStream(properties.getProperty("target.avro"))) {
+        profiler.start("Export to binary avro");
 
-            CSVParser parser = CSVParser.parse(new FileInputStream(properties.getProperty("source")), StandardCharsets.UTF_8,
+        int cnt = 0;
+
+        try(OutputStream outputStreamAvro = new FileOutputStream("dat/geo-ip-entity.avro")) {
+
+            CSVParser parser = CSVParser.parse(new FileInputStream("/storage/db/GEO/maxmind/2010-10.MaxMind GeoIP City CSV Format/GeoIP-139_20101001/GeoIPCity.csv"), StandardCharsets.UTF_8,
                     CSVFormat.DEFAULT
                             .withDelimiter(',')
                             .withFirstRecordAsHeader());
@@ -36,12 +42,11 @@ public class GeoIpBinaryEncoder {
             // Avro
             BinaryMessageEncoder<GeoIpCityAvroEntity> binaryMessageEncoder = GeoIpCityAvroEntity.getEncoder();
 
-            /*
             while (irec.hasNext()) {
 
                 CSVRecord rec = irec.next();
-                int startIpNum = 0;//(int) NetworkUtils.parseIpV4(rec.get(0));
-                int endIpNum = 0;//(int) NetworkUtils.parseIpV4(rec.get(1));
+                int startIpNum = (int) NetworkUtils.parseIpV4(rec.get(0));
+                int endIpNum = (int) NetworkUtils.parseIpV4(rec.get(1));
 
                 GeoIpCityAvroEntity entity = GeoIpCityAvroEntity.newBuilder()
                         .setStartIpNum(startIpNum)
@@ -57,10 +62,18 @@ public class GeoIpBinaryEncoder {
                         .build();
 
                 binaryMessageEncoder.encode(entity, outputStreamAvro);
-
+                cnt++;
             }
-            parser.close();*/
+            parser.close();
         }
+
+        logger.info("cnt = {}", cnt);
+
+        profiler.stop();
+
+        TimeInstrument tm = profiler.stop();
+
+        tm.print();
 
     }
 

@@ -1,4 +1,4 @@
-package mayton.probeavro;
+package mayton.probeavro.geoip;
 
 public class GeoIpCity {
 

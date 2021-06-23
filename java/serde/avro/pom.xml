@@ -5,7 +5,13 @@
     <groupId>mayton.probeavro</groupId>
     <artifactId>probeavro</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
+
+    <modules>
+        <module>avro-generated</module>
+        <module>main</module>
+    </modules>
+
+    <packaging>pom</packaging>
 
     <name>probeavro</name>
     <url>http://maven.apache.org</url>
@@ -38,7 +44,6 @@
             <version>${apache.avro.version}</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
@@ -47,56 +52,12 @@
 
     </dependencies>
 
+    <!--
+                  mvn help:describe -Dplugin=org.apache.avro:avro-maven-plugin
+                -->
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.6.1</version>
-                <configuration>
-                    <source>${java.source.version}</source>
-                    <target>${java.target.version}</target>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <artifactId>maven-clean-plugin</artifactId>
-                <version>3.1.0</version>
-                <executions>
-                    <execution>
-                        <id>auto-clean</id>
-                        <phase>initialize</phase>
-                        <goals>
-                            <goal>clean</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <!--
-              Maven plugin for Avro IDL and Specific API Compilers
-
-                This plugin has 5 goals:
-
-                avro:help
-                  Display help information on avro-maven-plugin.
-                  Call mvn avro:help -Ddetail=true -Dgoal=<goal-name> to display parameter
-                  details.
-
-                avro:idl-protocol
-                  Generate Java classes and interfaces from AvroIDL files (.avdl)
-
-                avro:induce
-                  Generate Avro files (.avsc and .avpr) from Java classes or interfaces
-
-                avro:protocol
-                  Generate Java classes and interfaces from Avro protocol files (.avpr)
-
-                avro:schema
-                  Generate Java classes from Avro schema files (.avsc)
-
-            -->
-            <plugin>
+            <!--plugin>
                 <groupId>org.apache.avro</groupId>
                 <artifactId>avro-maven-plugin</artifactId>
                 <version>1.10.2</version>
@@ -107,30 +68,14 @@
                             <goal>schema</goal>
                         </goals>
                         <configuration>
-                            <sourceDirectory>${project.basedir}/avro/</sourceDirectory>
-                            <outputDirectory>${project.basedir}/src/main/generated/</outputDirectory>
+                            <sourceDirectory>avro</sourceDirectory>
+                            <includes>**/*.avsc</includes>
+                            <outputDirectory>avro-generated/src/main/java</outputDirectory>
+                            <enableDecimalLogicalType>true</enableDecimalLogicalType>
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>1.6.0</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>java</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <mainClass>mayton.probeavro.App</mainClass>
-                    <killAfter>-1</killAfter>
-                </configuration>
-            </plugin>
-
+            </plugin-->
         </plugins>
 
     </build>

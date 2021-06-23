@@ -4,7 +4,13 @@
    "name" : "Emp",
    "doc"  : "Employee table",
    "fields" : [
-       { "name" : "ID",    "type" : "int" },
-       { "name" : "name",  "type" : "string" }
+     { "name" : "EMPNO",    "type" : "int" },
+     { "name" : "ENAME",    "type" : "string" },
+     { "name" : "JOB",      "type" : "string" },
+     { "name" : "MGR",      "type" : ["null", "int"] },
+     { "name" : "HIREDATE", "type" : "string" },
+     { "name" : "SAL",      "type" : "double" },
+     { "name" : "COMM",     "type" : ["null", "double"] },
+     { "name" : "DEPTNO",   "type" : "int" }
    ]
 }

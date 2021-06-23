@@ -1,9 +1,8 @@
-package mayton.probeavro;
+package mayton.probeavro.geoip;
 
 import org.apache.avro.data.Json;
 import org.apache.avro.file.DataFileWriter;
 import org.apache.avro.generic.GenericDatumWriter;
-import org.apache.avro.generic.GenericRecord;
 import org.apache.avro.io.DatumWriter;
 import org.apache.avro.io.Encoder;
 import org.apache.avro.io.EncoderFactory;
@@ -21,7 +20,7 @@ public class GeoIpCityMain {
 
     public static void main(String[] args) throws IOException {
 
-        /*GeoIpCityAvroEntity entity = GeoIpCityAvroEntity.newBuilder()
+        GeoIpCityAvroEntity entity = GeoIpCityAvroEntity.newBuilder()
                 .setDmaCode("COD")
                 .setAreaCode("ARE")
                 .setLatitude(15.1)
@@ -33,10 +32,10 @@ public class GeoIpCityMain {
                 .setStartIpNum(0)
                 .setEndIpNum(255).build();
 
-        OutputStream outputStream = new FileOutputStream("target/geo-ip-entity-01.avro");
+        OutputStream outputStream = new FileOutputStream("output/geo-ip-entity-01.avro");
         GeoIpCityAvroEntity.getEncoder().encode(entity, outputStream);
 
-        File file = new File("target/geo-ip-entity-02.avro");
+        File file = new File("output/geo-ip-entity-02.avro");
 
         DatumWriter<GeoIpCityAvroEntity> datumWriter = new GenericDatumWriter<>(GeoIpCityAvroEntity.getClassSchema());
 
@@ -47,10 +46,12 @@ public class GeoIpCityMain {
         dataFileWriter.close();
 
 
-        Encoder jsonEncoder = EncoderFactory.get().jsonEncoder(GeoIpCityAvroEntity.getClassSchema(), new FileOutputStream("target/geo-ip-json-03.avro"));
+        Encoder jsonEncoder = EncoderFactory.get().jsonEncoder(GeoIpCityAvroEntity.getClassSchema(), new FileOutputStream("output/geo-ip-json-03.avro"));
+
         Json.ObjectWriter writer = new Json.ObjectWriter();
         writer.setSchema(GeoIpCityAvroEntity.getClassSchema());
-        writer.write(entity, jsonEncoder);*/
+        writer.write(entity, jsonEncoder);
+
 
 
 
