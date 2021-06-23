@@ -1,47 +1,72 @@
 package mayton.geo;
 
 import com.google.protobuf.CodedOutputStream;
+import mayton.network.NetworkUtils;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.profiler.Profiler;
+import org.slf4j.profiler.TimeInstrument;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.util.Iterator;
 
 public class Main {
 
+    static Logger logger = LoggerFactory.getLogger(Main.class);
+
     public static void main(String[] args) throws IOException {
-        GeoIpEntity.GeoIpCity london = GeoIpEntity.GeoIpCity.newBuilder()
-                .setStartIpNum(0)
-                .setEndIpNum(0xFFFFFFFF)
-                .setCity("London")
-                .setCountry("Brit")
-                .setAreaCode("EN")
-                .setDmaCode("UX")
-                .setLatitude(0.1)
-                .setLongitude(0.2)
-                .setPostalCode("01234")
-                .build();
 
-        /*london.writeTo(new FileOutputStream("dat/london.dat"));
+        Profiler profiler = new Profiler("GeoIpBinaryEncoder");
 
-        london.writeDelimitedTo(new FileOutputStream("dat/london-delimited.dat"));
+        profiler.start("Export to binary protobuf");
 
-        CodedOutputStream codedOutputStream = CodedOutputStream.newInstance(new FileOutputStream("dat/london-coded.dat"));
-        london.writeTo(codedOutputStream);
-        codedOutputStream.flush();
+        int cnt = 0;
 
-        GeoIpEntity.GeoIpCity londonRecovered = GeoIpEntity.GeoIpCity.parseFrom(new FileInputStream("dat/london.dat"));*/
+        try(OutputStream outputStreamProtobuf = new FileOutputStream("dat/geo-ip-entity.dat")) {
 
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        london.writeDelimitedTo(byteArrayOutputStream);
-        london.writeDelimitedTo(byteArrayOutputStream);
-        byteArrayOutputStream.flush();
+            CSVParser parser = CSVParser.parse(new FileInputStream("/storage/db/GEO/maxmind/2010-10.MaxMind GeoIP City CSV Format/GeoIP-139_20101001/GeoIPCity.csv"), StandardCharsets.UTF_8,
+                    CSVFormat.DEFAULT
+                            .withDelimiter(',')
+                            .withFirstRecordAsHeader());
 
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
+            Iterator<CSVRecord> irec = parser.iterator();
 
-        GeoIpEntity.GeoIpCity londonRecovered1 = GeoIpEntity.GeoIpCity.parseDelimitedFrom(byteArrayInputStream);
-        GeoIpEntity.GeoIpCity londonRecovered2 = GeoIpEntity.GeoIpCity.parseDelimitedFrom(byteArrayInputStream);
+            while (irec.hasNext()) {
 
-        System.out.println(londonRecovered1.toString());
+                CSVRecord rec = irec.next();
+                int startIpNum = (int) NetworkUtils.parseIpV4(rec.get(0));
+                int endIpNum = (int) NetworkUtils.parseIpV4(rec.get(1));
 
-        System.out.println(londonRecovered2.toString());
+                GeoIpEntity.GeoIpCity entity = GeoIpEntity.GeoIpCity.newBuilder()
+                        .setStartIpNum(startIpNum)
+                        .setEndIpNum(endIpNum)
+                        .setCity(rec.get(2))
+                        .setCountry(rec.get(3))
+                        .setAreaCode(rec.get(4))
+                        .setDmaCode(rec.get(5))
+                        .setLatitude(Double.parseDouble(rec.get(6)))
+                        .setLongitude(Double.parseDouble(rec.get(7)))
+                        .setPostalCode(rec.get(8))
+                        .build();
+
+                entity.writeDelimitedTo(outputStreamProtobuf);
+
+                cnt++;
+            }
+            parser.close();
+        }
+
+        logger.info("cnt = {}", cnt);
+
+        profiler.stop();
+
+        TimeInstrument tm = profiler.stop();
+
+        tm.print();
 
     }
 }

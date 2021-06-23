@@ -3,14 +3,15 @@
 ## GeoIpAvro
 
 * Schema in header
+* Splittable
 * Row-like
 * Not null fields
 
 Statistics
 
-|Source(CSV)|Dest(AVRO)|Ratio|Encode Time|Rows   |Speed          |
-|-----------|----------|-----|-----------|-------|---------------|
-|431909944  | 361440209|0.83 | 195 sec   |5748952|30 000 rows/sec|
+|Source(CSV)|Dest(AVRO)|Ratio|Encode Time|Rows   |Speed          |Compression Codec|
+|-----------|----------|-----|-----------|-------|---------------|-----------------|
+|431909944  | 361440209|0.83 | 195 sec   |5748952|30 000 rows/sec|         ?       |
 
 Sample:
 ```
