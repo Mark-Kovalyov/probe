@@ -57,7 +57,7 @@
                 -->
     <build>
         <plugins>
-            <!--plugin>
+            <plugin>
                 <groupId>org.apache.avro</groupId>
                 <artifactId>avro-maven-plugin</artifactId>
                 <version>1.10.2</version>
@@ -68,14 +68,18 @@
                             <goal>schema</goal>
                         </goals>
                         <configuration>
-                            <sourceDirectory>avro</sourceDirectory>
-                            <includes>**/*.avsc</includes>
-                            <outputDirectory>avro-generated/src/main/java</outputDirectory>
-                            <enableDecimalLogicalType>true</enableDecimalLogicalType>
+                            <sourceDirectory>${project.basedir}/avro/</sourceDirectory>
+                            <outputDirectory>${project.basedir}/avro-generated/src/main/java/</outputDirectory>
+                            <includes>
+                                <include>**/*.avsc</include>
+                            </includes>
+                            <imports>
+                                <import>${project.basedir}/avro/Emp.avsc</import>
+                            </imports>
                         </configuration>
                     </execution>
                 </executions>
-            </plugin-->
+            </plugin>
         </plugins>
 
     </build>

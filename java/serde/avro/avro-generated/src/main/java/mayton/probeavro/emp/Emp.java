@@ -15,8 +15,8 @@ import org.apache.avro.message.SchemaStore;
 /** Employee table */
 @org.apache.avro.specific.AvroGenerated
 public class Emp extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = 4682030466166476886L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Emp\",\"namespace\":\"mayton.probeavro.emp\",\"doc\":\"Employee table\",\"fields\":[{\"name\":\"EMPNO\",\"type\":\"int\"},{\"name\":\"ENAME\",\"type\":\"string\"},{\"name\":\"JOB\",\"type\":\"string\"},{\"name\":\"MGR\",\"type\":[\"null\",\"int\"]},{\"name\":\"HIREDATE\",\"type\":\"string\"},{\"name\":\"SAL\",\"type\":\"double\"},{\"name\":\"COMM\",\"type\":[\"null\",\"double\"]},{\"name\":\"DEPTNO\",\"type\":\"int\"}]}");
+  private static final long serialVersionUID = 8706087690207520757L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Emp\",\"namespace\":\"mayton.probeavro.emp\",\"doc\":\"Employee table\",\"fields\":[{\"name\":\"EMPNO\",\"type\":\"int\"},{\"name\":\"ENAME\",\"type\":\"string\"},{\"name\":\"JOB\",\"type\":{\"type\":\"enum\",\"name\":\"JOBEnum\",\"symbols\":[\"SALESMAN\",\"PRESIDENT\",\"MANAGER\",\"CLERK\"]}},{\"name\":\"MGR\",\"type\":[\"null\",\"int\"]},{\"name\":\"HIREDATE\",\"type\":\"string\"},{\"name\":\"SAL\",\"type\":\"double\"},{\"name\":\"COMM\",\"type\":[\"null\",\"double\"]},{\"name\":\"DEPTNO\",\"type\":\"int\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static SpecificData MODEL$ = new SpecificData();
@@ -74,7 +74,7 @@ public class Emp extends org.apache.avro.specific.SpecificRecordBase implements 
 
    private int EMPNO;
    private java.lang.CharSequence ENAME;
-   private java.lang.CharSequence JOB;
+   private mayton.probeavro.emp.JOBEnum JOB;
    private java.lang.Integer MGR;
    private java.lang.CharSequence HIREDATE;
    private double SAL;
@@ -99,7 +99,7 @@ public class Emp extends org.apache.avro.specific.SpecificRecordBase implements 
    * @param COMM The new value for COMM
    * @param DEPTNO The new value for DEPTNO
    */
-  public Emp(java.lang.Integer EMPNO, java.lang.CharSequence ENAME, java.lang.CharSequence JOB, java.lang.Integer MGR, java.lang.CharSequence HIREDATE, java.lang.Double SAL, java.lang.Double COMM, java.lang.Integer DEPTNO) {
+  public Emp(java.lang.Integer EMPNO, java.lang.CharSequence ENAME, mayton.probeavro.emp.JOBEnum JOB, java.lang.Integer MGR, java.lang.CharSequence HIREDATE, java.lang.Double SAL, java.lang.Double COMM, java.lang.Integer DEPTNO) {
     this.EMPNO = EMPNO;
     this.ENAME = ENAME;
     this.JOB = JOB;
@@ -133,7 +133,7 @@ public class Emp extends org.apache.avro.specific.SpecificRecordBase implements 
     switch (field$) {
     case 0: EMPNO = (java.lang.Integer)value$; break;
     case 1: ENAME = (java.lang.CharSequence)value$; break;
-    case 2: JOB = (java.lang.CharSequence)value$; break;
+    case 2: JOB = (mayton.probeavro.emp.JOBEnum)value$; break;
     case 3: MGR = (java.lang.Integer)value$; break;
     case 4: HIREDATE = (java.lang.CharSequence)value$; break;
     case 5: SAL = (java.lang.Double)value$; break;
@@ -181,7 +181,7 @@ public class Emp extends org.apache.avro.specific.SpecificRecordBase implements 
    * Gets the value of the 'JOB' field.
    * @return The value of the 'JOB' field.
    */
-  public java.lang.CharSequence getJOB() {
+  public mayton.probeavro.emp.JOBEnum getJOB() {
     return JOB;
   }
 
@@ -190,7 +190,7 @@ public class Emp extends org.apache.avro.specific.SpecificRecordBase implements 
    * Sets the value of the 'JOB' field.
    * @param value the value to set.
    */
-  public void setJOB(java.lang.CharSequence value) {
+  public void setJOB(mayton.probeavro.emp.JOBEnum value) {
     this.JOB = value;
   }
 
@@ -322,7 +322,7 @@ public class Emp extends org.apache.avro.specific.SpecificRecordBase implements 
 
     private int EMPNO;
     private java.lang.CharSequence ENAME;
-    private java.lang.CharSequence JOB;
+    private mayton.probeavro.emp.JOBEnum JOB;
     private java.lang.Integer MGR;
     private java.lang.CharSequence HIREDATE;
     private double SAL;
@@ -497,7 +497,7 @@ public class Emp extends org.apache.avro.specific.SpecificRecordBase implements 
       * Gets the value of the 'JOB' field.
       * @return The value.
       */
-    public java.lang.CharSequence getJOB() {
+    public mayton.probeavro.emp.JOBEnum getJOB() {
       return JOB;
     }
 
@@ -507,7 +507,7 @@ public class Emp extends org.apache.avro.specific.SpecificRecordBase implements 
       * @param value The value of 'JOB'.
       * @return This builder.
       */
-    public mayton.probeavro.emp.Emp.Builder setJOB(java.lang.CharSequence value) {
+    public mayton.probeavro.emp.Emp.Builder setJOB(mayton.probeavro.emp.JOBEnum value) {
       validate(fields()[2], value);
       this.JOB = value;
       fieldSetFlags()[2] = true;
@@ -738,7 +738,7 @@ public class Emp extends org.apache.avro.specific.SpecificRecordBase implements 
         Emp record = new Emp();
         record.EMPNO = fieldSetFlags()[0] ? this.EMPNO : (java.lang.Integer) defaultValue(fields()[0]);
         record.ENAME = fieldSetFlags()[1] ? this.ENAME : (java.lang.CharSequence) defaultValue(fields()[1]);
-        record.JOB = fieldSetFlags()[2] ? this.JOB : (java.lang.CharSequence) defaultValue(fields()[2]);
+        record.JOB = fieldSetFlags()[2] ? this.JOB : (mayton.probeavro.emp.JOBEnum) defaultValue(fields()[2]);
         record.MGR = fieldSetFlags()[3] ? this.MGR : (java.lang.Integer) defaultValue(fields()[3]);
         record.HIREDATE = fieldSetFlags()[4] ? this.HIREDATE : (java.lang.CharSequence) defaultValue(fields()[4]);
         record.SAL = fieldSetFlags()[5] ? this.SAL : (java.lang.Double) defaultValue(fields()[5]);
@@ -780,7 +780,7 @@ public class Emp extends org.apache.avro.specific.SpecificRecordBase implements 
 
     out.writeString(this.ENAME);
 
-    out.writeString(this.JOB);
+    out.writeEnum(this.JOB.ordinal());
 
     if (this.MGR == null) {
       out.writeIndex(0);
@@ -815,7 +815,7 @@ public class Emp extends org.apache.avro.specific.SpecificRecordBase implements 
 
       this.ENAME = in.readString(this.ENAME instanceof Utf8 ? (Utf8)this.ENAME : null);
 
-      this.JOB = in.readString(this.JOB instanceof Utf8 ? (Utf8)this.JOB : null);
+      this.JOB = mayton.probeavro.emp.JOBEnum.values()[in.readEnum()];
 
       if (in.readIndex() != 1) {
         in.readNull();
@@ -849,7 +849,7 @@ public class Emp extends org.apache.avro.specific.SpecificRecordBase implements 
           break;
 
         case 2:
-          this.JOB = in.readString(this.JOB instanceof Utf8 ? (Utf8)this.JOB : null);
+          this.JOB = mayton.probeavro.emp.JOBEnum.values()[in.readEnum()];
           break;
 
         case 3:

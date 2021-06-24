@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package mayton.geo;
+
+option java_package = "mayton.emp";
+option java_multiple_files = true;
+option optimize_for = CODE_SIZE;
+
+import "google/protobuf/any.proto";
+
+// DEPTNO;DNAME;LOC
+message Debt {
+  int32 deptNo = 1;
+  string debtName = 2;
+  string loc = 3;
+  repeated Emp emps = 4;
+  google.protobuf.Any anyObject = 5;
+  reserved 6 to 20;
+}
+
+// EMPNO;ENAME;JOB;MGR;HIREDATE;SAL;COMM;DEPTNO
+message Emp {
+  int32 empId = 1;
+  string ename = 2;
+  enum Jobs {
+    SALESMAN = 0;
+    PRESIDENT = 1;
+    ANALYST = 2;
+    CLERK = 3;
+    MANAGER = 4;
+  }
+  Jobs job = 3;
+  int32 mgr = 4;
+  string hiredate = 5;
+  double sal = 6;
+  double comm = 7;
+  string comments = 8 [deprecated = true];
+  reserved 9 to 100;
+}

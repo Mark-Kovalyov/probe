@@ -1,13 +1,43 @@
 # AVRO
 
+https://avro.apache.org/
+
 ## GeoIpAvro
 
+* Binary and JSON
 * Schema in header
 * Splittable
 * Row-like
 * Not null fields
+* Integer == varint (zigzag)
+* Enumerations
+* Complex types: records
+* Unions ?
 
-Statistics
+## Quotations
+
+_Avro includes a simple object container file format. A file has a schema, 
+and all objects stored in the file must be written according to that schema, 
+using binary encoding. Objects are stored in blocks that may be compressed. 
+Syncronization markers are used between blocks to permit efficient splitting 
+of files for MapReduce processing._
+
+### Required Codecs
+
+* The "null" codec simply passes through data uncompressed.
+* The "deflate" codec writes the data block using the deflate algorithm as specified in RFC 1951, and typically implemented using the zlib library. Note that this format (unlike the "zlib format" in RFC 1950) does not have a checksum.
+
+### Optional Codecs
+
+* The "bzip2" codec uses the bzip2 compression library.
+* The "snappy" codec uses Google's Snappy compression library. Each compressed block is followed by the 4-byte, big-endian CRC32 checksum of the uncompressed data in the block. 
+* The "xz" codec uses the XZ compression library.
+* The "zstandard" codec uses Facebook's Zstandard compression library.
+
+Cons:
+* External Schema required ?
+
+### Statistics
 
 |Source(CSV)|Dest(AVRO)|Ratio|Encode Time|Rows   |Speed          |Compression Codec|
 |-----------|----------|-----|-----------|-------|---------------|-----------------|
@@ -56,3 +86,7 @@ Format
 000001d0  00 00 40 53 40 00 00 c3  01 f7 f3 b2 c1 04 8a a0  |..@S@...........|
 000001e0  8e 80 80 b9 11 fe ff b9  11 00 04 49 4e 00 04 30  |...........IN..0|
 ```
+
+## Links 
+
+* Avro4s https://github.com/sksamuel/avro4s

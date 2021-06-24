@@ -1,7 +1,16 @@
 # GeoIpCity protobuf
 
+https://developers.google.com/protocol-buffers/docs/proto3
+
+## Features
+
 * Binary
 * Language-tolerant
+* Integer == varint
+* Types: varing, sint32, sint64, fixed32, fixed64, sfixed32, sfixed64
+* Collections: map 
+* Enumerations
+* Complex types: messages
 
 ## Benchmark
 

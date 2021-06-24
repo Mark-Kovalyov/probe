@@ -1,4 +1,15 @@
-{
+[
+  {
+    "namespace":"mayton.probeavro.emp",
+    "type" : "record",
+    "name" : "Debt",
+    "fields" : [
+      { "name" : "DEBTNO",    "type" : "int" },
+      { "name" : "DEBTNAME",  "type" : "string" },
+      { "name" : "LOC",       "type" : "string" }
+    ]
+  },
+  {
    "namespace":"mayton.probeavro.emp",
    "type" : "record",
    "name" : "Emp",
@@ -6,11 +17,55 @@
    "fields" : [
      { "name" : "EMPNO",    "type" : "int" },
      { "name" : "ENAME",    "type" : "string" },
-     { "name" : "JOB",      "type" : "string" },
+     { "name" : "JOB",
+       "type" : {
+         "name" : "JOBEnum",
+         "type": "enum",
+         "symbols": [
+           "SALESMAN",
+           "PRESIDENT",
+           "MANAGER",
+           "CLERK"
+         ]
+       }
+     },
      { "name" : "MGR",      "type" : ["null", "int"] },
      { "name" : "HIREDATE", "type" : "string" },
      { "name" : "SAL",      "type" : "double" },
      { "name" : "COMM",     "type" : ["null", "double"] },
      { "name" : "DEPTNO",   "type" : "int" }
    ]
-}
+  },
+  {
+    "namespace":"mayton.probeavro.emp",
+    "type" : "record",
+    "name" : "DebtEmp",
+    "fields" : [
+      { "name" : "DEBTNO",    "type" : "int" },
+      { "name" : "DEBTNAME",  "type" : "string" },
+      { "name" : "LOC",       "type" : "string" },
+      { "name" : "EMPS",
+        "type" : {
+          "name" : "EMPSRecord",
+          "type" : "record",
+          "fields" : [
+            { "name" : "ENAME",    "type" : "string" }
+          ]
+        }
+      }
+    ]
+  }, {
+    "namespace":"mayton.probeavro.emp",
+    "type" : "record",
+    "name" : "DebtAggregator",
+    "fields" : [
+       { "name" : "DEBTNO",    "type" : "int" },
+       { "name" : "EMPCollection",
+         "type" : {
+           "type": "array",
+           "items": "mayton.probeavro.emp.Emp"
+         }
+       }
+    ]
+  }
+]
