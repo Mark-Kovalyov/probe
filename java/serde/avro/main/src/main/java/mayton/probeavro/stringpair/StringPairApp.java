@@ -8,7 +8,6 @@ import org.apache.avro.generic.GenericDatumReader;
 import org.apache.avro.generic.GenericDatumWriter;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.avro.io.*;
-import org.apache.log4j.BasicConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,7 +32,6 @@ public class StringPairApp {
 
     public StringPairApp() throws IOException {
 
-        BasicConfigurator.configure();
 
         logger.info("::configure schema");
 
@@ -44,12 +42,12 @@ public class StringPairApp {
         logger.info("::populate record");
 
         GenericRecord datum = new GenericData.Record(schema);
-        datum.put("left","1");
-        datum.put("right","2");
+        datum.put("left","leftvalue");
+        datum.put("right","rightvalue");
 
         logger.info("::write");
 
-        OutputStream outStream = new FileOutputStream("output/datum-out1.avro");
+        OutputStream outStream = new FileOutputStream("dat/StringPair-01.avro");
         DatumWriter<GenericRecord> writer = new GenericDatumWriter<>(schema);
         Encoder encoder = EncoderFactory.get().binaryEncoder(outStream, null);
         writer.write(datum, encoder);
@@ -60,7 +58,7 @@ public class StringPairApp {
 
         DatumReader<GenericRecord> reader = new GenericDatumReader<>(schema);
 
-        InputStream inStream = new FileInputStream("target/out1.avro");
+        InputStream inStream = new FileInputStream("dat/StringPair-01.avro");
 
         Decoder decoder = DecoderFactory.get().binaryDecoder(inStream, null);
 
@@ -69,17 +67,17 @@ public class StringPairApp {
         logger.info(":: left = {}", result.get("left").toString());
         logger.info(":: right = {}", result.get("right").toString());
 
+        try(OutputStream jsonStream = new FileOutputStream("dat/StringPair-01.json")) {
+            Json.ObjectWriter objectWriter = new Json.ObjectWriter();
+            Encoder jsonEncoder = EncoderFactory.get().jsonEncoder(schema, jsonStream);
+            objectWriter.setSchema(schema);
+            objectWriter.write(new GeoIpCity(), jsonEncoder);
+
+        } catch (IOException ex) {
+            logger.error("!",ex);
+        }
+
         logger.info("::end");
-
-        // TODO:
-        OutputStream jsonStream = new FileOutputStream("target/json-out1.avro");
-        Json.ObjectWriter objectWriter = new Json.ObjectWriter();
-
-        Schema schema2 = parser.parse(new FileInputStream("schema/StringPair.avsc"));
-
-        Encoder jsonEncoder = EncoderFactory.get().jsonEncoder(schema2, jsonStream);
-
-        objectWriter.write(new GeoIpCity(), jsonEncoder);
 
     }
 

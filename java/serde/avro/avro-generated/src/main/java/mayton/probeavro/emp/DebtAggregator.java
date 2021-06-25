@@ -14,11 +14,14 @@ import org.apache.avro.message.SchemaStore;
 
 @org.apache.avro.specific.AvroGenerated
 public class DebtAggregator extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = 1374277922749089130L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"DebtAggregator\",\"namespace\":\"mayton.probeavro.emp\",\"fields\":[{\"name\":\"DEBTNO\",\"type\":\"int\"},{\"name\":\"EMPCollection\",\"type\":{\"type\":\"array\",\"items\":{\"type\":\"record\",\"name\":\"Emp\",\"doc\":\"Employee table\",\"fields\":[{\"name\":\"EMPNO\",\"type\":\"int\"},{\"name\":\"ENAME\",\"type\":\"string\"},{\"name\":\"JOB\",\"type\":{\"type\":\"enum\",\"name\":\"JOBEnum\",\"symbols\":[\"SALESMAN\",\"PRESIDENT\",\"MANAGER\",\"CLERK\"]}},{\"name\":\"MGR\",\"type\":[\"null\",\"int\"]},{\"name\":\"HIREDATE\",\"type\":\"string\"},{\"name\":\"SAL\",\"type\":\"double\"},{\"name\":\"COMM\",\"type\":[\"null\",\"double\"]},{\"name\":\"DEPTNO\",\"type\":\"int\"}]}}}]}");
+  private static final long serialVersionUID = -5571414574400383100L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"DebtAggregator\",\"namespace\":\"mayton.probeavro.emp\",\"fields\":[{\"name\":\"DEBTNO\",\"type\":\"int\"},{\"name\":\"EMPCollection\",\"type\":{\"type\":\"array\",\"items\":{\"type\":\"record\",\"name\":\"Emp\",\"doc\":\"Employee table\",\"fields\":[{\"name\":\"EMPNO\",\"type\":\"int\"},{\"name\":\"ENAME\",\"type\":\"string\"},{\"name\":\"JOB\",\"type\":{\"type\":\"enum\",\"name\":\"JOBEnum\",\"symbols\":[\"SALESMAN\",\"PRESIDENT\",\"MANAGER\",\"CLERK\"]}},{\"name\":\"MGR\",\"type\":[\"null\",\"int\"]},{\"name\":\"HIREDATE\",\"type\":\"string\"},{\"name\":\"SAL\",\"type\":{\"type\":\"bytes\",\"logicalType\":\"decimal\",\"precision\":4,\"scale\":2}},{\"name\":\"COMM\",\"type\":[\"null\",\"double\"]},{\"name\":\"DEPTNO\",\"type\":\"int\"}]}}}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static SpecificData MODEL$ = new SpecificData();
+static {
+    MODEL$.addLogicalTypeConversion(new org.apache.avro.Conversions.DecimalConversion());
+  }
 
   private static final BinaryMessageEncoder<DebtAggregator> ENCODER =
       new BinaryMessageEncoder<DebtAggregator>(MODEL$, SCHEMA$);
@@ -340,86 +343,6 @@ public class DebtAggregator extends org.apache.avro.specific.SpecificRecordBase 
     READER$.read(this, SpecificData.getDecoder(in));
   }
 
-  @Override protected boolean hasCustomCoders() { return true; }
-
-  @Override public void customEncode(org.apache.avro.io.Encoder out)
-    throws java.io.IOException
-  {
-    out.writeInt(this.DEBTNO);
-
-    long size0 = this.EMPCollection.size();
-    out.writeArrayStart();
-    out.setItemCount(size0);
-    long actualSize0 = 0;
-    for (mayton.probeavro.emp.Emp e0: this.EMPCollection) {
-      actualSize0++;
-      out.startItem();
-      e0.customEncode(out);
-    }
-    out.writeArrayEnd();
-    if (actualSize0 != size0)
-      throw new java.util.ConcurrentModificationException("Array-size written was " + size0 + ", but element count was " + actualSize0 + ".");
-
-  }
-
-  @Override public void customDecode(org.apache.avro.io.ResolvingDecoder in)
-    throws java.io.IOException
-  {
-    org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
-    if (fieldOrder == null) {
-      this.DEBTNO = in.readInt();
-
-      long size0 = in.readArrayStart();
-      java.util.List<mayton.probeavro.emp.Emp> a0 = this.EMPCollection;
-      if (a0 == null) {
-        a0 = new SpecificData.Array<mayton.probeavro.emp.Emp>((int)size0, SCHEMA$.getField("EMPCollection").schema());
-        this.EMPCollection = a0;
-      } else a0.clear();
-      SpecificData.Array<mayton.probeavro.emp.Emp> ga0 = (a0 instanceof SpecificData.Array ? (SpecificData.Array<mayton.probeavro.emp.Emp>)a0 : null);
-      for ( ; 0 < size0; size0 = in.arrayNext()) {
-        for ( ; size0 != 0; size0--) {
-          mayton.probeavro.emp.Emp e0 = (ga0 != null ? ga0.peek() : null);
-          if (e0 == null) {
-            e0 = new mayton.probeavro.emp.Emp();
-          }
-          e0.customDecode(in);
-          a0.add(e0);
-        }
-      }
-
-    } else {
-      for (int i = 0; i < 2; i++) {
-        switch (fieldOrder[i].pos()) {
-        case 0:
-          this.DEBTNO = in.readInt();
-          break;
-
-        case 1:
-          long size0 = in.readArrayStart();
-          java.util.List<mayton.probeavro.emp.Emp> a0 = this.EMPCollection;
-          if (a0 == null) {
-            a0 = new SpecificData.Array<mayton.probeavro.emp.Emp>((int)size0, SCHEMA$.getField("EMPCollection").schema());
-            this.EMPCollection = a0;
-          } else a0.clear();
-          SpecificData.Array<mayton.probeavro.emp.Emp> ga0 = (a0 instanceof SpecificData.Array ? (SpecificData.Array<mayton.probeavro.emp.Emp>)a0 : null);
-          for ( ; 0 < size0; size0 = in.arrayNext()) {
-            for ( ; size0 != 0; size0--) {
-              mayton.probeavro.emp.Emp e0 = (ga0 != null ? ga0.peek() : null);
-              if (e0 == null) {
-                e0 = new mayton.probeavro.emp.Emp();
-              }
-              e0.customDecode(in);
-              a0.add(e0);
-            }
-          }
-          break;
-
-        default:
-          throw new java.io.IOException("Corrupt ResolvingDecoder.");
-        }
-      }
-    }
-  }
 }
 
 

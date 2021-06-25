@@ -1,0 +1,60 @@
+@startuml
+
+enum org.apache.avro.file.CodecFactory {
+    - nullCodec
+    - deflate
+    - xz
+    - snappy
+    - bzip2
+    - zstandard
+}
+
+class org.apache.avro.file.DataFileStream<D> extends Iterator , Iterable {
+
+}
+
+class org.apache.avro.util.Utf8.Encoder {
+
+}
+
+abstract class org.apache.avro.io.BinaryEncoder extends org.apache.avro.util.Utf8.Encoder {
+
+}
+
+interface org.apache.avro.message.MessageEncoder {
+  + encode(D datum) : ByteBuffer
+  + encode(D datum, OutputStream stream)
+}
+
+class org.apache.avro.message.BinaryMessageEncoder extends org.apache.avro.message.MessageEncoder {
+  + encode(D datum, OutputStream stream)
+}
+
+class org.apache.avro.file.DataFileWriter implements Closable, Flushable {
+ + setFlushOnEveryBlock(boolean);
+ + setSyncInterval(int);
+ + setCodec(CodecFactory);
+}
+
+org.apache.avro.Schema_Parser .. org.apache.avro.Schema
+
+class org.apache.avro.Schema_Parser {
+
+}
+
+class org.apache.avro.Schema {
+
+}
+
+org.apache.avro.Schema.DatumWriter .. org.apache.avro.generic.GenericDatumWriter
+
+interface org.apache.avro.Schema.DatumWriter<D> {
+  + setSchema(Schema schema)
+  + write(D datum, Encoder out)
+}
+
+class org.apache.avro.generic.GenericDatumWriter<D> extends org.apache.avro.Schema.DatumWriter {
+
+}
+
+@enduml

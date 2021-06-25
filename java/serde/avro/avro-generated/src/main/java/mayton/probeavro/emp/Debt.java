@@ -14,8 +14,8 @@ import org.apache.avro.message.SchemaStore;
 
 @org.apache.avro.specific.AvroGenerated
 public class Debt extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = 499184150958053060L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Debt\",\"namespace\":\"mayton.probeavro.emp\",\"fields\":[{\"name\":\"DEBTNO\",\"type\":\"int\"},{\"name\":\"DEBTNAME\",\"type\":\"string\"},{\"name\":\"LOC\",\"type\":\"string\"}]}");
+  private static final long serialVersionUID = -8574906535693954255L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Debt\",\"namespace\":\"mayton.probeavro.emp\",\"fields\":[{\"name\":\"DEBTNO\",\"type\":{\"type\":\"string\",\"logicalType\":\"UUID\"}},{\"name\":\"DEBTNAME\",\"type\":\"string\"},{\"name\":\"LOC\",\"type\":\"string\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static SpecificData MODEL$ = new SpecificData();
@@ -71,7 +71,7 @@ public class Debt extends org.apache.avro.specific.SpecificRecordBase implements
     return DECODER.decode(b);
   }
 
-   private int DEBTNO;
+   private java.lang.CharSequence DEBTNO;
    private java.lang.CharSequence DEBTNAME;
    private java.lang.CharSequence LOC;
 
@@ -88,7 +88,7 @@ public class Debt extends org.apache.avro.specific.SpecificRecordBase implements
    * @param DEBTNAME The new value for DEBTNAME
    * @param LOC The new value for LOC
    */
-  public Debt(java.lang.Integer DEBTNO, java.lang.CharSequence DEBTNAME, java.lang.CharSequence LOC) {
+  public Debt(java.lang.CharSequence DEBTNO, java.lang.CharSequence DEBTNAME, java.lang.CharSequence LOC) {
     this.DEBTNO = DEBTNO;
     this.DEBTNAME = DEBTNAME;
     this.LOC = LOC;
@@ -110,7 +110,7 @@ public class Debt extends org.apache.avro.specific.SpecificRecordBase implements
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: DEBTNO = (java.lang.Integer)value$; break;
+    case 0: DEBTNO = (java.lang.CharSequence)value$; break;
     case 1: DEBTNAME = (java.lang.CharSequence)value$; break;
     case 2: LOC = (java.lang.CharSequence)value$; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
@@ -121,7 +121,7 @@ public class Debt extends org.apache.avro.specific.SpecificRecordBase implements
    * Gets the value of the 'DEBTNO' field.
    * @return The value of the 'DEBTNO' field.
    */
-  public int getDEBTNO() {
+  public java.lang.CharSequence getDEBTNO() {
     return DEBTNO;
   }
 
@@ -130,7 +130,7 @@ public class Debt extends org.apache.avro.specific.SpecificRecordBase implements
    * Sets the value of the 'DEBTNO' field.
    * @param value the value to set.
    */
-  public void setDEBTNO(int value) {
+  public void setDEBTNO(java.lang.CharSequence value) {
     this.DEBTNO = value;
   }
 
@@ -209,7 +209,7 @@ public class Debt extends org.apache.avro.specific.SpecificRecordBase implements
   public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<Debt>
     implements org.apache.avro.data.RecordBuilder<Debt> {
 
-    private int DEBTNO;
+    private java.lang.CharSequence DEBTNO;
     private java.lang.CharSequence DEBTNAME;
     private java.lang.CharSequence LOC;
 
@@ -262,7 +262,7 @@ public class Debt extends org.apache.avro.specific.SpecificRecordBase implements
       * Gets the value of the 'DEBTNO' field.
       * @return The value.
       */
-    public int getDEBTNO() {
+    public java.lang.CharSequence getDEBTNO() {
       return DEBTNO;
     }
 
@@ -272,7 +272,7 @@ public class Debt extends org.apache.avro.specific.SpecificRecordBase implements
       * @param value The value of 'DEBTNO'.
       * @return This builder.
       */
-    public mayton.probeavro.emp.Debt.Builder setDEBTNO(int value) {
+    public mayton.probeavro.emp.Debt.Builder setDEBTNO(java.lang.CharSequence value) {
       validate(fields()[0], value);
       this.DEBTNO = value;
       fieldSetFlags()[0] = true;
@@ -293,6 +293,7 @@ public class Debt extends org.apache.avro.specific.SpecificRecordBase implements
       * @return This builder.
       */
     public mayton.probeavro.emp.Debt.Builder clearDEBTNO() {
+      DEBTNO = null;
       fieldSetFlags()[0] = false;
       return this;
     }
@@ -382,7 +383,7 @@ public class Debt extends org.apache.avro.specific.SpecificRecordBase implements
     public Debt build() {
       try {
         Debt record = new Debt();
-        record.DEBTNO = fieldSetFlags()[0] ? this.DEBTNO : (java.lang.Integer) defaultValue(fields()[0]);
+        record.DEBTNO = fieldSetFlags()[0] ? this.DEBTNO : (java.lang.CharSequence) defaultValue(fields()[0]);
         record.DEBTNAME = fieldSetFlags()[1] ? this.DEBTNAME : (java.lang.CharSequence) defaultValue(fields()[1]);
         record.LOC = fieldSetFlags()[2] ? this.LOC : (java.lang.CharSequence) defaultValue(fields()[2]);
         return record;
@@ -417,7 +418,7 @@ public class Debt extends org.apache.avro.specific.SpecificRecordBase implements
   @Override public void customEncode(org.apache.avro.io.Encoder out)
     throws java.io.IOException
   {
-    out.writeInt(this.DEBTNO);
+    out.writeString(this.DEBTNO);
 
     out.writeString(this.DEBTNAME);
 
@@ -430,7 +431,7 @@ public class Debt extends org.apache.avro.specific.SpecificRecordBase implements
   {
     org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
     if (fieldOrder == null) {
-      this.DEBTNO = in.readInt();
+      this.DEBTNO = in.readString(this.DEBTNO instanceof Utf8 ? (Utf8)this.DEBTNO : null);
 
       this.DEBTNAME = in.readString(this.DEBTNAME instanceof Utf8 ? (Utf8)this.DEBTNAME : null);
 
@@ -440,7 +441,7 @@ public class Debt extends org.apache.avro.specific.SpecificRecordBase implements
       for (int i = 0; i < 3; i++) {
         switch (fieldOrder[i].pos()) {
         case 0:
-          this.DEBTNO = in.readInt();
+          this.DEBTNO = in.readString(this.DEBTNO instanceof Utf8 ? (Utf8)this.DEBTNO : null);
           break;
 
         case 1:

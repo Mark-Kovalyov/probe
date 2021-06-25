@@ -4,7 +4,13 @@
     "type" : "record",
     "name" : "Debt",
     "fields" : [
-      { "name" : "DEBTNO",    "type" : "int" },
+      { "name" : "DEBTNO",
+        "type" :{
+          "name" : "DebtNoUuidType",
+          "type" : "string",
+          "logicalType": "UUID"
+       }
+      },
       { "name" : "DEBTNAME",  "type" : "string" },
       { "name" : "LOC",       "type" : "string" }
     ]
@@ -31,7 +37,16 @@
      },
      { "name" : "MGR",      "type" : ["null", "int"] },
      { "name" : "HIREDATE", "type" : "string" },
-     { "name" : "SAL",      "type" : "double" },
+     {
+       "name": "SAL",
+       "type": {
+         "name": "SALType",
+         "type": "bytes",
+         "logicalType": "decimal",
+         "precision": 4,
+         "scale": 2
+       }
+     },
      { "name" : "COMM",     "type" : ["null", "double"] },
      { "name" : "DEPTNO",   "type" : "int" }
    ]

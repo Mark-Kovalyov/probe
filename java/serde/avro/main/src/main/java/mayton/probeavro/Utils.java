@@ -1,7 +1,5 @@
 package mayton.probeavro;
 
-import org.apache.commons.collections.iterators.ObjectArrayIterator;
-
 import java.sql.ResultSet;
 import java.util.Collections;
 import java.util.Iterator;

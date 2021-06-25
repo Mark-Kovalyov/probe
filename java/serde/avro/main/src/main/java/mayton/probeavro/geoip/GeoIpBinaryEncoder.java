@@ -42,13 +42,14 @@ public class GeoIpBinaryEncoder {
             // Avro
             BinaryMessageEncoder<GeoIpCityAvroEntity> binaryMessageEncoder = GeoIpCityAvroEntity.getEncoder();
 
+            GeoIpCityAvroEntity forReuse = new GeoIpCityAvroEntity();
             while (irec.hasNext()) {
 
                 CSVRecord rec = irec.next();
                 int startIpNum = (int) NetworkUtils.parseIpV4(rec.get(0));
                 int endIpNum = (int) NetworkUtils.parseIpV4(rec.get(1));
 
-                GeoIpCityAvroEntity entity = GeoIpCityAvroEntity.newBuilder()
+                GeoIpCityAvroEntity entity = GeoIpCityAvroEntity.newBuilder(forReuse)
                         .setStartIpNum(startIpNum)
                         .setEndIpNum(endIpNum)
                         .setCountry(rec.get(2))

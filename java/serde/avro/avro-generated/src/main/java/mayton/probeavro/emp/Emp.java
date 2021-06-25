@@ -15,11 +15,14 @@ import org.apache.avro.message.SchemaStore;
 /** Employee table */
 @org.apache.avro.specific.AvroGenerated
 public class Emp extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = 8706087690207520757L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Emp\",\"namespace\":\"mayton.probeavro.emp\",\"doc\":\"Employee table\",\"fields\":[{\"name\":\"EMPNO\",\"type\":\"int\"},{\"name\":\"ENAME\",\"type\":\"string\"},{\"name\":\"JOB\",\"type\":{\"type\":\"enum\",\"name\":\"JOBEnum\",\"symbols\":[\"SALESMAN\",\"PRESIDENT\",\"MANAGER\",\"CLERK\"]}},{\"name\":\"MGR\",\"type\":[\"null\",\"int\"]},{\"name\":\"HIREDATE\",\"type\":\"string\"},{\"name\":\"SAL\",\"type\":\"double\"},{\"name\":\"COMM\",\"type\":[\"null\",\"double\"]},{\"name\":\"DEPTNO\",\"type\":\"int\"}]}");
+  private static final long serialVersionUID = 6714032631906981922L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Emp\",\"namespace\":\"mayton.probeavro.emp\",\"doc\":\"Employee table\",\"fields\":[{\"name\":\"EMPNO\",\"type\":\"int\"},{\"name\":\"ENAME\",\"type\":\"string\"},{\"name\":\"JOB\",\"type\":{\"type\":\"enum\",\"name\":\"JOBEnum\",\"symbols\":[\"SALESMAN\",\"PRESIDENT\",\"MANAGER\",\"CLERK\"]}},{\"name\":\"MGR\",\"type\":[\"null\",\"int\"]},{\"name\":\"HIREDATE\",\"type\":\"string\"},{\"name\":\"SAL\",\"type\":{\"type\":\"bytes\",\"logicalType\":\"decimal\",\"precision\":4,\"scale\":2}},{\"name\":\"COMM\",\"type\":[\"null\",\"double\"]},{\"name\":\"DEPTNO\",\"type\":\"int\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static SpecificData MODEL$ = new SpecificData();
+static {
+    MODEL$.addLogicalTypeConversion(new org.apache.avro.Conversions.DecimalConversion());
+  }
 
   private static final BinaryMessageEncoder<Emp> ENCODER =
       new BinaryMessageEncoder<Emp>(MODEL$, SCHEMA$);
@@ -77,7 +80,7 @@ public class Emp extends org.apache.avro.specific.SpecificRecordBase implements 
    private mayton.probeavro.emp.JOBEnum JOB;
    private java.lang.Integer MGR;
    private java.lang.CharSequence HIREDATE;
-   private double SAL;
+   private java.nio.ByteBuffer SAL;
    private java.lang.Double COMM;
    private int DEPTNO;
 
@@ -99,7 +102,7 @@ public class Emp extends org.apache.avro.specific.SpecificRecordBase implements 
    * @param COMM The new value for COMM
    * @param DEPTNO The new value for DEPTNO
    */
-  public Emp(java.lang.Integer EMPNO, java.lang.CharSequence ENAME, mayton.probeavro.emp.JOBEnum JOB, java.lang.Integer MGR, java.lang.CharSequence HIREDATE, java.lang.Double SAL, java.lang.Double COMM, java.lang.Integer DEPTNO) {
+  public Emp(java.lang.Integer EMPNO, java.lang.CharSequence ENAME, mayton.probeavro.emp.JOBEnum JOB, java.lang.Integer MGR, java.lang.CharSequence HIREDATE, java.nio.ByteBuffer SAL, java.lang.Double COMM, java.lang.Integer DEPTNO) {
     this.EMPNO = EMPNO;
     this.ENAME = ENAME;
     this.JOB = JOB;
@@ -127,6 +130,24 @@ public class Emp extends org.apache.avro.specific.SpecificRecordBase implements 
     }
   }
 
+  private static final org.apache.avro.Conversion<?>[] conversions =
+      new org.apache.avro.Conversion<?>[] {
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+  };
+
+  @Override
+  public org.apache.avro.Conversion<?> getConversion(int field) {
+    return conversions[field];
+  }
+
   // Used by DatumReader.  Applications should not call.
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
@@ -136,7 +157,7 @@ public class Emp extends org.apache.avro.specific.SpecificRecordBase implements 
     case 2: JOB = (mayton.probeavro.emp.JOBEnum)value$; break;
     case 3: MGR = (java.lang.Integer)value$; break;
     case 4: HIREDATE = (java.lang.CharSequence)value$; break;
-    case 5: SAL = (java.lang.Double)value$; break;
+    case 5: SAL = (java.nio.ByteBuffer)value$; break;
     case 6: COMM = (java.lang.Double)value$; break;
     case 7: DEPTNO = (java.lang.Integer)value$; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
@@ -232,7 +253,7 @@ public class Emp extends org.apache.avro.specific.SpecificRecordBase implements 
    * Gets the value of the 'SAL' field.
    * @return The value of the 'SAL' field.
    */
-  public double getSAL() {
+  public java.nio.ByteBuffer getSAL() {
     return SAL;
   }
 
@@ -241,7 +262,7 @@ public class Emp extends org.apache.avro.specific.SpecificRecordBase implements 
    * Sets the value of the 'SAL' field.
    * @param value the value to set.
    */
-  public void setSAL(double value) {
+  public void setSAL(java.nio.ByteBuffer value) {
     this.SAL = value;
   }
 
@@ -325,7 +346,7 @@ public class Emp extends org.apache.avro.specific.SpecificRecordBase implements 
     private mayton.probeavro.emp.JOBEnum JOB;
     private java.lang.Integer MGR;
     private java.lang.CharSequence HIREDATE;
-    private double SAL;
+    private java.nio.ByteBuffer SAL;
     private java.lang.Double COMM;
     private int DEPTNO;
 
@@ -617,7 +638,7 @@ public class Emp extends org.apache.avro.specific.SpecificRecordBase implements 
       * Gets the value of the 'SAL' field.
       * @return The value.
       */
-    public double getSAL() {
+    public java.nio.ByteBuffer getSAL() {
       return SAL;
     }
 
@@ -627,7 +648,7 @@ public class Emp extends org.apache.avro.specific.SpecificRecordBase implements 
       * @param value The value of 'SAL'.
       * @return This builder.
       */
-    public mayton.probeavro.emp.Emp.Builder setSAL(double value) {
+    public mayton.probeavro.emp.Emp.Builder setSAL(java.nio.ByteBuffer value) {
       validate(fields()[5], value);
       this.SAL = value;
       fieldSetFlags()[5] = true;
@@ -648,6 +669,7 @@ public class Emp extends org.apache.avro.specific.SpecificRecordBase implements 
       * @return This builder.
       */
     public mayton.probeavro.emp.Emp.Builder clearSAL() {
+      SAL = null;
       fieldSetFlags()[5] = false;
       return this;
     }
@@ -741,7 +763,7 @@ public class Emp extends org.apache.avro.specific.SpecificRecordBase implements 
         record.JOB = fieldSetFlags()[2] ? this.JOB : (mayton.probeavro.emp.JOBEnum) defaultValue(fields()[2]);
         record.MGR = fieldSetFlags()[3] ? this.MGR : (java.lang.Integer) defaultValue(fields()[3]);
         record.HIREDATE = fieldSetFlags()[4] ? this.HIREDATE : (java.lang.CharSequence) defaultValue(fields()[4]);
-        record.SAL = fieldSetFlags()[5] ? this.SAL : (java.lang.Double) defaultValue(fields()[5]);
+        record.SAL = fieldSetFlags()[5] ? this.SAL : (java.nio.ByteBuffer) defaultValue(fields()[5]);
         record.COMM = fieldSetFlags()[6] ? this.COMM : (java.lang.Double) defaultValue(fields()[6]);
         record.DEPTNO = fieldSetFlags()[7] ? this.DEPTNO : (java.lang.Integer) defaultValue(fields()[7]);
         return record;
@@ -771,123 +793,6 @@ public class Emp extends org.apache.avro.specific.SpecificRecordBase implements 
     READER$.read(this, SpecificData.getDecoder(in));
   }
 
-  @Override protected boolean hasCustomCoders() { return true; }
-
-  @Override public void customEncode(org.apache.avro.io.Encoder out)
-    throws java.io.IOException
-  {
-    out.writeInt(this.EMPNO);
-
-    out.writeString(this.ENAME);
-
-    out.writeEnum(this.JOB.ordinal());
-
-    if (this.MGR == null) {
-      out.writeIndex(0);
-      out.writeNull();
-    } else {
-      out.writeIndex(1);
-      out.writeInt(this.MGR);
-    }
-
-    out.writeString(this.HIREDATE);
-
-    out.writeDouble(this.SAL);
-
-    if (this.COMM == null) {
-      out.writeIndex(0);
-      out.writeNull();
-    } else {
-      out.writeIndex(1);
-      out.writeDouble(this.COMM);
-    }
-
-    out.writeInt(this.DEPTNO);
-
-  }
-
-  @Override public void customDecode(org.apache.avro.io.ResolvingDecoder in)
-    throws java.io.IOException
-  {
-    org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
-    if (fieldOrder == null) {
-      this.EMPNO = in.readInt();
-
-      this.ENAME = in.readString(this.ENAME instanceof Utf8 ? (Utf8)this.ENAME : null);
-
-      this.JOB = mayton.probeavro.emp.JOBEnum.values()[in.readEnum()];
-
-      if (in.readIndex() != 1) {
-        in.readNull();
-        this.MGR = null;
-      } else {
-        this.MGR = in.readInt();
-      }
-
-      this.HIREDATE = in.readString(this.HIREDATE instanceof Utf8 ? (Utf8)this.HIREDATE : null);
-
-      this.SAL = in.readDouble();
-
-      if (in.readIndex() != 1) {
-        in.readNull();
-        this.COMM = null;
-      } else {
-        this.COMM = in.readDouble();
-      }
-
-      this.DEPTNO = in.readInt();
-
-    } else {
-      for (int i = 0; i < 8; i++) {
-        switch (fieldOrder[i].pos()) {
-        case 0:
-          this.EMPNO = in.readInt();
-          break;
-
-        case 1:
-          this.ENAME = in.readString(this.ENAME instanceof Utf8 ? (Utf8)this.ENAME : null);
-          break;
-
-        case 2:
-          this.JOB = mayton.probeavro.emp.JOBEnum.values()[in.readEnum()];
-          break;
-
-        case 3:
-          if (in.readIndex() != 1) {
-            in.readNull();
-            this.MGR = null;
-          } else {
-            this.MGR = in.readInt();
-          }
-          break;
-
-        case 4:
-          this.HIREDATE = in.readString(this.HIREDATE instanceof Utf8 ? (Utf8)this.HIREDATE : null);
-          break;
-
-        case 5:
-          this.SAL = in.readDouble();
-          break;
-
-        case 6:
-          if (in.readIndex() != 1) {
-            in.readNull();
-            this.COMM = null;
-          } else {
-            this.COMM = in.readDouble();
-          }
-          break;
-
-        case 7:
-          this.DEPTNO = in.readInt();
-          break;
-
-        default:
-          throw new java.io.IOException("Corrupt ResolvingDecoder.");
-        }
-      }
-    }
-  }
 }
 
 
