@@ -1,9 +1,20 @@
 # XFS
 
+## Defrag
+
+Estimate degree of frag
+```
+xfs_db -r -c frag /dev/sda8
+```
+
+```
+xfs_fsr -v /dev/sda8
+```
+
+
 ## XFS copy
 
 xfs_copy - copy the contents of an XFS filesystem
-
 
 
 ## Repair

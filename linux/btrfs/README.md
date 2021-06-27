@@ -1,6 +1,6 @@
 # Btrfs cheetsheet
 
-## Usecase 1 (Create file system)
+## Create file system
 ```
 $ mkfs.btrfs -f /dev/sdc3
 ```
@@ -142,3 +142,14 @@ Label: none  uuid: ede561bc-c752-4f7f-b680-9cd4375df0b0
     devid    1 size 119.21GiB used 42.05GiB path /dev/sdc3
     devid    2 size 119.21GiB used 46.03GiB path /dev/sdc4
 ```
+
+Make label (mounted)
+```
+btrfs filesystem label <mountpoint> <newlabel>
+```
+
+Make label (unmounted)
+```
+btrfs filesystem label <device> <newlabel>
+```
+
