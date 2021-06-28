@@ -2,15 +2,16 @@
 
 # Clean
 rm -f bin/*
+mvn clean
 
 # Producer + libs
-mvn clean package -P kafka-producer -DskipTests
-mvn install dependency:copy-dependencies -P kafka-producer
+# mvn clean package -P kafka-producer -DskipTests
+mvn install dependency:copy-dependencies -P kafka-producer -DskipTests
 cp target/producer.jar ./bin
 rsync target/dependency/* ./bin -r
 
 # Consumer
-mvn package -P kafka-consumer -DskipTests
-mvn install dependency:copy-dependencies -P kafka-consumer
+# mvn package -P kafka-consumer -DskipTests
+mvn install dependency:copy-dependencies -P kafka-consumer -DskipTests
 cp target/consumer.jar ./bin
 rsync target/dependency/* ./bin -r
