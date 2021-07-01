@@ -5,89 +5,41 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>mayton</groupId>
-  <artifactId>probe-kafka</artifactId>
+  <artifactId>kryo</artifactId>
   <version>1.0-SNAPSHOT</version>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
-    <kafka.version>2.8.0</kafka.version>
-    <apache.avro.version>1.10.2</apache.avro.version>
-    <log4j2.version>2.14.1</log4j2.version>
-    <slf4j.version>1.7.30</slf4j.version>
-    <protobuf.version>3.17.2</protobuf.version>
   </properties>
-
-  <repositories>
-    <repository>
-      <id>confluent</id>
-      <url>https://packages.confluent.io/maven/</url>
-    </repository>
-  </repositories>
 
   <profiles>
     <profile>
-      <id>kafka-producer</id>
+      <id>profile1</id>
       <activation>
         <activeByDefault>true</activeByDefault>
+        <property>
+          <name>name1</name>
+          <value>value1</value>
+        </property>
       </activation>
       <properties>
-        <main.class.name>mayton.kafka.Producer</main.class.name>
-        <jar.name>producer</jar.name>
-      </properties>
-    </profile>
-    <profile>
-      <id>kafka-consumer</id>
-      <properties>
-        <main.class.name>mayton.kafka.Consumer</main.class.name>
-        <jar.name>consumer</jar.name>
+        <main.class.name>mayton.Main</main.class.name>
+        <jar.name>ApplicationName</jar.name>
       </properties>
     </profile>
   </profiles>
 
   <dependencies>
 
-    <!-- https://mvnrepository.com/artifact/org.apache.kafka/kafka-clients -->
     <dependency>
-      <groupId>org.apache.kafka</groupId>
-      <artifactId>kafka-clients</artifactId>
-      <version>${kafka.version}</version>
+      <groupId>com.esotericsoftware</groupId>
+      <artifactId>kryo</artifactId>
+      <version>5.1.1</version>
     </dependency>
-
-    <dependency>
-      <groupId>com.google.protobuf</groupId>
-      <artifactId>protobuf-java</artifactId>
-      <version>${protobuf.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>com.google.protobuf</groupId>
-      <artifactId>protoc</artifactId>
-      <version>${protobuf.version}</version>
-      <type>pom</type>
-    </dependency>
-
 
     <!-- Command Line interface support -->
-
-    <dependency>
-      <groupId>org.apache.avro</groupId>
-      <artifactId>avro</artifactId>
-      <version>${apache.avro.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.avro</groupId>
-      <artifactId>avro-mapred</artifactId>
-      <version>${apache.avro.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>io.confluent</groupId>
-      <artifactId>kafka-avro-serializer</artifactId>
-      <version>LATEST</version>
-    </dependency>
 
     <dependency>
       <groupId>commons-cli</groupId>

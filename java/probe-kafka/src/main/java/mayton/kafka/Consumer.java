@@ -8,6 +8,7 @@ import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
+import org.apache.kafka.common.serialization.StringDeserializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +26,7 @@ public class Consumer {
                 .addRequiredOption("b", "bootstrap-servers", true, "bootstrap servers (Comma separated)")
                 .addRequiredOption("p", "poll-time", true, "Poll timeout (ms)")
                 .addRequiredOption("t", "topic-pattern", true, "topic pattern (regex)")
+                .addRequiredOption("c", "consumer-id", true, "consumer id")
                 .addOption("g", "group-id", true, "group.id");
     }
 
@@ -53,7 +55,9 @@ public class Consumer {
         Properties properties = new Properties();
         properties.put("bootstrap.servers", line.getOptionValue("bootstrap-servers"));
         properties.put("key.deserializer",   "org.apache.kafka.common.serialization.StringDeserializer");
-        properties.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+        properties.put("value.deserializer", StringDeserializer.class); //"org.apache.kafka.common.serialization.StringDeserializer");
+        // TODO: The configuration 'consumer.id' was supplied but isn't a known config
+        properties.put("consumer.id", line.getOptionValue("consumer-id"));
         properties.put("group.id", line.getOptionValue("group-id", "0"));
 
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(properties);

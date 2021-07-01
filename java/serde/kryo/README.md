@@ -1,0 +1,3 @@
+# Kryo
+
+* What about licence?

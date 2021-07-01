@@ -20,7 +20,8 @@ public class Producer {
     public static Options createOptions() {
         return new Options()
                 .addRequiredOption("b", "bootstrap-servers", true, "bootstrap servers (Comma separated)")
-                .addRequiredOption("t", "topic", true, "topic");
+                .addRequiredOption("t", "topic", true, "topic")
+                .addOption("m", "max-primes", true, "Maximum prime number");
     }
 
     public static void printHelp() {
@@ -43,18 +44,6 @@ public class Producer {
         }
     }
 
-    private static class ProducerCallback implements Callback {
-
-        @Override
-        public void onCompletion(RecordMetadata metadata, Exception exception) {
-            if (exception != null) {
-                logger.error("!", exception);
-            } else {
-                logger.info("Successfully sent with offset = {}", metadata.offset());
-            }
-        }
-    }
-
     private static void process(CommandLine line) {
         logger.info("Start");
         Properties properties = new Properties();
@@ -67,7 +56,9 @@ public class Producer {
 
         ProducerCallback producerCallback = new ProducerCallback();
 
-        for (int i = 0; i < 1_000_0000; i++) {
+        int maxPrimes = Integer.parseInt(line.getOptionValue("max-primes", "10000000"));
+
+        for (int i = 0; i < maxPrimes; i++) {
             if (isPrime(i)) {
                 ProducerRecord<String, String> record = new ProducerRecord<>(topic, String.valueOf(i));
                 producer.send(record, producerCallback);
