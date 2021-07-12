@@ -33,6 +33,7 @@ public class Main {
 
     private static void process(CommandLine line) {
         logger.info("Start");
+        
         logger.info("Finish");
     }
 }

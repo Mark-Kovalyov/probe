@@ -1,0 +1,68 @@
+@startuml
+
+class BooleanWritable
+class ByteWritable
+class ShortWritable
+class IntWritable
+class VntWritable
+class FloatWritable
+class LongWritable
+class VlongWritable
+class DoubleWritable
+
+BooleanWritable ..|> WritableComparable
+ByteWritable ..|> WritableComparable
+ShortWritable ..|> WritableComparable
+IntWritable ..|> WritableComparable
+VntWritable ..|> WritableComparable
+FloatWritable ..|> WritableComparable
+LongWritable ..|> WritableComparable
+VlongWritable ..|> WritableComparable
+DoubleWritable ..|> WritableComparable
+
+class MapWritable
+class SortedMapWritable
+
+MapWritable --> AbstractMapWritable
+SortedMapWritable --> AbstractMapWritable
+
+class Text 
+class NullWritable
+class ObjectWritable
+class BytesWritable
+class MD5Hash
+class GenericWritable
+
+Text ..|> WritableComparable
+NullWritable ..|> WritableComparable
+ObjectWritable ..|> WritableComparable
+BytesWritable ..|> WritableComparable
+MD5Hash ..|> WritableComparable
+GenericWritable ..|> WritableComparable
+
+interface AbstractMapWritable {}
+
+interface Writable {
+  + write(out : DataOutput)
+  + readFields(in : DataInput)
+}
+
+interface WritableComparable {
+
+}
+
+WritableComparable ..|> Comparable
+WritableComparable ..|> Writable
+AbstractMapWritable ..|> Writable
+
+interface BinaryComparable {}
+
+class ArrayWritable
+class ArrayPrimitiveWritable
+class TwoDArrayWritable
+class AbstractMapWritable
+class EnumSetWritable
+class CompressedWritable
+class VersionedWritable
+
+@enduml

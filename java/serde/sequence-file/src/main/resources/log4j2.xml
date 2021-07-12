@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%highlight{%d{yyyy-MM-dd HH:mm:ss} [%-5p] %-3tid : %c{1} :: %m%n}{FATAL=Bright red blink, ERROR=Bright red, WARN=Bright yellow, INFO=Bright green, DEBUG=Bright cyan, TRACE=Bright cyan}"/>
+        </Console>
+    </Appenders>
+
+    <Loggers>
+
+        <Root level="info">
+            <AppenderRef ref="Console"          level="info"/>
+            <AppenderRef ref="MainFileAppender" level="info"/>
+        </Root>
+
+        <Logger name="mayton" level="trace" additivity="false">
+            <AppenderRef ref="Console"          level="trace"/>
+            <AppenderRef ref="MainFileAppender" level="trace"/>
+        </Logger>
+
+    </Loggers>
+
+</Configuration>

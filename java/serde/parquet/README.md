@@ -20,6 +20,38 @@
   * Minimum size to read access a single record  
   * 8KB < page < 1MB  
 
+## Parquet tools (Python)
+
+```
+$ pip show parquet-tools
+Name: parquet-tools
+Version: 0.2.6
+Summary: Easy install parquet-tools
+Home-page: https://github.com/ktrueda/parquet-tools
+Author: Kentaro Ueda
+Author-email: kentaro.ueda.kentaro@gmail.com
+License: MIT
+Location: /home/mayton/.local/lib/python3.8/site-packages
+Requires: pandas, pyarrow, thrift, tabulate, colorama, boto3, halo
+```
+
+```
+$ parquet-tools
+usage: parquet-tools [-h] {show,csv,inspect} ...
+
+parquet CLI tools
+
+positional arguments:
+{show,csv,inspect}
+show              Show human readble format. see `show -h`
+csv               Cat csv style. see `csv -h`
+inspect           Inspect parquet file. see `inspect -h`
+
+optional arguments:
+-h, --help          show this help message and exit
+```
+
+
 ## Parquet tools
 
 http://www.mtitek.com/tutorials/bigdata/hadoop/parquet-tools.php
