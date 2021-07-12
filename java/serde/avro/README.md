@@ -37,6 +37,13 @@ of files for MapReduce processing._
 Cons:
 * External Schema required ?
 
+### Synchronization markers
+
+|Marker|Value|
+|------|-----|
+|Begin |1
+|End   |2
+
 ### Statistics
 
 |Source(CSV)|Dest(AVRO)|Ratio|Encode Time|Rows   |Speed          |Compression Codec|
