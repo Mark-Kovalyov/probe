@@ -1,6 +1,50 @@
 # Thrift
 
+## Sample of DSL
+
+```thrift
+namespace java mayton.geo.generated
+
+enum Country {
+ EN,
+ FR,
+ GE
+}
+
+struct GeoIpCity {
+  1 : required i32 startIpNum,
+  2 : required i32 endIpNum,
+  3 : optional Country country,
+  4 : optional string region,
+  5 : optional string city,
+  6 : optional string postalCode,
+  7 : required double latitude,
+  8 : required double longitude,
+  9 : optional string dmaCode,
+ 10 : optional string areaCode
+}
+
+service GeoIpService {
+    void store(1 : GeoIpCity geoIpCity)
+    GeoIpCity retrieve(1 : i32 num)
+}
+
 ```
+
+## Datatypes
+
+## Dependencies
+
+```xml
+        <dependency>
+            <groupId>org.apache.thrift</groupId>
+            <artifactId>libthrift</artifactId>
+            <version>0.14.0</version>
+        </dependency>
+```
+
+## CLI
+```bash
 Usage: thrift [options] file
 Options:
   -version    Print the compiler version
@@ -187,4 +231,42 @@ Available generators (and options):
     no_default_ns:   Omit default xmlns and add idl: prefix to all elements
     no_namespaces:   Do not add namespace definitions to the XML model
   xsd (XSD):
+```
+
+## C++ compillation
+
+```bash
+$ ls -1
+gcdlcmservice_constants.cpp
+gcdlcmservice_constants.h
+gcdlcmservice_types.cpp
+gcdlcmservice_types.h
+SharedService.cpp
+SharedService.h
+SharedService_server.skeleton.cpp
+```
+
+```bash
+g++ -Wall -I/usr/local/include/thrift *.cpp -L/usr/local/lib -lthrift -o something
+In file included from gcdlcmservice_constants.h:10,
+                 from gcdlcmservice_constants.cpp:7:
+gcdlcmservice_types.h:12:10: fatal error: thrift/Thrift.h: No such file or directory
+   12 | #include <thrift/Thrift.h>
+      |          ^~~~~~~~~~~~~~~~~
+compilation terminated.
+In file included from gcdlcmservice_types.cpp:7:
+gcdlcmservice_types.h:12:10: fatal error: thrift/Thrift.h: No such file or directory
+   12 | #include <thrift/Thrift.h>
+      |          ^~~~~~~~~~~~~~~~~
+compilation terminated.
+In file included from SharedService.cpp:7:
+SharedService.h:10:10: fatal error: thrift/TDispatchProcessor.h: No such file or directory
+   10 | #include <thrift/TDispatchProcessor.h>
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+compilation terminated.
+In file included from SharedService_server.skeleton.cpp:4:
+SharedService.h:10:10: fatal error: thrift/TDispatchProcessor.h: No such file or directory
+   10 | #include <thrift/TDispatchProcessor.h>
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+compilation terminated.
 ```

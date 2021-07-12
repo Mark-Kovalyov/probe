@@ -1,7 +1,34 @@
 #!/bin/bash -v
 
-# -o   src/main/java \
 thrift -v \
        --gen java:fullcamel=y,option_type=y \
        -out src/main/java \
        thrift/geo-ip-city.thrift
+
+thrift -v \
+       --gen java:fullcamel=y,option_type=y \
+       -out src/main/java \
+       thrift/cross-platform-service.thrift
+
+mkdir -p src/main/cpp/cross-platform-service
+
+thrift -v \
+       --gen cpp \
+       -out src/main/cpp/cross-platform-service \
+       thrift/cross-platform-service.thrift
+
+mkdir -p src/main/cpp/tutorial
+
+thrift -v \
+       --gen cpp \
+       -out src/main/cpp/tutorial \
+       thrift/tutorial.thrift
+
+mkdir -p src/main/cpp/gcdlcmservice
+
+thrift -v \
+       --gen cpp \
+       -out src/main/cpp/gcdlcmservice \
+       thrift/gcdlcmservice.thrift
+
+# g++ -Wall -I/usr/local/include/thrift *.cpp -L/usr/local/lib -lthrift -o something
