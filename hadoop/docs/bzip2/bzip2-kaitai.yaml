@@ -1,0 +1,15 @@
+meta:
+  id: bzip2
+  file-extension: bz2
+doc: |
+  bzip2 is a freely available, patent free (see below), high-quality data compressor.
+doc-ref: https://sourceware.org/bzip2/
+seq:
+  - id: magic
+    contents: 'BZ'
+types:
+  - startOfBlock:
+      seq:
+        - id: pi
+          - [0x31, 0x41, 0x59, 0x26, 0x53, 0x59]
+  - endOfFile:
