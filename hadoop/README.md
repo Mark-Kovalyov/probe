@@ -1,4 +1,87 @@
-# Hadoop
+# Hadoop (sample for 3.3.1)
+
+## Modes:
+
+* Local (Standalone) Mode
+* Pseudo-Distributed Mode
+* Fully-Distributed Mode
+
+## Run standalong 
+```bash
+$ cd $HADOOP_HOME
+$ bin/hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-3.1.2.jar grep /bigdata/hadoop/input /bigdata/hadoop/output 'dfs[a-z.]+'
+```
+
+## Env
+hadoop-env.sh
+```
+export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+```
+
+## Yarn (Yet-Another-Resource-Negotiator)
+
+* Cluster Resource Management
+* Scheduling
+
+### Yarn config (Yet-Another-Resource-Negotiator)
+yarn-site.xml
+```xml
+<?xml version="1.0"?>
+<configuration>
+  <properties>
+    <name>yarn.nodemanager.aux-services</name>
+    <value>mapreduce_shuffle</value>
+  </properties>  
+</configuration>
+```
+mapred-site.xml
+```xml
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+  <properties>
+    <name>mapreduce.framework.name</name>
+    <value>yarn</value>    
+  </properties>
+</configuration>
+```
+## Start Yarn
+```
+$ ./start-yarn.sh
+Starting resourcemanager
+Starting nodemanagers
+
+```
+expected somethig like that:
+```
+jps -l
+1234 NameNode
+1235 DataNode
+```
+
+## HDFS config
+hdfs-site.xml
+```
+<configuration>
+  <property>
+    <name>dfs.client.read.shortcircuit</name>
+    <value>true</value>
+  </property>
+
+  <property>
+    <name>dfs.domain.socket.path</name>
+    <value>/var/lib/hadoop-hdfs/dn_socket</value>
+  </property>
+</configuration>
+```
+## Start HDFS
+
+## Demo
+
+## WebUI
+```
+http://hostname:8088/cluster
+```
 
 ## Terminology
 
