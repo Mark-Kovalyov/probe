@@ -51,3 +51,5 @@ sensitive.properties
 
 # JQuick
 .jqwik-database
+
+nohup.out
