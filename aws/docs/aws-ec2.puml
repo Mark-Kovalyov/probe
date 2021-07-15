@@ -1,0 +1,5 @@
+@startuml
+class ec2 {
+
+}
+@enduml

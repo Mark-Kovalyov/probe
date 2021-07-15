@@ -1,0 +1,23 @@
+@startuml
+
+class Stack {
+    StackId : arn
+    --
+    StackName
+    TemplateDesc
+    LastUpdateTime: datetime
+    StackStatus : StatusEnum
+    DriftInfo : DriftInfoType
+}
+
+class DriftInfoType {
+
+}
+
+enum StatusEnum {
+    CREATE_COMPLETE
+}
+
+@enduml
+
+
