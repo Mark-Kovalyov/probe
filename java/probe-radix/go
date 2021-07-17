@@ -1,0 +1,7 @@
+#!/bin/bash -v
+
+
+
+java -jar bin/radix.jar \
+ -XX:+PrintGCDetails \
+ -XX:+PrintGCTimeStamps
