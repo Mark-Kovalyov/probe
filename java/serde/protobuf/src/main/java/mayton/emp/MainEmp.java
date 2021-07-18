@@ -3,7 +3,6 @@ package mayton.emp;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.io.HexDump;
 import org.apache.commons.io.output.NullOutputStream;
-import org.apache.commons.lang3.StringUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

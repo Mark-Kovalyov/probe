@@ -26,9 +26,10 @@ public class Main {
 
         int cnt = 0;
 
-        try(OutputStream outputStreamProtobuf = new FileOutputStream("dat/geo-ip-entity.dat")) {
 
-            CSVParser parser = CSVParser.parse(new FileInputStream("/storage/db/GEO/maxmind/2010-10.MaxMind GeoIP City CSV Format/GeoIP-139_20101001/GeoIPCity.csv"), StandardCharsets.UTF_8,
+        try(OutputStream outputStreamProtobuf = new FileOutputStream("/bigdata/GeoIPCity-protobuf.dat")) {
+
+            CSVParser parser = CSVParser.parse(new FileInputStream("/bigdata/GeoIPCity.utf-8.csv"), StandardCharsets.UTF_8,
                     CSVFormat.DEFAULT
                             .withDelimiter(',')
                             .withFirstRecordAsHeader());
@@ -54,7 +55,6 @@ public class Main {
                         .build();
 
                 entity.writeDelimitedTo(outputStreamProtobuf);
-
                 cnt++;
             }
             parser.close();

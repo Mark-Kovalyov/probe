@@ -11,6 +11,7 @@ https://developers.google.com/protocol-buffers/docs/proto3
 * Collections: map 
 * Enumerations
 * Complex types: messages
+* Splittable : no
 
 ## Benchmark
 
@@ -142,3 +143,14 @@ Parse PROTO_FILES and generate output based on the options given:
                               even if it contains spaces.
 
 ```
+
+## Citatas
+
+https://www.linkedin.com/pulse/many-hadoop-file-formats-which-one-choose-santosh-panda/
+
+Protobuf is designed by google and satisfies all the above properties 
+except splittability, that is why its not used in hadoop world.This is 
+because it does not have a container format and its just series of protobuf 
+objects in the file format.So the overhead of defining your own container 
+to make this format splittable needs a lot of work.This is also not recommend 
+format for Hadoop.
