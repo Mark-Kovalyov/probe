@@ -1,6 +1,5 @@
 package mayton.probeavro.emp;
 
-import mayton.probeavro.geoip.GeoIpCityAvroEntity;
 import org.apache.avro.Schema;
 import org.apache.avro.generic.GenericDatumReader;
 import org.apache.avro.generic.GenericRecord;

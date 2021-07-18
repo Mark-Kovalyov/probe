@@ -46,6 +46,9 @@ class org.apache.avro.Schema {
 
 }
 
+class org.apache.avro.specific.SpecificDatumWriter extends org.apache.avro.generic.GenericDatumWriter {
+}
+
 org.apache.avro.Schema.DatumWriter .. org.apache.avro.generic.GenericDatumWriter
 
 interface org.apache.avro.Schema.DatumWriter<D> {

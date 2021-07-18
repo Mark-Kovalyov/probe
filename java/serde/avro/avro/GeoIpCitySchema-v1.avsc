@@ -1,0 +1,12 @@
+{
+   "namespace" : "mayton.probeavro.geoip",
+   "type"      : "record",
+   "name"      : "GeoIpCityAvroEntityV1",
+   "fields" : [
+       { "name" : "startIpNum",  "type" : "int" },
+       { "name" : "endIpNum",    "type" : "int" },
+       { "name" : "country",     "type" : ["string", "null"] },
+       { "name" : "region",      "type" : ["string", "null"] },
+       { "name" : "city",        "type" : ["string", "null"] }
+    ]
+}

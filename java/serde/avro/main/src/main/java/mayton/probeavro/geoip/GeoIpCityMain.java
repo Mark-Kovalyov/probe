@@ -20,7 +20,7 @@ public class GeoIpCityMain {
 
     public static void main(String[] args) throws IOException {
 
-        GeoIpCityAvroEntity entity = GeoIpCityAvroEntity.newBuilder()
+        GeoIpCityAvroEntityV2 entity = GeoIpCityAvroEntityV2.newBuilder()
                 .setDmaCode("COD")
                 .setAreaCode("ARE")
                 .setLatitude(15.1)
@@ -33,23 +33,23 @@ public class GeoIpCityMain {
                 .setEndIpNum(255).build();
 
         OutputStream outputStream = new FileOutputStream("output/geo-ip-entity-01.avro");
-        GeoIpCityAvroEntity.getEncoder().encode(entity, outputStream);
+        GeoIpCityAvroEntityV2.getEncoder().encode(entity, outputStream);
 
         File file = new File("output/geo-ip-entity-02.avro");
 
-        DatumWriter<GeoIpCityAvroEntity> datumWriter = new GenericDatumWriter<>(GeoIpCityAvroEntity.getClassSchema());
+        DatumWriter<GeoIpCityAvroEntityV2> datumWriter = new GenericDatumWriter<>(GeoIpCityAvroEntityV2.getClassSchema());
 
-        DataFileWriter<GeoIpCityAvroEntity> dataFileWriter = new DataFileWriter<>(datumWriter);
-        dataFileWriter.create(GeoIpCityAvroEntity.getClassSchema(), file);
+        DataFileWriter<GeoIpCityAvroEntityV2> dataFileWriter = new DataFileWriter<>(datumWriter);
+        dataFileWriter.create(GeoIpCityAvroEntityV2.getClassSchema(), file);
         dataFileWriter.append(entity);
         dataFileWriter.append(entity);
         dataFileWriter.close();
 
 
-        Encoder jsonEncoder = EncoderFactory.get().jsonEncoder(GeoIpCityAvroEntity.getClassSchema(), new FileOutputStream("output/geo-ip-json-03.avro"));
+        Encoder jsonEncoder = EncoderFactory.get().jsonEncoder(GeoIpCityAvroEntityV2.getClassSchema(), new FileOutputStream("output/geo-ip-json-03.avro"));
 
         Json.ObjectWriter writer = new Json.ObjectWriter();
-        writer.setSchema(GeoIpCityAvroEntity.getClassSchema());
+        writer.setSchema(GeoIpCityAvroEntityV2.getClassSchema());
         writer.write(entity, jsonEncoder);
 
 

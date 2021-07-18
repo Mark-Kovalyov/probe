@@ -6,21 +6,13 @@ https://avro.apache.org/
 
 * Binary and JSON
 * Schema in header
-* Splittable
+* Splittable: YES
 * Row-like
 * Not null fields
 * Integer == varint (zigzag)
 * Enumerations
 * Complex types: records
 * Unions ?
-
-## Quotations
-
-_Avro includes a simple object container file format. A file has a schema, 
-and all objects stored in the file must be written according to that schema, 
-using binary encoding. Objects are stored in blocks that may be compressed. 
-Syncronization markers are used between blocks to permit efficient splitting 
-of files for MapReduce processing._
 
 ### Required Codecs
 
@@ -34,21 +26,17 @@ of files for MapReduce processing._
 * The "xz" codec uses the XZ compression library.
 * The "zstandard" codec uses Facebook's Zstandard compression library.
 
+### Encoders (Java Implementation)
+* 
+
 Cons:
 * External Schema required ?
-
-### Synchronization markers
-
-|Marker|Value|
-|------|-----|
-|Begin |1
-|End   |2
 
 ### Statistics
 
 |Source(CSV)|Dest(AVRO)|Ratio|Encode Time|Rows   |Speed          |Compression Codec|
 |-----------|----------|-----|-----------|-------|---------------|-----------------|
-|431909944  | 361440209|0.83 | 195 sec   |5748952|30 000 rows/sec|         ?       |
+|TODO
 
 Sample:
 ```
@@ -61,39 +49,62 @@ startIpNum,endIpNum,country,region,city,postalCode,latitude,longitude,dmaCode,ar
 
 Format
 ```
-00000000  c3 01 f7 f3 b2 c1 04 8a  a0 8e 80 80 80 10 fe ff  |................|
-00000010  bf 10 00 04 41 55 00 00  00 00 00 00 00 00 00 00  |....AU..........|
-00000020  00 00 3b c0 00 00 00 00  00 a0 60 40 00 00 c3 01  |..;.......`@....|
-00000030  f7 f3 b2 c1 04 8a a0 8e  80 80 c8 10 fe ff cf 10  |................|
-00000040  00 04 4d 59 00 00 00 00  00 00 00 00 00 00 00 00  |..MY............|
-00000050  04 40 00 00 00 00 00 20  5c 40 00 00 c3 01 f7 f3  |.@..... \@......|
-00000060  b2 c1 04 8a a0 8e 80 a8  d0 10 fe ab d0 10 00 04  |................|
-00000070  41 55 00 00 00 00 00 00  00 00 00 00 00 00 3b c0  |AU............;.|
-00000080  00 00 00 00 00 a0 60 40  00 00 c3 01 f7 f3 b2 c1  |......`@........|
-00000090  04 8a a0 8e 80 80 d8 10  fe ff df 10 00 04 4b 52  |..............KR|
-000000a0  00 00 00 00 00 00 00 00  00 00 00 80 42 40 00 00  |............B@..|
-000000b0  00 00 00 e0 5f 40 00 00  c3 01 f7 f3 b2 c1 04 8a  |...._@..........|
-000000c0  a0 8e 80 80 e0 10 fe ff  ff 10 00 04 43 4e 00 00  |............CN..|
-000000d0  00 00 00 00 00 00 00 00  00 80 41 40 00 00 00 00  |..........A@....|
-000000e0  00 40 5a 40 00 00 c3 01  f7 f3 b2 c1 04 8a a0 8e  |.@Z@............|
-000000f0  80 80 80 11 fe ff 9f 11  00 04 4b 52 00 00 00 00  |..........KR....|
-00000100  00 00 00 00 00 00 00 80  42 40 00 00 00 00 00 e0  |........B@......|
-00000110  5f 40 00 00 c3 01 f7 f3  b2 c1 04 8a a0 8e 80 80  |_@..............|
-00000120  a8 11 fe ff af 11 00 04  4a 50 00 00 00 00 00 00  |........JP......|
-00000130  00 00 00 00 00 00 42 40  00 00 00 00 00 40 61 40  |......B@.....@a@|
-00000140  00 00 c3 01 f7 f3 b2 c1  04 8a a0 8e 80 80 b0 11  |................|
-00000150  fe ff b7 11 00 04 49 4e  00 00 00 00 00 00 00 00  |......IN........|
-00000160  00 00 00 00 34 40 00 00  00 00 00 40 53 40 00 00  |....4@.....@S@..|
-00000170  c3 01 f7 f3 b2 c1 04 8a  a0 8e 80 80 b8 11 fe bf  |................|
-00000180  b8 11 00 04 49 4e 00 04  30 32 00 12 48 79 64 65  |....IN..02..Hyde|
-00000190  72 61 62 61 64 00 00 55  30 2a a9 13 60 31 40 3c  |rabad..U0*..`1@<|
-000001a0  4e d1 91 5c 9e 53 40 00  00 c3 01 f7 f3 b2 c1 04  |N..\.S@.........|
-000001b0  8a a0 8e 80 c0 b8 11 fe  ff b8 11 00 04 49 4e 00  |.............IN.|
-000001c0  00 00 00 00 00 00 00 00  00 00 00 34 40 00 00 00  |...........4@...|
-000001d0  00 00 40 53 40 00 00 c3  01 f7 f3 b2 c1 04 8a a0  |..@S@...........|
-000001e0  8e 80 80 b9 11 fe ff b9  11 00 04 49 4e 00 04 30  |...........IN..0|
+TODO
 ```
 
 ## Links 
 
 * Avro4s https://github.com/sksamuel/avro4s
+
+## Quotations
+
+*
+
+_Avro includes a simple object container file format. A file has a schema,
+and all objects stored in the file must be written according to that schema,
+using binary encoding. Objects are stored in blocks that may be compressed.
+Syncronization markers are used between blocks to permit efficient splitting
+of files for MapReduce processing._
+
+*
+
+_If your use case typically scans or retrieves all of the fields 
+in a row in each query, Avro is usually the best choice. Avro was 
+designed to remove all short-comings in Sequence files and this 
+is recommended format for Hadoop. Avro has a external schema that 
+the user defines and it is enforced on all the data in the file 
+and it can be used in any language.It has very nice binary coding 
+which makes the size even little smaller than protobuff._
+
+_Avro is a row oriented format.Avro guarantees data is written to 
+disk when flushed or synced with a very low memory overhead. Avro 
+supports block compression and supports schema evolution._
+
+## Known bugs
+
+```
+341947287 Jul 18 22:31 GeoIPCity-protobuf.dat
+432144345 May 12  2019 GeoIPCity.utf-8.csv
+161699011 Jul 18 22:38 GeoIPCity-v1-directBinaryEncoder.avro
+303678770 Jul 18 22:38 GeoIPCity-v2-blockingBinaryEncoder.avro
+```
+
+```
+$ avro-tools getschema GeoIPCity-v1-directBinaryEncoder.avro
+Exception in thread "main" org.apache.avro.InvalidAvroMagicException: Not an Avro data file.
+at org.apache.avro.file.DataFileStream.initialize(DataFileStream.java:111)
+at org.apache.avro.file.DataFileReader.<init>(DataFileReader.java:139)
+at org.apache.avro.file.DataFileReader.<init>(DataFileReader.java:131)
+at org.apache.avro.tool.DataFileGetSchemaTool.run(DataFileGetSchemaTool.java:46)
+at org.apache.avro.tool.Main.run(Main.java:67)
+at org.apache.avro.tool.Main.main(Main.java:56)
+
+$ avro-tools getschema GeoIPCity-v2-blockingBinaryEncoder.avro
+Exception in thread "main" org.apache.avro.InvalidAvroMagicException: Not an Avro data file.
+at org.apache.avro.file.DataFileStream.initialize(DataFileStream.java:111)
+at org.apache.avro.file.DataFileReader.<init>(DataFileReader.java:139)
+at org.apache.avro.file.DataFileReader.<init>(DataFileReader.java:131)
+at org.apache.avro.tool.DataFileGetSchemaTool.run(DataFileGetSchemaTool.java:46)
+at org.apache.avro.tool.Main.run(Main.java:67)
+at org.apache.avro.tool.Main.main(Main.java:56)
+```
