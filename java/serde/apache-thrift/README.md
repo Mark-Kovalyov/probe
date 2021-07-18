@@ -1,5 +1,7 @@
 # Thrift
 
+* Splittable: NO
+
 ## Sample of DSL
 
 ```thrift
@@ -233,40 +235,11 @@ Available generators (and options):
   xsd (XSD):
 ```
 
-## C++ compillation
+## Citatas
 
-```bash
-$ ls -1
-gcdlcmservice_constants.cpp
-gcdlcmservice_constants.h
-gcdlcmservice_types.cpp
-gcdlcmservice_types.h
-SharedService.cpp
-SharedService.h
-SharedService_server.skeleton.cpp
-```
-
-```bash
-g++ -Wall -I/usr/local/include/thrift *.cpp -L/usr/local/lib -lthrift -o something
-In file included from gcdlcmservice_constants.h:10,
-                 from gcdlcmservice_constants.cpp:7:
-gcdlcmservice_types.h:12:10: fatal error: thrift/Thrift.h: No such file or directory
-   12 | #include <thrift/Thrift.h>
-      |          ^~~~~~~~~~~~~~~~~
-compilation terminated.
-In file included from gcdlcmservice_types.cpp:7:
-gcdlcmservice_types.h:12:10: fatal error: thrift/Thrift.h: No such file or directory
-   12 | #include <thrift/Thrift.h>
-      |          ^~~~~~~~~~~~~~~~~
-compilation terminated.
-In file included from SharedService.cpp:7:
-SharedService.h:10:10: fatal error: thrift/TDispatchProcessor.h: No such file or directory
-   10 | #include <thrift/TDispatchProcessor.h>
-      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-compilation terminated.
-In file included from SharedService_server.skeleton.cpp:4:
-SharedService.h:10:10: fatal error: thrift/TDispatchProcessor.h: No such file or directory
-   10 | #include <thrift/TDispatchProcessor.h>
-      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-compilation terminated.
-```
+Thrift is pretty much same properties like protobuf. Also its not quite 
+expressive.Thrift supports a lot more languages than protobuff. Thrift 
+generates code to implement RPC clients and servers. Thrift has RPC support 
+built in. Protobuf currently relies on third-party libraries, meaning less eyes, 
+less testing, less reliable code.This is a good format but since its not splittable, 
+it is not recommended for Hadoop.
